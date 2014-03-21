@@ -1,10 +1,10 @@
 
 public class Tetris {
 
-  private final ContextManager manager = new ContextManager();
+  private final ContextManager manager;
   
   public Tetris(){
-   
+     manager = new ContextManager();
   }
   
   public void init(){
@@ -12,7 +12,7 @@ public class Tetris {
   }
   
   public void start(){
-    
+    manager.start();
   }
   
   public static void main( String[] args ){

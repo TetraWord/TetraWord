@@ -2,7 +2,7 @@ package GameEngine;
 
 public class GameEngine {
 
-  private static GameEngine INSTANCE = new GameEngine();
+  private static final GameEngine INSTANCE = new GameEngine();
   
   //Singleton
   private GameEngine(){

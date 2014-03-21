@@ -3,13 +3,14 @@ package GraphicEngine;
 import javax.swing.JFrame;
 
 public class GraphicEngine extends JFrame{
-  public static final int WINDOW_WIDTH = 300;
-  public static final int WINDOW_HEIGHT = 500;
-  private static GraphicEngine INSTANCE = new GraphicEngine();
+  public static final int WINDOW_WIDTH = 500;
+  public static final int WINDOW_HEIGHT = 800;
+  private static final GraphicEngine INSTANCE = new GraphicEngine();
+  private final JFrame window;
   
   //Singleton
   private GraphicEngine(){
-    Window window = new Window(WINDOW_WIDTH, WINDOW_HEIGHT);
+    window = new Window(WINDOW_WIDTH, WINDOW_HEIGHT);
   }
   
   public static GraphicEngine getInstance(){
@@ -22,5 +23,7 @@ public class GraphicEngine extends JFrame{
   
   public static void main( String[] args ){
     GraphicEngine engine = getInstance();
+    
+    
   }
 }
