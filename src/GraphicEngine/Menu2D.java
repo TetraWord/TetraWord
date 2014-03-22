@@ -1,17 +1,22 @@
 
 package GraphicEngine;
 
+import static GraphicEngine.GraphicEngine.WINDOW_WIDTH;
 import java.awt.Graphics;
 import javax.swing.JPanel;
 
-class Menu2D extends JPanel {
+public class Menu2D extends JPanel {
   private Button2D[] buttons;
   private int capacity;
   private int current;
   
   public Menu2D() {
-     capacity = 0;
-     current = 0;
+    //Panel settings
+    this.setLayout(null);
+    
+    //Menu settings
+    capacity = 0;
+    current = 0;
   }
   
   public void add(Button2D newButton){
@@ -22,12 +27,29 @@ class Menu2D extends JPanel {
     }
   }
   
+  public Button2D[] getButtons(){
+    return buttons;
+  }
+  
+  public Button2D getAt( int index ){
+    return buttons[index];
+  }
+  
   public void defineMainMenu(){
     buttons = new Button2D[4];
     capacity = 4;
     current = 0;
-    this.add(new Button2D("Start new game", 50, 100, 100, 30));
-    this.add(new Button2D("Exit", 150, 200, 100, 30));
+    int sx = 150, sy = 60;
+    int x = WINDOW_WIDTH/2 - sx/2;
+    int y = 50;
+    int step_y = y+sy;
+    this.add(new Button2D("Start new game", x, y, sx, sy));
+    y = y + step_y;
+    this.add(new Button2D("Load game", x, y, sx, sy));
+    y = y + step_y;
+    this.add(new Button2D("Options", x, y, sx, sy));
+    y = y + step_y;
+    this.add(new Button2D("Exit", x, y, sx, sy));
   }
   
   @Override

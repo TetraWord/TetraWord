@@ -2,11 +2,12 @@ package GameEngine;
 
 public class GameEngine {
 
+  private GameState currentState;
   private static final GameEngine INSTANCE = new GameEngine();
   
   //Singleton
   private GameEngine(){
-    
+    currentState = GameState.NO_STATE;
   }
   
   public static GameEngine getInstance(){
@@ -14,10 +15,15 @@ public class GameEngine {
   }
   
   public void init(){
-    
+    currentState = GameState.IN_MENU;
   }
   
-  public static void main( String[] args ){
+  public void update(){
+    
+  }
+
+  public GameState getState() {
+    return currentState;
   }
 
 }

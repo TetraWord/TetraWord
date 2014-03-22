@@ -19,6 +19,10 @@ public class GraphicEngine {
     window.defineMainMenu();
   }
   
+  public Window getWindow(){
+    return window;
+  }
+  
   public static void main( String[] args ){
     GraphicEngine engine = getInstance();
     engine.window.defineNewBoardGame();

@@ -17,11 +17,16 @@ public class Window extends JFrame{
     this.setResizable(false);
     this.setLocationRelativeTo(null);
     this.setDefaultCloseOperation(this.EXIT_ON_CLOSE); 
+    this.setLayout(null);
     this.setVisible(true);
   }
   
   private void setPan( JPanel newPan ){
     pan = newPan;
+  }
+  
+  public JPanel getPan(){
+    return pan;
   }
   
   public void defineMainMenu(){
