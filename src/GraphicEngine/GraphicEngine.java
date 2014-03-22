@@ -1,12 +1,10 @@
 package GraphicEngine;
 
-import javax.swing.JFrame;
-
-public class GraphicEngine extends JFrame{
+public class GraphicEngine {
   public static final int WINDOW_WIDTH = 500;
   public static final int WINDOW_HEIGHT = 800;
   private static final GraphicEngine INSTANCE = new GraphicEngine();
-  private final JFrame window;
+  private final Window window;
   
   //Singleton
   private GraphicEngine(){
@@ -18,12 +16,12 @@ public class GraphicEngine extends JFrame{
   }
   
   public void init(){
-    
+    window.defineMainMenu();
   }
   
   public static void main( String[] args ){
     GraphicEngine engine = getInstance();
-    
+    engine.window.defineNewBoardGame();
     
   }
 }
