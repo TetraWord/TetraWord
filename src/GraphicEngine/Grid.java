@@ -11,8 +11,7 @@ class Grid extends JPanel {
   public Grid(){}
   
   @Override
-  public void paintComponent(Graphics g){  
-    System.out.println("coucou");
+  public void paintComponent(Graphics g){
     int step = 30;
     int marge = 30;
     int height = WINDOW_HEIGHT - marge;

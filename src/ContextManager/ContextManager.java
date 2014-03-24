@@ -45,13 +45,30 @@ public class ContextManager implements ActionListener {
   @Override
   public void actionPerformed(ActionEvent e) {
     JPanel pan = graphicEngine.getWindow().getPan();
-    if( pan instanceof Menu2D ){ 
-      Menu2D menu = (Menu2D)pan;
-      Button2D[] buttons = menu.getButtons();
-      for( int i = 0; i < buttons.length; ++i){
-        if( e.getSource() == buttons[i]){
-          System.out.println("Clic sur le bouton "+buttons[i].getName()+" ! ");
-        }
+    if( pan instanceof Menu2D ){
+      
+      Button2D click = (Button2D)e.getSource();
+
+      switch(click.getName()){
+        case "Start new game":
+          Window w = graphicEngine.getWindow();
+          w.defineNewBoardGame();
+          w.repaint();
+          break;
+        
+        case "Load game":
+          break;
+          
+        case "Options":
+          break;
+          
+        case "Exit":
+          System.exit(0);
+          break;
+          
+        default:
+          System.out.println("No implemented yet");
+          break;
       }
     }
     else if( pan instanceof BoardGame2D){
