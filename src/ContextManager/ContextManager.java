@@ -52,7 +52,9 @@ public class ContextManager implements ActionListener {
       menuListener.actionPerformed(e);
     }
     else if( pan instanceof BoardGame2D){
+	  pan.addKeyListener(gameListener);	
       gameListener.actionPerformed(e);
+      
     }
     
   }
