@@ -11,14 +11,14 @@ import javax.swing.JPanel;
 * Chocolate spread
 */
 
-public class ContextManager implements ActionListener {
+public class ContextManager {
   
   private GameState lastState;
 	private final GameEngine gameEngine = GameEngine.getInstance();
 	private final GraphicEngine graphicEngine = GraphicEngine.getInstance();
   private static final ContextManager INSTANCE = new ContextManager();
-  private final MenuEventListener menuListener = new MenuEventListener();
-  private final GameEventListener gameListener = new GameEventListener();
+  private static final MenuEventListener menuListener = new MenuEventListener();
+  private static final GameEventListener gameListener = new GameEventListener();
   
   private ContextManager(){
     
@@ -28,6 +28,14 @@ public class ContextManager implements ActionListener {
     return INSTANCE;
   }
   
+  public static GameEventListener getGameListener(){
+    return gameListener;
+  }
+  
+  public static MenuEventListener getMenuListener(){
+    return menuListener;
+  }
+   
   public void init(){
     graphicEngine.init();
     gameEngine.init();
@@ -42,20 +50,5 @@ public class ContextManager implements ActionListener {
     if( currentGameState != lastState ){
       //We need to update the game
     }
-  }
-
-  //Peut être qu'une optimisation peut être faite ici notamment en ne passant pas par cette classe
-  @Override
-  public void actionPerformed(ActionEvent e) {
-    JPanel pan = graphicEngine.getWindow().getPan();
-    if( pan instanceof Menu2D ){
-      menuListener.actionPerformed(e);
-    }
-    else if( pan instanceof BoardGame2D){
-	  pan.addKeyListener(gameListener);	
-      gameListener.actionPerformed(e);
-      
-    }
-    
   }
 }

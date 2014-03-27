@@ -1,5 +1,6 @@
 package GraphicEngine;
 
+import ContextManager.ContextManager;
 import java.awt.Graphics;
 import javax.swing.JPanel;
 
@@ -11,6 +12,10 @@ public class BoardGame2D extends JPanel {
   private final Grid gameGrid;
   
   public BoardGame2D(){
+ 
+    this.addKeyListener( ContextManager.getInstance().getGameListener() );
+    
+    this.setFocusable(true);
     gameGrid = new Grid();
   }
   

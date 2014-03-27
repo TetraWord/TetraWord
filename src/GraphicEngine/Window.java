@@ -1,46 +1,40 @@
 package GraphicEngine;
 
+import static GraphicEngine.GraphicEngine.WINDOW_HEIGHT;
+import static GraphicEngine.GraphicEngine.WINDOW_WIDTH;
+import java.awt.Dimension;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 /***
  * Define the main window of the application
  */
 
-public class Window extends JFrame{
-  private JPanel pan;
+public class Window extends JFrame {
   
-  public Window(int w, int h){
+  public static final Dimension size = new Dimension(WINDOW_WIDTH,WINDOW_HEIGHT);
+  public static final String title = "TetraWord";
+  
+  public Window(){
     //Window settings
-    this.setTitle("TetraWord");
-    this.setSize(w, h);
+    this.setTitle(title);
+    this.setSize(size);
     this.setResizable(false);
     this.setLocationRelativeTo(null);
-    this.setDefaultCloseOperation(this.EXIT_ON_CLOSE); 
-    this.setLayout(null);
-    this.setVisible(true);
-  }
-  
-  private void setPan( JPanel newPan ){
-    pan = newPan;
-  }
-  
-  public JPanel getPan(){
-    return pan;
+    this.setDefaultCloseOperation(EXIT_ON_CLOSE); 
   }
   
   public void defineMainMenu(){
-    pan = new Menu2D();
-    Menu2D menu = (Menu2D)pan;
+    Menu2D menu = new Menu2D();
     menu.defineMainMenu();
-    this.setContentPane( menu );
+    this.setContentPane (menu );
     this.setVisible(true);
   }
   
   public void defineNewBoardGame(){
-    pan = new BoardGame2D();
-    this.setContentPane( pan );
+    BoardGame2D boardGame = new BoardGame2D();
+    this.setContentPane( boardGame );
     this.setVisible(true);
+    boardGame.requestFocusInWindow();
   }
   
 }

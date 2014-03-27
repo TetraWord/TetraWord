@@ -11,8 +11,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-class GameEventListener implements ActionListener, KeyListener{
+public class GameEventListener implements ActionListener, KeyListener{
 
+  public GameEventListener(){}
+  
   @Override
   public void actionPerformed(ActionEvent e) {
 	  

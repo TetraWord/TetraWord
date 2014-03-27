@@ -12,7 +12,7 @@ public class Button2D extends JButton {
     this.name = name;
     this.setBounds(x, y, sx, sy);
     this.setFocusable(false);
-    this.addActionListener( ContextManager.getInstance() );
+    this.addActionListener( ContextManager.getInstance().getMenuListener() );
   }
   
   @Override
