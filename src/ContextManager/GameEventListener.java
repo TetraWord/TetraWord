@@ -20,24 +20,24 @@ class GameEventListener implements ActionListener, KeyListener{
   
   @Override
   public void keyPressed(KeyEvent e) {
-	System.out.println("Key pressed");
-	switch (e.getKeyChar()) {
-		case KeyEvent.VK_UP:
-			System.out.println("Up pressed");
-            break;
-            
-        case KeyEvent.VK_DOWN:
-        	System.out.println("Down pressed");
-            break;
-            
-        case KeyEvent.VK_LEFT:
-        	System.out.println("Left pressed");
-            break;
-            
-        case KeyEvent.VK_RIGHT:
-        	System.out.println("Right pressed");
-        	break;
-	}
+		System.out.println("Key pressed");
+		switch (e.getKeyChar()) {
+			case KeyEvent.VK_UP:
+				System.out.println("Up pressed");
+	            break;
+	            
+	        case KeyEvent.VK_DOWN:
+	        	System.out.println("Down pressed");
+	            break;
+	            
+	        case KeyEvent.VK_LEFT:
+	        	System.out.println("Left pressed");
+	            break;
+	            
+	        case KeyEvent.VK_RIGHT:
+	        	System.out.println("Right pressed");
+	        	break;
+		}
   }
 
   @Override
