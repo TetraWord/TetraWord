@@ -1,0 +1,9 @@
+<Nom>
+cube
+<R G B>
+150 150 0
+<Representation>
+0 0 0 0
+0 0 0 0
+0 1 1 0
+0 1 1 0

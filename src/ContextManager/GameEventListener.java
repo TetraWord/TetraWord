@@ -21,8 +21,7 @@ public class GameEventListener implements ActionListener, KeyListener{
   }
   
   @Override
-	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
+  public void keyPressed(KeyEvent e) {
 		System.out.println("Key pressed");
 		switch (e.getKeyChar()) {
 			case KeyEvent.VK_UP:
@@ -41,17 +40,17 @@ public class GameEventListener implements ActionListener, KeyListener{
 	        	System.out.println("Right pressed");
 	        	break;
 		}
-	}
+  }
 
-	@Override
-	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+  @Override
+  public void keyReleased(KeyEvent e) {
+	// TODO Auto-generated method stub
+	
+  }
 
-	@Override
-	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+  @Override
+  public void keyTyped(KeyEvent e) {
+	// TODO Auto-generated method stub
+	
+  }
 }
