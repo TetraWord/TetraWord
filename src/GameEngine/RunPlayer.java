@@ -11,7 +11,7 @@ public class RunPlayer implements Runnable {
   @Override
   public void run() {
     while(true){
-      System.out.println("Coucou c'est player "+player.getNumber());
+      //System.out.println("Coucou c'est player "+player.getNumber());
     }
   }
   
