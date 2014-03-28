@@ -22,8 +22,7 @@ public class GameEventListener implements ActionListener, KeyListener{
   
   @Override
   public void keyPressed(KeyEvent e) {
-		System.out.println("Key pressed");
-		switch (e.getKeyChar()) {
+		switch (e.getKeyCode()) {
 			case KeyEvent.VK_UP:
 				System.out.println("Up pressed");
 	            break;
