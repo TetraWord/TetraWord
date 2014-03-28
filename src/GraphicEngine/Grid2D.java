@@ -1,12 +1,8 @@
 
 package GraphicEngine;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.image.BufferedImage;
-import java.awt.image.ColorModel;
-import java.awt.image.WritableRaster;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
@@ -30,13 +26,7 @@ class Grid2D extends JPanel {
             g.drawImage(img, 0, 0, this);
         } catch (IOException e) {
             /*Load background image from default design*/
-            try {
-                Image img = ImageIO.read(new File("media/Design/paper/background.jpg"));
-                //Pour une image de fond
-                g.drawImage(img, 0, 0, this);
-            } catch (IOException ioe) {
-                ioe.printStackTrace();
-            }
+             e.printStackTrace();
         }
         
         //Shape draw
