@@ -3,10 +3,18 @@ package GameEngine;
 
 //Singleton
 
+//import Tetris;
+
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.StringReader;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Random;
+import java.util.Scanner;
 
 public class ShapesStock {
   
@@ -17,24 +25,107 @@ public class ShapesStock {
       /*Read files .shape*/
       File repertoire = new File("media/Shapes/");
       String[] liste = repertoire.list();
-      int cpt = 0;
+      shapeModel = new Shape[liste.length];
       for( int i = 0; i < liste.length; ++i){
           if( liste[i].endsWith(".shape") ){ 
-            System.out.println( liste[i] +"\n");
-            ++cpt;
+          	/*Pour chaque fichier .shape créer une shape et l'ajouter au shapeModel*/
+            shapeModel[i] = this.readFile("media/Shapes/"+liste[i]);
           }
       }
-      shapeModel = new Shape[cpt];
-      /*Pour chaque fichier .shape créer une shape*/
-      /*Stocker les shape dans le ShapesStock*/
   }
   
   public static ShapesStock getInstance() {
     return ShapesStockHolder.INSTANCE;
   }
   
-  public void readFile(){
-    
+  public Shape readFile(String path){
+  	Scanner scanner;
+  	int count = 0;
+  	int i, cpt;
+  	StringReader l;
+  	String name ="";
+  	int[] color = new int[3], rep1 = new int[4], rep2 = new int[4], rep3 = new int[4], rep4 = new int[4];
+		try {
+			scanner = new Scanner(new File(path));
+			while (scanner.hasNextLine()) {
+				switch (count) {
+					case 0:
+						name = scanner.nextLine();
+						break;
+						
+					case 1:
+						l = new StringReader(scanner.nextLine());
+						cpt = 0;
+						while((i=l.read()) != -1 ) {
+							if((char)i !=' '){
+								String s = String.valueOf(i);
+								color[cpt]= Integer.parseInt(s);
+							}
+						}
+						break;
+						
+					case 2:
+						l = new StringReader(scanner.nextLine());
+						cpt = 0;
+						while((i=l.read()) != -1 ) {
+							if((char)i !=' '){
+								String s = String.valueOf(i);
+								rep1[cpt]= Integer.parseInt(s);
+							}
+						}
+						break;
+						
+					case 3:
+						l = new StringReader(scanner.nextLine());
+						cpt = 0;
+						while((i=l.read()) != -1 ) {
+							if((char)i !=' '){
+								String s = String.valueOf(i);
+								rep2[cpt]= Integer.parseInt(s);
+							}
+						}
+						break;
+					
+					case 4:
+						l = new StringReader(scanner.nextLine());
+						cpt = 0;
+						while((i=l.read()) != -1 ) {
+							if((char)i !=' '){
+								String s = String.valueOf(i);
+								rep3[cpt]= Integer.parseInt(s);
+							}
+						}
+						break;
+						
+					case 5:
+						l = new StringReader(scanner.nextLine());
+						cpt = 0;
+						while((i=l.read()) != -1 ) {
+							if((char)i !=' '){
+								String s = String.valueOf(i);
+								rep4[cpt]= Integer.parseInt(s);
+							}
+						}
+						break;
+				}
+				count++;
+				
+				//faites ici votre traitement
+				
+			}
+			scanner.close();
+			
+			return new Shape(name, color, new int[][]{rep1,rep2,rep3,rep4}); 
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+  	
   }
   
   public Shape getRandomShape(){
@@ -47,6 +138,8 @@ public class ShapesStock {
   
   public static void main(String[] args){
       ShapesStock ss = new ShapesStock();
+      System.out.println(ss.getRandomShape().getName());
+      
   }
   
   private static class ShapesStockHolder {
@@ -54,3 +147,4 @@ public class ShapesStock {
     private static final ShapesStock INSTANCE = new ShapesStock();
   }
 }
+
