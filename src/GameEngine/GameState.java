@@ -12,7 +12,7 @@ public enum GameState {
     this.name = name;
   }
   
-  public String getState() {
+  public String getStateName() {
     return name;
   }
 

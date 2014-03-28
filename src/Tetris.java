@@ -5,9 +5,7 @@ public class Tetris {
 
   private final ContextManager manager = ContextManager.getInstance();
   
-  public Tetris(){
-     
-  }
+  public Tetris(){}
   
   public void init(){
     manager.init();

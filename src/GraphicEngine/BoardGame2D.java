@@ -15,7 +15,6 @@ public class BoardGame2D extends JPanel {
  
     this.addKeyListener( ContextManager.getInstance().getGameListener() );
     
-    this.setFocusable(true);
     gameGrid = new Grid();
   }
   

@@ -3,9 +3,6 @@ package ContextManager;
 
 import GraphicEngine.*;
 import GameEngine.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.JPanel;
 
 /*
 * Chocolate spread
@@ -18,17 +15,17 @@ public class ContextManager {
 	private final GraphicEngine graphicEngine = GraphicEngine.getInstance();
   private static final ContextManager INSTANCE = new ContextManager();
   private static final MenuEventListener menuListener = new MenuEventListener();
-  private static final GameEventListener gameListener = new GameEventListener();
+  private static final PlayerEventListener gameListener = new PlayerEventListener();
   
   private ContextManager(){
-    
+    lastState = GameState.NO_STATE;
   }
   
   public static ContextManager getInstance(){
     return INSTANCE;
   }
   
-  public static GameEventListener getGameListener(){
+  public static PlayerEventListener getGameListener(){
     return gameListener;
   }
   
@@ -42,13 +39,19 @@ public class ContextManager {
   }
   
   public void start(){
-    
+    while(true){
+      updateContentIfNeeded();
+    }
   }
   
   public void updateContentIfNeeded(){
     GameState currentGameState = gameEngine.getState();
     if( currentGameState != lastState ){
-      //We need to update the game
+      if ( currentGameState == GameState.IN_GAME){
+        gameEngine.addNewPlayer();
+      }
+      System.out.println("I need updating");
+      lastState = currentGameState;
     }
   }
 }

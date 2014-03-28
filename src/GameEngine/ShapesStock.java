@@ -8,7 +8,7 @@ import java.io.File;
 public class ShapesStock {
   
   private ShapesStock() {
-      /*Lire les fichiers .shape*/
+      /*Read files .shape*/
       File repertoire = new File("media/Shapes/");
       String[] liste = repertoire.list();
       for( int i = 0; i < liste.length; ++i){
