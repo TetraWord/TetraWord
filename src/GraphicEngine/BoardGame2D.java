@@ -13,7 +13,8 @@ public class BoardGame2D extends JPanel {
   
   public BoardGame2D(){
  
-    this.addKeyListener( ContextManager.getInstance().getGameListener() );
+    this.addKeyListener( ContextManager.getInstance().getPlayerListener(1));
+    this.addKeyListener( ContextManager.getInstance().getPlayerListener(2));
     
     gameGrid = new Grid2D ();
   }

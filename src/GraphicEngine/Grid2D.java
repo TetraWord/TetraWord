@@ -8,13 +8,17 @@ import javax.swing.JPanel;
 
 class Grid2D extends JPanel {
   
-  private Shape2D currentShape;
+  private Shape2D currentShape = null;
   
-  public Grid2D(){}
+  public Grid2D(){
+    currentShape = new Shape2D();
+    this.setVisible(true);
+  }
   
   
   @Override
   public void paintComponent(Graphics g){
+    
     int step = 30;
     int marge = 30;
     int height = WINDOW_HEIGHT - marge;
@@ -29,6 +33,11 @@ class Grid2D extends JPanel {
         //vertical lines
         g.drawLine(i, offsetHeight, i, height - marge);
       }
+    }
+    
+    //Shape draw
+    if( currentShape != null ){
+      currentShape.paintComponent(g);
     }
   }
   
