@@ -20,5 +20,9 @@ public class Shape {
   public Shape(Shape shape) {
     this(shape.name, shape.color, shape.representation);
   }
+  
+  public String getName() {
+  	return this.name;
+  }
 
 }
