@@ -1,6 +1,8 @@
 
 package ContextManager;
 
+import GameEngine.GameEngine;
+import GameEngine.GameState;
 import GraphicEngine.Button2D;
 import GraphicEngine.GraphicEngine;
 import GraphicEngine.Window;
@@ -11,14 +13,26 @@ public class MenuEventListener implements ActionListener {
 
   @Override
   public void actionPerformed(ActionEvent e) {
+    GameEngine game = GameEngine.getInstance();
     GraphicEngine g = GraphicEngine.getInstance();
     Button2D click = (Button2D)e.getSource();
-
+    Window w = g.getWindow();
+    
     switch(click.getName()){
-      case "Start new game":
-        Window w = g.getWindow();
+      case "Start new game":    
+        w.defineGameMenu();
+        w.repaint();
+        break;
+      
+      case "Single game":
         w.defineNewBoardGame();
         w.repaint();
+        game.setState(GameState.IN_GAME);
+        game.babarianUpdate();
+        break;
+        
+      case "Multiplayer game":
+        
         break;
         
       case "Load game":
