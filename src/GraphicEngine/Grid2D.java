@@ -38,30 +38,11 @@ class Grid2D extends JPanel {
                 ioe.printStackTrace();
             }
         }
-        try {
-            BufferedImage monImage = ImageIO.read(new File("media/Design/paper/brick.png"));
-            WritableRaster trame = monImage.getRaster();
-            ColorModel color = monImage.getColorModel();
-            int rgb = Color.red.getRGB();
-            Object couleurBlanc = color.getDataElements(rgb, null);
-
-            for (int i = 0; i < 35; ++i) {
-                for (int j = 0; j < 35; ++j) {
-                    int alpha = monImage.getRGB(i, j);
-                    if (alpha < 0) {
-                        trame.setDataElements(i, j, couleurBlanc);
-                    }
-                }
-            }
-            g.drawImage(monImage, 50, 200, null);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        
         //Shape draw
         if (currentShape != null) {
             currentShape.paintComponent(g);
         }
-    }
+        }
 
 }
