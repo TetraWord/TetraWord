@@ -2,6 +2,7 @@ package GameEngine;
 
 public class Grid {
   private final int[][] tGrid = new int[10][20];
+  private Shape currentShape;
   
   public Grid(){
     for( int i = 0; i < 10; ++i ){

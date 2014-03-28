@@ -9,13 +9,13 @@ import javax.swing.JPanel;
  */
 
 public class BoardGame2D extends JPanel {
-  private final Grid gameGrid;
+  private final Grid2D gameGrid;
   
   public BoardGame2D(){
  
     this.addKeyListener( ContextManager.getInstance().getGameListener() );
     
-    gameGrid = new Grid();
+    gameGrid = new Grid2D ();
   }
   
   @Override

@@ -29,7 +29,15 @@ public class GameEngine {
     players[nbPlayer] = new Player(nbPlayer);
     ++nbPlayer;
   }
+  
+  public Player[] getPlayers(){
+    return players;
+  }
 
+  public int getNbPlayers(){
+    return nbPlayer;
+  }
+  
   public GameState getState() {
     return currentState;
   }

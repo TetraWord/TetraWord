@@ -25,4 +25,9 @@ public class GraphicEngine {
   public Window getWindow(){
     return window;
   }
+
+  public void renderFrame() {
+    window.renderFrame();
+  }
+
 }

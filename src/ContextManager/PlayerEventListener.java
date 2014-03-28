@@ -6,10 +6,10 @@
 
 package ContextManager;
 
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
-public class PlayerEventListener implements KeyListener{
+public class PlayerEventListener extends KeyAdapter{
 
   public PlayerEventListener(){}
   
@@ -35,15 +35,4 @@ public class PlayerEventListener implements KeyListener{
 		}
   }
 
-  @Override
-  public void keyReleased(KeyEvent e) {
-	// TODO Auto-generated method stub
-	
-  }
-
-  @Override
-  public void keyTyped(KeyEvent e) {
-	// TODO Auto-generated method stub
-	
-  }
 }

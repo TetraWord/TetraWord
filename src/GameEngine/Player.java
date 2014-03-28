@@ -1,14 +1,16 @@
 package GameEngine;
 
-public class Player implements Runnable {
+public class Player {
 	private final BoardGame boardGame = new BoardGame();
 	private final int number;
   private final Thread thread;
   private double score;
+  private int numLinesRemoved;
   private Shape shapeStocked;
 	
-	public Player(int nb){
+	public Player( int nb ){
     score = 0;
+    numLinesRemoved = 0;
 		number = nb;
     thread = new Thread();
 	}
@@ -24,9 +26,17 @@ public class Player implements Runnable {
     shapeStocked = null;
     return s; //vérifier si ca ne retourne pas toujours null... 
   }
+  
+  public static void main( String[] args ){
+    Player p1 = new Player(1);
+    Player p2 = new Player(2);
+    Thread t = new Thread(new RunPlayer(p1));
+    Thread t2 = new Thread(new RunPlayer(p2));
+    t.start();
+    t2.start();
+  }
 
-  @Override
-  public void run() {
-    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+  public int getNumber() {
+    return number;
   }
 }

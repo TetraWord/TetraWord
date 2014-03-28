@@ -6,9 +6,12 @@ import static GraphicEngine.GraphicEngine.WINDOW_WIDTH;
 import java.awt.Graphics;
 import javax.swing.JPanel;
 
-class Grid extends JPanel {
+class Grid2D extends JPanel {
   
-  public Grid(){}
+  private Shape2D currentShape;
+  
+  public Grid2D(){}
+  
   
   @Override
   public void paintComponent(Graphics g){

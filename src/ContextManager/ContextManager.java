@@ -38,20 +38,30 @@ public class ContextManager {
     gameEngine.init();
   }
   
-  public void start(){
-    while(true){
-      updateContentIfNeeded();
-    }
+  public void run(){
+    graphicEngine.renderFrame();
   }
   
-  public void updateContentIfNeeded(){
-    GameState currentGameState = gameEngine.getState();
-    if( currentGameState != lastState ){
-      if ( currentGameState == GameState.IN_GAME){
-        gameEngine.addNewPlayer();
-      }
-      System.out.println("I need updating");
-      lastState = currentGameState;
+  public void defineGameMenu(){
+    Window w = graphicEngine.getWindow();
+    w.defineGameMenu();
+    w.repaint();
+  }
+  
+  public void definePlayersGame(int numPlayer){
+    //Graphic
+    Window w = graphicEngine.getWindow();
+    w.defineNewBoardGame();
+    w.repaint();
+    
+    //GameEngine
+    for(int i = 0; i < numPlayer; ++i){
+      gameEngine.addNewPlayer();
+    } 
+    Player[] players = gameEngine.getPlayers();
+    for(int i = 0; i < numPlayer; ++i ){
+      Thread t = new Thread(new RunPlayer(players[i]));
+      t.start();
     }
   }
 }
