@@ -130,7 +130,7 @@ public class ShapesStock {
   
   public Shape getRandomShape(){
     Random r = new Random();
-    int x = Math.abs(r.nextInt()) % shapeModel.length + 1;
+    int x = Math.abs(r.nextInt()) % shapeModel.length;
     Shape newShape = new Shape( shapeModel[x] );
     instanciedShape.add(newShape);
     return newShape;
