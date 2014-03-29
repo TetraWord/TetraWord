@@ -3,8 +3,8 @@ package GraphicEngine;
 public class GraphicEngine {
   
   
-  public static final int WINDOW_WIDTH = 500;
-  public static final int WINDOW_HEIGHT = 800;
+  public static final int WINDOW_WIDTH = 650;
+  public static final int WINDOW_HEIGHT = 889;
   
   private static final GraphicEngine INSTANCE = new GraphicEngine();
   private final Window window;
