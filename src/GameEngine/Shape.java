@@ -20,6 +20,8 @@ public class Shape {
   public int getG(){ return color[1]; }
   public int getB(){ return color[2]; }
   
+  public int getRep(int x, int y){ return representation[x][y]; }
+  
   //Copy constructor
   public Shape(Shape shape) {
     this(shape.name, shape.color, shape.representation);
