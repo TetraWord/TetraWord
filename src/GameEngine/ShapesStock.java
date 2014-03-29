@@ -41,8 +41,10 @@ public final class ShapesStock {
   	Scanner scanner;
   	int count = 0;
   	int i, cpt;
+  	char c;
   	StringReader l;
-  	String name ="";
+  	StringBuilder res;
+  	String name ="", s;
   	int[] color = new int[3], rep1 = new int[4], rep2 = new int[4], rep3 = new int[4], rep4 = new int[4];
 		try {
 			scanner = new Scanner(new File(path));
@@ -55,57 +57,72 @@ public final class ShapesStock {
 					case 1:
 						l = new StringReader(scanner.nextLine());
 						cpt = 0;
+						res = new StringBuilder();
 						while((i=l.read()) != -1 ) {
-              System.out.println("i : "+i);
-							if((char)i !=' '){
-								String s = String.valueOf(i);
+							if((c=(char)i) !=' '){
+								res.append(c);
+							}else{
+								s = String.valueOf(res.toString());
 								color[cpt]= Integer.parseInt(s);
+								res = new StringBuilder();
+								cpt++;
 							}
 						}
+						s = String.valueOf(res.toString());
+						color[cpt]= Integer.parseInt(s);
+						l.close();
 						break;
 						
 					case 2:
 						l = new StringReader(scanner.nextLine());
 						cpt = 0;
 						while((i=l.read()) != -1 ) {
-							if((char)i !=' '){
-								String s = String.valueOf(i);
+							if((c=(char)i) !=' '){
+								s = String.valueOf(c);
 								rep1[cpt]= Integer.parseInt(s);
+								cpt++;
 							}
 						}
+						l.close();
 						break;
 						
 					case 3:
 						l = new StringReader(scanner.nextLine());
 						cpt = 0;
 						while((i=l.read()) != -1 ) {
-							if((char)i !=' '){
-								String s = String.valueOf(i);
+							if((c=(char)i) !=' '){
+								s = String.valueOf(c);
 								rep2[cpt]= Integer.parseInt(s);
+								cpt++;
 							}
 						}
+						l.close();
 						break;
 					
 					case 4:
 						l = new StringReader(scanner.nextLine());
 						cpt = 0;
 						while((i=l.read()) != -1 ) {
-							if((char)i !=' '){
-								String s = String.valueOf(i);
+							if((c=(char)i) !=' '){
+								s = String.valueOf(c);
 								rep3[cpt]= Integer.parseInt(s);
+								cpt++;
 							}
 						}
+						l.close();
 						break;
 						
 					case 5:
 						l = new StringReader(scanner.nextLine());
 						cpt = 0;
 						while((i=l.read()) != -1 ) {
-							if((char)i !=' '){
-								String s = String.valueOf(i);
+							if((c=(char)i) !=' '){
+								s = String.valueOf(c);
 								rep4[cpt]= Integer.parseInt(s);
+								cpt++;
 							}
 						}
+						l.close();
 						break;
 				}
 				count++;
@@ -115,7 +132,6 @@ public final class ShapesStock {
 			}
 			scanner.close();
 			for(i = 0; i < color.length; ++i){
-        System.out.println("je veux de la coueleur : "+color[i]);
       }
 			return new Shape(name, color, new int[][]{rep1,rep2,rep3,rep4}); 
 			
