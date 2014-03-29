@@ -1,9 +1,9 @@
 package GraphicEngine;
 
-import ContextManager.ContextManager;
 import GameEngine.BoardGame;
 import static GraphicEngine.GraphicEngine.WINDOW_HEIGHT;
 import static GraphicEngine.GraphicEngine.WINDOW_WIDTH;
+import java.awt.Container;
 import java.awt.Dimension;
 import javax.swing.JFrame;
 
@@ -41,11 +41,13 @@ public class Window extends JFrame {
   }
   
   public void defineNewBoardGame(BoardGame model){
+    Container pan = getContentPane();
     BoardGame2D boardGame = new BoardGame2D(model);
-    this.setContentPane( boardGame );
+
+    pan.add( boardGame );
+
     this.setVisible(true);
     boardGame.requestFocusInWindow();
-    boardGame.start();
   }
 
   public void clear() {

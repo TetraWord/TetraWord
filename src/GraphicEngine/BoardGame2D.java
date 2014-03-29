@@ -2,6 +2,9 @@ package GraphicEngine;
 
 import ContextManager.ContextManager;
 import GameEngine.BoardGame;
+import static GraphicEngine.GraphicEngine.WINDOW_HEIGHT;
+import static GraphicEngine.GraphicEngine.WINDOW_WIDTH;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.io.File;
@@ -20,10 +23,11 @@ public class BoardGame2D extends JPanel {
 
   public BoardGame2D(BoardGame model) {
     this.model = model;
-    this.addKeyListener(ContextManager.getInstance().getPlayerListener(1));
-    this.addKeyListener(ContextManager.getInstance().getPlayerListener(2));
-
+    this.setSize(650,889);
+    this.addKeyListener(ContextManager.getInstance().getPlayerListener(model.getNb()));
+  
     gameGrid = new Grid2D();
+    
     setShapeToGrid2D();
   }
 
@@ -33,9 +37,11 @@ public class BoardGame2D extends JPanel {
   
   @Override
   public void paintComponent(Graphics g) {
+    
     try {
       /*Try to load background image from chosen design*/
       Image img = ImageIO.read(new File("media/Design/paper/background.jpg"));
+      int offset = model.getNb();
       g.drawImage(img, 0, 0, this);
     } catch (IOException e) {
       /*Load background image from default design*/
@@ -43,9 +49,5 @@ public class BoardGame2D extends JPanel {
     }
     gameGrid.paintComponent(g);
   }
-
-  void start() {
-    
-  }
-
+  
 }

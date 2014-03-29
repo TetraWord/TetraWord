@@ -36,7 +36,6 @@ public class CurrentShape extends Shape {
   }
 
   void tryMove(int newX, int newY) {
-    System.out.println(newX);
     if( newX >= 0 && newX < 10 ){
       curX = newX;
     }

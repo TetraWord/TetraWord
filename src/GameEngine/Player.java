@@ -8,7 +8,7 @@ public class Player {
   private Shape shapeStocked;
 	
 	public Player( int nb ){
-    boardGame = new BoardGame();
+    boardGame = new BoardGame(nb);
     score = 0;
     numLinesRemoved = 0;
 		number = nb;

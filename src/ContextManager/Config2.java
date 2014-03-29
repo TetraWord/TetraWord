@@ -2,6 +2,7 @@
 package ContextManager;
 
 import GameEngine.Player;
+import GraphicEngine.GraphicEngine;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
@@ -37,5 +38,13 @@ public class Config2 extends KeyAdapter {
         System.out.println("Right pressed");
         break;
 		}
+    
+    repaint();
+  }
+  
+  private void repaint(){
+    GraphicEngine g = GraphicEngine.getInstance();
+    g.renderFrame();
+    
   }
 }

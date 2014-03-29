@@ -3,6 +3,8 @@ package ContextManager;
 
 import GraphicEngine.*;
 import GameEngine.*;
+import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.KeyAdapter;
 
 /*
@@ -28,8 +30,12 @@ public class ContextManager {
   }
   
   public KeyAdapter getPlayerListener(int index){
-    if(index == 1) return player1Listener;
-    if(index == 2) return player2Listener;
+    if(index == 0){
+      return player1Listener;
+    }
+    if(index == 1){
+      return player2Listener;
+    }
     return null;
   }
   
@@ -53,28 +59,37 @@ public class ContextManager {
   }
   
   public void definePlayersGame(int numPlayer){
-    
     //Graphic
     Window w = graphicEngine.getWindow();
+    w.clear();
+    w.setLocationRelativeTo(null);
+    
+    if(numPlayer > 1){
+      Dimension size = w.getSize();
+      size.width *= 2;
+      w.setSize(size);
+      w.setLayout(new GridLayout(1,2));
+    }
     
     for(int i = 0; i < numPlayer; ++i){
       gameEngine.addNewPlayer();
-    } 
+    }
+    
     Player[] players = gameEngine.getPlayers();
     for(int i = 0; i < numPlayer; ++i ){
       if(i == 0){
         player1Listener = new Config1(players[i]);
-        w.defineNewBoardGame(players[i].getBoardGame());
-        w.repaint();
       }
       if(i == 1){
         player2Listener = new Config2(players[i]);
       }
+      w.defineNewBoardGame(players[i].getBoardGame());
+ 
       Thread t = new RunPlayer(players[i]);
       t.start();
     }
     
-    
+    w.repaint();
     
   }
 }

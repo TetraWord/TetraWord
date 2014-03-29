@@ -127,8 +127,6 @@ public final class ShapesStock {
 				}
 				count++;
 				
-				//faites ici votre traitement
-				
 			}
 			scanner.close();
 			for(i = 0; i < color.length; ++i){
