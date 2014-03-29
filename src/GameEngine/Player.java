@@ -1,13 +1,14 @@
 package GameEngine;
 
 public class Player {
-	private final BoardGame boardGame = new BoardGame();
+	private final BoardGame boardGame;
 	private final int number;
   private double score;
   private int numLinesRemoved;
   private Shape shapeStocked;
 	
 	public Player( int nb ){
+    boardGame = new BoardGame();
     score = 0;
     numLinesRemoved = 0;
 		number = nb;
@@ -40,5 +41,9 @@ public class Player {
   }
 
   public void right() {
+  }
+
+  public BoardGame getBoardGame() {
+    return boardGame;
   }
 }

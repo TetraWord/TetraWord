@@ -42,10 +42,6 @@ public class ContextManager {
     gameEngine.init();
   }
   
-  public void run(){
-    graphicEngine.renderFrame();
-  }
-  
   public void defineGameMenu(){
     Window w = graphicEngine.getWindow();
     w.defineGameMenu();
@@ -53,22 +49,28 @@ public class ContextManager {
   }
   
   public void definePlayersGame(int numPlayer){
-    //GameEngine
-    for(int i = 0; i < numPlayer; ++i){
-      gameEngine.addNewPlayer();     
-    } 
-    Player[] players = gameEngine.getPlayers();
-    for(int i = 0; i < numPlayer; ++i ){
-      if(i == 0) player1Listener = new Config1(players[i]);
-      if(i == 1) player2Listener = new Config2(players[i]);
-      Thread t = new Thread(new RunPlayer(players[i]));
-      t.start();
-    }
     
     //Graphic
     Window w = graphicEngine.getWindow();
     
-    w.defineNewBoardGame();
-    w.repaint();
+    for(int i = 0; i < numPlayer; ++i){
+      gameEngine.addNewPlayer();
+    } 
+    Player[] players = gameEngine.getPlayers();
+    for(int i = 0; i < numPlayer; ++i ){
+      if(i == 0){
+        player1Listener = new Config1(players[i]);
+        w.defineNewBoardGame(players[i].getBoardGame());
+        w.repaint();
+      }
+      if(i == 1){
+        player2Listener = new Config2(players[i]);
+      }
+      Thread t = new Thread(new RunPlayer(players[i]));
+      t.start();
+    }
+    
+    
+    
   }
 }

@@ -6,4 +6,8 @@ public class BoardGame {
   public BoardGame(){
     grid = new Grid();
   }
+  
+  public Grid getGrid(){
+    return grid;
+  }
 }

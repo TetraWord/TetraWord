@@ -1,7 +1,7 @@
 
 import ContextManager.ContextManager;
 
-public class Tetris extends Thread {
+public class Tetris {
 
   private final ContextManager manager = ContextManager.getInstance();
   
@@ -11,14 +11,9 @@ public class Tetris extends Thread {
     manager.init();
   }
   
-  public void run(){
-    manager.run();
-  }
-  
   public static void main( String[] args ){
     Tetris game = new Tetris();
     game.init();
-    game.start();
   }
 
 }
