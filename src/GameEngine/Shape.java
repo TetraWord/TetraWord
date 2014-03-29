@@ -3,7 +3,7 @@ package GameEngine;
 
 
 public class Shape {
-  
+
   public enum ShapeEnum { NoShape, LShape, MirroredLShape, SShape, ZShape, LineShape, SquareShape, TShape };
   
   protected final String name;
@@ -27,6 +27,10 @@ public class Shape {
   
   public String getName() {
   	return this.name;
+  }
+  
+  public int[][] getRepresentation(){
+    return representation;
   }
 
 }

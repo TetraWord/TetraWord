@@ -7,7 +7,7 @@ public class CurrentShape extends Shape {
   
   public CurrentShape(String name, int[] color, int[][] representation) {
     super(name, color, representation);
-    curX = 5; curY = 0;
+    curX = 3; curY = 0;
     this.composition = new Brick[representation.length][representation[0].length];
     for( int i = 0; i < representation.length; ++i ){
       for( int j = 0; j < representation[i].length; ++j ){
@@ -33,5 +33,15 @@ public class CurrentShape extends Shape {
   
   public void rotateRight(){
     
+  }
+
+  void tryMove(int newX, int newY) {
+    System.out.println(newX);
+    if( newX >= 0 && newX < 10 ){
+      curX = newX;
+    }
+    if( newY <= 20){
+      curY = newY;  
+    }
   }
 }

@@ -52,8 +52,4 @@ public class Window extends JFrame {
     getContentPane().removeAll();
   }
 
-  void renderFrame() {
-    
-  }
-  
 }

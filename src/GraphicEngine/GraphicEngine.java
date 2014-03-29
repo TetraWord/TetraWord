@@ -27,7 +27,7 @@ public class GraphicEngine {
   }
 
   public void renderFrame() {
-    window.renderFrame();
+    window.repaint();
   }
 
 }

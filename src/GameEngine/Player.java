@@ -30,20 +30,31 @@ public class Player {
     return number;
   }
 
-  public void up() {
-    
-  }
-
-  public void down() {
+  public synchronized void down() {
+    CurrentShape s = getCurrentShape();
+    s.tryMove(s.getX(), s.getY() + 1);
   }
 
   public void left() {
+    CurrentShape s = getCurrentShape();
+    s.tryMove(s.getX() - 1, s.getY());
   }
 
-  public void right() {
+  public void right(){
+    CurrentShape s = getCurrentShape();
+    s.tryMove(s.getX() + 1, s.getY());
   }
 
+  public void rotate(){
+    CurrentShape s = getCurrentShape();
+    s.rotateLeft();
+  }
+  
   public BoardGame getBoardGame() {
     return boardGame;
+  }
+  
+  private CurrentShape getCurrentShape(){
+    return boardGame.getGrid().getCurrentShape();
   }
 }

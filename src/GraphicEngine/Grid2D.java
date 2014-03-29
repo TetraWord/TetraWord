@@ -1,7 +1,7 @@
 
 package GraphicEngine;
 
-import GameEngine.Shape;
+import GameEngine.CurrentShape;
 import java.awt.Graphics;
 import javax.swing.JPanel;
 
@@ -13,7 +13,7 @@ class Grid2D extends JPanel {
         this.setVisible(true);
     }
 
-    public void setShape2D(Shape s){
+    public void setShape2D(CurrentShape s){
       currentShape = new Shape2D(s);
     }
     

@@ -13,7 +13,7 @@ public class Dictionnary {
   
   HashSet dico;
   
-  public Dictionnary() throws IOException {
+  public Dictionnary() {
     dico = new HashSet();
     String file = "./media/dictionnary.txt";
     
@@ -29,7 +29,6 @@ public class Dictionnary {
       while( (line = br.readLine()) != null ){
         dico.add(line);
       }
-      System.out.println(dico.size());
       br.close();
     }catch( FileNotFoundException e ){
       System.out.println( e.getMessage() );
@@ -42,7 +41,7 @@ public class Dictionnary {
     return dico.contains(s);
   }
    
-  public static void main( String[] args ) throws IOException{
+  public static void main( String[] args ) {
     Dictionnary d = new Dictionnary();
     String s = "désolé";
     if( d.included(s) ){

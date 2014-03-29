@@ -18,7 +18,7 @@ public class Config2 extends KeyAdapter {
     switch (e.getKeyCode()) {
 			case KeyEvent.VK_Z:
         System.out.println("Up pressed");
-        p.up();
+        p.rotate();
 	      break;
 	            
 	    case KeyEvent.VK_S:

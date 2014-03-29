@@ -2,6 +2,7 @@
 package ContextManager;
 
 import GameEngine.Player;
+import GraphicEngine.GraphicEngine;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
@@ -18,7 +19,7 @@ public class Config1 extends KeyAdapter {
     switch (e.getKeyCode()) {
 			case KeyEvent.VK_UP:
         System.out.println("Up pressed");
-        p.up();
+        p.rotate();
 	      break;
 	            
 	    case KeyEvent.VK_DOWN:
@@ -36,5 +37,13 @@ public class Config1 extends KeyAdapter {
         p.right();
         break;
 		}
+    
+    repaint();
+  }
+  
+  private void repaint(){
+    GraphicEngine g = GraphicEngine.getInstance();
+    g.renderFrame();
+    
   }
 }

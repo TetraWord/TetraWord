@@ -42,6 +42,10 @@ public class ContextManager {
     gameEngine.init();
   }
   
+  public void update(){
+    graphicEngine.renderFrame();
+  }
+  
   public void defineGameMenu(){
     Window w = graphicEngine.getWindow();
     w.defineGameMenu();
@@ -66,7 +70,7 @@ public class ContextManager {
       if(i == 1){
         player2Listener = new Config2(players[i]);
       }
-      Thread t = new Thread(new RunPlayer(players[i]));
+      Thread t = new RunPlayer(players[i]);
       t.start();
     }
     
