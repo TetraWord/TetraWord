@@ -26,13 +26,20 @@ public class BoardGame2D extends JPanel {
     this.addKeyListener(ContextManager.getInstance().getPlayerListener(0));
     this.addKeyListener(ContextManager.getInstance().getPlayerListener(1));
   
-    gameGrid = new Grid2D();
+    gameGrid = new Grid2D(model.getGrid());
     
     setShapeToGrid2D();
   }
 
   public void setShapeToGrid2D(){
     gameGrid.setShape2D(model.getGrid().getCurrentShape());
+  }
+  
+  public void update(){
+    if(model.getUpdate()){
+      model.setUpdate(false);
+      gameGrid.setShape2D(model.getGrid().getCurrentShape());
+    }
   }
   
   @Override

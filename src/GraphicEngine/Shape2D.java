@@ -1,6 +1,7 @@
 package GraphicEngine;
 
 import GameEngine.CurrentShape;
+import GameEngine.Shape;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -21,7 +22,26 @@ class Shape2D {
 
 	public void paintComponent(Graphics g) {
 		/*Drawing of a brick whith the color of the model */
-		try {
+      BufferedImage monImage = getBrickImage(g, model);
+
+      //Draw the shape
+			//70 en x et 135 en y pour le coin haut gauche
+			int top = 135;
+			int left = 70;
+			int sizeBrick = 35;
+			int[][] representation = model.getRepresentation();
+			for (int i = 0; i < 4; ++i) {
+				for (int j = 0; j < 4; ++j) {
+					if (representation[i][j] > 0) {
+						g.drawImage(monImage, (j + model.getX()) * sizeBrick + left, (i + model.getY()) * sizeBrick + top, null);
+					}
+				}
+			}
+		
+	}
+  
+  public BufferedImage getBrickImage (Graphics g, Shape model){
+    try {
 			BufferedImage monImage = ImageIO.read(new File("media/Design/paper/brick.png"));
 			WritableRaster trame = monImage.getRaster();
 			ColorModel color = monImage.getColorModel();
@@ -37,23 +57,15 @@ class Shape2D {
 					Object couleur = color.getDataElements(rgb, null);
 					trame.setDataElements(i, j, couleur);
 				}
-			}
-
-      //Draw the shape
-			//70 en x et 135 en y pour le coin haut gauche
-			int top = 135;
-			int left = 70;
-			int sizeBrick = 35;
-			int[][] representation = model.getRepresentation();
-			for (int i = 0; i < 4; ++i) {
-				for (int j = 0; j < 4; ++j) {
-					if (representation[i][j] > 0) {
-						g.drawImage(monImage, (j + model.getX()) * sizeBrick + left, (i + model.getY()) * sizeBrick + top, null);
-					}
-				}
-			}
-		} catch (IOException e) {
+			}    
+      return monImage;
+    } catch (IOException e) {
 			e.printStackTrace();
+      return null;
 		}
-	}
+  }
+
+  Shape getModel() {
+    return model;
+  }
 }

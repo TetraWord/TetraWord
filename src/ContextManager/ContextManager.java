@@ -51,7 +51,7 @@ public class ContextManager {
   public void update(){
     graphicEngine.renderFrame();
   }
-  
+ 
   public void defineGameMenu(){
     Window w = graphicEngine.getWindow();
     w.defineGameMenu();

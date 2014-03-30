@@ -3,6 +3,7 @@ package GameEngine;
 public class BoardGame {
 	private final Grid grid;
   private final int nb;
+  private boolean doUpdate = false;
   
   public BoardGame(int nb){
     this.nb = nb;
@@ -15,5 +16,13 @@ public class BoardGame {
   
   public int getNb(){
     return nb;
+  }
+
+  public boolean getUpdate() {
+    return doUpdate;
+  }
+
+  public void setUpdate(boolean b) {
+    doUpdate = b;
   }
 }
