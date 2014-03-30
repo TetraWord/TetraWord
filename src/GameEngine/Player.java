@@ -36,18 +36,23 @@ public class Player {
     s.tryMove(s.getX(), s.getY()+1);
     //Si on ne peut pas faire descendre la pièce plus bas, on l'inscrit dans la Grid
     if ( tmpY == s.getY() ) {
+              
     	Grid g = boardGame.getGrid();
     	int[][] tmp = g.getTGrid(); 
     	
     	for(int i=0; i<4; ++i) {
     		for (int j=0; j<4; ++j) {
-    			tmp[s.getX()-3 + i][s.getY()-3 + j] = s.representation[i][j];
+          int value = s.representation[j][i];
+          if( value > 0 ){
+            tmp[s.getX() + i ][s.getY() + j] = s.representation[j][i];
+          }
     		}
     	}
     	
     	g.setTGrid(tmp);
     	Shape shape = getRandomShape();
     	setCurrentShape(shape);
+      boardGame.setUpdate(true);
     	for(int i=9; i>=0; --i) {
     		for (int j=19; j>=0; --j) {
     			System.out.print(g.getTGrid()[i][j]);

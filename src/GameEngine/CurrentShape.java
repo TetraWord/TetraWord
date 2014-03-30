@@ -7,7 +7,7 @@ public class CurrentShape extends Shape {
   
   public CurrentShape(String name, int[] color, int[][] representation) {
     super(name, color, representation);
-    curX = 3; curY = 0;
+    curX = 3; curY = -1;
     this.composition = new Brick[representation.length][representation[0].length];
     for( int i = 0; i < representation.length; ++i ){
       for( int j = 0; j < representation[i].length; ++j ){
@@ -45,7 +45,7 @@ public class CurrentShape extends Shape {
     }
   }
   
-  private int getMaxX(int[][] matrix){
+  public int getMaxX(int[][] matrix){
     boolean colIsEmpty = true;
     int n = matrix.length;
     
@@ -62,7 +62,7 @@ public class CurrentShape extends Shape {
     return 0;
   }
   
-  private int getMaxY(int[][] matrix){
+  public int getMaxY(int[][] matrix){
     boolean rowIsEmpty = true;
     int n = matrix.length;
     
@@ -126,7 +126,7 @@ public class CurrentShape extends Shape {
     return tmp2;
   }
 
-  void tryMove(int newX, int newY) {
+  public void tryMove(int newX, int newY) {
     if( newX >= 0 && newX <= ( 10 - getMaxX(representation) ) ){
       curX = newX;
     }

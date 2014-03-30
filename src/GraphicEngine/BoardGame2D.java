@@ -27,10 +27,9 @@ public class BoardGame2D extends JPanel {
 		this.setSize(650, 889);
 		Properties prop = new Properties();
 		InputStream input = null;
-		
+
 		/*Get background image from file myConf*/
 		try {
-
 			input = new FileInputStream("conf/myConf.properties");
 
 			// load a properties file
@@ -51,11 +50,12 @@ public class BoardGame2D extends JPanel {
 				}
 			}
 		}
+
 		/*Pas propre mais fonctionne*/
 		this.addKeyListener(ContextManager.getInstance().getPlayerListener(0));
 		this.addKeyListener(ContextManager.getInstance().getPlayerListener(1));
 
-		gameGrid = new Grid2D();
+		gameGrid = new Grid2D(model.getGrid());
 
 		setShapeToGrid2D();
 	}
@@ -80,4 +80,10 @@ public class BoardGame2D extends JPanel {
 		gameGrid.paintComponent(g);
 	}
 
+	public void update() {
+		if (model.getUpdate()) {
+			model.setUpdate(false);
+			gameGrid.setShape2D(model.getGrid().getCurrentShape());
+		}
+	}
 }
