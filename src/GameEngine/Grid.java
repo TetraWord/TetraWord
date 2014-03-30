@@ -2,7 +2,7 @@ package GameEngine;
 
 public class Grid {
   private final static ShapesStock ss = ShapesStock.getInstance();
-  private final int[][] tGrid = new int[10][20];
+  private int[][] tGrid = new int[10][20];
   private CurrentShape currentShape;
   
   public Grid(){
@@ -12,6 +12,18 @@ public class Grid {
     for( int i = 0; i < 10; ++i ){
       for( int j = 0; j < 20; ++j ){
         tGrid[i][j] = -1;
+      }
+    }
+  }
+  
+  public int[][] getTGrid(){
+  	return tGrid;
+  }
+  
+  public void setTGrid(int[][] tg) {
+  	for( int i = 0; i < 10; ++i ){
+      for( int j = 0; j < 20; ++j ){
+        tGrid[i][j] = tg[i][j];
       }
     }
   }

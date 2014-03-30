@@ -32,7 +32,19 @@ public class Player {
 
   public synchronized void down() {
     CurrentShape s = getCurrentShape();
-    s.tryMove(s.getX(), s.getY() + 1);
+    
+    if ( !s.tryMove(s.getX(), s.getY()+1) ) {
+    	Grid g = boardGame.getGrid();
+    	int[][] tmp = g.getTGrid(); 
+    	
+    	for(int i=0; i<4; ++i) {
+    		for (int j=0; j<4; ++j) {
+    			tmp[s.getX() + i][s.getY() + j] = s.representation[i][j];
+    		}
+    	}
+    	
+    	g.setTGrid(tmp);
+    }
   }
 
   public void left() {
