@@ -1,8 +1,10 @@
 
 package GraphicEngine;
 
+import GameEngine.DesignMenu;
 import static GraphicEngine.GraphicEngine.WINDOW_WIDTH;
 import java.awt.Graphics;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class Menu2D extends JPanel {
@@ -57,7 +59,7 @@ public class Menu2D extends JPanel {
   }
   
   public void defineGameMenu(){
-    setButton2D(2);
+    setButton2D(3);
     int sx = 150, sy = 60;
     int x = WINDOW_WIDTH/2 - sx/2;
     int y = 50;
@@ -66,7 +68,38 @@ public class Menu2D extends JPanel {
     y = y + step_y;
     this.add(new Button2D("Multiplayer game", x, y, sx, sy));
     y = y + step_y;
-    this.add(new Button2D("Exit", x, y, sx, sy));
+    this.add(new Button2D("Previous", x, y, sx, sy));
+  }
+  
+  public void defineOptionGameMenu(){
+    setButton2D(3);
+    int sx = 150, sy = 60;
+    int x = WINDOW_WIDTH/2 - sx/2;
+    int y = 50;
+    int step_y = y+sy;
+    this.add(new Button2D("Design & Theme", x, y, sx, sy));
+    y = y + step_y;
+    this.add(new Button2D("Difficulty", x, y, sx, sy));
+    y = y + step_y;
+    this.add(new Button2D("Previous", x, y, sx, sy));
+  }
+  
+  public void defineDesignMenu(){
+    int sx = 150, sy = 60;
+    int x = WINDOW_WIDTH/2 - sx;
+    int y = 50;
+    int step_y = y+sy;
+    int step_x = y+sx;
+		
+		DesignMenu dm = new DesignMenu();
+		
+		JLabel label = new JLabel("Choose a theme");
+    label.setBounds(x, y, sx, sy);
+		this.add(label);
+		
+		x = x +step_x;
+		ComboBox combo = new ComboBox("Choose theme", dm.getNames(), x, y, sx, sy);
+		this.add(combo);
   }
   
   @Override

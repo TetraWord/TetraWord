@@ -29,10 +29,21 @@ public class MenuEventListener implements ActionListener {
         break;
           
       case "Options":
+				c.defineOptionGameMenu();
         break;
+				
+			case "Design & Theme":
+				c.defineDesignMenu();
+				break;
+				
+			case "Difficulty":
+				break;
          
       case "Exit":
         System.exit(0);
+        break;
+         
+      case "Previous":
         break;
           
       default:

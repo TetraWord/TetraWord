@@ -58,6 +58,18 @@ public class ContextManager {
     w.repaint();
   }
   
+  public void defineOptionGameMenu(){
+    Window w = graphicEngine.getWindow();
+    w.defineOptionGameMenu();
+    w.repaint();
+  }
+  
+  public void defineDesignMenu(){
+    Window w = graphicEngine.getWindow();
+    w.defineDesignMenu();
+    w.repaint();
+  }
+  
   public void definePlayersGame(int numPlayer){
     //Graphic
     Window w = graphicEngine.getWindow();

@@ -40,6 +40,20 @@ public class Window extends JFrame {
     this.setVisible(true);
   }
   
+  public void defineOptionGameMenu(){
+    Menu2D menu = new Menu2D();
+    menu.defineOptionGameMenu();
+    this.setContentPane(menu);
+    this.setVisible(true);
+  }
+  
+  public void defineDesignMenu(){
+    Menu2D menu = new Menu2D();
+    menu.defineDesignMenu();
+    this.setContentPane(menu);
+    this.setVisible(true);
+  }
+  
   public void defineNewBoardGame(BoardGame model){
     Container pan = getContentPane();
     BoardGame2D boardGame = new BoardGame2D(model);
