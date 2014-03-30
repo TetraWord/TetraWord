@@ -28,6 +28,10 @@ public class Grid {
     }
   }
   
+  public Shape getRandomShape(){
+  	return ss.getRandomShape();
+  }
+  
   public CurrentShape getCurrentShape(){
     return currentShape;
   }

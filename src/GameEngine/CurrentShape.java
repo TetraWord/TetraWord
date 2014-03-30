@@ -126,17 +126,12 @@ public class CurrentShape extends Shape {
     return tmp2;
   }
 
-  boolean tryMove(int newX, int newY) {
-  	boolean res = false;
+  void tryMove(int newX, int newY) {
     if( newX >= 0 && newX <= ( 10 - getMaxX(representation) ) ){
       curX = newX;
-      res = true;
     }
     if( newY < ( 20 - getMaxY(representation) ) ){
       curY = newY;
-      res = true;
     }
-    
-    return res;
   }
 }

@@ -32,18 +32,27 @@ public class Player {
 
   public synchronized void down() {
     CurrentShape s = getCurrentShape();
-    
-    if ( !s.tryMove(s.getX(), s.getY()+1) ) {
+    int tmpY = s.getY();
+    s.tryMove(s.getX(), s.getY()+1);
+    //Si on ne peut pas faire descendre la pièce plus bas, on l'inscrit dans la Grid
+    if ( tmpY == s.getY() ) {
     	Grid g = boardGame.getGrid();
     	int[][] tmp = g.getTGrid(); 
     	
     	for(int i=0; i<4; ++i) {
     		for (int j=0; j<4; ++j) {
-    			tmp[s.getX() + i][s.getY() + j] = s.representation[i][j];
+    			tmp[s.getX()-3 + i][s.getY()-3 + j] = s.representation[i][j];
     		}
     	}
     	
     	g.setTGrid(tmp);
+    	Shape shape = getRandomShape();
+    	setCurrentShape(shape);
+    	for(int i=9; i>=0; --i) {
+    		for (int j=19; j>=0; --j) {
+    			System.out.print(g.getTGrid()[i][j]);
+    		}System.out.println();
+    	}
     }
   }
 
@@ -68,5 +77,13 @@ public class Player {
   
   private CurrentShape getCurrentShape(){
     return boardGame.getGrid().getCurrentShape();
+  }
+  
+  private void setCurrentShape(Shape s) {
+  	boardGame.getGrid().launchNextShape(s);
+  }
+  
+  private Shape getRandomShape(){
+  	return boardGame.getGrid().getRandomShape();
   }
 }
