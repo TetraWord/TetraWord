@@ -8,7 +8,7 @@ public class Shape {
   
   protected final String name;
   protected final int[] color;
-  protected final int[][] representation;
+  protected int[][] representation;
   
   public Shape(String name, int[] color, int[][] representation){
     this.name = name;

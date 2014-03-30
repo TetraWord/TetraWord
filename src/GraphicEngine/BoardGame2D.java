@@ -2,9 +2,6 @@ package GraphicEngine;
 
 import ContextManager.ContextManager;
 import GameEngine.BoardGame;
-import static GraphicEngine.GraphicEngine.WINDOW_HEIGHT;
-import static GraphicEngine.GraphicEngine.WINDOW_WIDTH;
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.io.File;
@@ -24,7 +21,10 @@ public class BoardGame2D extends JPanel {
   public BoardGame2D(BoardGame model) {
     this.model = model;
     this.setSize(650,889);
-    this.addKeyListener(ContextManager.getInstance().getPlayerListener(model.getNb()));
+    
+    /*Pas propre mais fonctionne*/
+    this.addKeyListener(ContextManager.getInstance().getPlayerListener(0));
+    this.addKeyListener(ContextManager.getInstance().getPlayerListener(1));
   
     gameGrid = new Grid2D();
     

@@ -28,18 +28,109 @@ public class CurrentShape extends Shape {
   public int getY(){ return curY; }
  
   public void rotateLeft(){
+    int[][] repTmp = new int[4][4];
+    for(int i = 0; i < 4; ++i){
+      for(int j = 0; j < 4; ++j){
+        repTmp[i][j] = representation[3-j][i];
+      }
+    }
     
+    representation = replaceToTopLeftCorner(repTmp);
+    
+    while(curX >( 10 - getMaxX(representation)) ){
+      --curX;
+    }
+    while(curY >=( 20 - getMaxY(representation)) ){
+      --curY;
+    }
   }
   
-  public void rotateRight(){
+  private int getMaxX(int[][] matrix){
+    boolean colIsEmpty = true;
+    int n = matrix.length;
     
+    for(int i = (n - 1); i >= 0; --i){
+      for(int j = 0; j < n; ++j ){
+        if(matrix[j][i] == 1){
+          colIsEmpty = false;
+        }
+      }
+      if( !colIsEmpty ){
+        return i;
+      }
+    }
+    return 0;
+  }
+  
+  private int getMaxY(int[][] matrix){
+    boolean rowIsEmpty = true;
+    int n = matrix.length;
+    
+    for(int i = (n - 1); i >= 0; --i){
+      for(int j = 0; j < n; ++j ){
+        if(matrix[i][j] == 1){
+          rowIsEmpty = false;
+        }
+      }
+      if( !rowIsEmpty ){
+        return i;
+      }
+    }
+    return 0;
+  }
+  
+  private int[][] replaceToTopLeftCorner(int[][] matrix){
+    boolean lineIsEmpty = true;
+    boolean colIsEmpty = true;
+    int firstLineNoEmpty = -1;
+    int firstColNoEmpty = -1;
+    
+    for(int i = 0; i < matrix.length; ++i){
+      for(int j = 0; j < matrix[i].length; ++j){
+        if( matrix[i][j] == 1 ){
+          lineIsEmpty = false;
+        }
+        if( matrix[j][i] == 1){
+          colIsEmpty = false;
+        }
+      }
+      if( !lineIsEmpty && firstLineNoEmpty == -1){
+        firstLineNoEmpty = i;
+      }else if( !colIsEmpty && firstColNoEmpty == -1){
+        firstColNoEmpty = i;
+      }
+    }
+    
+    int prevValue = firstColNoEmpty;
+    int [][] tmp = new int[matrix.length][matrix[0].length];
+    for(int i = 0; i < matrix.length; ++i){
+      if(firstLineNoEmpty == matrix.length){
+        firstLineNoEmpty = 0;
+      }
+      tmp[i] = matrix[firstLineNoEmpty];
+      ++firstLineNoEmpty;
+    }
+    
+    int[][] tmp2 = new int[tmp.length][tmp[0].length];
+    for(int i = 0; i < tmp.length; ++i){
+      for(int j = 0; j < tmp[i].length; ++j){
+        if(firstColNoEmpty == tmp[i].length){
+          firstColNoEmpty = 0;
+        }
+        tmp2[i][j] = tmp[i][firstColNoEmpty];
+        ++firstColNoEmpty;
+      }
+      firstColNoEmpty = prevValue;
+    }
+    
+    return tmp2;
   }
 
   void tryMove(int newX, int newY) {
-    if( newX >= 0 && newX < 10 ){
+    if( newX >= 0 && newX <= ( 10 - getMaxX(representation) ) ){
       curX = newX;
     }
-    if( newY <= 20){
+    if( newY < ( 20 - getMaxY(representation) ) ){
       curY = newY;  
     }
   }
