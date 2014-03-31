@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class Grid implements Observable {
 
   private final static ShapesStock ss = ShapesStock.getInstance();
-  private final int[][] tGrid = new int[13][23];
+  private final int[][] tGrid = new int[23][13];
   private CurrentShape currentShape;
   private ArrayList<Observer> listObserver = new ArrayList<>();
 
@@ -44,6 +44,48 @@ public class Grid implements Observable {
 
   public void launchNextShape(Shape s) {
     currentShape = new CurrentShape(s);
+  }
+  
+  public int getFirstFullLine(){
+    boolean isLineFull = true;
+    for(int i = 0; i < 21 ; ++i ){
+      for(int j = 0; j < 11; ++j){
+        if(tGrid[i][j] < 0){
+          isLineFull = false;
+        }
+      }
+      if(isLineFull){
+        return i;
+      }
+    }
+    
+    return -1;
+  }
+  
+  public void removedFullLines(){
+    /* Be carefull because of the number of the line */
+    /* Be carefull you need the anagram mode later */
+    int numFullLines = 0;
+    boolean isLineFull = true;
+    for(int i = 19; i > 15; --i ){
+      for(int j = 0; j < 11; ++j){
+        if(tGrid[i][j] < 0){
+          isLineFull = false;
+        }
+      }
+      if(isLineFull){
+        ++numFullLines;
+      }
+      isLineFull = true;
+    }
+    
+    for(int i = 19; i > numFullLines; --i){
+      for(int j = 0; j < 11; ++j){
+        tGrid[i][j] = tGrid[i-numFullLines][j];
+      } 
+    }
+    
+    System.out.println("nombre de full line : "+numFullLines);
   }
 
   @Override

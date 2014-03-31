@@ -64,7 +64,7 @@ public class BoardGame2D extends JPanel implements Observer {
     }
   }
 
-  public void setShapeToGrid2D() {
+  private void setShapeToGrid2D() {
     gameGrid.setShape2D(model.getGrid().getCurrentShape());
   }
 

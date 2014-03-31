@@ -42,22 +42,23 @@ public class Player {
     	
     	for(int i=0; i<4; ++i) {
     		for (int j=0; j<4; ++j) {
-          int value = s.representation[j][i];
+          int value = s.representation[i][j];
           if( value > 0 ){
-            tmp[s.getX() + i ][s.getY() + j] = s.representation[j][i];
+            tmp[s.getY() + i ][s.getX() + j] = s.representation[i][j];
           }
     		}
     	}
     	
     	g.setTGrid(tmp);
+      g.removedFullLines();
     	Shape shape = getRandomShape();
     	setCurrentShape(shape);
       boardGame.setGridUpdate();
-    	for(int i=9; i>=0; --i) {
-    		for (int j=19; j>=0; --j) {
+    	/*for(int i=0; i<20; ++i) {
+    		for (int j=0; j<10; ++j) {
     			System.out.print(g.getTGrid()[i][j]);
     		}System.out.println();
-    	}
+    	}*/
     }
   }
 

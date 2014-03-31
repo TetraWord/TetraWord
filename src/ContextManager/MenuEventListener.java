@@ -50,6 +50,8 @@ public class MenuEventListener implements ActionListener {
         System.out.println("No implemented yet");
         break;
     }
+    
+    c.update();
   }
   
 }

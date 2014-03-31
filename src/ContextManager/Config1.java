@@ -23,7 +23,7 @@ public class Config1 extends KeyAdapter {
 	      break;
 	            
 	    case KeyEvent.VK_DOWN:
-        System.out.println("Down pressed");
+        //System.out.println("Down pressed");
         p.down();
         break;
       
