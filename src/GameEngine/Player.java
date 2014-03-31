@@ -54,8 +54,10 @@ public class Player {
     	
     	g.setTGrid(tmp);
       g.removedFullLines();
-    	Shape shape = getRandomShape();
-    	setCurrentShape(shape);
+      if( !g.isComplete()) {
+	    	Shape shape = getRandomShape();
+	    	setCurrentShape(shape);
+      }
       boardGame.setGridUpdate();
     	/*for(int i=0; i<20; ++i) {
     		for (int j=0; j<10; ++j) {
