@@ -8,20 +8,51 @@ import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 import java.awt.image.WritableRaster;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
 import javax.imageio.ImageIO;
 
 //Draw the currentShape
 class Shape2D {
 
 	private CurrentShape model;
+	private String brick;
 
 	public Shape2D(CurrentShape model) {
 		this.model = model;
+		
+		Properties prop = new Properties();
+		InputStream input = null;
+		/*Get brick image from file myConf*/
+		try {
+
+			input = new FileInputStream("conf/myConf.properties");
+
+			// load a properties file
+			prop.load(input);
+
+			brick = prop.getProperty("brick");
+
+		} catch (IOException ex) {
+			/*Default background*/
+			brick = "media/Design/paper/brick.jpg";
+			ex.printStackTrace();
+		} finally {
+			if (input != null) {
+				try {
+					input.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 
 	public void paintComponent(Graphics g) {
 		/*Drawing of a brick whith the color of the model */
+
       BufferedImage monImage = getBrickImage(g, model);
 
       //Draw the shape
@@ -42,7 +73,7 @@ class Shape2D {
   
   public BufferedImage getBrickImage (Graphics g, Shape model){
     try {
-			BufferedImage monImage = ImageIO.read(new File("media/Design/paper/brick.png"));
+			BufferedImage monImage = ImageIO.read(new File(brick));
 			WritableRaster trame = monImage.getRaster();
 			ColorModel color = monImage.getColorModel();
 
