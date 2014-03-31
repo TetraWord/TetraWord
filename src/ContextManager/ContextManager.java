@@ -18,6 +18,7 @@ public class ContextManager {
 	private final GraphicEngine graphicEngine = GraphicEngine.getInstance();
   private static final ContextManager INSTANCE = new ContextManager();
   private static final MenuEventListener menuListener = new MenuEventListener();
+  private static final ItemActionListener itemListener = new ItemActionListener();
   private static Config1 player1Listener = null;
   private static Config2 player2Listener = null;
   
@@ -41,6 +42,10 @@ public class ContextManager {
   
   public static MenuEventListener getMenuListener(){
     return menuListener;
+  }
+  
+  public static ItemActionListener getItemListener(){
+    return itemListener;
   }
    
   public void init(){
@@ -69,6 +74,14 @@ public class ContextManager {
     w.defineDesignMenu();
     w.repaint();
   }
+
+	void reloadApercuBackground(String item) {
+		
+		System.out.println(item);
+    Window w = graphicEngine.getWindow();
+    w.reloadApercuBackground(item);
+    w.repaint();
+	}
   
   public void definePlayersGame(int numPlayer){
     //Graphic

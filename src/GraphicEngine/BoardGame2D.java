@@ -30,6 +30,7 @@ public class BoardGame2D extends JPanel {
 
 		/*Get background image from file myConf*/
 		try {
+
 			input = new FileInputStream("conf/myConf.properties");
 
 			// load a properties file
@@ -50,7 +51,6 @@ public class BoardGame2D extends JPanel {
 				}
 			}
 		}
-
 		/*Pas propre mais fonctionne*/
 		this.addKeyListener(ContextManager.getInstance().getPlayerListener(0));
 		this.addKeyListener(ContextManager.getInstance().getPlayerListener(1));

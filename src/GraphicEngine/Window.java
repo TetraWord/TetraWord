@@ -50,8 +50,7 @@ public class Window extends JFrame {
   }
   
   public void defineDesignMenu(){
-    Menu2D menu = new Menu2D();
-    menu.defineDesignMenu();
+    DesignMenu2D menu = new DesignMenu2D();
     this.setContentPane(menu);
     this.setVisible(true);
   }
@@ -65,6 +64,13 @@ public class Window extends JFrame {
     this.setVisible(true);
     boardGame.requestFocusInWindow();
   }
+
+	public void reloadApercuBackground(String item) {
+		Container pan = getContentPane();
+		if(pan instanceof DesignMenu2D){
+			((DesignMenu2D)pan).reloadApercuBackground(item);
+		}
+	}
 
   public void clear() {
     getContentPane().removeAll();
