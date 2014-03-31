@@ -33,7 +33,10 @@ public class Player {
   public synchronized void down() {
     CurrentShape s = getCurrentShape();
     int tmpY = s.getY();
-    s.tryMove(s.getX(), s.getY()+1);
+    //On test s'il y a collision avec un élément déjà présent dans la grid
+    if( !s.tryCollision(boardGame.getGrid().getTGrid()) ){
+    	s.tryMove(s.getX(), s.getY()+1);
+    }
     //Si on ne peut pas faire descendre la pièce plus bas, on l'inscrit dans la Grid
     if ( tmpY == s.getY() ) {
               
