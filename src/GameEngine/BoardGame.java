@@ -9,9 +9,13 @@ public class BoardGame implements Observable {
   private final int nb;
   private ArrayList<Observer> listObserver = new ArrayList<>();
   
-  public BoardGame(int nb){
+  public BoardGame(int nb, Shape s){
     this.nb = nb;
-    grid = new Grid();
+    grid = new Grid(s);
+  }
+  
+  public void setInGrid(CurrentShape s){
+    grid.setIn(s);
   }
   
   public Grid getGrid(){
@@ -37,10 +41,6 @@ public class BoardGame implements Observable {
   @Override
   public void delObservateur() {
     listObserver = new ArrayList<>();
-  }
-
-  void setGridUpdate() {
-    grid.updateObservateur();
   }
 
 }

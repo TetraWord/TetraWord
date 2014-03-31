@@ -1,3 +1,4 @@
+
 package GameEngine;
 
 public class Player {
@@ -7,8 +8,8 @@ public class Player {
   private int numLinesRemoved;
   private Shape shapeStocked;
 	
-	public Player( int nb ){
-    boardGame = new BoardGame(nb);
+	public Player( int nb, Shape s ){
+    boardGame = new BoardGame(nb, s);
     score = 0;
     numLinesRemoved = 0;
 		number = nb;
@@ -36,29 +37,8 @@ public class Player {
     s.tryMove(s.getX(), s.getY()+1);
     //Si on ne peut pas faire descendre la pièce plus bas, on l'inscrit dans la Grid
     if ( tmpY == s.getY() ) {
-              
     	Grid g = boardGame.getGrid();
-    	int[][] tmp = g.getTGrid(); 
-    	
-    	for(int i=0; i<4; ++i) {
-    		for (int j=0; j<4; ++j) {
-          int value = s.representation[i][j];
-          if( value > 0 ){
-            tmp[s.getY() + i ][s.getX() + j] = s.representation[i][j];
-          }
-    		}
-    	}
-    	
-    	g.setTGrid(tmp);
-      g.removedFullLines();
-    	Shape shape = getRandomShape();
-    	setCurrentShape(shape);
-      boardGame.setGridUpdate();
-    	/*for(int i=0; i<20; ++i) {
-    		for (int j=0; j<10; ++j) {
-    			System.out.print(g.getTGrid()[i][j]);
-    		}System.out.println();
-    	}*/
+      boardGame.setInGrid(s);
     }
   }
 
@@ -83,13 +63,5 @@ public class Player {
   
   private CurrentShape getCurrentShape(){
     return boardGame.getGrid().getCurrentShape();
-  }
-  
-  private void setCurrentShape(Shape s) {
-  	boardGame.getGrid().launchNextShape(s);
-  }
-  
-  private Shape getRandomShape(){
-  	return boardGame.getGrid().getRandomShape();
   }
 }

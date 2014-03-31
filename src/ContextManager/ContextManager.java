@@ -80,8 +80,9 @@ public class ContextManager {
       w.setLayout(new GridLayout(1,2));
     }
     
+    Shape s = ShapesStock.getInstance().getRandomShape();
     for(int i = 0; i < numPlayer; ++i){
-      gameEngine.addNewPlayer();
+      gameEngine.addNewPlayer(s);
     }
     
     Player[] players = gameEngine.getPlayers();
