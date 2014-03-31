@@ -1,15 +1,7 @@
 package GraphicEngine;
 
-import GameEngine.DesignMenu;
 import static GraphicEngine.GraphicEngine.WINDOW_WIDTH;
 import java.awt.Graphics;
-import java.awt.Image;
-import java.io.File;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class Menu2D extends JPanel {
