@@ -1,7 +1,6 @@
 package GraphicEngine;
 
 import GameEngine.BoardGame;
-import GameEngine.CurrentShape;
 import static GraphicEngine.GraphicEngine.WINDOW_HEIGHT;
 import static GraphicEngine.GraphicEngine.WINDOW_WIDTH;
 import java.awt.Container;
@@ -16,7 +15,6 @@ public class Window extends JFrame {
   
   public static final Dimension size = new Dimension(WINDOW_WIDTH,WINDOW_HEIGHT);
   public static final String title = "TetraWord";
-  public final BoardGame2D[] boardGames = new BoardGame2D[2];
 
   public Window(){
     
@@ -45,7 +43,6 @@ public class Window extends JFrame {
   public void defineNewBoardGame(BoardGame model){
     Container pan = getContentPane();
     BoardGame2D boardGame = new BoardGame2D(model);
-    boardGames[model.getNb()] = boardGame;
     pan.add( boardGame );
 
     this.setVisible(true);
@@ -54,14 +51,6 @@ public class Window extends JFrame {
 
   public void clear() {
     getContentPane().removeAll();
-  }
-  
-  public void update() {
-    for(int i = 0; i < boardGames.length; ++i){
-      if(boardGames[i] != null){
-        boardGames[i].update();
-      }
-    }
   }
 
 }

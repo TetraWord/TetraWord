@@ -52,7 +52,7 @@ public class Player {
     	g.setTGrid(tmp);
     	Shape shape = getRandomShape();
     	setCurrentShape(shape);
-      boardGame.setUpdate(true);
+      boardGame.setGridUpdate();
     	for(int i=9; i>=0; --i) {
     		for (int j=19; j>=0; --j) {
     			System.out.print(g.getTGrid()[i][j]);

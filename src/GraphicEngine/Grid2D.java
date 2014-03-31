@@ -2,17 +2,20 @@ package GraphicEngine;
 
 import GameEngine.CurrentShape;
 import GameEngine.Grid;
+import Pattern.Observable;
+import Pattern.Observer;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import javax.swing.JPanel;
 
-class Grid2D extends JPanel {
+class Grid2D extends JPanel implements Observer{
 
   private Grid model = null;
   private Shape2D currentShape = null;
 
   public Grid2D(Grid model) {
     this.model = model;
+    model.addObservateur(this);
     this.setVisible(true);
   }
 
@@ -22,7 +25,7 @@ class Grid2D extends JPanel {
 
   @Override
   public void paintComponent(Graphics g) {
-    //Shape draw
+    //Grid draw
     int top = 135;
     int left = 70;
     int sizeBrick = 35;
@@ -38,6 +41,13 @@ class Grid2D extends JPanel {
           g.drawImage(monImage, i * sizeBrick + left, j * sizeBrick + top, null);
         }
       }
+    }
+  }
+
+  @Override
+  public void update(Observable o, Object args) {
+    if(args instanceof CurrentShape){
+      setShape2D((CurrentShape)args);
     }
   }
 
