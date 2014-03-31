@@ -59,7 +59,6 @@ public class DesignMenu2D extends Menu2D{
 	void reloadApercuBackground(String item) {
 		String[] themes = dm.getNames();
 		for(int i = 0; i < themes.length; ++i){
-			System.out.println(themes[i]);
 			if( themes[i].equals(item) ){
 				apercuBackground = dm.getBackground(i);
 			}
