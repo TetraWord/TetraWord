@@ -94,10 +94,12 @@ public class Grid implements Observable {
   }
 
   public boolean isComplete() {
-    if (getTGrid()[0][3] == 1) {
-      System.out.println("Stop");
-      return true;
-    }
+  	for(int i=0; i<4; ++i){
+	    if (getTGrid()[0][currentShape.getX() + i] == 1) {
+	      System.out.println("Stop");
+	      return true;
+	    }
+  	}
     return false;
   }
 
