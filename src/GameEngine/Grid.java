@@ -81,6 +81,14 @@ public class Grid implements Observable {
     System.out.println("nombre de full line : " + numFullLines);
   }
 
+  public boolean isComplete() {
+    if (getTGrid()[0][3] == 1) {
+      System.out.println("Stop");
+      return true;
+    }
+    return false;
+  }
+
   @Override
   public void addObservateur(Observer obs) {
     listObserver.add(obs);
@@ -109,8 +117,10 @@ public class Grid implements Observable {
     }
 
     removedFullLines();
-    Shape shape = getRandomShape();
-    launchNextShape(shape);
+    if (!isComplete()) {
+      Shape shape = getRandomShape();
+      launchNextShape(shape);
+    }
     updateObservateur();
   }
 
