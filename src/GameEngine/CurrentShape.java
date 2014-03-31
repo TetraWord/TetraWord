@@ -135,14 +135,14 @@ public class CurrentShape extends Shape {
     }
   }
   
-  public boolean tryCollision(int[][] g){
+  public boolean tryCollision(int[][] g, int x, int y){
   	boolean res = false;
   	
   	for(int i=0; i<4; ++i) {
   		for (int j=0; j<4; ++j) {
         int value = representation[i][j];
         //On teste s'il y a déjà un élément dans la grid
-        if( value > 0 && g[curY+1 + i][curX + j] == 1){
+        if( value > 0 && g[y + i][x + j] == 1){
           return true;
         }
   		}

@@ -34,7 +34,7 @@ public class Player {
   public synchronized void down() {
     CurrentShape s = getCurrentShape();
     int tmpY = s.getY();
-    if (!s.tryCollision(boardGame.getGrid().getTGrid())) {
+    if (!s.tryCollision(boardGame.getGrid().getTGrid(), s.getX(),  s.getY()+1)) {
       s.tryMove(s.getX(), s.getY() + 1);
     }
     //Si on ne peut pas faire descendre la pièce plus bas, on l'inscrit dans la Grid
@@ -46,12 +46,16 @@ public class Player {
 
   public void left() {
     CurrentShape s = getCurrentShape();
-    s.tryMove(s.getX() - 1, s.getY());
+    if (!s.tryCollision(boardGame.getGrid().getTGrid(), s.getX()-1,  s.getY())) {
+    	s.tryMove(s.getX() - 1, s.getY());
+    }
   }
 
   public void right() {
     CurrentShape s = getCurrentShape();
-    s.tryMove(s.getX() + 1, s.getY());
+    if (!s.tryCollision(boardGame.getGrid().getTGrid(), s.getX()+1, s.getY())) {
+    	s.tryMove(s.getX() + 1, s.getY());
+    }
   }
 
   public void rotate() {
