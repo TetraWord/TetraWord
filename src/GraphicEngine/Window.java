@@ -57,6 +57,7 @@ public class Window extends JFrame {
   public void defineNewBoardGame(BoardGame model){
     Container pan = getContentPane();
     BoardGame2D boardGame = new BoardGame2D(model);
+    model.addObservateur(boardGame);
     pan.add( boardGame );
 
     this.setVisible(true);

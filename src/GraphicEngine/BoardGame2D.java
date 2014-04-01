@@ -26,7 +26,6 @@ public class BoardGame2D extends JPanel implements Observer {
 
   public BoardGame2D(BoardGame model) {
     this.model = model;
-    model.addObservateur(this);
     this.setSize(650, 889);
 
     /*Pas propre mais fonctionne*/
@@ -34,7 +33,8 @@ public class BoardGame2D extends JPanel implements Observer {
     this.addKeyListener(ContextManager.getInstance().getPlayerListener(1));
 
     gameGrid = new Grid2D(model.getGrid());
-
+    model.getGrid().addObservateur(gameGrid);
+    
     setShapeToGrid2D();
 
     Properties prop = new Properties();

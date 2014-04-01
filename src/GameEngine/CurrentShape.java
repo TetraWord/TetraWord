@@ -35,8 +35,15 @@ public class CurrentShape extends Shape {
       }
     }
     
-    representation = replaceToTopLeftCorner(repTmp);
+    repTmp = replaceToTopLeftCorner(repTmp);
     
+    //Vérifié ici s'il y a une collision
+    
+    //Sinon si yen a pas 
+    representation = repTmp;
+    
+    //Pour replacer la pièce danbs la grid si lors de la rotation elle se met à dépasser (exemple de la barre en bas)
+    //A VERIFIER SUR UN VRAI TETRIS OU ALORS A SUPPRIMER UNE FOIS LA COLLISION TESTE AU MOINS EN Y
     while(curX >( 10 - getMaxX(representation)) ){
       --curX;
     }

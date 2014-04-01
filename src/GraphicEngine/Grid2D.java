@@ -15,7 +15,6 @@ class Grid2D extends JPanel implements Observer{
 
   public Grid2D(Grid model) {
     this.model = model;
-    model.addObservateur(this);
     this.setVisible(true);
   }
 
