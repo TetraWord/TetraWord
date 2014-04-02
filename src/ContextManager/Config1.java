@@ -8,7 +8,7 @@ import java.awt.event.KeyEvent;
 
 public class Config1 extends KeyAdapter {
   
-  private Player p;
+  private final Player p;
   
   public Config1(Player p){
     this.p = p;
@@ -35,6 +35,11 @@ public class Config1 extends KeyAdapter {
       case KeyEvent.VK_RIGHT:
         System.out.println("Right pressed");
         p.right();
+        break;
+        
+      case KeyEvent.VK_NUMPAD0:
+        System.out.println("0 pressed");
+        p.stockShape();
         break;
 		}
     

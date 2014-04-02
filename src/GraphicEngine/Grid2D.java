@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 class Grid2D extends JPanel implements Observer{
 
   private Grid model = null;
-  private Shape2D currentShape = null;
+  private CurrentShape2D currentShape = null;
 
   public Grid2D(Grid model) {
     this.model = model;
@@ -19,7 +19,7 @@ class Grid2D extends JPanel implements Observer{
   }
 
   public void setShape2D(CurrentShape s) {
-    currentShape = new Shape2D(s);
+    currentShape = new CurrentShape2D(s);
   }
 
   @Override
@@ -36,7 +36,7 @@ class Grid2D extends JPanel implements Observer{
     for (int i = 0; i < t.length; ++i) {
       for (int j = 0; j < t[i].length; ++j) {
         if (t[i][j] > 0) {
-          BufferedImage monImage = currentShape.getBrickImage(g, currentShape.getModel());
+          BufferedImage monImage = currentShape.getBrickImage();
           g.drawImage(monImage, j * sizeBrick + left, i * sizeBrick + top, null);
         }
       }

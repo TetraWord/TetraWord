@@ -25,8 +25,8 @@ public class GameEngine {
     
   }
   
-  public void addNewPlayer(Shape s){
-    players[nbPlayer] = new Player(nbPlayer, s);
+  public void addNewPlayer(Shape s, Shape s2){
+    players[nbPlayer] = new Player(nbPlayer, s, s2);
     ++nbPlayer;
   }
   

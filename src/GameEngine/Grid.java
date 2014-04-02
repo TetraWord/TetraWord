@@ -3,21 +3,17 @@ package GameEngine;
 import Pattern.Observable;
 import Pattern.Observer;
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Queue;
 
 public class Grid implements Observable {
 
-  private final static ShapesStock ss = ShapesStock.getInstance();
   private final int[][] tGrid = new int[23][13];
   private CurrentShape currentShape;
   private ArrayList<Observer> listObserver = new ArrayList<>();
-  private final Queue<Shape> listNextShape = new LinkedList<>();
+  private final BoardGame myBoardGame;
 
-  public Grid(Shape s) {
-    currentShape = new CurrentShape(s);
-    listNextShape.add(s);
-
+  public Grid(BoardGame b, CurrentShape cS) {
+    this.myBoardGame = b;
+    this.currentShape = cS;
     for (int i = 0; i < tGrid.length; ++i) {
       for (int j = 0; j < tGrid[i].length; ++j) {
         tGrid[i][j] = -1;
@@ -29,26 +25,8 @@ public class Grid implements Observable {
     return tGrid;
   }
 
-  public Shape getRandomShape() {
-    return ss.getRandomShape();
-  }
-
   public CurrentShape getCurrentShape() {
     return currentShape;
-  }
-
-  public void launchNextShape() {
-    int size = listNextShape.size();
-    if(size > 0){
-      currentShape = new CurrentShape( listNextShape.poll() );
-    }else{
-      //There is no shape to launch
-      CurrentShape s = new CurrentShape(getRandomShape());
-      Player[] tabP = GameEngine.getInstance().getPlayers();
-      for(int i = 0; i < GameEngine.getInstance().getNbPlayers(); ++i){
-        tabP[i].getBoardGame().getGrid().listNextShape.add(s);
-      }
-    }
   }
 
   public int getFirstFullLine() {
@@ -132,7 +110,7 @@ public class Grid implements Observable {
 
     removedFullLines();
     if (!isComplete()) {
-      launchNextShape();
+      currentShape = myBoardGame.launchNextShape();
     }
     updateObservateur();
   }
