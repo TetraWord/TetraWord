@@ -25,8 +25,8 @@ public class GameEngine {
     
   }
   
-  public void addNewPlayer(){
-    players[nbPlayer] = new Player(nbPlayer);
+  public void addNewPlayer(Shape s){
+    players[nbPlayer] = new Player(nbPlayer, s);
     ++nbPlayer;
   }
   
@@ -44,10 +44,6 @@ public class GameEngine {
   
   public void setState(GameState newState){
     currentState = newState;
-  }
-
-  public void babarianUpdate() {
-    addNewPlayer();
   }
 
 }

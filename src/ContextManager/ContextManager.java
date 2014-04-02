@@ -79,39 +79,40 @@ public class ContextManager {
 		w.reloadApercuBackground(item);
 		w.validate();
 	}
-
-	public void definePlayersGame(int numPlayer) {
-		//Graphic
-		Window w = graphicEngine.getWindow();
-		w.clear();
-		w.setLocationRelativeTo(null);
-
-		if (numPlayer > 1) {
-			Dimension size = w.getSize();
-			size.width *= 2;
-			w.setSize(size);
-			w.setLayout(new GridLayout(1, 2));
-		}
-
-		for (int i = 0; i < numPlayer; ++i) {
-			gameEngine.addNewPlayer();
-		}
-
-		Player[] players = gameEngine.getPlayers();
-		for (int i = 0; i < numPlayer; ++i) {
-			if (i == 0) {
-				player1Listener = new Config1(players[i]);
-			}
-			if (i == 1) {
-				player2Listener = new Config2(players[i]);
-			}
-			w.defineNewBoardGame(players[i].getBoardGame());
-
-			Thread t = new RunPlayer(players[i]);
-			t.start();
-		}
-
-		w.repaint();
-
-	}
+  
+  public void definePlayersGame(int numPlayer){
+    //Graphic
+    Window w = graphicEngine.getWindow();
+    w.clear();
+    w.setLocationRelativeTo(null);
+    
+    if(numPlayer > 1){
+      Dimension size = w.getSize();
+      size.width *= 2;
+      w.setSize(size);
+      w.setLayout(new GridLayout(1,2));
+    }
+    
+    Shape s = ShapesStock.getInstance().getRandomShape();
+    for(int i = 0; i < numPlayer; ++i){
+      gameEngine.addNewPlayer(s);
+    }
+    
+    Player[] players = gameEngine.getPlayers();
+    for(int i = 0; i < numPlayer; ++i ){
+      if(i == 0){
+        player1Listener = new Config1(players[i]);
+      }
+      if(i == 1){
+        player2Listener = new Config2(players[i]);
+      }
+      w.defineNewBoardGame(players[i].getBoardGame());
+ 
+      Thread t = new RunPlayer(players[i]);
+      t.start();
+    }
+    
+    update();
+    
+  }
 }

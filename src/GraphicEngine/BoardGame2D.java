@@ -2,6 +2,8 @@ package GraphicEngine;
 
 import ContextManager.ContextManager;
 import GameEngine.BoardGame;
+import Pattern.Observable;
+import Pattern.Observer;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.io.File;
@@ -16,74 +18,79 @@ import javax.swing.JPanel;
  * *
  * Define one board for a player with it's own grid
  */
-public class BoardGame2D extends JPanel {
+public class BoardGame2D extends JPanel implements Observer {
 
-	private final Grid2D gameGrid;
-	private final BoardGame model;
-	private String background;
+  private final Grid2D gameGrid;
+  private final BoardGame model;
+  private String background;
 
-	public BoardGame2D(BoardGame model) {
-		this.model = model;
-		this.setSize(650, 889);
-		Properties prop = new Properties();
-		InputStream input = null;
+  public BoardGame2D(BoardGame model) {
+    this.model = model;
+    this.setSize(650, 889);
 
-		/*Get background image from file myConf*/
-		try {
+    /*Pas propre mais fonctionne*/
+    this.addKeyListener(ContextManager.getInstance().getPlayerListener(0));
+    this.addKeyListener(ContextManager.getInstance().getPlayerListener(1));
 
-			input = new FileInputStream("conf/myConf.properties");
+    gameGrid = new Grid2D(model.getGrid());
+    model.getGrid().addObservateur(gameGrid);
+    
+    setShapeToGrid2D();
 
-			// load a properties file
-			prop.load(input);
+    Properties prop = new Properties();
+    InputStream input = null;
+		
+    /*Get background image from file myConf*/
+    try {
+      input = new FileInputStream("conf/myConf.properties");
 
-			background = prop.getProperty("background");
+      // load a properties file
+      prop.load(input);
 
-		} catch (IOException ex) {
-			/*Default background*/
-			background = "media/Design/paper/background.jpg";
-			ex.printStackTrace();
-		} finally {
-			if (input != null) {
-				try {
-					input.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-		/*Pas propre mais fonctionne*/
-		this.addKeyListener(ContextManager.getInstance().getPlayerListener(0));
-		this.addKeyListener(ContextManager.getInstance().getPlayerListener(1));
+      background = prop.getProperty("background");
 
-		gameGrid = new Grid2D(model.getGrid());
+    } catch (IOException ex) {
+      /*Default background*/
+      background = "media/Design/paper/background.jpg";
+      ex.printStackTrace();
+    } finally {
+      if (input != null) {
+        try {
+          input.close();
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+      }
+    }
+  }
 
-		setShapeToGrid2D();
-	}
+  private void setShapeToGrid2D() {
+    gameGrid.setShape2D(model.getGrid().getCurrentShape());
+  }
 
-	public void setShapeToGrid2D() {
-		gameGrid.setShape2D(model.getGrid().getCurrentShape());
-	}
+  @Override
+  public void update(Observable o, Object args) {
+    System.out.println("do nothing");
+  }
 
-	@Override
-	public void paintComponent(Graphics g) {
+  @Override
+  public void paintComponent(Graphics g) {
 
-		try {
-			/*Try to load background image from chosen design*/
+    try {
+      /*Try to load background image from chosen design*/
 
-			Image img = ImageIO.read(new File(background));
-			int offset = model.getNb();
-			g.drawImage(img, 0, 0, this);
-		} catch (IOException e) {
-			/*Load background image from default design*/
-			e.printStackTrace();
-		}
-		gameGrid.paintComponent(g);
-	}
+      Image img = ImageIO.read(new File(background));
+      g.drawImage(img, 0, 0, this);
+    } catch (IOException e) {
+      /*Load background image from default design*/
+      e.printStackTrace();
+    }
+    drawHUB(g);
+    gameGrid.paintComponent(g);
+  }
 
-	public void update() {
-		if (model.getUpdate()) {
-			model.setUpdate(false);
-			gameGrid.setShape2D(model.getGrid().getCurrentShape());
-		}
-	}
+  private void drawHUB(Graphics g) {
+    //Draw here timer, score, etc..
+  }
+
 }

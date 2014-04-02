@@ -35,8 +35,15 @@ public class CurrentShape extends Shape {
       }
     }
     
-    representation = replaceToTopLeftCorner(repTmp);
+    repTmp = replaceToTopLeftCorner(repTmp);
     
+    //Vérifié ici s'il y a une collision
+    
+    //Sinon si yen a pas 
+    representation = repTmp;
+    
+    //Pour replacer la pièce danbs la grid si lors de la rotation elle se met à dépasser (exemple de la barre en bas)
+    //A VERIFIER SUR UN VRAI TETRIS OU ALORS A SUPPRIMER UNE FOIS LA COLLISION TESTE AU MOINS EN Y
     while(curX >( 10 - getMaxX(representation)) ){
       --curX;
     }
@@ -133,5 +140,21 @@ public class CurrentShape extends Shape {
     if( newY < ( 20 - getMaxY(representation) ) ){
       curY = newY;
     }
+  }
+  
+  public boolean tryCollision(int[][] g, int x, int y){
+  	boolean res = false;
+  	
+  	for(int i=0; i<4; ++i) {
+  		for (int j=0; j<4; ++j) {
+        int value = representation[i][j];
+        //On teste s'il y a déjà un élément dans la grid
+        if( value > 0 && g[y + i][x + j] == 1){
+          return true;
+        }
+  		}
+  	}
+  	
+  	return res;
   }
 }
