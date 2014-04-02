@@ -10,14 +10,17 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 public class DesignMenu2D extends Menu2D {
 
 	DesignMenu dm;
 	String apercuBackground;
 	String[] bricks;
+	JPanel pannel = new JPanel();
 	ButtonGroup group = new ButtonGroup();
 
 	public DesignMenu2D() {
@@ -40,8 +43,7 @@ public class DesignMenu2D extends Menu2D {
 		ComboBox combo = new ComboBox("Choose theme", dm.getNames(), x, y, sx, sy);
 		this.add(combo);
 
-		apercuBackground = dm.getBackground(0);
-		bricks = dm.getBricks(0);
+		loadApercus((String)combo.getSelectedItem());
 	}
 
 	@Override
@@ -49,6 +51,7 @@ public class DesignMenu2D extends Menu2D {
 		super.paintComponent(g);
 		drawApercuBackground(g, apercuBackground);
 		drawApercuBricks(g, bricks);
+		this.validate();
 	}
 
 	private void drawApercuBackground(Graphics g, String file) {
@@ -68,6 +71,7 @@ public class DesignMenu2D extends Menu2D {
 		int step = WINDOW_WIDTH / 7;
 
 		JLabel label = new JLabel("Choose your bricks");
+		this.add(label);
 
 		for (int i = 0; i < bricks.length; ++i) {
 			try {
@@ -83,30 +87,40 @@ public class DesignMenu2D extends Menu2D {
 		}
 	}
 
-	void reloadApercuBackground(String item) {
+	public void loadApercus(String item) {
+		
+		int x = WINDOW_WIDTH / 4;
+		int y = WINDOW_HEIGHT / 2 + 100;
+		int step = WINDOW_WIDTH / 7;
+		bricks = null;
+		
+		/*Get chosen theme*/
 		String[] themes = dm.getNames();
 		for (int i = 0; i < themes.length; ++i) {
+			/*Change theme if needed*/
 			if (themes[i].equals(item)) {
 				apercuBackground = dm.getBackground(i);
 				bricks = dm.getBricks(i);
 			}
 		}
+		
 		while (group.getElements().hasMoreElements()) {
-			System.out.println(group.getElements().nextElement());
-			group.remove(group.getElements().nextElement());
+			/*Empty button from group and Jpanel */
+			AbstractButton b = group.getElements().nextElement();
+			this.remove(b);
+			group.remove(b);
 		}
+		/*Fill button to group and Jpanel with new bricks*/
 		for (int i = 0; i < bricks.length; ++i) {
-			int x = WINDOW_WIDTH / 4;
-			int y = WINDOW_HEIGHT / 2 + 100;
-			int step = WINDOW_WIDTH / 7;
 			RadioButton2D radio = new RadioButton2D("Brick");
 			radio.setText("");
 			radio.setBounds(x + 8 + i * step, y + 40, 20, 20);
-			if (i == 1) {
+			if (i == 0) {
 				radio.setSelected(true);
 			}
+			
 			group.add(radio);
-			//this.add(group);
+			this.add(radio);
 		}
 	}
 }

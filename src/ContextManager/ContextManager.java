@@ -77,7 +77,7 @@ public class ContextManager {
 
 		Window w = graphicEngine.getWindow();
 		w.reloadApercuBackground(item);
-		w.repaint();
+		w.validate();
 	}
 
 	public void definePlayersGame(int numPlayer) {
