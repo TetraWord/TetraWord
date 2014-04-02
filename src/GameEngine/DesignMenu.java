@@ -25,7 +25,6 @@ public class DesignMenu {
 		
 		for (int i = 0; i < liste.length; ++i) {
 		
-		System.out.println(i);
 			if (liste[i].endsWith(".properties")) {
 				/*For each files, save background*/
 				readFile("conf/Design/"+liste[i], i);
@@ -37,7 +36,6 @@ public class DesignMenu {
 		
 		Properties prop = new Properties();
 		InputStream input = null;
-		
 		/*Get infos from file*/
 		try {
 
