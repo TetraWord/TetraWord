@@ -94,8 +94,9 @@ public class ContextManager {
     }
     
     Shape s = ShapesStock.getInstance().getRandomShape();
+    Shape s2 = ShapesStock.getInstance().getRandomShape();
     for(int i = 0; i < numPlayer; ++i){
-      gameEngine.addNewPlayer(s);
+      gameEngine.addNewPlayer(s, s2);
     }
     
     Player[] players = gameEngine.getPlayers();

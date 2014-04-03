@@ -37,6 +37,10 @@ public class Config2 extends KeyAdapter {
         p.right();
         System.out.println("Right pressed");
         break;
+        
+      case KeyEvent.VK_F:
+        System.out.println("F pressed");
+        break;
 		}
     
     repaint();

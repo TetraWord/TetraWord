@@ -2,6 +2,7 @@ package GraphicEngine;
 
 import ContextManager.ContextManager;
 import GameEngine.BoardGame;
+import GameEngine.Player;
 import Pattern.Observable;
 import Pattern.Observer;
 import java.awt.Graphics;
@@ -19,13 +20,14 @@ import javax.swing.JPanel;
  * Define one board for a player with it's own grid
  */
 public class BoardGame2D extends JPanel implements Observer {
-
+  private Shape2D nextShape;
   private final Grid2D gameGrid;
   private final BoardGame model;
   private String background;
 
   public BoardGame2D(BoardGame model) {
     this.model = model;
+    nextShape = new Shape2D(model.getNextShape());
     this.setSize(650, 889);
 
     /*Pas propre mais fonctionne*/
@@ -51,7 +53,7 @@ public class BoardGame2D extends JPanel implements Observer {
 
     } catch (IOException ex) {
       /*Default background*/
-      background = "media/Design/paper/background.jpg";
+      background = "media/Design/Paper/background.jpg";
       ex.printStackTrace();
     } finally {
       if (input != null) {
@@ -70,7 +72,7 @@ public class BoardGame2D extends JPanel implements Observer {
 
   @Override
   public void update(Observable o, Object args) {
-    System.out.println("do nothing");
+    nextShape = new Shape2D(model.getNextShape());
   }
 
   @Override
@@ -90,7 +92,19 @@ public class BoardGame2D extends JPanel implements Observer {
   }
 
   private void drawHUB(Graphics g) {
-    //Draw here timer, score, etc..
+    Player p = model.getPlayer();
+    if(p.hasShapeStocked()){
+      drawShapeStocked(p, g);
+    }
+    drawNextShape(g);
+  }
+  
+  private void drawNextShape(Graphics g){
+    nextShape.draw(g, 500, 150, 0.8);
+  }
+  
+  private void drawShapeStocked(Player p, Graphics g) {
+    //To do
   }
 
 }

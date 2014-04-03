@@ -8,23 +8,24 @@ public class Player {
   private int numLinesRemoved;
   private Shape shapeStocked;
 
-  public Player(int nb, Shape s) {
-    boardGame = new BoardGame(nb, s);
+  public Player(int nb, Shape s, Shape s2) {
+    boardGame = new BoardGame(nb, s, s2, this);
     score = 0;
     numLinesRemoved = 0;
     number = nb;
-  }
-
-  public void addShapeStocked(Shape s) {
-    if (shapeStocked != null) {
-      shapeStocked = s;
-    }
   }
 
   public Shape useShapeStocked() {
     Shape s = shapeStocked;
     shapeStocked = null;
     return s; //vérifier si ca ne retourne pas toujours null... 
+  }
+  
+  public boolean hasShapeStocked() {
+    if(shapeStocked != null){
+      return true;
+    }
+    return false;
   }
 
   public int getNumber() {
@@ -69,5 +70,11 @@ public class Player {
 
   private CurrentShape getCurrentShape() {
     return boardGame.getGrid().getCurrentShape();
+  }
+
+  public void stockShape() {
+    if (shapeStocked != null) {
+      shapeStocked = getCurrentShape();
+    }
   }
 }
