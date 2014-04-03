@@ -1,5 +1,6 @@
 package GraphicEngine;
 
+import GameEngine.Brick;
 import GameEngine.CurrentShape;
 import GameEngine.Grid;
 import Pattern.Observable;
@@ -32,10 +33,10 @@ class Grid2D extends JPanel implements Observer{
     if (currentShape != null) {
       currentShape.paintComponent(g);
     }
-    int[][] t = model.getTGrid();
+    Brick[][] t = model.getTGrid();
     for (int i = 0; i < t.length; ++i) {
       for (int j = 0; j < t[i].length; ++j) {
-        if (t[i][j] > 0) {
+        if (t[i][j].getNb() > 0) {
           BufferedImage monImage = currentShape.getBrickImage();
           g.drawImage(monImage, j * sizeBrick + left, i * sizeBrick + top, null);
         }

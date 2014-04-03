@@ -6,7 +6,9 @@ import java.util.ArrayList;
 
 public class Grid implements Observable {
 
-  private final int[][] tGrid = new int[23][13];
+  private static final int sizeX = 10;
+  private static final int sizeY = 20;
+  private final Brick[][] tGrid = new Brick[sizeY][sizeX];
   private CurrentShape currentShape;
   private ArrayList<Observer> listObserver = new ArrayList<>();
   private final BoardGame myBoardGame;
@@ -14,14 +16,14 @@ public class Grid implements Observable {
   public Grid(BoardGame b, CurrentShape cS) {
     this.myBoardGame = b;
     this.currentShape = cS;
-    for (int i = 0; i < tGrid.length; ++i) {
-      for (int j = 0; j < tGrid[i].length; ++j) {
-        tGrid[i][j] = -1;
+    for (int i = 0; i < sizeY; ++i) {
+      for (int j = 0; j < sizeX; ++j) {
+        tGrid[i][j] = new Brick(' ', -1);
       }
     }
   }
 
-  public int[][] getTGrid() {
+  public Brick[][] getTGrid() {
     return tGrid;
   }
 
@@ -31,9 +33,9 @@ public class Grid implements Observable {
 
   public int getFirstFullLine() {
     boolean isLineFull = true;
-    for (int i = 0; i < 21; ++i) {
-      for (int j = 0; j < 11; ++j) {
-        if (tGrid[i][j] < 0) {
+    for (int i = 0; i < sizeY; ++i) {
+      for (int j = 0; j < sizeX; ++j) {
+        if (tGrid[i][j].getNb() < 0) {
           isLineFull = false;
         }
       }
@@ -48,12 +50,17 @@ public class Grid implements Observable {
   public void removedFullLines() {
     /* Be carefull because of the number of the line */
     /* Be carefull you need the anagram mode later */
+    
     int numFullLines = 0;
     boolean isLineFull = true;
-    for (int i = 19; i > 15; --i) {
-      for (int j = 0; j < 11; ++j) {
-        if (tGrid[i][j] < 0) {
-          isLineFull = false;
+    for (int i = 0; i < 20; ++i) {
+      for (int j = 0; j < 10; ++j) {
+        try{
+          if (tGrid[i][j].getNb() < 0) {
+            isLineFull = false;
+          }
+        }catch(NullPointerException e){
+          System.out.println("i vaut alors : "+i+" et j vaut alors : "+j);
         }
       }
       if (isLineFull) {
@@ -63,17 +70,22 @@ public class Grid implements Observable {
     }
 
     for (int i = 19; i > numFullLines; --i) {
-      for (int j = 0; j < 11; ++j) {
+      for (int j = 0; j < 10; ++j) {
         tGrid[i][j] = tGrid[i - numFullLines][j];
       }
     }
 
     System.out.println("nombre de full line : " + numFullLines);
+
   }
 
   public boolean isComplete() {
   	for(int i=0; i<4; ++i){
-	    if (getTGrid()[0][currentShape.getX() + i] == 1) {
+      int x = currentShape.getX() + i;
+      if( x >= 10 ){
+        return false;
+      }
+	    if (getTGrid()[0][currentShape.getX() + i].getNb() >= 1) {
 	      System.out.println("Stop");
 	      return true;
 	    }
@@ -101,9 +113,12 @@ public class Grid implements Observable {
   void setIn(CurrentShape s) {
     for (int i = 0; i < 4; ++i) {
       for (int j = 0; j < 4; ++j) {
+        int y = s.getY() + i;
+        int x = s.getX() + j;
         int value = s.representation[i][j];
-        if (value > 0) {
-          tGrid[s.getY() + i][s.getX() + j] = s.representation[i][j];
+        if (value > 0 && y < sizeY && x < sizeX) {
+          Brick b = s.getComposition()[i][j];
+          tGrid[y][x] = new Brick(b);
         }
       }
     }
@@ -116,8 +131,8 @@ public class Grid implements Observable {
   }
 
   private void printGrid() {
-    for (int i = 0; i < 20; ++i) {
-      for (int j = 0; j < 10; ++j) {
+    for (int i = 0; i < sizeY; ++i) {
+      for (int j = 0; j < sizeX; ++j) {
         System.out.print(tGrid[i][j]);
       }
       System.out.println();
