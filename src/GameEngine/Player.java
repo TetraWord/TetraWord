@@ -61,7 +61,7 @@ public class Player {
 
   public void rotate() {
     CurrentShape s = getCurrentShape();
-    s.rotateLeft();
+    s.rotateLeft(boardGame.getGrid().getTGrid());
   }
 
   public BoardGame getBoardGame() {

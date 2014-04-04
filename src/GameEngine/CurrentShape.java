@@ -39,11 +39,12 @@ public class CurrentShape extends Shape {
     return composition;
   }
 
-  public void rotateLeft() {
+  /*public void rotateLeft() {
     int[][] repTmp = new int[4][4];
     for (int i = 0; i < 4; ++i) {
       for (int j = 0; j < 4; ++j) {
         repTmp[i][j] = representation[3 - j][i];
+      
       }
     }
 
@@ -61,6 +62,33 @@ public class CurrentShape extends Shape {
     }
     while (curY > (20 - getMaxY(representation))) {
       --curY;
+    }
+  }*/
+  
+  public void rotateLeft(Brick[][] g) {
+    int[][] repTmp = new int[4][4];
+    for (int i = 0; i < 4; ++i) {
+      for (int j = 0; j < 4; ++j) {
+        repTmp[i][j] = representation[3 - j][i];
+      }
+    }
+
+    repTmp = replaceToTopLeftCorner(repTmp);
+
+    //Vérifier ici s'il y a une collision
+    if( !tryCollision(g, curX, curY, repTmp) ){
+	    //Sinon si yen a pas 
+	    representation = repTmp;
+	    setComposition(representation);
+	
+	    //Pour replacer la pièce danbs la grid si lors de la rotation elle se met à dépasser (exemple de la barre en bas)
+	    //A VERIFIER SUR UN VRAI TETRIS OU ALORS A SUPPRIMER UNE FOIS LA COLLISION TESTE AU MOINS EN Y
+	    while (curX >= (10 - getMaxX(representation))) {
+	      --curX;
+	    }
+	    while (curY > (20 - getMaxY(representation))) {
+	      --curY;
+	    }
     }
   }
 
@@ -150,6 +178,7 @@ public class CurrentShape extends Shape {
     curY = newY;
   }
 
+  /* TryCollision pour les mouvements left, right, down */
   public boolean tryCollision(Brick[][] g, int newX, int newY) {
     if (newX < 0 || newX >= (10 - getMaxX(representation))) {
       return true;
@@ -161,6 +190,30 @@ public class CurrentShape extends Shape {
     for (int i = 0; i < 4; ++i) {
       for (int j = 0; j < 4; ++j) {
         int value = representation[i][j];
+        //On teste s'il y a déjà un élément dans la grid
+        if (value > 0 && g[newY + i][newX + j].getNb() >= 1) {
+          return true;
+        }
+      }
+    }
+
+    return false;
+  }
+  
+  /* TryCollision pour la rotation */
+  public boolean tryCollision(Brick[][] g, int newX, int newY, int[][] rep) {
+  	System.out.println("x: " + newX + ", y: " + newY);
+    if (newX < 0 || newX >= (10 - getMaxX(rep))) {
+      return true;
+    }
+    if (newY <0 || newY >= (20 - getMaxY(rep))) {
+      return true;
+    }
+
+    for (int i = 0; i < 4; ++i) {
+      for (int j = 0; j < 4; ++j) {
+        int value = rep[i][j];
+        System.out.println("newY: " + (newY + i) + ", newX: " + (newX + j));
         //On teste s'il y a déjà un élément dans la grid
         if (value > 0 && g[newY + i][newX + j].getNb() >= 1) {
           return true;

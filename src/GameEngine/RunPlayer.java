@@ -13,14 +13,16 @@ public class RunPlayer extends Thread {
   
   @Override
   public void run() {
-    while(true){
-      player.down();
-      try {
-        this.sleep(1000);
-      } catch (InterruptedException ex) {
-        Logger.getLogger(RunPlayer.class.getName()).log(Level.SEVERE, null, ex);
-      }
-    }
-  }
+		while(this.player.getBoardGame().getPlay()){
+			player.down();
+			try {
+				this.sleep(1000);
+			} catch (InterruptedException ex) {
+				Logger.getLogger(RunPlayer.class.getName()).log(Level.SEVERE, null, ex);
+			}
+	  }
+		System.out.println("you loose");
+		// TODO: on ne doit plus pouvoir utiliser le clavier
+	}
   
 }

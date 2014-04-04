@@ -11,7 +11,7 @@ public class Grid implements Observable {
   private final Brick[][] tGrid = new Brick[sizeY][sizeX];
   private CurrentShape currentShape;
   private ArrayList<Observer> listObserver = new ArrayList<>();
-  private final BoardGame myBoardGame;
+  private BoardGame myBoardGame;
 
   public Grid(BoardGame b, CurrentShape cS) {
     this.myBoardGame = b;
@@ -79,16 +79,24 @@ public class Grid implements Observable {
 
   }
 
-  public boolean isComplete() {
+  public boolean isComplete(CurrentShape s) {
   	for(int i=0; i<4; ++i){
-      int x = currentShape.getX() + i;
+  		int x = currentShape.getX() + i;
       if( x >= 10 ){
         return false;
       }
 	    if (getTGrid()[0][currentShape.getX() + i].getNb() >= 1) {
 	      System.out.println("Stop");
+	      this.myBoardGame.setPlay();
 	      return true;
 	    }
+  		for(int j=0; j<4; ++j ) {
+  			if(s.representation[i][j] >=1 && getTGrid()[j][currentShape.getX() + i].getNb() >= 1){
+  				System.out.println("Stop");
+  				this.myBoardGame.setPlay();
+  				return true;
+  			}
+  		}
   	}
     return false;
   }
@@ -124,8 +132,9 @@ public class Grid implements Observable {
     }
 
     removedFullLines();
-    if (!isComplete()) {
-      currentShape = myBoardGame.launchNextShape();
+    CurrentShape cs = myBoardGame.launchNextShape();
+    if (!isComplete(cs)) {
+      currentShape = cs;
     }
     updateObservateur();
   }
