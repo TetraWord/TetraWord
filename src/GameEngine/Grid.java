@@ -60,7 +60,6 @@ public class Grid implements Observable {
             isLineFull = false;
           }
         }catch(NullPointerException e){
-          System.out.println("i vaut alors : "+i+" et j vaut alors : "+j);
         }
       }
       if (isLineFull) {
