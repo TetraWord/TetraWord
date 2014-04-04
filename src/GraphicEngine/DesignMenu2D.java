@@ -30,7 +30,7 @@ public class DesignMenu2D extends Menu2D {
 
 	public DesignMenu2D() {
 		super();
-		state = Menu2D.MenuState.DESIGN;
+		state = MenuState.DESIGN;
 
 		int sx = 150, sy = 60;
 		int x = WINDOW_WIDTH / 2 - sx;

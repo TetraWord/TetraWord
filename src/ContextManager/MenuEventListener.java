@@ -43,6 +43,7 @@ public class MenuEventListener implements ActionListener {
 				break;
 
 			case "Previous":
+				c.getBack();
 				break;
 
 			default:

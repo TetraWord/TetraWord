@@ -15,6 +15,7 @@ public class Window extends JFrame {
   
   public static final Dimension size = new Dimension(WINDOW_WIDTH,WINDOW_HEIGHT);
   public static final String title = "TetraWord";
+	public static Menu2D menu;
 
   public Window(){
     
@@ -27,28 +28,28 @@ public class Window extends JFrame {
   }
   
   public void defineMainMenu(){
-    Menu2D menu = new Menu2D();
+    menu = new Menu2D();
     menu.defineMainMenu();
     this.setContentPane(menu);
     this.setVisible(true);
   }
   
   public void defineGameMenu(){
-    Menu2D menu = new Menu2D();
+    menu = new Menu2D();
     menu.defineGameMenu();
     this.setContentPane(menu);
     this.setVisible(true);
   }
   
   public void defineOptionGameMenu(){
-    Menu2D menu = new Menu2D();
+    menu = new Menu2D();
     menu.defineOptionGameMenu();
     this.setContentPane(menu);
     this.setVisible(true);
   }
   
   public void defineDesignMenu(){
-    DesignMenu2D menu = new DesignMenu2D();
+    menu = new DesignMenu2D();
     this.setContentPane(menu);
     this.setVisible(true);
   }
@@ -73,5 +74,9 @@ public class Window extends JFrame {
   public void clear() {
     getContentPane().removeAll();
   }
+	
+	public Menu2D getMenu(){
+		return menu;
+	}
 
 }

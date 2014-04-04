@@ -25,6 +25,10 @@ public class Menu2D extends JPanel {
 		buttons = new Button2D[capacity];
 		current = 0;
 	}
+	
+	public MenuState getState(){
+		return state;
+	}
 
 	public void add(Button2D newButton) {
 		if (current < capacity) {
@@ -92,24 +96,6 @@ public class Menu2D extends JPanel {
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-	}
-
-	protected static enum MenuState {
-
-		MAIN("Main Menu"),
-		GAME("Game Menu"),
-		OPTION("Option Menu"),
-		DESIGN("Design Menu");
-
-		private String name = "";
-
-		MenuState(String name) {
-			this.name = name;
-		}
-
-		public String getStateName() {
-			return name;
-		}
 	}
 
 }
