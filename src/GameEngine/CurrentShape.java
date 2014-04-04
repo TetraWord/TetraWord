@@ -44,6 +44,14 @@ public class CurrentShape extends Shape {
     for (int i = 0; i < 4; ++i) {
       for (int j = 0; j < 4; ++j) {
         repTmp[i][j] = representation[3 - j][i];
+        /*
+        //test if we can rotate
+        if(repTmp[i][j] > 0){
+          if(curX + j >= 10){
+            return;
+          }
+        }
+        */
       }
     }
 
