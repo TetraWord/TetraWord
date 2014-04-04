@@ -14,7 +14,11 @@ public class Button2D extends JButton {
     this.setFocusable(false);
     this.addActionListener( ContextManager.getInstance().getMenuListener() );
   }
-  
+	
+	public void removeListener(){
+		this.removeActionListener(ContextManager.getInstance().getMenuListener());
+	}
+	
   @Override
   public String getName(){
     return name;

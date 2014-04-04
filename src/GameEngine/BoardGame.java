@@ -14,15 +14,25 @@ public class BoardGame implements Observable {
   private ArrayList<Observer> listObserver = new ArrayList<>();
   private final Player myPlayer;
   private final Queue<Shape> listNextShape = new LinkedList<>();
-
+  private boolean play;
+  
   public BoardGame(int nb, Shape s, Shape s2, Player p) {
     this.nb = nb;
     this.myPlayer = p;
+    this.play = true;
 
     listNextShape.add(s);
     listNextShape.add(s2);
 
     grid = new Grid(this, new CurrentShape(s));
+  }
+  
+  public void setPlay(){
+  	this.play = false;
+  }
+  
+  public boolean getPlay() {
+  	return this.play;
   }
 
   public void setInGrid(CurrentShape s) {

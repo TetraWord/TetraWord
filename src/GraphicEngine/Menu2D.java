@@ -20,7 +20,7 @@ public class Menu2D extends JPanel {
 		current = 0;
 	}
 
-	private void setButton2D(int capacity) {
+	protected void setButton2D(int capacity) {
 		this.capacity = capacity;
 		buttons = new Button2D[capacity];
 		current = 0;
