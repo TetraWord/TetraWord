@@ -55,6 +55,12 @@ public class ContextManager {
 		graphicEngine.renderFrame();
 	}
 
+	public void defineMainMenu() {
+		Window w = graphicEngine.getWindow();
+		w.defineMainMenu();
+		w.repaint();
+	}
+
 	public void defineGameMenu() {
 		Window w = graphicEngine.getWindow();
 		w.defineGameMenu();
@@ -73,11 +79,29 @@ public class ContextManager {
 		w.repaint();
 	}
 
-	void reloadApercuBackground(String item) {
+	public void reloadApercuBackground(String item) {
 
 		Window w = graphicEngine.getWindow();
 		w.reloadApercuBackground(item);
 		w.validate();
+	}
+
+	public void getBack() {
+		String lastMenuState = graphicEngine.getWindow().getMenu().getState().getStateName();
+		switch ( lastMenuState ){
+			case "Design Menu" :
+				this.defineOptionGameMenu();
+				break;
+			case "Game Menu" :
+				this.defineMainMenu();
+				break;
+			case "Option Menu" :
+				this.defineMainMenu();
+				break;
+			default :
+				System.out.println("No implemented yet");
+				break;
+		}
 	}
   
   public void definePlayersGame(int numPlayer){
