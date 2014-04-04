@@ -14,7 +14,6 @@ public class RunPlayer extends Thread {
   @Override
   public void run() {
 		while(this.player.getBoardGame().getPlay()){
-			System.out.println(this.player.getBoardGame().getPlay());
 			player.down();
 			try {
 				this.sleep(1000);
