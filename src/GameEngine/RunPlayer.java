@@ -16,7 +16,7 @@ public class RunPlayer extends Thread {
 		while(this.player.getBoardGame().getPlay()){
 			player.down();
 			try {
-				this.sleep(1000);
+				this.sleep(1000 / player.getLevel());
 			} catch (InterruptedException ex) {
 				Logger.getLogger(RunPlayer.class.getName()).log(Level.SEVERE, null, ex);
 			}

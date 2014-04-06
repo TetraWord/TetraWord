@@ -4,6 +4,7 @@ public class Player {
 
   private final BoardGame boardGame;
   private final int number;
+  private int level;
   private double score;
   private int numLinesRemoved;
   private Shape shapeStocked;
@@ -11,6 +12,7 @@ public class Player {
   public Player(int nb, Shape s, Shape s2) {
     boardGame = new BoardGame(nb, s, s2, this);
     score = 0;
+    level = 1;
     numLinesRemoved = 0;
     number = nb;
   }
@@ -76,5 +78,9 @@ public class Player {
     if (shapeStocked != null) {
       shapeStocked = getCurrentShape();
     }
+  }
+
+  int getLevel() {
+    return level;
   }
 }
