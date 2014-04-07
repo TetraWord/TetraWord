@@ -87,16 +87,16 @@ public class ContextManager {
 	}
 
 	public void getBack() {
-		String lastMenuState = graphicEngine.getWindow().getMenu().getState().getStateName();
+		String lastMenuState = graphicEngine.getWindow().getMenu().getLastState().getStateName();
 		switch ( lastMenuState ){
-			case "Design Menu" :
-				this.defineOptionGameMenu();
-				break;
 			case "Game Menu" :
+				this.defineGameMenu();
+				break;
+			case "Main Menu" :
 				this.defineMainMenu();
 				break;
 			case "Option Menu" :
-				this.defineMainMenu();
+				this.defineOptionGameMenu();
 				break;
 			default :
 				System.out.println("No implemented yet");

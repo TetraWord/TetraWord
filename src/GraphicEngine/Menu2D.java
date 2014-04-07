@@ -10,6 +10,7 @@ public class Menu2D extends JPanel {
 	private int capacity;
 	private int current;
 	protected MenuState state = MenuState.MAIN;
+	protected MenuState lastState = null;
 
 	public Menu2D() {
 		//Panel settings
@@ -28,6 +29,10 @@ public class Menu2D extends JPanel {
 	
 	public MenuState getState(){
 		return state;
+	}
+	
+	public MenuState getLastState(){
+		return lastState;
 	}
 
 	public void add(Button2D newButton) {
@@ -48,6 +53,7 @@ public class Menu2D extends JPanel {
 
 	public void defineMainMenu() {
 		state = MenuState.MAIN;
+		lastState = null;
 		
 		setButton2D(4);
 		int sx = 150, sy = 60;
@@ -65,6 +71,7 @@ public class Menu2D extends JPanel {
 
 	public void defineGameMenu() {
 		state = MenuState.GAME;
+		lastState = MenuState.MAIN;
 		
 		setButton2D(3);
 		int sx = 150, sy = 60;
@@ -80,6 +87,7 @@ public class Menu2D extends JPanel {
 
 	public void defineOptionGameMenu() {
 		state = MenuState.OPTION;
+		lastState = MenuState.MAIN;
 		
 		setButton2D(3);
 		int sx = 150, sy = 60;
