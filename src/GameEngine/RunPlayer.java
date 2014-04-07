@@ -3,9 +3,9 @@ package GameEngine;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class RunPlayer extends Thread {
+public class RunPlayer implements Runnable {
   
-  private Player player;
+  private final Player player;
   
   public RunPlayer(Player p){
     this.player = p;
@@ -16,7 +16,7 @@ public class RunPlayer extends Thread {
 		while(this.player.getBoardGame().getPlay()){
 			player.down();
 			try {
-				this.sleep(1000 / player.getLevel());
+				Thread.sleep(1000 / player.getLevel());
 			} catch (InterruptedException ex) {
 				Logger.getLogger(RunPlayer.class.getName()).log(Level.SEVERE, null, ex);
 			}

@@ -8,6 +8,7 @@ public class Player {
   private double score;
   private int numLinesRemoved;
   private Shape shapeStocked;
+  private final Object monitor = new Object();
 
   public Player(int nb, Shape s, Shape s2) {
     boardGame = new BoardGame(nb, s, s2, this);
@@ -34,16 +35,18 @@ public class Player {
     return number;
   }
 
-  public synchronized void down() {
-    CurrentShape s = getCurrentShape();
-    int tmpY = s.getY();
-    if (!s.tryCollision(boardGame.getGrid().getTGrid(), s.getX(),  s.getY()+1)) {
-      s.tryMove(s.getX(), s.getY() + 1);
-    }
-    //Si on ne peut pas faire descendre la pièce plus bas, on l'inscrit dans la Grid
-    if (tmpY == s.getY()) {
-      Grid g = boardGame.getGrid();
-      boardGame.setInGrid(s);
+  public void down() {
+    synchronized(monitor){
+      CurrentShape s = getCurrentShape();
+      int tmpY = s.getY();
+      if (!s.tryCollision(boardGame.getGrid().getTGrid(), s.getX(),  s.getY()+1)) {
+        s.tryMove(s.getX(), s.getY() + 1);
+      }
+      //Si on ne peut pas faire descendre la pièce plus bas, on l'inscrit dans la Grid
+      if (tmpY == s.getY()) {
+        Grid g = boardGame.getGrid();
+        boardGame.setInGrid(s);
+      }
     }
   }
 
@@ -80,7 +83,11 @@ public class Player {
     }
   }
 
-  int getLevel() {
+  public int getLevel() {
     return level;
+  }
+
+  public void setLevelUp() {
+    ++level;
   }
 }

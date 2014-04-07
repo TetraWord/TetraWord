@@ -1,5 +1,6 @@
 package GraphicEngine;
 
+import ContextManager.ContextManager;
 import GameEngine.BoardGame;
 import static GraphicEngine.GraphicEngine.WINDOW_HEIGHT;
 import static GraphicEngine.GraphicEngine.WINDOW_WIDTH;
@@ -61,7 +62,9 @@ public class Window extends JFrame {
     pan.add( boardGame );
 
     this.setVisible(true);
-    boardGame.requestFocusInWindow();
+    this.addKeyListener(ContextManager.getInstance().getPlayerListener(0));
+    this.addKeyListener(ContextManager.getInstance().getPlayerListener(1));
+    this.requestFocusInWindow();
   }
 
 	public void reloadApercuBackground(String item) {
