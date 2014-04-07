@@ -154,7 +154,6 @@ public final class ShapesStock {
   
   public static void main(String[] args){
       ShapesStock ss = new ShapesStock();
-      System.out.println(ss.getRandomShape().getName());
       
   }
   

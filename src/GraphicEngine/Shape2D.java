@@ -51,8 +51,8 @@ public class Shape2D {
   
   public void draw(Graphics g, int x, int y, double ratio) {
 		/*Drawing of a brick whith the color of the model */
-
-      BufferedImage monImage = getBrickImage();
+      Color c = new Color(model.getR(), model.getG(), model.getB());
+      BufferedImage monImage = getBrickImage(c);
 
       //Draw the shape
 			//70 en x et 135 en y pour le coin haut gauche
@@ -70,7 +70,7 @@ public class Shape2D {
 		
 	}
   
-  public BufferedImage getBrickImage (){
+  public BufferedImage getBrickImage (Color myColor){
     try {
 			BufferedImage monImage = ImageIO.read(new File(brick));
 			WritableRaster trame = monImage.getRaster();
@@ -82,7 +82,7 @@ public class Shape2D {
 					Object pixel = trame.getDataElements(i, j, null);
 					int alpha = color.getAlpha(pixel);
 					/*Create new color with alpha of the image*/
-					Color myColor = new Color(model.getR(), model.getG(), model.getB(), alpha);
+					myColor = new Color(myColor.getRed(), myColor.getGreen(), myColor.getBlue(), alpha);
 					int rgb = myColor.getRGB();
 					Object couleur = color.getDataElements(rgb, null);
 					trame.setDataElements(i, j, couleur);

@@ -1,5 +1,7 @@
 package GameEngine;
 
+import java.awt.Color;
+
 public class CurrentShape extends Shape {
 
   private int curX, curY;
@@ -26,10 +28,11 @@ public class CurrentShape extends Shape {
 
   private void setComposition(int[][] representation){
     this.composition = new Brick[representation.length][representation[0].length];
+    Color color = new Color(this.getR(), this.getG(), this.getB());
     for (int i = 0; i < representation.length; ++i) {
       for (int j = 0; j < representation[i].length; ++j) {
         if (representation[i][j] > 0) { //suivant comment est implémenter la représentation
-          composition[i][j] = new Brick('a', 1); //rajouter une lettre au hasard
+          composition[i][j] = new Brick('a', 1, color); //rajouter une lettre au hasard
         }
       }
     }

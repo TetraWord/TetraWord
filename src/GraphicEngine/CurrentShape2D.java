@@ -2,6 +2,7 @@ package GraphicEngine;
 
 import GameEngine.CurrentShape;
 import GameEngine.Shape;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
@@ -17,8 +18,8 @@ public class CurrentShape2D extends Shape2D {
 
 	public void paintComponent(Graphics g) {
 		/*Drawing of a brick whith the color of the model */
-
-      BufferedImage monImage = getBrickImage();
+      Color c = new Color(model.getR(), model.getG(), model.getB());
+      BufferedImage monImage = getBrickImage(c);
 
       //Draw the shape
 			//70 en x et 135 en y pour le coin haut gauche
