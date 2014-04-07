@@ -74,6 +74,13 @@ public class Grid implements Observable {
       }
     }
 
+    /* Remove this later it's just for some test */
+    if(numFullLines > 0){
+      myBoardGame.getPlayer().setLevelUp();
+      int level = myBoardGame.getPlayer().getLevel();
+      myBoardGame.updateObservateur(level);
+    }
+
     System.out.println("nombre de full line : " + numFullLines);
 
   }
@@ -106,7 +113,7 @@ public class Grid implements Observable {
   }
 
   @Override
-  public void updateObservateur() {
+  public void updateObservateur(Object args) {
     for (Observer obs : listObserver) {
       obs.update(this, currentShape);
     }
@@ -135,7 +142,7 @@ public class Grid implements Observable {
     if (!isComplete(cs)) {
       currentShape = cs;
     }
-    updateObservateur();
+    updateObservateur(null);
   }
 
   private void printGrid() {

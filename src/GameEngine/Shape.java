@@ -34,5 +34,4 @@ public class Shape {
   public int[][] getRepresentation(){
     return representation;
   }
-
 }

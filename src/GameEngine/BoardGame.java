@@ -65,7 +65,7 @@ public class BoardGame implements Observable {
       tabP[i].getBoardGame().listNextShape.add(s);
     }
     
-    updateObservateur();
+    updateObservateur(null);
     
     return cs;
   }
@@ -80,9 +80,9 @@ public class BoardGame implements Observable {
   }
 
   @Override
-  public void updateObservateur() {
+  public void updateObservateur(Object args) {
     for (Observer obs : listObserver) {
-      obs.update(this, null);
+      obs.update(this, args);
     }
   }
 

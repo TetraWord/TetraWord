@@ -133,7 +133,8 @@ public class ContextManager {
       }
       w.defineNewBoardGame(players[i].getBoardGame());
  
-      Thread t = new RunPlayer(players[i]);
+      Thread t = new Thread(new RunPlayer(players[i]));
+      t.setDaemon(true);
       t.start();
     }
     
