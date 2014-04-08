@@ -34,7 +34,7 @@ public class Config1 extends KeyAdapter {
         break;
         
       case KeyEvent.VK_NUMPAD0:
-        p.stockShape();
+        p.dropDown();
         break;
 		}
     

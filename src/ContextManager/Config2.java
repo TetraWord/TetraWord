@@ -39,7 +39,7 @@ public class Config2 extends KeyAdapter {
         break;
         
       case KeyEvent.VK_F:
-        System.out.println("F pressed");
+        p.dropDown();
         break;
 		}
     

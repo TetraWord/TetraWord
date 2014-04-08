@@ -138,6 +138,7 @@ public class ContextManager {
       t.start();
     }
     
+    w.addWindowListener();
     update();
     
   }
