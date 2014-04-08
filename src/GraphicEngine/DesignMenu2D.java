@@ -21,6 +21,7 @@ import javax.imageio.ImageIO;
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 public class DesignMenu2D extends Menu2D {
 
@@ -79,6 +80,7 @@ public class DesignMenu2D extends Menu2D {
 
 					// save properties to project root folder
 					prop.store(output, null);
+					JOptionPane.showMessageDialog(null, "Design saved");
 
 				} catch (IOException io) {
 					io.printStackTrace();
