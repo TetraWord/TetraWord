@@ -3,6 +3,8 @@ package GraphicEngine;
 import GameEngine.DesignMenu;
 import static GraphicEngine.GraphicEngine.WINDOW_WIDTH;
 import static GraphicEngine.GraphicEngine.WINDOW_HEIGHT;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -33,7 +35,7 @@ public class DesignMenu2D extends Menu2D {
 		state = MenuState.DESIGN;
 		lastState = MenuState.OPTION;
 
-		int sx = 150, sy = 60;
+		int sx = 150, sy = 50;
 		int x = WINDOW_WIDTH / 2 - sx;
 		int y = 50;
 		int step_x = 200;
@@ -42,14 +44,18 @@ public class DesignMenu2D extends Menu2D {
 
 		JLabel label = new JLabel("Choose a theme");
 		label.setBounds(x, y, sx, sy);
+		label.setFont(new Font("Champagne & Limousines", 20, 20));
+		label.setForeground(Color.white);
 		this.add(label);
 
 		x = x + step_x;
 		combo = new ComboBox("Choose theme", dm.getNames(), x, y, sx, sy);
+		combo.setFont(new Font("Champagne & Limousines", 20, 20));
 		this.add(combo);
-
+		
+		sx = 300;
 		x = WINDOW_WIDTH / 2 - sx / 2;
-		y = 650;
+		y = 600;
 		int step_y = 100;
 		setButton2D(2);
 		Button2D b = new Button2D("Save design", x, y, sx, sy);
@@ -129,7 +135,7 @@ public class DesignMenu2D extends Menu2D {
 
 	private void drawApercuBricks(Graphics g, String[] bricks) {
 		int x = WINDOW_WIDTH / 4;
-		int y = WINDOW_HEIGHT / 2 + 100;
+		int y = WINDOW_HEIGHT / 2 + 40;
 		int step = WINDOW_WIDTH / 7;
 
 		JLabel label = new JLabel("Choose your bricks");
@@ -175,8 +181,9 @@ public class DesignMenu2D extends Menu2D {
 		/*Fill button to group and Jpanel with new bricks*/
 		for (int i = 0; i < bricks.length; ++i) {
 			RadioButton2D radio = new RadioButton2D("Brick", bricks[i]);
+			radio.setOpaque(false);
 			radio.setText("");
-			radio.setBounds(x + 8 + i * step, y + 40, 20, 20);
+			radio.setBounds(x + 8 + i * step, y - 15, 20, 20);
 			if (i == 0) {
 				radio.setSelected(true);
 			}

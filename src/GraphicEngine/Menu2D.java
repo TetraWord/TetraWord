@@ -2,6 +2,10 @@ package GraphicEngine;
 
 import static GraphicEngine.GraphicEngine.WINDOW_WIDTH;
 import java.awt.Graphics;
+import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 public class Menu2D extends JPanel {
@@ -26,12 +30,12 @@ public class Menu2D extends JPanel {
 		buttons = new Button2D[capacity];
 		current = 0;
 	}
-	
-	public MenuState getState(){
+
+	public MenuState getState() {
 		return state;
 	}
-	
-	public MenuState getLastState(){
+
+	public MenuState getLastState() {
 		return lastState;
 	}
 
@@ -54,12 +58,12 @@ public class Menu2D extends JPanel {
 	public void defineMainMenu() {
 		state = MenuState.MAIN;
 		lastState = null;
-		
+
 		setButton2D(4);
-		int sx = 150, sy = 60;
+		int sx = 300, sy = 50;
 		int x = WINDOW_WIDTH / 2 - sx / 2;
-		int y = 50;
-		int step_y = y + sy;
+		int y = 300;
+		int step_y = 50 + sy;
 		this.add(new Button2D("Start new game", x, y, sx, sy));
 		y = y + step_y;
 		this.add(new Button2D("Load game", x, y, sx, sy));
@@ -72,12 +76,12 @@ public class Menu2D extends JPanel {
 	public void defineGameMenu() {
 		state = MenuState.GAME;
 		lastState = MenuState.MAIN;
-		
+
 		setButton2D(3);
-		int sx = 150, sy = 60;
+		int sx = 300, sy = 50;
 		int x = WINDOW_WIDTH / 2 - sx / 2;
-		int y = 50;
-		int step_y = y + sy;
+		int y = 300;
+		int step_y = 50 + sy;
 		this.add(new Button2D("Single game", x, y, sx, sy));
 		y = y + step_y;
 		this.add(new Button2D("Multiplayer game", x, y, sx, sy));
@@ -88,13 +92,15 @@ public class Menu2D extends JPanel {
 	public void defineOptionGameMenu() {
 		state = MenuState.OPTION;
 		lastState = MenuState.MAIN;
-		
-		setButton2D(3);
-		int sx = 150, sy = 60;
+
+		setButton2D(4);
+		int sx = 300, sy = 50;
 		int x = WINDOW_WIDTH / 2 - sx / 2;
-		int y = 50;
-		int step_y = y + sy;
+		int y = 300;
+		int step_y = 50 + sy;
 		this.add(new Button2D("Design & Theme", x, y, sx, sy));
+		y = y + step_y;
+		this.add(new Button2D("Edit pieces", x, y, sx, sy));
 		y = y + step_y;
 		this.add(new Button2D("Difficulty", x, y, sx, sy));
 		y = y + step_y;
@@ -104,6 +110,28 @@ public class Menu2D extends JPanel {
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
+		if (state != MenuState.DESIGN) {
+			try {
+				/*Try to load background image from chosen design*/
+
+				Image img = ImageIO.read(new File("media/Design/menuBG.jpg"));
+				g.drawImage(img, 0, 0, this);
+			} catch (IOException e) {
+				/*Load background image from default design*/
+				e.printStackTrace();
+			}
+		}else{
+			try {
+				/*Try to load background image from chosen design*/
+
+				Image img = ImageIO.read(new File("media/Design/optionMenuBG.jpg"));
+				g.drawImage(img, 0, 0, this);
+			} catch (IOException e) {
+				/*Load background image from default design*/
+				e.printStackTrace();
+			}
+			
+		}
 	}
 
 }

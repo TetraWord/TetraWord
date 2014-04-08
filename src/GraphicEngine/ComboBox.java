@@ -13,7 +13,6 @@ public class ComboBox extends JComboBox {
     this.name = name;
 		this.addItemListener(ContextManager.getInstance().getItemListener());
     this.setBounds(x, y, sx, sy);
-		/*Ajouter un écouteur*/
   }
   
   @Override
