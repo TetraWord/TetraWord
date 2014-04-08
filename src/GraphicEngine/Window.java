@@ -26,6 +26,7 @@ public class Window extends JFrame {
     this.setResizable(false);
     this.setLocationRelativeTo(null); //to center the window
     this.setDefaultCloseOperation(EXIT_ON_CLOSE); //to exit on the red cross
+    
   }
   
   public void defineMainMenu(){
@@ -62,11 +63,14 @@ public class Window extends JFrame {
     pan.add( boardGame );
 
     this.setVisible(true);
+  }
+  
+  public void addWindowListener(){
     this.addKeyListener(ContextManager.getInstance().getPlayerListener(0));
     this.addKeyListener(ContextManager.getInstance().getPlayerListener(1));
     this.requestFocusInWindow();
   }
-
+  
 	public void reloadApercuBackground(String item) {
 		Container pan = getContentPane();
 		if(pan instanceof DesignMenu2D){

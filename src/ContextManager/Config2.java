@@ -16,6 +16,11 @@ public class Config2 extends KeyAdapter {
   
   @Override
   public void keyPressed(KeyEvent e) {
+    
+    if(ContextManager.getInstance().isPaused){
+      return;
+    }
+    
     switch (e.getKeyCode()) {
 			case KeyEvent.VK_Z:
         System.out.println("Up pressed");
@@ -39,7 +44,7 @@ public class Config2 extends KeyAdapter {
         break;
         
       case KeyEvent.VK_F:
-        System.out.println("F pressed");
+        p.dropDown();
         break;
 		}
     

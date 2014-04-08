@@ -20,8 +20,7 @@ public class BoardGame implements Observable {
     this.nb = nb;
     this.myPlayer = p;
     this.play = true;
-
-    listNextShape.add(s);
+    
     listNextShape.add(s2);
 
     grid = new Grid(this, new CurrentShape(s));

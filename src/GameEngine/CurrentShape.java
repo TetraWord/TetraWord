@@ -10,7 +10,7 @@ public class CurrentShape extends Shape {
   public CurrentShape(String name, int[] color, int[][] representation) {
     super(name, color, representation);
     curX = 3;
-    curY = -1;
+    curY = 0;
     setComposition(representation);
   }
 
@@ -41,32 +41,6 @@ public class CurrentShape extends Shape {
   public Brick[][] getComposition() {
     return composition;
   }
-
-  /*public void rotateLeft() {
-    int[][] repTmp = new int[4][4];
-    for (int i = 0; i < 4; ++i) {
-      for (int j = 0; j < 4; ++j) {
-        repTmp[i][j] = representation[3 - j][i];
-      
-      }
-    }
-
-    repTmp = replaceToTopLeftCorner(repTmp);
-
-    //Vérifié ici s'il y a une collision
-    //Sinon si yen a pas 
-    representation = repTmp;
-    setComposition(representation);
-
-    //Pour replacer la pièce danbs la grid si lors de la rotation elle se met à dépasser (exemple de la barre en bas)
-    //A VERIFIER SUR UN VRAI TETRIS OU ALORS A SUPPRIMER UNE FOIS LA COLLISION TESTE AU MOINS EN Y
-    while (curX >= (10 - getMaxX(representation))) {
-      --curX;
-    }
-    while (curY > (20 - getMaxY(representation))) {
-      --curY;
-    }
-  }*/
   
   public void rotateLeft(Brick[][] g) {
     int[][] repTmp = new int[4][4];
@@ -176,7 +150,7 @@ public class CurrentShape extends Shape {
     return tmp2;
   }
 
-  public void tryMove(int newX, int newY) {
+  public void move(int newX, int newY) {
     curX = newX;
     curY = newY;
   }

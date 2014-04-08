@@ -1,5 +1,6 @@
 package GameEngine;
 
+import ContextManager.ContextManager;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -14,7 +15,9 @@ public class RunPlayer implements Runnable {
   @Override
   public void run() {
 		while(this.player.getBoardGame().getPlay()){
-			player.down();
+      if(!ContextManager.getInstance().isPaused){
+        player.down();
+      }
 			try {
 				Thread.sleep(1000 / player.getLevel());
 			} catch (InterruptedException ex) {
