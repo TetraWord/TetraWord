@@ -18,7 +18,7 @@ public class CurrentShape2D extends Shape2D {
 
 	public void paintComponent(Graphics g) {
 		/*Drawing of a brick whith the color of the model */
-      Color c = new Color(model.getR(), model.getG(), model.getB());
+      Color c = model.getRGB();
       BufferedImage monImage = getBrickImage(c);
 
       //Draw the shape

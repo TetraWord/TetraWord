@@ -1,24 +1,30 @@
 
 package GameEngine;
 
+import java.awt.Color;
+
 
 public class Shape {
 
   public enum ShapeEnum { NoShape, LShape, MirroredLShape, SShape, ZShape, LineShape, SquareShape, TShape };
   
   protected final String name;
-  protected final int[] color;
+  protected final Color color;
   protected int[][] representation;
   
   public Shape(String name, int[] color, int[][] representation){
     this.name = name;
+    this.color = new Color(color[0], color[1], color[2]);
+    this.representation = representation;
+  }
+  
+  public Shape(String name, Color color, int[][] representation){
+    this.name = name; 
     this.color = color;
     this.representation = representation;
   }
   
-  public int getR(){ return color[0]; }
-  public int getG(){ return color[1]; }
-  public int getB(){ return color[2]; }
+  public Color getRGB(){ return color; }
   
   public int getRep(int x, int y){ return representation[x][y]; }
   

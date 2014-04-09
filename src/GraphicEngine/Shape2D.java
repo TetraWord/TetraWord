@@ -51,7 +51,7 @@ public class Shape2D {
   
   public void draw(Graphics g, int x, int y, double ratio) {
 		/*Drawing of a brick whith the color of the model */
-      Color c = new Color(model.getR(), model.getG(), model.getB());
+      Color c = model.getRGB();
       BufferedImage monImage = getBrickImage(c);
 
       //Draw the shape

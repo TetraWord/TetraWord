@@ -7,7 +7,7 @@ public class CurrentShape extends Shape {
   private int curX, curY;
   private Brick[][] composition;
 
-  public CurrentShape(String name, int[] color, int[][] representation) {
+  public CurrentShape(String name, Color color, int[][] representation) {
     super(name, color, representation);
     curX = 3;
     curY = 0;
@@ -28,7 +28,7 @@ public class CurrentShape extends Shape {
 
   private void setComposition(int[][] representation){
     this.composition = new Brick[representation.length][representation[0].length];
-    Color color = new Color(this.getR(), this.getG(), this.getB());
+    Color color = this.getRGB();
     for (int i = 0; i < representation.length; ++i) {
       for (int j = 0; j < representation[i].length; ++j) {
         if (representation[i][j] > 0) { //suivant comment est implémenter la représentation
