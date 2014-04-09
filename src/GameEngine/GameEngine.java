@@ -6,43 +6,43 @@ public class GameEngine {
   private static final GameEngine INSTANCE = new GameEngine();
   private final Player[] players;
   private int nbPlayer = 0;
-  
+
   //Singleton
-  private GameEngine(){
+  private GameEngine() {
     currentState = GameState.NO_STATE;
     players = new Player[4];
   }
-  
-  public static GameEngine getInstance(){
+
+  public static GameEngine getInstance() {
     return INSTANCE;
   }
-  
-  public void init(){
+
+  public void init() {
     currentState = GameState.IN_MENU;
   }
-  
-  public void update(){
-    
+
+  public void update() {
+
   }
-  
-  public void addNewPlayer(Shape s, Shape s2){
+
+  public void addNewPlayer(Shape s, Shape s2) {
     players[nbPlayer] = new Player(nbPlayer, s, s2);
     ++nbPlayer;
   }
-  
-  public Player[] getPlayers(){
+
+  public Player[] getPlayers() {
     return players;
   }
 
-  public int getNbPlayers(){
+  public int getNbPlayers() {
     return nbPlayer;
   }
-  
+
   public GameState getState() {
     return currentState;
   }
-  
-  public void setState(GameState newState){
+
+  public void setState(GameState newState) {
     currentState = newState;
   }
 

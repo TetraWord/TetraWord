@@ -6,51 +6,51 @@ import java.awt.event.ActionListener;
 
 public class MenuEventListener implements ActionListener {
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		ContextManager c = ContextManager.getInstance();
-		Button2D click = (Button2D) e.getSource();
+  @Override
+  public void actionPerformed(ActionEvent e) {
+    ContextManager c = ContextManager.getInstance();
+    Button2D click = (Button2D) e.getSource();
 
-		switch (click.getName()) {
-			case "Start new game":
-				c.defineGameMenu();
-				break;
+    switch (click.getName()) {
+      case "Start new game":
+        c.defineGameMenu();
+        break;
 
-			case "Single game":
-				c.definePlayersGame(1);
-				break;
+      case "Single game":
+        c.definePlayersGame(1);
+        break;
 
-			case "Multiplayer game":
-				c.definePlayersGame(2);
-				break;
+      case "Multiplayer game":
+        c.definePlayersGame(2);
+        break;
 
-			case "Load game":
-				break;
+      case "Load game":
+        break;
 
-			case "Options":
-				c.defineOptionGameMenu();
-				break;
+      case "Options":
+        c.defineOptionGameMenu();
+        break;
 
-			case "Design & Theme":
-				c.defineDesignMenu();
-				break;
+      case "Design & Theme":
+        c.defineDesignMenu();
+        break;
 
-			case "Difficulty":
-				break;
+      case "Difficulty":
+        break;
 
-			case "Exit":
-				System.exit(0);
-				break;
+      case "Exit":
+        System.exit(0);
+        break;
 
-			case "Previous":
-				c.getBack();
-				break;
+      case "Previous":
+        c.getBack();
+        break;
 
-			default:
-				System.out.println("No implemented yet");
-				break;
-		}
-		c.update();
+      default:
+        System.out.println("No implemented yet");
+        break;
+    }
+    c.update();
   }
-  
+
 }

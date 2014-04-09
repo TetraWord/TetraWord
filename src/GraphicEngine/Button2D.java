@@ -9,30 +9,30 @@ import javax.swing.SwingConstants;
 
 public class Button2D extends JButton {
 
-	private final String name;
+  private final String name;
 
-	public Button2D(String name, int x, int y, int sx, int sy) {
-		super(name);
-		this.name = name;
-		this.setBounds(x, y, sx, sy);
-		this.setFocusable(false);
-		this.addActionListener(ContextManager.getInstance().getMenuListener());
+  public Button2D(String name, int x, int y, int sx, int sy) {
+    super(name);
+    this.name = name;
+    this.setBounds(x, y, sx, sy);
+    this.setFocusable(false);
+    this.addActionListener(ContextManager.getInstance().getMenuListener());
 
-		/*Design*/
-		this.setIcon(new ImageIcon("media/Design/btnBG.jpg"));
-		
-		this.setVerticalTextPosition(SwingConstants.CENTER); 
-		this.setHorizontalTextPosition(SwingConstants.CENTER); 
-		this.setForeground(Color.white);
-		this.setFont(new Font("Champagne & Limousines", 30, 30));
-	}
+    /*Design*/
+    this.setIcon(new ImageIcon("media/Design/btnBG.jpg"));
 
-	public void removeListener() {
-		this.removeActionListener(ContextManager.getInstance().getMenuListener());
-	}
+    this.setVerticalTextPosition(SwingConstants.CENTER);
+    this.setHorizontalTextPosition(SwingConstants.CENTER);
+    this.setForeground(Color.white);
+    this.setFont(new Font("Champagne & Limousines", 30, 30));
+  }
 
-	@Override
-	public String getName() {
-		return name;
-	}
+  public void removeListener() {
+    this.removeActionListener(ContextManager.getInstance().getMenuListener());
+  }
+
+  @Override
+  public String getName() {
+    return name;
+  }
 }

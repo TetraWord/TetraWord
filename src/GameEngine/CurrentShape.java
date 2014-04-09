@@ -26,22 +26,22 @@ public class CurrentShape extends Shape {
     return curY;
   }
 
-  private void setComposition(int[][] representation){
+  private void setComposition(int[][] representation) {
     this.composition = new Brick[representation.length][representation[0].length];
     Color color = this.getRGB();
     for (int i = 0; i < representation.length; ++i) {
       for (int j = 0; j < representation[i].length; ++j) {
-        if (representation[i][j] > 0) { //suivant comment est implémenter la représentation
-          composition[i][j] = new Brick('a', 1, color); //rajouter une lettre au hasard
+        if (representation[i][j] > 0) {
+          composition[i][j] = new Brick(1, color);
         }
       }
     }
   }
-  
+
   public Brick[][] getComposition() {
     return composition;
   }
-  
+
   public void rotateLeft(Brick[][] g) {
     int[][] repTmp = new int[4][4];
     for (int i = 0; i < 4; ++i) {
@@ -53,19 +53,19 @@ public class CurrentShape extends Shape {
     repTmp = replaceToTopLeftCorner(repTmp);
 
     //Vérifier ici s'il y a une collision
-    if( !tryCollision(g, curX, curY, repTmp) ){
-	    //Sinon si yen a pas 
-	    representation = repTmp;
-	    setComposition(representation);
-	
+    if (!tryCollision(g, curX, curY, repTmp)) {
+      //Sinon si yen a pas 
+      representation = repTmp;
+      setComposition(representation);
+
 	    //Pour replacer la pièce danbs la grid si lors de la rotation elle se met à dépasser (exemple de la barre en bas)
-	    //A VERIFIER SUR UN VRAI TETRIS OU ALORS A SUPPRIMER UNE FOIS LA COLLISION TESTE AU MOINS EN Y
-	    while (curX >= (10 - getMaxX(representation))) {
-	      --curX;
-	    }
-	    while (curY > (20 - getMaxY(representation))) {
-	      --curY;
-	    }
+      //A VERIFIER SUR UN VRAI TETRIS OU ALORS A SUPPRIMER UNE FOIS LA COLLISION TESTE AU MOINS EN Y
+      while (curX >= (10 - getMaxX(representation))) {
+        --curX;
+      }
+      while (curY > (20 - getMaxY(representation))) {
+        --curY;
+      }
     }
   }
 
@@ -176,14 +176,14 @@ public class CurrentShape extends Shape {
 
     return false;
   }
-  
+
   /* TryCollision pour la rotation */
   public boolean tryCollision(Brick[][] g, int newX, int newY, int[][] rep) {
-  	System.out.println("x: " + newX + ", y: " + newY);
+    System.out.println("x: " + newX + ", y: " + newY);
     if (newX < 0 || newX >= (10 - getMaxX(rep))) {
       return true;
     }
-    if (newY <0 || newY >= (20 - getMaxY(rep))) {
+    if (newY < 0 || newY >= (20 - getMaxY(rep))) {
       return true;
     }
 

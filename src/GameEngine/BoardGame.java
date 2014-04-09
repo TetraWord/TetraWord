@@ -15,23 +15,23 @@ public class BoardGame implements Observable {
   private final Player myPlayer;
   private final Queue<Shape> listNextShape = new LinkedList<>();
   private boolean play;
-  
+
   public BoardGame(int nb, Shape s, Shape s2, Player p) {
     this.nb = nb;
     this.myPlayer = p;
     this.play = true;
-    
+
     listNextShape.add(s2);
 
     grid = new Grid(this, new CurrentShape(s));
   }
-  
-  public void setPlay(){
-  	this.play = false;
+
+  public void setPlay() {
+    this.play = false;
   }
-  
+
   public boolean getPlay() {
-  	return this.play;
+    return this.play;
   }
 
   public void setInGrid(CurrentShape s) {
@@ -63,16 +63,16 @@ public class BoardGame implements Observable {
     for (int i = 0; i < GameEngine.getInstance().getNbPlayers(); ++i) {
       tabP[i].getBoardGame().listNextShape.add(s);
     }
-    
+
     updateObservateur(null);
-    
+
     return cs;
   }
 
-  public Shape getNextShape(){
+  public Shape getNextShape() {
     return listNextShape.element();
   }
-  
+
   @Override
   public void addObservateur(Observer obs) {
     listObserver.add(obs);
