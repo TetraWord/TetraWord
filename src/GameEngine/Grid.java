@@ -71,6 +71,7 @@ public class Grid implements Observable {
     for (int i = 19; i > numFullLines; --i) {
       for (int j = 0; j < 10; ++j) {
         tGrid[i][j] = tGrid[i - numFullLines][j];
+				updateObservateur(tGrid);
       }
     }
 
@@ -81,7 +82,7 @@ public class Grid implements Observable {
       myBoardGame.updateObservateur(level);
     }
 
-    System.out.println("nombre de full line : " + numFullLines);
+    //System.out.println("nombre de full line : " + numFullLines);
 
   }
 
@@ -92,13 +93,13 @@ public class Grid implements Observable {
         return false;
       }
 	    if (getTGrid()[0][currentShape.getX() + i].getNb() >= 1) {
-	      System.out.println("Stop");
+	      //System.out.println("Stop");
 	      this.myBoardGame.setPlay();
 	      return true;
 	    }
   		for(int j=0; j<4; ++j ) {
   			if(s.representation[i][j] >=1 && getTGrid()[j][currentShape.getX() + i].getNb() >= 1){
-  				System.out.println("Stop");
+  				//System.out.println("Stop");
   				this.myBoardGame.setPlay();
   				return true;
   			}
@@ -115,7 +116,7 @@ public class Grid implements Observable {
   @Override
   public void updateObservateur(Object args) {
     for (Observer obs : listObserver) {
-      obs.update(this, currentShape);
+      obs.update(this, args);
     }
   }
 
@@ -125,6 +126,7 @@ public class Grid implements Observable {
   }
 
   void setIn(CurrentShape s) {
+		
     for (int i = 0; i < 4; ++i) {
       for (int j = 0; j < 4; ++j) {
         int y = s.getY() + i;
@@ -142,7 +144,7 @@ public class Grid implements Observable {
     if (!isComplete(cs)) {
       currentShape = cs;
     }
-    updateObservateur(null);
+		updateObservateur(currentShape);
   }
 
   private void printGrid() {

@@ -5,13 +5,11 @@ import java.awt.Color;
 public class CurrentShape extends Shape {
 
   private int curX, curY;
-  private Brick[][] composition;
 
   public CurrentShape(String name, Color color, int[][] representation) {
     super(name, color, representation);
     curX = 3;
     curY = 0;
-    setComposition(representation);
   }
 
   CurrentShape(Shape s) {
@@ -24,22 +22,6 @@ public class CurrentShape extends Shape {
 
   public int getY() {
     return curY;
-  }
-
-  private void setComposition(int[][] representation){
-    this.composition = new Brick[representation.length][representation[0].length];
-    Color color = this.getRGB();
-    for (int i = 0; i < representation.length; ++i) {
-      for (int j = 0; j < representation[i].length; ++j) {
-        if (representation[i][j] > 0) { //suivant comment est implémenter la représentation
-          composition[i][j] = new Brick('a', 1, color); //rajouter une lettre au hasard
-        }
-      }
-    }
-  }
-  
-  public Brick[][] getComposition() {
-    return composition;
   }
   
   public void rotateLeft(Brick[][] g) {
@@ -179,7 +161,6 @@ public class CurrentShape extends Shape {
   
   /* TryCollision pour la rotation */
   public boolean tryCollision(Brick[][] g, int newX, int newY, int[][] rep) {
-  	System.out.println("x: " + newX + ", y: " + newY);
     if (newX < 0 || newX >= (10 - getMaxX(rep))) {
       return true;
     }
@@ -190,7 +171,6 @@ public class CurrentShape extends Shape {
     for (int i = 0; i < 4; ++i) {
       for (int j = 0; j < 4; ++j) {
         int value = rep[i][j];
-        System.out.println("newY: " + (newY + i) + ", newX: " + (newX + j));
         //On teste s'il y a déjà un élément dans la grid
         if (value > 0 && g[newY + i][newX + j].getNb() >= 1) {
           return true;

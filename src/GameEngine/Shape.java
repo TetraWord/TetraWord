@@ -1,30 +1,73 @@
 
 package GameEngine;
 
+import Pattern.Observable;
+import Pattern.Observer;
 import java.awt.Color;
+import java.util.ArrayList;
 
 
-public class Shape {
+public class Shape implements Observable {
+
 
   public enum ShapeEnum { NoShape, LShape, MirroredLShape, SShape, ZShape, LineShape, SquareShape, TShape };
   
   protected final String name;
   protected final Color color;
   protected int[][] representation;
+  private Brick[][] composition;
+	private ArrayList<Observer> listObserver = new ArrayList<>();
+	
+	
+	@Override
+	public void addObservateur(Observer obs) {
+		listObserver.add(obs);
+	}
+
+	@Override
+	public void updateObservateur(Object args) {
+		for (Observer obs : listObserver) {
+      obs.update(this, args);
+    }
+	}
+
+	@Override
+	public void delObservateur() {
+		listObserver = new ArrayList<>();
+	}
   
   public Shape(String name, int[] color, int[][] representation){
     this.name = name;
     this.color = new Color(color[0], color[1], color[2]);
     this.representation = representation;
+    setComposition(representation);
   }
   
   public Shape(String name, Color color, int[][] representation){
     this.name = name; 
     this.color = color;
     this.representation = representation;
+    setComposition(representation);
+  }
+
+  protected void setComposition(int[][] representation){
+    this.composition = new Brick[representation.length][representation[0].length];
+    Color color = this.getColor();
+    for (int i = 0; i < representation.length; ++i) {
+      for (int j = 0; j < representation[i].length; ++j) {
+        if (representation[i][j] > 0) { //suivant comment est implémenter la représentation
+          composition[i][j] = new Brick('a', 1, color); //rajouter une lettre au hasard
+        }
+      }
+    }
+		updateObservateur(null);
   }
   
-  public Color getRGB(){ return color; }
+  public Brick[][] getComposition() {
+    return composition;
+  }
+  
+  public Color getColor(){ return color; }
   
   public int getRep(int x, int y){ return representation[x][y]; }
   

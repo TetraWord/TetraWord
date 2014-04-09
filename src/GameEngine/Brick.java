@@ -30,4 +30,8 @@ public class Brick {
     return color;
   }
   
+  public char getLetter(){
+    return letter;
+  }
+  
 }

@@ -1,6 +1,7 @@
 
 package GraphicEngine;
 
+import GameEngine.Brick;
 import GameEngine.Shape;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -16,14 +17,30 @@ import javax.imageio.ImageIO;
 
 public class Shape2D {
   
-  private Shape model;
+  private final Shape model;
 	private String brick;
+	protected final Brick2D[][] compositionBrick2D;
   
   public Shape2D(Shape s){
     this.model = s;
     
+		int[][] representation = model.getRepresentation();
+		Brick[][] composition = model.getComposition();
+		compositionBrick2D = new Brick2D[composition.length][composition[0].length];
+		for (int i = 0; i < 4; ++i) {
+				for (int j = 0; j < 4; ++j) {
+					if (representation[i][j] > 0) {
+						compositionBrick2D[i][j] = new Brick2D(composition[i][j]);
+					} else {
+						compositionBrick2D[i][j] = null;
+					}
+				}
+			}
+		
+		
     Properties prop = new Properties();
 		InputStream input = null;
+		
 		/*Get brick image from file myConf*/
 		try {
 
@@ -50,24 +67,22 @@ public class Shape2D {
   }
   
   public void draw(Graphics g, int x, int y, double ratio) {
-		/*Drawing of a brick whith the color of the model */
-      Color c = model.getRGB();
-      BufferedImage monImage = getBrickImage(c);
-
-      //Draw the shape
-			//70 en x et 135 en y pour le coin haut gauche
-			int top = y;
-			int left = x;
-			int sizeBrick = (int)(35 * ratio);
+		
+		int top = y;
+		int left = x;
+		int sizeBrick = (int)(35 * ratio);
+		Color c = model.getColor();
+    BufferedImage monImage = getBrickImage(c);
 			int[][] representation = model.getRepresentation();
 			for (int i = 0; i < 4; ++i) {
 				for (int j = 0; j < 4; ++j) {
 					if (representation[i][j] > 0) {
-						g.drawImage(monImage, j * sizeBrick + left, i * sizeBrick + top, null);
+						if (compositionBrick2D[i][j] != null) {
+							compositionBrick2D[i][j].draw(g, j * sizeBrick + left, i * sizeBrick + top, monImage);
+						}
 					}
 				}
-			}
-		
+			}		
 	}
   
   public BufferedImage getBrickImage (Color myColor){
