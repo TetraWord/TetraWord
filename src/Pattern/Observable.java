@@ -1,3 +1,4 @@
+
 package Pattern;
 
 public interface Observable {
