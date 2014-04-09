@@ -1,4 +1,3 @@
-
 package GameEngine;
 
 import Pattern.Observable;
@@ -7,15 +6,19 @@ import java.awt.Color;
 import java.util.ArrayList;
 
 
+
 public class Shape implements Observable {
 
 
-  public enum ShapeEnum { NoShape, LShape, MirroredLShape, SShape, ZShape, LineShape, SquareShape, TShape };
-  
+  public enum ShapeEnum {
+
+    NoShape, LShape, MirroredLShape, SShape, ZShape, LineShape, SquareShape, TShape
+  };
+
   protected final String name;
   protected final Color color;
   protected int[][] representation;
-  private Brick[][] composition;
+  protected Brick[][] composition;
 	private ArrayList<Observer> listObserver = new ArrayList<>();
 	
 	
@@ -42,9 +45,9 @@ public class Shape implements Observable {
     this.representation = representation;
     setComposition(representation);
   }
-  
-  public Shape(String name, Color color, int[][] representation){
-    this.name = name; 
+
+  public Shape(String name, Color color, int[][] representation) {
+    this.name = name;
     this.color = color;
     this.representation = representation;
     setComposition(representation);
@@ -62,25 +65,31 @@ public class Shape implements Observable {
     }
 		updateObservateur(null);
   }
-  
+
   public Brick[][] getComposition() {
     return composition;
   }
   
   public Color getColor(){ return color; }
   
-  public int getRep(int x, int y){ return representation[x][y]; }
-  
+  public int getRep(int x, int y){
+		return representation[x][y]; 
+	}
+
+  public Color getRGB() {
+    return color;
+  }
+
   //Copy constructor
   public Shape(Shape shape) {
     this(shape.name, shape.color, shape.representation);
   }
-  
+
   public String getName() {
-  	return this.name;
+    return this.name;
   }
-  
-  public int[][] getRepresentation(){
+
+  public int[][] getRepresentation() {
     return representation;
   }
 }

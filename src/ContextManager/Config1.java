@@ -15,11 +15,11 @@ public class Config1 extends KeyAdapter {
 
   @Override
   public void keyPressed(KeyEvent e) {
-    
-    if(ContextManager.getInstance().isPaused){
+
+    if (ContextManager.getInstance().isPaused) {
       return;
     }
-    
+
     switch (e.getKeyCode()) {
       case KeyEvent.VK_UP:
         p.rotate();

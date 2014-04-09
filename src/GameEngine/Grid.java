@@ -11,7 +11,7 @@ public class Grid implements Observable {
   private final Brick[][] tGrid = new Brick[sizeY][sizeX];
   private CurrentShape currentShape;
   private ArrayList<Observer> listObserver = new ArrayList<>();
-  private BoardGame myBoardGame;
+  private final BoardGame myBoardGame;
 
   public Grid(BoardGame b, CurrentShape cS) {
     this.myBoardGame = b;
@@ -50,16 +50,16 @@ public class Grid implements Observable {
   public void removedFullLines() {
     /* Be carefull because of the number of the line */
     /* Be carefull you need the anagram mode later */
-    
+
     int numFullLines = 0;
     boolean isLineFull = true;
     for (int i = 0; i < 20; ++i) {
       for (int j = 0; j < 10; ++j) {
-        try{
+        try {
           if (tGrid[i][j].getNb() < 0) {
             isLineFull = false;
           }
-        }catch(NullPointerException e){
+        } catch (NullPointerException e) {
         }
       }
       if (isLineFull) {
@@ -76,7 +76,7 @@ public class Grid implements Observable {
     }
 
     /* Remove this later it's just for some test */
-    if(numFullLines > 0){
+    if (numFullLines > 0) {
       myBoardGame.getPlayer().setLevelUp();
       int level = myBoardGame.getPlayer().getLevel();
       myBoardGame.updateObservateur(level);
@@ -87,11 +87,12 @@ public class Grid implements Observable {
   }
 
   public boolean isComplete(CurrentShape s) {
-  	for(int i=0; i<4; ++i){
-  		int x = currentShape.getX() + i;
-      if( x >= 10 ){
+    for (int i = 0; i < 4; ++i) {
+      int x = currentShape.getX() + i;
+      if (x >= 10) {
         return false;
       }
+
 	    if (getTGrid()[0][currentShape.getX() + i].getNb() >= 1) {
 	      //System.out.println("Stop");
 	      this.myBoardGame.setPlay();
@@ -105,6 +106,7 @@ public class Grid implements Observable {
   			}
   		}
   	}
+
     return false;
   }
 

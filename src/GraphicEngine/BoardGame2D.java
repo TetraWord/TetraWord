@@ -34,10 +34,10 @@ public class BoardGame2D extends JPanel implements Observer {
     this.setLayout(null);
     this.setSize(650, 889);
     this.model = model;
-    
+
     /* UI NextShape */
     nextShape = new Shape2D(model.getNextShape());
-    
+
     /* UI Level */
     this.level = new JLabel("1", CENTER);
     setJLabel(level, 530, 770, 50, 50);
@@ -47,8 +47,10 @@ public class BoardGame2D extends JPanel implements Observer {
     model.getGrid().addObservateur(gameGrid);
 
     setShapeToGrid2D();
-    
-    /** Graphics properties **/
+
+    /**
+     * Graphics properties *
+     */
     Properties prop = new Properties();
     InputStream input = null;
 
@@ -76,28 +78,28 @@ public class BoardGame2D extends JPanel implements Observer {
     }
   }
 
-  private void setJLabel(JLabel jl, int x, int y, int sx, int sy){
+  private void setJLabel(JLabel jl, int x, int y, int sx, int sy) {
     jl.setBounds(x, y, sx, sy);
     jl.setFont(new Font("Arial", Font.BOLD, 22));
   }
-  
+
   public void setLevelUp(String level) {
     this.level.setText(level);
   }
-  
+
   private void setShapeToGrid2D() {
     gameGrid.setShape2D(model.getGrid().getCurrentShape());
   }
 
   @Override
   public void update(Observable o, Object args) {
-    if(args == null){
+    if (args == null) {
       nextShape = new Shape2D(model.getNextShape());
     }
-    if(args instanceof Integer){
+    if (args instanceof Integer) {
       level.setText(String.valueOf(args));
     }
-    
+
   }
 
   @Override

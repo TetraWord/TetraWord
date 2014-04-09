@@ -14,10 +14,10 @@ public class CurrentShape2D extends Shape2D implements Observer{
 
 	private final CurrentShape model;
 
-	public CurrentShape2D(CurrentShape model) {
+  public CurrentShape2D(CurrentShape model) {
     super(model);
-		this.model = model;
-	}
+    this.model = model;
+  }
 
 	public void paintComponent(Graphics g) {
 		int top = 135;

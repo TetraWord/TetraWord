@@ -9,7 +9,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import javax.swing.JPanel;
 
-class Grid2D extends JPanel implements Observer{
+class Grid2D extends JPanel implements Observer {
 
   private Grid model = null;
   private CurrentShape2D currentShape = null;
@@ -44,7 +44,7 @@ class Grid2D extends JPanel implements Observer{
     }
     //Brick draw
     Brick[][] t = model.getTGrid();
-    
+
     for (int i = 0; i < t.length; ++i) {
       for (int j = 0; j < t[i].length; ++j) {
 				//System.out.println(i+" "+j);

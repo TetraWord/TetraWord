@@ -9,6 +9,7 @@ import java.util.ArrayList;
 /*
  * Chocolate spread
  */
+
 public class ContextManager {
 
   private GameState lastState;
@@ -54,7 +55,7 @@ public class ContextManager {
   }
 
   public void update() {
-    if(isPaused){
+    if (isPaused) {
       return;
     }
     graphicEngine.renderFrame();
