@@ -55,6 +55,13 @@ public class Window extends JFrame {
     this.setContentPane(menu);
     this.setVisible(true);
   }
+  
+  public void defineMultiPlayersMenu() {
+    menu = new Menu2D();
+    menu.defineMultiPlayersMenu();
+    this.setContentPane(menu);
+    this.setVisible(true);
+  }
 
   public void defineNewBoardGame(BoardGame model) {
     Container pan = getContentPane();
@@ -85,5 +92,5 @@ public class Window extends JFrame {
   public Menu2D getMenu() {
     return menu;
   }
-
+  
 }

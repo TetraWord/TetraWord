@@ -24,9 +24,6 @@ public class Brick {
     this.number = number;
     this.color = c;
     char l = (char) ((int) 'a' + r.nextInt(26));
-
-    System.out.println("C vaut :" + l);
-
   }
 
   public Brick(Brick b) {

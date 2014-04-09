@@ -25,10 +25,7 @@ public class Player {
   }
 
   public boolean hasShapeStocked() {
-    if (shapeStocked != null) {
-      return true;
-    }
-    return false;
+    return shapeStocked != null;
   }
 
   public int getNumber() {
@@ -65,7 +62,6 @@ public class Player {
   }
 
   public void dropDown() {
-    System.out.println("i'm here");
     CurrentShape s = getCurrentShape();
     int finalLine = 0;
     while (!s.tryCollision(boardGame.getGrid().getTGrid(), s.getX(), finalLine)) {

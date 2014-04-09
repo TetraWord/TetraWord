@@ -114,7 +114,7 @@ public class ContextManager {
     isPaused = !isPaused;
   }
 
-  public void definePlayersGame(int numPlayer) {
+  public void definePlayersGame(double numPlayer) {
     //Graphic
     Window w = graphicEngine.getWindow();
     w.clear();
@@ -138,7 +138,7 @@ public class ContextManager {
       if (i == 0) {
         player1Listener = new Config1(players[i]);
       }
-      if (i == 1) {
+      if (i == 1 && numPlayer != 1.5) {
         player2Listener = new Config2(players[i]);
       }
       w.defineNewBoardGame(players[i].getBoardGame());
@@ -152,5 +152,11 @@ public class ContextManager {
     w.addWindowListener();
     update();
 
+  }
+
+  void defineMultiPlayersMenu() {
+    Window w = graphicEngine.getWindow();
+    w.defineMultiPlayersMenu();
+    w.repaint();
   }
 }
