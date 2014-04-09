@@ -21,10 +21,18 @@ public class MenuEventListener implements ActionListener {
         break;
 
       case "Multiplayer game":
+        c.defineMultiPlayersMenu();
+        break;
+      
+      case "Load game":
+        break;
+        
+      case "Versus human":
         c.definePlayersGame(2);
         break;
-
-      case "Load game":
+        
+      case "Versus IA":
+        c.definePlayersGame(1.5);
         break;
 
       case "Options":

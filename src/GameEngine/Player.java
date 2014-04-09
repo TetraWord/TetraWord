@@ -65,9 +65,9 @@ public class Player {
   }
 
   public void dropDown() {
-    System.out.println("i'm here");
     CurrentShape s = getCurrentShape();
-    int finalLine = 0;
+
+    int finalLine = new Integer(s.getY());
     while (!s.tryCollision(boardGame.getGrid().getTGrid(), s.getX(), finalLine)) {
       ++finalLine;
     }
