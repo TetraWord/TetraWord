@@ -5,13 +5,11 @@ import java.awt.Color;
 public class CurrentShape extends Shape {
 
   private int curX, curY;
-  private Brick[][] composition;
 
-  public CurrentShape(String name, int[] color, int[][] representation) {
+  public CurrentShape(String name, Color color, int[][] representation) {
     super(name, color, representation);
     curX = 3;
-    curY = -1;
-    setComposition(representation);
+    curY = 0;
   }
 
   CurrentShape(Shape s) {
@@ -26,48 +24,10 @@ public class CurrentShape extends Shape {
     return curY;
   }
 
-  private void setComposition(int[][] representation){
-    this.composition = new Brick[representation.length][representation[0].length];
-    Color color = new Color(this.getR(), this.getG(), this.getB());
-    for (int i = 0; i < representation.length; ++i) {
-      for (int j = 0; j < representation[i].length; ++j) {
-        if (representation[i][j] > 0) { //suivant comment est implémenter la représentation
-          composition[i][j] = new Brick('a', 1, color); //rajouter une lettre au hasard
-        }
-      }
-    }
-  }
-  
   public Brick[][] getComposition() {
     return composition;
   }
 
-  /*public void rotateLeft() {
-    int[][] repTmp = new int[4][4];
-    for (int i = 0; i < 4; ++i) {
-      for (int j = 0; j < 4; ++j) {
-        repTmp[i][j] = representation[3 - j][i];
-      
-      }
-    }
-
-    repTmp = replaceToTopLeftCorner(repTmp);
-
-    //Vérifié ici s'il y a une collision
-    //Sinon si yen a pas 
-    representation = repTmp;
-    setComposition(representation);
-
-    //Pour replacer la pièce danbs la grid si lors de la rotation elle se met à dépasser (exemple de la barre en bas)
-    //A VERIFIER SUR UN VRAI TETRIS OU ALORS A SUPPRIMER UNE FOIS LA COLLISION TESTE AU MOINS EN Y
-    while (curX >= (10 - getMaxX(representation))) {
-      --curX;
-    }
-    while (curY > (20 - getMaxY(representation))) {
-      --curY;
-    }
-  }*/
-  
   public void rotateLeft(Brick[][] g) {
     int[][] repTmp = new int[4][4];
     for (int i = 0; i < 4; ++i) {
@@ -79,19 +39,19 @@ public class CurrentShape extends Shape {
     repTmp = replaceToTopLeftCorner(repTmp);
 
     //Vérifier ici s'il y a une collision
-    if( !tryCollision(g, curX, curY, repTmp) ){
-	    //Sinon si yen a pas 
-	    representation = repTmp;
-	    setComposition(representation);
-	
+    if (!tryCollision(g, curX, curY, repTmp)) {
+      //Sinon si yen a pas 
+      representation = repTmp;
+      setComposition(representation);
+
 	    //Pour replacer la pièce danbs la grid si lors de la rotation elle se met à dépasser (exemple de la barre en bas)
-	    //A VERIFIER SUR UN VRAI TETRIS OU ALORS A SUPPRIMER UNE FOIS LA COLLISION TESTE AU MOINS EN Y
-	    while (curX >= (10 - getMaxX(representation))) {
-	      --curX;
-	    }
-	    while (curY > (20 - getMaxY(representation))) {
-	      --curY;
-	    }
+      //A VERIFIER SUR UN VRAI TETRIS OU ALORS A SUPPRIMER UNE FOIS LA COLLISION TESTE AU MOINS EN Y
+      while (curX >= (10 - getMaxX(representation))) {
+        --curX;
+      }
+      while (curY > (20 - getMaxY(representation))) {
+        --curY;
+      }
     }
   }
 
@@ -127,6 +87,16 @@ public class CurrentShape extends Shape {
       }
     }
     return 0;
+  }
+  
+  public int getMinY(Brick[][] matrix) {
+    int finalLine = new Integer(getY());
+    
+    while (!tryCollision(matrix, getX(), finalLine)){
+        		++finalLine;
+    }
+	  
+    return finalLine-1;
   }
 
   private int[][] replaceToTopLeftCorner(int[][] matrix) {
@@ -176,7 +146,7 @@ public class CurrentShape extends Shape {
     return tmp2;
   }
 
-  public void tryMove(int newX, int newY) {
+  public void move(int newX, int newY) {
     curX = newX;
     curY = newY;
   }
@@ -202,13 +172,13 @@ public class CurrentShape extends Shape {
 
     return false;
   }
-  
+
   /* TryCollision pour la rotation */
   public boolean tryCollision(Brick[][] g, int newX, int newY, int[][] rep) {
-  	if (newX < 0 || newX >= (10 - getMaxX(rep))) {
+    if (newX < 0 || newX >= (10 - getMaxX(rep))) {
       return true;
     }
-    if (newY <0 || newY >= (20 - getMaxY(rep))) {
+    if (newY < 0 || newY >= (20 - getMaxY(rep))) {
       return true;
     }
 

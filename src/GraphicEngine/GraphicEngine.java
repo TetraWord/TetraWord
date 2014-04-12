@@ -7,58 +7,58 @@ import java.util.Properties;
 
 public class GraphicEngine {
 
-	public static final int WINDOW_WIDTH = 650;
-	public static final int WINDOW_HEIGHT = 889;
+  public static final int WINDOW_WIDTH = 650;
+  public static final int WINDOW_HEIGHT = 889;
 
-	private static final GraphicEngine INSTANCE = new GraphicEngine();
-	private final Window window;
+  private static final GraphicEngine INSTANCE = new GraphicEngine();
+  private final Window window;
 
-	//Singleton
-	private GraphicEngine() {
-		window = new Window();
-	}
+  //Singleton
+  private GraphicEngine() {
+    window = new Window();
+  }
 
-	public static GraphicEngine getInstance() {
-		return INSTANCE;
-	}
+  public static GraphicEngine getInstance() {
+    return INSTANCE;
+  }
 
-	public void init() {
-		window.defineMainMenu();
-		
-		Properties prop = new Properties();
-		OutputStream output = null;
+  public void init() {
+    window.defineMainMenu();
 
-		try {
+    Properties prop = new Properties();
+    OutputStream output = null;
 
-			output = new FileOutputStream("conf/myConf.properties");
+    try {
 
-			// set the properties value
-			prop.setProperty("background", "media/Design/paper/background.jpg");
-			prop.setProperty("brick", "media/Design/paper/brick.png");
+      output = new FileOutputStream("conf/myConf.properties");
 
-			// save properties to project root folder
-			prop.store(output, null);
+      // set the properties value
+      prop.setProperty("background", "media/Design/paper/background.jpg");
+      prop.setProperty("brick", "media/Design/paper/brick.png");
 
-		} catch (IOException io) {
-			io.printStackTrace();
-		} finally {
-			if (output != null) {
-				try {
-					output.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
+      // save properties to project root folder
+      prop.store(output, null);
 
-		}
-	}
+    } catch (IOException io) {
+      io.printStackTrace();
+    } finally {
+      if (output != null) {
+        try {
+          output.close();
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+      }
 
-	public Window getWindow() {
-		return window;
-	}
+    }
+  }
 
-	public void renderFrame() {
-		window.repaint();
-	}
+  public Window getWindow() {
+    return window;
+  }
+
+  public void renderFrame() {
+    window.repaint();
+  }
 
 }

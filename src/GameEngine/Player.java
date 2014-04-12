@@ -8,6 +8,7 @@ public class Player {
   private double score;
   private int numLinesRemoved;
   private Shape shapeStocked;
+  private final Object monitor = new Object();
 
   public Player(int nb, Shape s, Shape s2) {
     boardGame = new BoardGame(nb, s, s2, this);
@@ -22,9 +23,9 @@ public class Player {
     shapeStocked = null;
     return s; //vérifier si ca ne retourne pas toujours null... 
   }
-  
+
   public boolean hasShapeStocked() {
-    if(shapeStocked != null){
+    if (shapeStocked != null) {
       return true;
     }
     return false;
@@ -34,31 +35,44 @@ public class Player {
     return number;
   }
 
-  public synchronized void down() {
-    CurrentShape s = getCurrentShape();
-    int tmpY = s.getY();
-    if (!s.tryCollision(boardGame.getGrid().getTGrid(), s.getX(),  s.getY()+1)) {
-      s.tryMove(s.getX(), s.getY() + 1);
-    }
-    //Si on ne peut pas faire descendre la pièce plus bas, on l'inscrit dans la Grid
-    if (tmpY == s.getY()) {
-      Grid g = boardGame.getGrid();
-      boardGame.setInGrid(s);
+  public void down() {
+    synchronized (monitor) {
+      CurrentShape s = getCurrentShape();
+      int tmpY = s.getY();
+      if (!s.tryCollision(boardGame.getGrid().getTGrid(), s.getX(), s.getY() + 1)) {
+        s.move(s.getX(), s.getY() + 1);
+      }
+      //Si on ne peut pas faire descendre la pièce plus bas, on l'inscrit dans la Grid
+      if (tmpY == s.getY()) {
+        Grid g = boardGame.getGrid();
+        boardGame.setInGrid(s);
+      }
     }
   }
 
   public void left() {
     CurrentShape s = getCurrentShape();
-    if (!s.tryCollision(boardGame.getGrid().getTGrid(), s.getX()-1,  s.getY())) {
-    	s.tryMove(s.getX() - 1, s.getY());
+    if (!s.tryCollision(boardGame.getGrid().getTGrid(), s.getX() - 1, s.getY())) {
+      s.move(s.getX() - 1, s.getY());
     }
   }
 
   public void right() {
     CurrentShape s = getCurrentShape();
-    if (!s.tryCollision(boardGame.getGrid().getTGrid(), s.getX()+1, s.getY())) {
-    	s.tryMove(s.getX() + 1, s.getY());
+    if (!s.tryCollision(boardGame.getGrid().getTGrid(), s.getX() + 1, s.getY())) {
+      s.move(s.getX() + 1, s.getY());
     }
+  }
+
+  public void dropDown() {
+    CurrentShape s = getCurrentShape();
+
+    int finalLine = new Integer(s.getY());
+    while (!s.tryCollision(boardGame.getGrid().getTGrid(), s.getX(), finalLine)) {
+      ++finalLine;
+    }
+
+    s.move(s.getX(), finalLine - 1);
   }
 
   public void rotate() {
@@ -80,7 +94,12 @@ public class Player {
     }
   }
 
-  int getLevel() {
+  public int getLevel() {
     return level;
   }
+
+  public void setLevelUp() {
+    ++level;
+  }
+
 }
