@@ -205,8 +205,7 @@ public class CurrentShape extends Shape {
   
   /* TryCollision pour la rotation */
   public boolean tryCollision(Brick[][] g, int newX, int newY, int[][] rep) {
-  	System.out.println("x: " + newX + ", y: " + newY);
-    if (newX < 0 || newX >= (10 - getMaxX(rep))) {
+  	if (newX < 0 || newX >= (10 - getMaxX(rep))) {
       return true;
     }
     if (newY <0 || newY >= (20 - getMaxY(rep))) {
@@ -216,7 +215,6 @@ public class CurrentShape extends Shape {
     for (int i = 0; i < 4; ++i) {
       for (int j = 0; j < 4; ++j) {
         int value = rep[i][j];
-        System.out.println("newY: " + (newY + i) + ", newX: " + (newX + j));
         //On teste s'il y a déjà un élément dans la grid
         if (value > 0 && g[newY + i][newX + j].getNb() >= 1) {
           return true;
