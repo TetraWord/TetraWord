@@ -30,19 +30,23 @@ public class CurrentShape extends Shape {
 
   public void rotateLeft(Brick[][] g) {
     int[][] repTmp = new int[4][4];
+    Brick[][] compTmp = new Brick[4][4];
+    
     for (int i = 0; i < 4; ++i) {
       for (int j = 0; j < 4; ++j) {
         repTmp[i][j] = representation[3 - j][i];
+        compTmp[i][j] = composition[3 - j][i];
       }
     }
 
     repTmp = replaceToTopLeftCorner(repTmp);
+    compTmp = replaceToTopLeftCorner(compTmp);
 
     //Vérifier ici s'il y a une collision
     if (!tryCollision(g, curX, curY, repTmp)) {
       //Sinon si yen a pas 
       representation = repTmp;
-      setComposition(representation);
+      composition = compTmp;
 
 	    //Pour replacer la pièce danbs la grid si lors de la rotation elle se met à dépasser (exemple de la barre en bas)
       //A VERIFIER SUR UN VRAI TETRIS OU ALORS A SUPPRIMER UNE FOIS LA COLLISION TESTE AU MOINS EN Y
@@ -53,6 +57,8 @@ public class CurrentShape extends Shape {
         --curY;
       }
     }
+    
+		updateObservateur(null);
   }
 
   public int getMaxX(int[][] matrix) {
@@ -88,7 +94,64 @@ public class CurrentShape extends Shape {
     }
     return 0;
   }
+  
+  public int getMinY(Brick[][] matrix) {
+    int finalLine = new Integer(getY());
+    
+    while (!tryCollision(matrix, getX(), finalLine)){
+        		++finalLine;
+    }
+	  
+    return finalLine-1;
+  }
+  
+  private Brick[][] replaceToTopLeftCorner(Brick[][] matrix) {
+    boolean lineIsEmpty = true;
+    boolean colIsEmpty = true;
+    int firstLineNoEmpty = -1;
+    int firstColNoEmpty = -1;
 
+    for (int i = 0; i < matrix.length; ++i) {
+      for (int j = 0; j < matrix[i].length; ++j) {
+        if (matrix[i][j] != null) {
+          lineIsEmpty = false;
+        }
+        if (matrix[j][i] != null) {
+          colIsEmpty = false;
+        }
+      }
+      if (!lineIsEmpty && firstLineNoEmpty == -1) {
+        firstLineNoEmpty = i;
+      } else if (!colIsEmpty && firstColNoEmpty == -1) {
+        firstColNoEmpty = i;
+      }
+    }
+
+    int prevValue = firstColNoEmpty;
+    Brick[][] tmp = new Brick[matrix.length][matrix[0].length];
+    for (int i = 0; i < matrix.length; ++i) {
+      if (firstLineNoEmpty == matrix.length) {
+        firstLineNoEmpty = 0;
+      }
+      tmp[i] = matrix[firstLineNoEmpty];
+      ++firstLineNoEmpty;
+    }
+
+    Brick[][] tmp2 = new Brick[tmp.length][tmp[0].length];
+    for (int i = 0; i < tmp.length; ++i) {
+      for (int j = 0; j < tmp[i].length; ++j) {
+        if (firstColNoEmpty == tmp[i].length) {
+          firstColNoEmpty = 0;
+        }
+        tmp2[i][j] = tmp[i][firstColNoEmpty];
+        ++firstColNoEmpty;
+      }
+      firstColNoEmpty = prevValue;
+    }
+
+    return tmp2;
+  }
+  
   private int[][] replaceToTopLeftCorner(int[][] matrix) {
     boolean lineIsEmpty = true;
     boolean colIsEmpty = true;
@@ -165,7 +228,6 @@ public class CurrentShape extends Shape {
 
   /* TryCollision pour la rotation */
   public boolean tryCollision(Brick[][] g, int newX, int newY, int[][] rep) {
-
     if (newX < 0 || newX >= (10 - getMaxX(rep))) {
       return true;
     }

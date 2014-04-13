@@ -24,6 +24,7 @@ public class Brick {
     this.number = number;
     this.color = c;
     char l = (char) ((int) 'a' + r.nextInt(26));
+    this.letter = l;
   }
 
   public Brick(Brick b) {

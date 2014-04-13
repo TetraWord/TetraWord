@@ -41,6 +41,7 @@ class Grid2D extends JPanel implements Observer {
 
     if (currentShape != null) {
       currentShape.paintComponent(g);
+      currentShape.paintShadow(g, model.getTGrid());
     }
     //Brick draw
     Brick[][] t = model.getTGrid();

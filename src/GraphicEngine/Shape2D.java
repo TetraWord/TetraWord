@@ -111,4 +111,32 @@ public class Shape2D {
       return null;
     }
   }
+  
+  public BufferedImage getBrickShadow (Color myColor){
+    try {
+			BufferedImage monImage = ImageIO.read(new File(brick));
+			WritableRaster trame = monImage.getRaster();
+			ColorModel color = monImage.getColorModel();
+
+			for (int i = 0; i < 35; ++i) {
+				for (int j = 0; j < 35; ++j) {
+					/*Get alpha of the image*/
+					Object pixel = trame.getDataElements(i, j, null);
+					int alpha = color.getAlpha(pixel);
+					if(alpha >=130){
+						alpha -= 130;
+					}
+					/*Create new color with alpha of the image*/
+					myColor = new Color(myColor.getRed(), myColor.getGreen(), myColor.getBlue(), alpha);
+					int rgb = myColor.getRGB();
+					Object couleur = color.getDataElements(rgb, null);
+					trame.setDataElements(i, j, couleur);
+				}
+			}    
+      return monImage;
+    } catch (IOException e) {
+			e.printStackTrace();
+      return null;
+		}
+  }
 }
