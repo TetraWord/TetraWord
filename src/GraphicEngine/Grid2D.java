@@ -51,9 +51,6 @@ class Grid2D extends JPanel implements Observer {
 				//System.out.println(i+" "+j);
         Brick b = t[i][j];
         if (t[i][j].getNb() > 0 ) {
-				if(i == 0 && j == 0){
-					System.out.println("ahah");
-				}
           BufferedImage monImage = currentShape.getBrickImage(b.getColor());
 					compositionBrick2D[i][j].draw(g, j * sizeBrick + left, i * sizeBrick + top, monImage);
         }
@@ -106,8 +103,6 @@ class Grid2D extends JPanel implements Observer {
 			for( int j = 0; j < bricks[i].length; ++j){
 				if( bricks[i][j].getNb() > 0 ){
 					compositionBrick2D[i][j] = new Brick2D(bricks[i][j]);
-				}else{
-					compositionBrick2D[i][j] = null;
 				}
 			}
 		}

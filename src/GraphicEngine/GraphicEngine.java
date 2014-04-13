@@ -33,8 +33,8 @@ public class GraphicEngine {
       output = new FileOutputStream("conf/myConf.properties");
 
       // set the properties value
-      prop.setProperty("background", "media/Design/paper/background.jpg");
-      prop.setProperty("brick", "media/Design/paper/brick.png");
+      prop.setProperty("background", "media/Design/futur/background.jpg");
+      prop.setProperty("brick", "media/Design/futur/brick.png");
 
       // save properties to project root folder
       prop.store(output, null);

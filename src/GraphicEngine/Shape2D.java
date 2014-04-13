@@ -123,8 +123,8 @@ public class Shape2D {
 					/*Get alpha of the image*/
 					Object pixel = trame.getDataElements(i, j, null);
 					int alpha = color.getAlpha(pixel);
-					if(alpha >=130){
-						alpha -= 130;
+					if(alpha >=110){
+						alpha -= 110;
 					}
 					/*Create new color with alpha of the image*/
 					myColor = new Color(myColor.getRed(), myColor.getGreen(), myColor.getBlue(), alpha);

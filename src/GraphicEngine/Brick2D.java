@@ -19,10 +19,10 @@ public class Brick2D {
 		g.drawImage(img, top, left, null);
 		String letter = Character.toString( model.getLetter() );
 		String toUpperCase = letter.toUpperCase();
-		Font font = new Font("Arial",Font.BOLD,30);
+		Font font = new Font("Arial",Font.BOLD,20);
 		g.setFont(font);
 		g.setColor(Color.white);
-		g.drawString( toUpperCase, top + 5, left + 25);
+		g.drawString( toUpperCase, top + 10, left + 25);
 	}
 	
 	
