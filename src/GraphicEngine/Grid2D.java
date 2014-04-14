@@ -7,6 +7,7 @@ import Pattern.Observable;
 import Pattern.Observer;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import javax.swing.JButton;
 import javax.swing.JPanel;
 
 class Grid2D extends JPanel implements Observer {
@@ -14,14 +15,22 @@ class Grid2D extends JPanel implements Observer {
   private Grid model = null;
   private CurrentShape2D currentShape = null;
   private final Brick2D[][] compositionBrick2D;
+  private JButton test;
 
   public Grid2D(Grid model) {
+    this.setLayout(null);
+    this.setSize(350,700);
+    this.setOpaque(false);
     this.model = model;
-    this.setVisible(true);
-
+        
+    test = new JButton("coucou clic moi");
+    test.setBounds(0, 0, 35, 35);
+    //this.add(test);
+    
 		Brick[][] tabBrick = model.getTGrid();
 		compositionBrick2D = new Brick2D[tabBrick.length][tabBrick[0].length];
-
+    
+    this.setVisible(true);
   }
 
   public void setShape2D(CurrentShape s) {
@@ -29,8 +38,7 @@ class Grid2D extends JPanel implements Observer {
     s.addObservateur(currentShape);
   }
 
-  @Override
-  public void paintComponent(Graphics g) {
+  public void draw(Graphics g) {
     //Grid draw
     int top = 135;
     int left = 70;
@@ -80,9 +88,6 @@ class Grid2D extends JPanel implements Observer {
     int xCS = cs.getX();
     int yCS = cs.getY();
 
-    int top = 135;
-    int left = 70;
-    int sizeBrick = 35;
     int x, y;
     for (int i = 0; i < 4; ++i) {
       for (int j = 0; j < 4; ++j) {

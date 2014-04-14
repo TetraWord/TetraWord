@@ -44,7 +44,9 @@ public class BoardGame2D extends JPanel implements Observer {
     this.add(level);
 
     gameGrid = new Grid2D(model.getGrid());
+    gameGrid.setBounds(70, 135, 350, 700);
     model.getGrid().addObservateur(gameGrid);
+    this.add(gameGrid);
 
     setShapeToGrid2D();
 
@@ -115,7 +117,7 @@ public class BoardGame2D extends JPanel implements Observer {
       e.printStackTrace();
     }
     drawHUB(g);
-    gameGrid.paintComponent(g);
+    gameGrid.draw(g);
   }
 
   private void drawHUB(Graphics g) {
