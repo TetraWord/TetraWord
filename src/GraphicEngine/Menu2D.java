@@ -123,11 +123,11 @@ public class Menu2D extends JPanel {
     y = y + step_y;
     this.add(new Button2D("Previous", x, y, sx, sy));
   }
-
+	
   @Override
   public void paintComponent(Graphics g) {
     super.paintComponent(g);
-    if (state != MenuState.DESIGN) {
+    if (state != MenuState.DESIGN && state != MenuState.DIFFICULTY ) {
       try {
         /*Try to load background image from chosen design*/
 

@@ -6,6 +6,7 @@ public enum MenuState {
   GAME("Game Menu"),
   OPTION("Option Menu"),
   DESIGN("Design Menu"),
+  DIFFICULTY("Difficulty Menu"),
   MULTI("MultiPlayers Menu");
 
   private String name = "";

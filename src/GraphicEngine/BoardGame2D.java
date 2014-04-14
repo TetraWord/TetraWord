@@ -30,6 +30,7 @@ public class BoardGame2D extends JPanel implements Observer {
   private String background;
   private final JLabel level;
   private final GridEventListener event;
+	private boolean shadow;
 
   public BoardGame2D(BoardGame model) {
     /* Settings */
@@ -44,16 +45,23 @@ public class BoardGame2D extends JPanel implements Observer {
     this.level = new JLabel("1", CENTER);
     setJLabel(level, 530, 770, 50, 50);
     this.add(level);
+    
+		loadDesign();
+		loadOptions();
 
+    
     event = new GridEventListener(this.model);
-    gameGrid = new Grid2D(model.getGrid(), event);
+    gameGrid = new Grid2D(model.getGrid(), event, shadow);
     gameGrid.setBounds(70, 135, 350, 700);
+
     model.getGrid().addObservateur(gameGrid);
     this.add(gameGrid);
 
     setShapeToGrid2D();
-
-    /**
+  }
+	
+	private void loadDesign(){
+		/**
      * Graphics properties *
      */
     Properties prop = new Properties();
@@ -81,7 +89,35 @@ public class BoardGame2D extends JPanel implements Observer {
         }
       }
     }
-  }
+	}
+	
+	private void loadOptions(){
+		Properties prop = new Properties();
+    InputStream input = null;
+
+    /*Get background image from file design*/
+    try {
+      input = new FileInputStream("conf/options.properties");
+
+      // load a properties file
+      prop.load(input);
+
+      shadow = Boolean.parseBoolean( prop.getProperty("shadow") );
+
+    } catch (IOException ex) {
+      /*Default background*/
+      shadow = false;
+      ex.printStackTrace();
+    } finally {
+      if (input != null) {
+        try {
+          input.close();
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+      }
+    }
+	}
 
   private void setJLabel(JLabel jl, int x, int y, int sx, int sy) {
     jl.setBounds(x, y, sx, sy);

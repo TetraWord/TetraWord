@@ -15,13 +15,17 @@ public class Grid2D extends JPanel implements Observer {
   private Grid model = null;
   private CurrentShape2D currentShape = null;
   private final Brick2D[][] compositionBrick2D;
-  private BrickButton[][] clickGrid;
+  private final BrickButton[][] clickGrid;
+	private final boolean shadowed;
 
-  public Grid2D(Grid model, GridEventListener event) {
+  public Grid2D(Grid model, GridEventListener event, boolean shadow) {
+    this.model = model;
+		this.shadowed = shadow;
+    
     this.setLayout(null);
     this.setSize(350,700);
-    this.setOpaque(false);
-    this.model = model;
+    this.setOpaque(false);	
+    this.setVisible(true);
 
     this.clickGrid = new BrickButton[20][10];
     for(int i = 0; i < 20; ++i){
@@ -52,7 +56,9 @@ public class Grid2D extends JPanel implements Observer {
 
     if (currentShape != null) {
       currentShape.paintComponent(g);
-      currentShape.paintShadow(g, model.getTGrid());
+			if (shadowed) {
+				currentShape.paintShadow(g, model.getTGrid());
+			}
     }
     //Brick draw
     Brick[][] t = model.getTGrid();

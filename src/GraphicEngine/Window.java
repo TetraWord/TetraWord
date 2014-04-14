@@ -55,6 +55,12 @@ public class Window extends JFrame {
     this.setContentPane(menu);
     this.setVisible(true);
   }
+
+	public void defineDifficultyMenu() {
+		menu = new DifficultyMenu2D();
+    this.setContentPane(menu);
+    this.setVisible(true);
+	}
   
   public void defineMultiPlayersMenu() {
     menu = new Menu2D();
@@ -80,7 +86,7 @@ public class Window extends JFrame {
 
   public void reloadApercuBackground(String item) {
     Container pan = getContentPane();
-    if (pan instanceof DesignMenu2D) {
+    if (pan instanceof DesignMenu2D ) {
       ((DesignMenu2D) pan).loadApercus(item);
     }
   }

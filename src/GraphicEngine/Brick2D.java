@@ -29,7 +29,7 @@ public class Brick2D {
 		if(shadow){
 			Graphics2D g2d = (Graphics2D) g;
 
-			Composite comp = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.2f);
+			Composite comp = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f);
 			g2d.setComposite(comp);
 			g2d.setPaint(Color.black);
 			g2d.setFont(new Font("Arial", Font.BOLD, 20));
