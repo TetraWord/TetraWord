@@ -72,7 +72,7 @@ public class DesignMenu2D extends Menu2D {
         OutputStream output = null;
         try {
 
-          output = new FileOutputStream("conf/myConf.properties");
+          output = new FileOutputStream("conf/design.properties");
 
           // set the properties value
           prop.setProperty("background", apercuBackground);

@@ -1,5 +1,6 @@
 package GraphicEngine;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -25,32 +26,35 @@ public class GraphicEngine {
   public void init() {
     window.defineMainMenu();
 
-    Properties prop = new Properties();
-    OutputStream output = null;
+		File f = new File("conf/design.properties");
+		if(!f.exists()) {
+			Properties prop = new Properties();
+			OutputStream output = null;
 
-    try {
+			try {
 
-      output = new FileOutputStream("conf/myConf.properties");
+				output = new FileOutputStream("conf/design.properties");
 
-      // set the properties value
-      prop.setProperty("background", "media/Design/futur/background.jpg");
-      prop.setProperty("brick", "media/Design/futur/brick.png");
+				// set the properties value
+				prop.setProperty("background", "media/Design/futur/background.jpg");
+				prop.setProperty("brick", "media/Design/futur/brick.png");
 
-      // save properties to project root folder
-      prop.store(output, null);
+				// save properties to project root folder
+				prop.store(output, null);
 
-    } catch (IOException io) {
-      io.printStackTrace();
-    } finally {
-      if (output != null) {
-        try {
-          output.close();
-        } catch (IOException e) {
-          e.printStackTrace();
-        }
-      }
+			} catch (IOException io) {
+				io.printStackTrace();
+			} finally {
+				if (output != null) {
+					try {
+						output.close();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
 
-    }
+			}
+		}
   }
 
   public Window getWindow() {

@@ -54,9 +54,9 @@ public class BoardGame2D extends JPanel implements Observer {
     Properties prop = new Properties();
     InputStream input = null;
 
-    /*Get background image from file myConf*/
+    /*Get background image from file design*/
     try {
-      input = new FileInputStream("conf/myConf.properties");
+      input = new FileInputStream("conf/design.properties");
 
       // load a properties file
       prop.load(input);

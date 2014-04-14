@@ -20,11 +20,6 @@ class Grid2D extends JPanel implements Observer {
     this.setVisible(true);
 		Brick[][] tabBrick = model.getTGrid();
 		compositionBrick2D = new Brick2D[tabBrick.length][tabBrick[0].length];
-		/*for (int i = 0; i < compositionBrick2D.length; ++i) {
-      for (int j = 0; j < compositionBrick2D[i].length; ++j) {
-				compositionBrick2D[i][j] = null;
-			}
-		}*/
   }
 
   public void setShape2D(CurrentShape s) {

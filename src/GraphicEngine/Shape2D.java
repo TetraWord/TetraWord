@@ -42,10 +42,10 @@ public class Shape2D {
     Properties prop = new Properties();
 		InputStream input = null;
 		
-		/*Get brick image from file myConf*/
+		/*Get brick image from file design*/
     try {
 
-      input = new FileInputStream("conf/myConf.properties");
+      input = new FileInputStream("conf/design.properties");
 
       // load a properties file
       prop.load(input);
@@ -92,7 +92,7 @@ public class Shape2D {
       BufferedImage monImage = ImageIO.read(new File(brick));
       WritableRaster trame = monImage.getRaster();
       ColorModel color = monImage.getColorModel();
-
+			
       for (int i = 0; i < 35; ++i) {
         for (int j = 0; j < 35; ++j) {
           /*Get alpha of the image*/
@@ -125,6 +125,8 @@ public class Shape2D {
 					int alpha = color.getAlpha(pixel);
 					if(alpha >=110){
 						alpha -= 110;
+					}else{
+						alpha = 0;
 					}
 					/*Create new color with alpha of the image*/
 					myColor = new Color(myColor.getRed(), myColor.getGreen(), myColor.getBlue(), alpha);
