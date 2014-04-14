@@ -44,6 +44,7 @@ public class MenuEventListener implements ActionListener {
         break;
 
       case "Difficulty":
+        c.defineDifficultyMenu();
         break;
 
       case "Exit":

@@ -55,6 +55,12 @@ public class Window extends JFrame {
     this.setContentPane(menu);
     this.setVisible(true);
   }
+
+	public void defineDifficultyMenu() {
+		menu = new DifficultyMenu2D();
+    this.setContentPane(menu);
+    this.setVisible(true);
+	}
   
   public void defineMultiPlayersMenu() {
     menu = new Menu2D();

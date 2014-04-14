@@ -85,6 +85,12 @@ public class ContextManager {
     w.repaint();
   }
 
+	void defineDifficultyMenu() {
+		Window w = graphicEngine.getWindow();
+    w.defineDifficultyMenu();
+    w.repaint();
+	}
+
   public void reloadApercuBackground(String item) {
 
     Window w = graphicEngine.getWindow();
