@@ -79,7 +79,7 @@ public class Shape2D {
 				for (int j = 0; j < 4; ++j) {
 					if (representation[i][j] > 0) {
 						if (compositionBrick2D[i][j] != null) {
-							compositionBrick2D[i][j].draw(g, j * sizeBrick + left, i * sizeBrick + top, monImage);
+							compositionBrick2D[i][j].draw(g, j * sizeBrick + left, i * sizeBrick + top, monImage, false);
 						}
 					}
 				}
