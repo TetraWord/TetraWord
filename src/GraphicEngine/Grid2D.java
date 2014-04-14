@@ -50,7 +50,7 @@ class Grid2D extends JPanel implements Observer {
       for (int j = 0; j < t[i].length; ++j) {
 				//System.out.println(i+" "+j);
         Brick b = t[i][j];
-        if (t[i][j].getNb() > 0 ) {
+        if (t[i][j].getNb() > 0 && compositionBrick2D[i][j] != null ) {
 				if(i == 0 && j == 0){
 					System.out.println("ahah");
 				}
