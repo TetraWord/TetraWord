@@ -65,7 +65,7 @@ public class BoardGame2D extends JPanel implements Observer {
 
     } catch (IOException ex) {
       /*Default background*/
-      background = "media/Design/Paper/background.jpg";
+      background = "media/Design/Futur/background.jpg";
       ex.printStackTrace();
     } finally {
       if (input != null) {
