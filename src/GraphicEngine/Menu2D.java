@@ -1,24 +1,11 @@
 package GraphicEngine;
 
 import static GraphicEngine.GraphicEngine.WINDOW_WIDTH;
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.util.Enumeration;
-import java.util.Properties;
 import javax.imageio.ImageIO;
-import javax.swing.AbstractButton;
-import javax.swing.ButtonGroup;
-import javax.swing.JCheckBox;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class Menu2D extends JPanel {
@@ -140,7 +127,7 @@ public class Menu2D extends JPanel {
   @Override
   public void paintComponent(Graphics g) {
     super.paintComponent(g);
-    if (state != MenuState.DESIGN) {
+    if (state != MenuState.DESIGN && state != MenuState.DIFFICULTY ) {
       try {
         /*Try to load background image from chosen design*/
 

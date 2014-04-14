@@ -14,10 +14,12 @@ class Grid2D extends JPanel implements Observer {
   private Grid model = null;
   private CurrentShape2D currentShape = null;
   private final Brick2D[][] compositionBrick2D;
+	private final boolean shadowed;
 
-  public Grid2D(Grid model) {
+  public Grid2D(Grid model, boolean shadow) {
     this.model = model;
     this.setVisible(true);
+		this.shadowed = shadow;						
 
 		Brick[][] tabBrick = model.getTGrid();
 		compositionBrick2D = new Brick2D[tabBrick.length][tabBrick[0].length];
@@ -38,7 +40,9 @@ class Grid2D extends JPanel implements Observer {
 
     if (currentShape != null) {
       currentShape.paintComponent(g);
-      currentShape.paintShadow(g, model.getTGrid());
+			if (shadowed) {
+				currentShape.paintShadow(g, model.getTGrid());
+			}
     }
     //Brick draw
     Brick[][] t = model.getTGrid();

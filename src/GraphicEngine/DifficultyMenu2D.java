@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 package GraphicEngine;
 
@@ -19,10 +14,6 @@ import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author Marine
- */
 class DifficultyMenu2D extends Menu2D {
 
 	JCheckBox shadow;
@@ -39,9 +30,21 @@ class DifficultyMenu2D extends Menu2D {
 		
 		int sx = 300, sy = 50;
     int x = WINDOW_WIDTH / 2 - sx / 2;
-    int y = 300;
+    int y = 50;
     int step_y = 50 + sy;
 		
+		/* Title */
+		JLabel title = new JLabel("Difficulty");
+    title.setBounds(x, y, sx, sy);
+    title.setFont(new Font("Champagne & Limousines", 50, 50));
+    title.setForeground(Color.white);
+		title.setHorizontalAlignment(JLabel.CENTER);
+		title.setVerticalAlignment(JLabel.CENTER);
+    this.add(title);
+		
+		y = y + step_y;
+		
+		/* Shadow */
 		JLabel label = new JLabel("Show shadow");
     label.setBounds(x, y, sx, sy);
     label.setFont(new Font("Champagne & Limousines", 20, 20));
@@ -99,7 +102,7 @@ class DifficultyMenu2D extends Menu2D {
     this.add(b);
     y = y + step_y;
     this.add(new Button2D("Previous", x, y, sx, sy));
-     
+    
 	}
 
 	

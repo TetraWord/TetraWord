@@ -86,7 +86,7 @@ public class Window extends JFrame {
 
   public void reloadApercuBackground(String item) {
     Container pan = getContentPane();
-    if (pan instanceof DesignMenu2D) {
+    if (pan instanceof DesignMenu2D ) {
       ((DesignMenu2D) pan).loadApercus(item);
     }
   }
