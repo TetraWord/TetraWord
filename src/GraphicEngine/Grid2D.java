@@ -1,5 +1,6 @@
 package GraphicEngine;
 
+import ContextManager.GridEventListener;
 import GameEngine.Brick;
 import GameEngine.CurrentShape;
 import GameEngine.Grid;
@@ -7,26 +8,34 @@ import Pattern.Observable;
 import Pattern.Observer;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import javax.swing.JButton;
 import javax.swing.JPanel;
 
-class Grid2D extends JPanel implements Observer {
+public class Grid2D extends JPanel implements Observer {
 
   private Grid model = null;
   private CurrentShape2D currentShape = null;
   private final Brick2D[][] compositionBrick2D;
-  private JButton test;
+  private BrickButton[][] clickGrid;
+  private final GridEventListener event;
 
   public Grid2D(Grid model) {
     this.setLayout(null);
     this.setSize(350,700);
     this.setOpaque(false);
     this.model = model;
-        
-    test = new JButton("coucou clic moi");
-    test.setBounds(0, 0, 35, 35);
-    //this.add(test);
     
+    event = new GridEventListener(this.model);
+
+    this.clickGrid = new BrickButton[20][10];
+    for(int i = 0; i < 20; ++i){
+      for(int j = 0; j < 10; ++j){
+        BrickButton b = new BrickButton(j, i);
+        b.addMouseListener(event);
+        clickGrid[i][j] = b;
+        this.add(clickGrid[i][j]);
+      }
+    }
+        
 		Brick[][] tabBrick = model.getTGrid();
 		compositionBrick2D = new Brick2D[tabBrick.length][tabBrick[0].length];
     

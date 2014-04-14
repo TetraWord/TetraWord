@@ -4,7 +4,7 @@ import Pattern.Observable;
 import Pattern.Observer;
 import java.util.ArrayList;
 
-public class Grid implements Observable {
+public class Grid implements Observable, Observer{
 
   private static final int sizeX = 10;
   private static final int sizeY = 20;
@@ -143,6 +143,17 @@ public class Grid implements Observable {
         System.out.print(tGrid[i][j]);
       }
       System.out.println();
+    }
+  }
+
+  @Override
+  public void update(Observable o, Object args) {
+    if (args instanceof int[]) {
+      /*We select the clicked Brick */
+      int x = ((int[])args)[0];
+      int y = ((int[])args)[1];
+      Brick b = tGrid[y][x];
+      System.out.println(b.getLetter());
     }
   }
 }
