@@ -1,5 +1,6 @@
 package GraphicEngine;
 
+import ContextManager.GridEventListener;
 import GameEngine.BoardGame;
 import GameEngine.Player;
 import Pattern.Observable;
@@ -28,6 +29,7 @@ public class BoardGame2D extends JPanel implements Observer {
   private final BoardGame model;
   private String background;
   private final JLabel level;
+  private final GridEventListener event;
 	private boolean shadow;
 
   public BoardGame2D(BoardGame model) {
@@ -47,8 +49,13 @@ public class BoardGame2D extends JPanel implements Observer {
 		loadDesign();
 		loadOptions();
 
-    gameGrid = new Grid2D(model.getGrid(), shadow);
+    
+    event = new GridEventListener(this.model);
+    gameGrid = new Grid2D(model.getGrid(), event, shadow);
+    gameGrid.setBounds(70, 135, 350, 700);
+
     model.getGrid().addObservateur(gameGrid);
+    this.add(gameGrid);
 
     setShapeToGrid2D();
   }
@@ -149,7 +156,7 @@ public class BoardGame2D extends JPanel implements Observer {
       e.printStackTrace();
     }
     drawHUB(g);
-    gameGrid.paintComponent(g);
+    gameGrid.draw(g);
   }
 
   private void drawHUB(Graphics g) {

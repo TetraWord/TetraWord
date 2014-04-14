@@ -10,7 +10,7 @@ import java.util.LinkedList;
 import java.util.Properties;
 import java.util.Queue;
 
-public class BoardGame implements Observable {
+public class BoardGame implements Observable, Observer {
 
   private final Grid grid;
   private final static ShapesStock ss = ShapesStock.getInstance();
@@ -19,6 +19,7 @@ public class BoardGame implements Observable {
   private final Player myPlayer;
   private final Queue<Shape> listNextShape = new LinkedList<>();
   private boolean play;
+  private boolean allowClick = false;
 
   public BoardGame(int nb, Shape s, Shape s2, Player p) {
     this.nb = nb;
@@ -58,7 +59,7 @@ public class BoardGame implements Observable {
     return ss.getRandomShape();
   }
 
-  public CurrentShape launchNextShape() {
+  public void launchNextShape() {
     int size = listNextShape.size();
     CurrentShape cs = new CurrentShape(listNextShape.poll());
     Shape s = new CurrentShape(getRandomShape());
@@ -70,7 +71,11 @@ public class BoardGame implements Observable {
 
     updateObservateur(null);
 
-    return cs;
+    if (!grid.isComplete(cs)) {
+      grid.setCurrentShape(cs);
+    }
+    grid.updateObservateur(cs);
+
   }
 
   public Shape getNextShape() {
@@ -92,6 +97,49 @@ public class BoardGame implements Observable {
   @Override
   public void delObservateur() {
     listObserver = new ArrayList<>();
+  }
+
+  void removeFullLine() {
+    int line = grid.getFirstFullLine();
+
+    while (line != -1) {
+      myPlayer.switchToAnagram(true);
+      setAllowClick(true);
+
+      while (myPlayer.isAnagram()) {
+        System.out.println("Pour le moment : "+myPlayer.getWord());
+        if(myPlayer.isWordFinished()){
+          System.out.println("j'ai tapé : "+myPlayer.getWord());
+        }
+      }
+      
+      myPlayer.clearWord();
+      grid.removeLine(line);
+
+      line = grid.getFirstFullLine();
+      /* Remove this later it's just for some test 
+       myBoardGame.getPlayer().setLevelUp();
+       int level = myBoardGame.getPlayer().getLevel();
+       myBoardGame.updateObservateur(level); */
+
+    }
+
+    myPlayer.switchToAnagram(false);
+  }
+
+  public void setAllowClick(boolean b) {
+    allowClick = b;
+  }
+
+  @Override
+  public void update(Observable o, Object args) {
+    if (args instanceof int[] && allowClick) {
+      /*We select the clicked Brick */
+      int x = ((int[]) args)[0];
+      int y = ((int[]) args)[1];
+      Brick b = grid.getTGrid()[y][x];
+      myPlayer.addNewChar(b.getLetter());
+    }
   }
 
 }

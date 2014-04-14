@@ -4,7 +4,7 @@ import Pattern.Observable;
 import Pattern.Observer;
 import java.util.ArrayList;
 
-public class Grid implements Observable {
+public class Grid implements Observable{
 
   private static final int sizeX = 10;
   private static final int sizeY = 20;
@@ -29,6 +29,10 @@ public class Grid implements Observable {
 
   public CurrentShape getCurrentShape() {
     return currentShape;
+  }
+  
+  public void setCurrentShape(CurrentShape cs){
+    currentShape = cs;
   }
 
   public int getFirstFullLine() {
@@ -102,7 +106,6 @@ public class Grid implements Observable {
   }
 
   void setIn(CurrentShape s) {
-
     for (int i = 0; i < 4; ++i) {
       for (int j = 0; j < 4; ++j) {
         int y = s.getY() + i;
@@ -114,27 +117,6 @@ public class Grid implements Observable {
         }
       }
     }
-
-    int line = getFirstFullLine();
-    
-    while (line != -1) {
-      
-      removeLine(line);
-      
-      line = getFirstFullLine();
-
-      /* Remove this later it's just for some test 
-      myBoardGame.getPlayer().setLevelUp();
-      int level = myBoardGame.getPlayer().getLevel();
-      myBoardGame.updateObservateur(level); */
-
-    }
-
-    CurrentShape cs = myBoardGame.launchNextShape();
-    if (!isComplete(cs)) {
-      currentShape = cs;
-    }
-    updateObservateur(currentShape);
   }
 
   private void printGrid() {

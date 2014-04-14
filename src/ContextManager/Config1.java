@@ -40,6 +40,13 @@ public class Config1 extends KeyAdapter {
       case KeyEvent.VK_NUMPAD0:
         p.dropDown();
         break;
+        
+      case KeyEvent.VK_ENTER:
+        if(p.isAnagram()){
+          p.switchToAnagram(false);
+          p.getBoardGame().setAllowClick(false);
+        }
+        break;
 
       case KeyEvent.VK_P:
         ContextManager.getInstance().setPause();

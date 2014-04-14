@@ -5,6 +5,9 @@ public class Player {
   private final BoardGame boardGame;
   private final int number;
   private int level;
+  private boolean anagram = false;
+  private boolean wordFinish = false;
+  private final StringBuilder word = new StringBuilder();
   private double score;
   private int numLinesRemoved;
   private Shape shapeStocked;
@@ -25,10 +28,7 @@ public class Player {
   }
 
   public boolean hasShapeStocked() {
-    if (shapeStocked != null) {
-      return true;
-    }
-    return false;
+    return shapeStocked != null;
   }
 
   public int getNumber() {
@@ -46,6 +46,10 @@ public class Player {
       if (tmpY == s.getY()) {
         Grid g = boardGame.getGrid();
         boardGame.setInGrid(s);
+        boardGame.removeFullLine();
+
+        boardGame.launchNextShape();
+
       }
     }
   }
@@ -102,4 +106,28 @@ public class Player {
     ++level;
   }
 
+  public void switchToAnagram(boolean b) {
+    wordFinish = b != true;
+    anagram = b;
+  }
+
+  public boolean isAnagram() {
+    return anagram;
+  }
+  
+  public void addNewChar(char c){
+    word.append(c);
+  }
+  
+  public String getWord(){
+    return word.toString();
+  }
+
+  public boolean isWordFinished() {
+    return wordFinish;
+  }
+
+  void clearWord() {
+    word.delete(0, word.length());
+  }
 }
