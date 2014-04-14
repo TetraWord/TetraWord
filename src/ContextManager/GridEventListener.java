@@ -1,7 +1,7 @@
 
 package ContextManager;
 
-import GameEngine.Grid;
+import GameEngine.BoardGame;
 import GraphicEngine.BrickButton;
 import Pattern.Observable;
 import Pattern.Observer;
@@ -13,7 +13,7 @@ public class GridEventListener extends MouseAdapter implements Observable{
   
   private ArrayList<Observer> listObserver = new ArrayList<>();
   
-  public GridEventListener(Grid obs){
+  public GridEventListener(BoardGame obs){
     addObservateur(obs);
   }
   

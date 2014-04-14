@@ -16,15 +16,12 @@ public class Grid2D extends JPanel implements Observer {
   private CurrentShape2D currentShape = null;
   private final Brick2D[][] compositionBrick2D;
   private BrickButton[][] clickGrid;
-  private final GridEventListener event;
 
-  public Grid2D(Grid model) {
+  public Grid2D(Grid model, GridEventListener event) {
     this.setLayout(null);
     this.setSize(350,700);
     this.setOpaque(false);
     this.model = model;
-    
-    event = new GridEventListener(this.model);
 
     this.clickGrid = new BrickButton[20][10];
     for(int i = 0; i < 20; ++i){
