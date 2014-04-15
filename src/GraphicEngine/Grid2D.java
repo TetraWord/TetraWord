@@ -6,6 +6,7 @@ import GameEngine.CurrentShape;
 import GameEngine.Grid;
 import Pattern.Observable;
 import Pattern.Observer;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import javax.swing.JPanel;
@@ -67,11 +68,16 @@ public class Grid2D extends JPanel implements Observer {
       for (int j = 0; j < t[i].length; ++j) {
         //System.out.println(i+" "+j);
         Brick b = t[i][j];
-        if (t[i][j].getNb() > 0 && compositionBrick2D[i][j] != null) {
+        if (b.getNb() > 0 && compositionBrick2D[i][j] != null) {
           if (i == 0 && j == 0) {
             System.out.println("ahah");
           }
-          BufferedImage monImage = currentShape.getBrickImage(b.getColor());
+          BufferedImage monImage;
+          if (b.isClicked()){
+            monImage = currentShape.getBrickImage(Color.GRAY);
+          }else{
+            monImage = currentShape.getBrickImage(b.getColor());
+          }
 					compositionBrick2D[i][j].draw(g, j * sizeBrick + left, i * sizeBrick + top, monImage, false);
         }
       }

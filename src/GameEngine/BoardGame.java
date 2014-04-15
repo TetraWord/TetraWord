@@ -138,7 +138,10 @@ public class BoardGame implements Observable, Observer {
       int x = ((int[]) args)[0];
       int y = ((int[]) args)[1];
       Brick b = grid.getTGrid()[y][x];
-      myPlayer.addNewChar(b.getLetter());
+      if( y == grid.getFirstFullLine() && !b.isClicked()){
+        myPlayer.addNewChar(b.getLetter());
+        b.setClicked(true);
+      }
     }
   }
 

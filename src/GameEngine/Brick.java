@@ -8,6 +8,7 @@ public class Brick {
   private char letter;
   private int number;
   private Color color;
+  private boolean clicked = false;
 
   public Brick(char letter, int number, Color c) {
     this.letter = letter;
@@ -41,6 +42,14 @@ public class Brick {
 	
   public char getLetter(){
     return letter;
+  }
+
+  public void setClicked(boolean b) {
+    clicked = b;
+  }
+
+  public boolean isClicked() {
+    return clicked;
   }
   
 }
