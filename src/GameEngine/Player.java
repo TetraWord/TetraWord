@@ -9,7 +9,7 @@ public class Player implements Observable{
   private final BoardGame boardGame;
   private final int number;
   private int level;
-  private boolean anagram = false;
+	private InGameState state = InGameState.TETRIS;
   private boolean wordFinish = false;
   private final StringBuilder word = new StringBuilder();
   private int score;
@@ -122,12 +122,13 @@ public class Player implements Observable{
   }
 
   public void switchToAnagram(boolean b) {
+		/* WTF */
     wordFinish = b != true;
-    anagram = b;
+		state = b ? InGameState.ANAGRAMME : InGameState.TETRIS;
   }
 
   public boolean isAnagram() {
-    return anagram;
+		return state == InGameState.ANAGRAMME;
   }
   
   public void addNewChar(char c){

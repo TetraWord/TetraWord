@@ -1,4 +1,4 @@
-package GraphicEngine;
+package GameEngine;
 
 public enum MenuState {
 

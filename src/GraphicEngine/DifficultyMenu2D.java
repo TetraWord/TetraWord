@@ -1,6 +1,7 @@
 
 package GraphicEngine;
 
+import GameEngine.MenuState;
 import static GraphicEngine.GraphicEngine.WINDOW_WIDTH;
 import java.awt.Color;
 import java.awt.Font;
