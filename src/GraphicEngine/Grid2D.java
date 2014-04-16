@@ -4,6 +4,7 @@ import ContextManager.GridEventListener;
 import GameEngine.Brick;
 import GameEngine.CurrentShape;
 import GameEngine.Grid;
+import GameEngine.Player;
 import Pattern.Observable;
 import Pattern.Observer;
 import java.awt.Color;
@@ -54,10 +55,11 @@ public class Grid2D extends JPanel implements Observer {
     int top = 135;
     int left = 70;
     int sizeBrick = 35;
+		Player myPlayer = model.getPlayer();
 
     if (currentShape != null) {
       currentShape.paintComponent(g);
-			if (shadowed) {
+			if (shadowed && !myPlayer.isAnagram() ) {
 				currentShape.paintShadow(g, model.getTGrid());
 			}
     }

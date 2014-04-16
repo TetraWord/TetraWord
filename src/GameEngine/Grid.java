@@ -127,4 +127,8 @@ public class Grid implements Observable{
       System.out.println();
     }
   }
+
+	public Player getPlayer() {
+		return myBoardGame.getPlayer();
+	}
 }
