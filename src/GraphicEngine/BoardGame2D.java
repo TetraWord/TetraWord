@@ -5,7 +5,6 @@ import GameEngine.BoardGame;
 import GameEngine.Player;
 import Pattern.Observable;
 import Pattern.Observer;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.io.File;
@@ -14,9 +13,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 import javax.imageio.ImageIO;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import static javax.swing.SwingConstants.CENTER;
 
 /**
  * *
@@ -28,7 +25,6 @@ public class BoardGame2D extends JPanel implements Observer {
   private final Grid2D gameGrid;
   private final BoardGame model;
   private String background;
-  private final JLabel level;
   private final GridEventListener event;
 	private boolean shadow;
 
@@ -40,12 +36,10 @@ public class BoardGame2D extends JPanel implements Observer {
 
     /* UI NextShape */
     nextShape = new Shape2D(model.getNextShape());
+		
+		Hub2D hub = new Hub2D(model.getHub());
+		this.add(hub);
 
-    /* UI Level */
-    this.level = new JLabel("1", CENTER);
-    setJLabel(level, 530, 770, 50, 50);
-    this.add(level);
-    
 		loadDesign();
 		loadOptions();
 
@@ -119,15 +113,6 @@ public class BoardGame2D extends JPanel implements Observer {
     }
 	}
 
-  private void setJLabel(JLabel jl, int x, int y, int sx, int sy) {
-    jl.setBounds(x, y, sx, sy);
-    jl.setFont(new Font("Arial", Font.BOLD, 22));
-  }
-
-  public void setLevelUp(String level) {
-    this.level.setText(level);
-  }
-
   private void setShapeToGrid2D() {
     gameGrid.setShape2D(model.getGrid().getCurrentShape());
   }
@@ -136,9 +121,6 @@ public class BoardGame2D extends JPanel implements Observer {
   public void update(Observable o, Object args) {
     if (args == null) {
       nextShape = new Shape2D(model.getNextShape());
-    }
-    if (args instanceof Integer) {
-      level.setText(String.valueOf(args));
     }
 
   }

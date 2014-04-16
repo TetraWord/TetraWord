@@ -15,6 +15,7 @@ public class BoardGame implements Observable, Observer {
   private final Player myPlayer;
   private final Queue<Shape> listNextShape = new LinkedList<>();
   private boolean play;
+	private final Hub hub = new Hub();
   private boolean allowClick = false;
 
   public BoardGame(int nb, Shape s, Shape s2, Player p) {
@@ -23,6 +24,7 @@ public class BoardGame implements Observable, Observer {
     this.play = true;
 
     listNextShape.add(s2);
+		p.addObservateur(hub);
 
     grid = new Grid(this, new CurrentShape(s));
   }
@@ -41,6 +43,10 @@ public class BoardGame implements Observable, Observer {
 
   public Grid getGrid() {
     return grid;
+  }
+
+  public Hub getHub() {
+    return hub;
   }
 
   public int getNb() {
@@ -105,7 +111,7 @@ public class BoardGame implements Observable, Observer {
       while (myPlayer.isAnagram()) {
         System.out.println("Pour le moment : "+myPlayer.getWord());
         if(myPlayer.isWordFinished()){
-          System.out.println("j'ai tapé : "+myPlayer.getWord());
+          //System.out.println("j'ai tapé : "+myPlayer.getWord());
         }
       }
       

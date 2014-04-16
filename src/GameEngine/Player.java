@@ -1,6 +1,10 @@
 package GameEngine;
 
-public class Player {
+import Pattern.Observable;
+import Pattern.Observer;
+import java.util.ArrayList;
+
+public class Player implements Observable{
 
   private final BoardGame boardGame;
   private final int number;
@@ -8,10 +12,11 @@ public class Player {
   private boolean anagram = false;
   private boolean wordFinish = false;
   private final StringBuilder word = new StringBuilder();
-  private double score;
+  private int score;
   private int numLinesRemoved;
   private Shape shapeStocked;
   private final Object monitor = new Object();
+	private ArrayList<Observer> listObserver = new ArrayList<>();
 
   public Player(int nb, Shape s, Shape s2) {
     boardGame = new BoardGame(nb, s, s2, this);
@@ -97,12 +102,22 @@ public class Player {
       shapeStocked = getCurrentShape();
     }
   }
+	
+	public int getScore(){
+		return score;
+	}
+	
+	public void addToScore(int add){
+		updateObservateur(null);
+		score = score + add;
+	}
 
   public int getLevel() {
     return level;
   }
 
   public void setLevelUp() {
+		updateObservateur(null);
     ++level;
   }
 
@@ -129,5 +144,22 @@ public class Player {
 
   void clearWord() {
     word.delete(0, word.length());
+  }
+
+	@Override
+	public void addObservateur(Observer obs) {
+    listObserver.add(obs);
+  }
+
+  @Override
+  public void updateObservateur(Object args) {
+    for (Observer obs : listObserver) {
+      obs.update(this, args);
+    }
+  }
+
+  @Override
+  public void delObservateur() {
+    listObserver = new ArrayList<>();
   }
 }
