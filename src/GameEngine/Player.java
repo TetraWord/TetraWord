@@ -54,7 +54,6 @@ public class Player implements Observable{
         boardGame.removeFullLine();
 
         boardGame.launchNextShape();
-
       }
     }
   }
@@ -112,19 +111,24 @@ public class Player implements Observable{
 		score = score + add;
 	}
 
+	public InGameState getState() {
+		return state;
+	}
+
   public int getLevel() {
     return level;
   }
 
   public void setLevelUp() {
-		updateObservateur(null);
     ++level;
+		updateObservateur(null);
   }
 
   public void switchToAnagram(boolean b) {
 		/* WTF */
     wordFinish = b != true;
 		state = b ? InGameState.ANAGRAMME : InGameState.TETRIS;
+		updateObservateur(null);
   }
 
   public boolean isAnagram() {

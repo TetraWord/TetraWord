@@ -38,6 +38,7 @@ public class BoardGame2D extends JPanel implements Observer {
     nextShape = new Shape2D(model.getNextShape());
 		
 		Hub2D hub = new Hub2D(model.getHub());
+		model.getHub().addObservateur(hub);
 		this.add(hub);
 
 		loadDesign();
