@@ -123,14 +123,14 @@ public class Player implements Observable {
     }
   }
 
-  public int getScore() {
-    return score;
-  }
-
-  public void addToScore(int add) {
-    updateObservateur(null);
-    score = score + add;
-  }
+	public int getScore(){
+		return score;
+	}
+	
+	public void addToScore(int add){
+		score = score + add;
+		updateObservateur(null);
+	}
 
   public InGameState getState() {
     return state;
@@ -155,7 +155,15 @@ public class Player implements Observable {
     return state == InGameState.ANAGRAMME;
   }
 
-  public void addNewChar(char c) {
+	public boolean isTetris() {
+		return state == InGameState.TETRIS;
+	}
+
+	public boolean isWordle() {
+		return state == InGameState.WORDLE;
+	}
+  
+  public void addNewChar(char c){
     word.append(c);
   }
 

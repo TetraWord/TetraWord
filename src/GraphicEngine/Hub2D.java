@@ -13,11 +13,17 @@ import static javax.swing.SwingConstants.CENTER;
 public class Hub2D extends JPanel implements Observer{
 	
 	private final Hub hub;
+	private final String font;
+	private final Color color;
 	private final JLabel mode;
 	private final JLabel level;
 	private final JLabel score;
 	
-	public Hub2D( Hub hub ){
+	public Hub2D( Hub hub, String font, Color color ){
+		
+		this.font = font; 
+		this.color = color;
+		System.out.println(font);
 		
     this.setLayout(null);
     this.setSize(650, 889);
@@ -30,26 +36,25 @@ public class Hub2D extends JPanel implements Observer{
 		String modeName = "Mode " + hub.getState().getStateName();
     mode = new JLabel(modeName, CENTER);
 		setJLabel(mode, 69, 85, 351, 45);
+		mode.setFont(new Font(font, Font.BOLD, 30));
     this.add(mode);
 		
 		/* UI Level */
     level = new JLabel(Integer.toString(hub.getLevel()), CENTER);
-		level.setForeground(Color.red);
 		setJLabel(level, 516, 786, 57, 23);
     this.add(level);
 		
 		/* UI Score */
     score = new JLabel(Integer.toString(hub.getScore()), CENTER);
-		score.setForeground(Color.red);
 		setJLabel(score, 520, 690, 57, 23);
     this.add(score);
 	}
 	
 	
 	private void setJLabel(JLabel jl, int x, int y, int sx, int sy) {
+		jl.setForeground(color);
     jl.setBounds(x, y, sx, sy);
-		jl.setFont(new Font("Champagne & Limousines", Font.BOLD, 22));
-
+		jl.setFont(new Font(font, Font.BOLD, 22));
   }
 
   /*public void setLevelUp(String level) {

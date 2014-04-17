@@ -18,30 +18,30 @@ public class Grid2D extends JPanel implements Observer {
   private CurrentShape2D currentShape = null;
   private final Brick2D[][] compositionBrick2D;
   private final BrickButton[][] clickGrid;
-	private final boolean shadowed;
+  private final boolean shadowed;
 
   public Grid2D(Grid model, GridEventListener event, boolean shadow) {
     this.model = model;
-		this.shadowed = shadow;
-    
+    this.shadowed = shadow;
+
     this.setLayout(null);
-    this.setSize(350,700);
-    this.setOpaque(false);	
+    this.setSize(350, 700);
+    this.setOpaque(false);
     this.setVisible(true);
 
     this.clickGrid = new BrickButton[20][10];
-    for(int i = 0; i < 20; ++i){
-      for(int j = 0; j < 10; ++j){
+    for (int i = 0; i < 20; ++i) {
+      for (int j = 0; j < 10; ++j) {
         BrickButton b = new BrickButton(j, i);
         b.addMouseListener(event);
         clickGrid[i][j] = b;
         this.add(clickGrid[i][j]);
       }
     }
-        
-		Brick[][] tabBrick = model.getTGrid();
-		compositionBrick2D = new Brick2D[tabBrick.length][tabBrick[0].length];
-    
+
+    Brick[][] tabBrick = model.getTGrid();
+    compositionBrick2D = new Brick2D[tabBrick.length][tabBrick[0].length];
+
     this.setVisible(true);
   }
 
@@ -55,13 +55,13 @@ public class Grid2D extends JPanel implements Observer {
     int top = 135;
     int left = 70;
     int sizeBrick = 35;
-		Player myPlayer = model.getPlayer();
+    Player myPlayer = model.getPlayer();
 
-    if (currentShape != null && !myPlayer.isAnagram()) {
+    if (currentShape != null && myPlayer.isTetris()) {
       currentShape.draw(g);
-			if (shadowed && !myPlayer.isAnagram() ) {
-				currentShape.paintShadow(g, model.getTGrid());
-			}
+      if (shadowed) {
+        currentShape.paintShadow(g, model.getTGrid());
+      }
     }
     //Brick draw
     Brick[][] t = model.getTGrid();
@@ -72,12 +72,12 @@ public class Grid2D extends JPanel implements Observer {
         Brick b = t[i][j];
         if (b.getNb() > 0 && compositionBrick2D[i][j] != null) {
           BufferedImage monImage;
-          if (b.isClicked()){
+          if (b.isClicked()) {
             monImage = currentShape.getBrickImage(Color.GRAY);
-          }else{
+          } else {
             monImage = currentShape.getBrickImage(b.getColor());
           }
-					compositionBrick2D[i][j].draw(g, j * sizeBrick + left, i * sizeBrick + top, monImage, false);
+          compositionBrick2D[i][j].draw(g, j * sizeBrick + left, i * sizeBrick + top, monImage, false);
         }
       }
     }
