@@ -165,6 +165,7 @@ public class Player implements Observable {
   
   public void addNewChar(char c){
     word.append(c);
+		updateObservateur(null);
   }
 
   public String getWord() {

@@ -18,6 +18,7 @@ public class Hub2D extends JPanel implements Observer{
 	private final JLabel mode;
 	private final JLabel level;
 	private final JLabel score;
+	private final JLabel word;
 	
 	public Hub2D( Hub hub, String font, Color color ){
 		
@@ -48,6 +49,11 @@ public class Hub2D extends JPanel implements Observer{
     score = new JLabel(Integer.toString(hub.getScore()), CENTER);
 		setJLabel(score, 520, 690, 57, 23);
     this.add(score);
+		
+		/* UI Word anagramme/wordle */
+    word = new JLabel(hub.getWord(), CENTER);
+		setJLabel(word, 71, 836, 420, 23);
+    this.add(word);
 	}
 	
 	
@@ -57,10 +63,6 @@ public class Hub2D extends JPanel implements Observer{
 		jl.setFont(new Font(font, Font.BOLD, 22));
   }
 
-  /*public void setLevelUp(String level) {
-    this.level.setText(level);
-  }*/
-
 	@Override
 	public void update(Observable o, Object args) {
 		if ( o instanceof Hub){
@@ -68,6 +70,7 @@ public class Hub2D extends JPanel implements Observer{
 			mode.setText(modeName);
 			level.setText(Integer.toString(hub.getLevel()));
 			score.setText(Integer.toString(hub.getScore()));
+			word.setText(hub.getWord());
 		}
 	}
 	
