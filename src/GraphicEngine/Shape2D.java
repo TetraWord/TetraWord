@@ -5,6 +5,8 @@ import GameEngine.Brick;
 import GameEngine.Shape;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 import java.awt.image.WritableRaster;
@@ -74,12 +76,23 @@ public class Shape2D {
 		int sizeBrick = (int)(35 * ratio);
 		Color c = model.getColor();
     BufferedImage monImage = getBrickImage(c);
+		
+		/*Resize image*/
+		BufferedImage before = monImage;
+		int w = before.getWidth();
+		int h = before.getHeight();
+		BufferedImage after = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+		AffineTransform at = new AffineTransform();
+		at.scale(ratio, ratio);
+		AffineTransformOp scaleOp = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
+		after = scaleOp.filter(before, after);
+		
 			int[][] representation = model.getRepresentation();
 			for (int i = 0; i < 4; ++i) {
 				for (int j = 0; j < 4; ++j) {
 					if (representation[i][j] > 0) {
 						if (compositionBrick2D[i][j] != null) {
-							compositionBrick2D[i][j].draw(g, j * sizeBrick + left, i * sizeBrick + top, monImage, false);
+							compositionBrick2D[i][j].draw(g, j * sizeBrick + left, i * sizeBrick + top, after, false);
 						}
 					}
 				}
