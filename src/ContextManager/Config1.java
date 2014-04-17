@@ -42,7 +42,7 @@ public class Config1 extends KeyAdapter {
         break;
         
       case KeyEvent.VK_ENTER:
-        if(p.isAnagram()){
+        if(p.isAnagram() && p.getWord().length() > 0){
           p.switchToAnagram(false);
           p.getBoardGame().setAllowClick(false);
         }
