@@ -196,4 +196,8 @@ public class Player implements Observable {
     numLinesRemoved += boardGame.removeFullLine();
     boardGame.launchNextShape();
   }
+
+  public void setWordFinish() {
+    wordFinish = true;
+  }
 }

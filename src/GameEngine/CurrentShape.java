@@ -34,8 +34,8 @@ public class CurrentShape extends Shape {
 
     for (int i = 0; i < sizeShape; ++i) {
       for (int j = 0; j < sizeShape; ++j) {
-        repTmp[i][j] = representation[sizeShape - j][i];
-        compTmp[i][j] = composition[sizeShape - j][i];
+        repTmp[i][j] = representation[sizeShape - 1 - j][i];
+        compTmp[i][j] = composition[sizeShape - 1 - j][i];
       }
     }
 
