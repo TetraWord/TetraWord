@@ -6,15 +6,12 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.StringReader;
-import java.util.LinkedList;
-import java.util.Queue;
 import java.util.Random;
 import java.util.Scanner;
 
 public final class ShapesStock {
 
   private final Shape[] shapeModel;
-  private final Queue<Shape> instanciedShape = new LinkedList<>();
 
   private ShapesStock() {
     /*Read files .shape*/
@@ -145,13 +142,11 @@ public final class ShapesStock {
     Random r = new Random();
     int x = Math.abs(r.nextInt()) % shapeModel.length;
     Shape newShape = new Shape(shapeModel[x]);
-    instanciedShape.add(newShape);
     return newShape;
   }
 
   public static void main(String[] args) {
     ShapesStock ss = new ShapesStock();
-
   }
 
   private static class ShapesStockHolder {

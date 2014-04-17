@@ -4,19 +4,19 @@ import Pattern.Observable;
 import Pattern.Observer;
 import java.util.ArrayList;
 
-public class Player implements Observable{
+public class Player implements Observable {
 
   private final BoardGame boardGame;
   private final int number;
   private int level;
-	private InGameState state = InGameState.TETRIS;
+  private InGameState state = InGameState.TETRIS;
   private boolean wordFinish = false;
   private final StringBuilder word = new StringBuilder();
   private int score;
   private int numLinesRemoved;
   private Shape shapeStocked;
   private final Object monitor = new Object();
-	private ArrayList<Observer> listObserver = new ArrayList<>();
+  private ArrayList<Observer> listObserver = new ArrayList<>();
 
   public Player(int nb, Shape s, Shape s2) {
     boardGame = new BoardGame(nb, s, s2, this);
@@ -43,49 +43,70 @@ public class Player implements Observable{
   public void down() {
     synchronized (monitor) {
       CurrentShape s = getCurrentShape();
-      int tmpY = s.getY();
-      if (!s.tryCollision(boardGame.getGrid().getTGrid(), s.getX(), s.getY() + 1)) {
-        s.move(s.getX(), s.getY() + 1);
-      }
-      //Si on ne peut pas faire descendre la pièce plus bas, on l'inscrit dans la Grid
-      if (tmpY == s.getY()) {
-        Grid g = boardGame.getGrid();
-        boardGame.setInGrid(s);
-        boardGame.removeFullLine();
-
-        boardGame.launchNextShape();
+      if (s != null) {
+        int tmpY = s.getY();
+        if (!s.tryCollision(boardGame.getGrid().getTGrid(), s.getX(), s.getY() + 1)) {
+          s.move(s.getX(), s.getY() + 1);
+        }
+        //Si on ne peut pas faire descendre la pièce plus bas, on l'inscrit dans la Grid
+        if (tmpY == s.getY()) {
+          boardGame.setInGrid(s);
+          Grid g = boardGame.getGrid();
+          if (g.getFirstFullLine() != -1) {
+            g.setCurrentShape(null);
+            switchToAnagram(true);
+          } else {
+            boardGame.launchNextShape();
+          }
+        }
       }
     }
   }
 
   public void left() {
     CurrentShape s = getCurrentShape();
-    if (!s.tryCollision(boardGame.getGrid().getTGrid(), s.getX() - 1, s.getY())) {
-      s.move(s.getX() - 1, s.getY());
+    if (s != null) {
+      if (!s.tryCollision(boardGame.getGrid().getTGrid(), s.getX() - 1, s.getY())) {
+        s.move(s.getX() - 1, s.getY());
+      }
     }
   }
 
   public void right() {
     CurrentShape s = getCurrentShape();
-    if (!s.tryCollision(boardGame.getGrid().getTGrid(), s.getX() + 1, s.getY())) {
-      s.move(s.getX() + 1, s.getY());
+    if (s != null) {
+      if (!s.tryCollision(boardGame.getGrid().getTGrid(), s.getX() + 1, s.getY())) {
+        s.move(s.getX() + 1, s.getY());
+      }
     }
   }
 
   public void dropDown() {
     CurrentShape s = getCurrentShape();
+    if (s != null) {
+      int finalLine = new Integer(s.getY());
+      while (!s.tryCollision(boardGame.getGrid().getTGrid(), s.getX(), finalLine)) {
+        ++finalLine;
+      }
 
-    int finalLine = new Integer(s.getY());
-    while (!s.tryCollision(boardGame.getGrid().getTGrid(), s.getX(), finalLine)) {
-      ++finalLine;
+      s.move(s.getX(), finalLine - 1);
+
+      boardGame.setInGrid(s);
+      Grid g = boardGame.getGrid();
+      if (g.getFirstFullLine() != -1) {
+        g.setCurrentShape(null);
+        switchToAnagram(true);
+      } else {
+        boardGame.launchNextShape();
+      }
     }
-
-    s.move(s.getX(), finalLine - 1);
   }
 
   public void rotate() {
     CurrentShape s = getCurrentShape();
-    s.rotateLeft(boardGame.getGrid().getTGrid());
+    if (s != null) {
+      s.rotateLeft(boardGame.getGrid().getTGrid());
+    }
   }
 
   public BoardGame getBoardGame() {
@@ -101,19 +122,19 @@ public class Player implements Observable{
       shapeStocked = getCurrentShape();
     }
   }
-	
-	public int getScore(){
-		return score;
-	}
-	
-	public void addToScore(int add){
-		updateObservateur(null);
-		score = score + add;
-	}
 
-	public InGameState getState() {
-		return state;
-	}
+  public int getScore() {
+    return score;
+  }
+
+  public void addToScore(int add) {
+    updateObservateur(null);
+    score = score + add;
+  }
+
+  public InGameState getState() {
+    return state;
+  }
 
   public int getLevel() {
     return level;
@@ -121,25 +142,24 @@ public class Player implements Observable{
 
   public void setLevelUp() {
     ++level;
-		updateObservateur(null);
+    updateObservateur(null);
   }
 
   public void switchToAnagram(boolean b) {
-		/* WTF */
     wordFinish = b != true;
-		state = b ? InGameState.ANAGRAMME : InGameState.TETRIS;
-		updateObservateur(null);
+    state = b ? InGameState.ANAGRAMME : InGameState.TETRIS;
+    updateObservateur(null);
   }
 
   public boolean isAnagram() {
-		return state == InGameState.ANAGRAMME;
+    return state == InGameState.ANAGRAMME;
   }
-  
-  public void addNewChar(char c){
+
+  public void addNewChar(char c) {
     word.append(c);
   }
-  
-  public String getWord(){
+
+  public String getWord() {
     return word.toString();
   }
 
@@ -149,10 +169,11 @@ public class Player implements Observable{
 
   void clearWord() {
     word.delete(0, word.length());
+    wordFinish = false;
   }
 
-	@Override
-	public void addObservateur(Observer obs) {
+  @Override
+  public void addObservateur(Observer obs) {
     listObserver.add(obs);
   }
 
@@ -166,5 +187,10 @@ public class Player implements Observable{
   @Override
   public void delObservateur() {
     listObserver = new ArrayList<>();
+  }
+
+  void doAnagram() {
+    numLinesRemoved += boardGame.removeFullLine();
+    boardGame.launchNextShape();
   }
 }

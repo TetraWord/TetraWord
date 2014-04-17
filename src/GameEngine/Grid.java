@@ -53,32 +53,27 @@ public class Grid implements Observable{
   }
 
   public void removeLine(int lineToRemove) {
-    /* Be carefull because of the number of the line */
-    /* Be carefull you need the anagram mode later */
-
     for (int i = lineToRemove; i > 0; --i) {
       for (int j = 0; j < 10; ++j) {
         tGrid[i][j] = tGrid[i - 1][j];
-        updateObservateur(tGrid);
       }
     }
+    updateObservateur(tGrid);
   }
 
   public boolean isComplete(CurrentShape s) {
     for (int i = 0; i < 4; ++i) {
-      int x = currentShape.getX() + i;
+      int x = s.getX() + i;
       if (x >= 10) {
         return false;
       }
 
-      if (getTGrid()[0][currentShape.getX() + i].getNb() >= 1) {
-        //System.out.println("Stop");
+      if (getTGrid()[0][x].getNb() >= 1) {
         this.myBoardGame.setPlay();
         return true;
       }
       for (int j = 0; j < 4; ++j) {
-        if (s.representation[i][j] >= 1 && getTGrid()[j][currentShape.getX() + i].getNb() >= 1) {
-          //System.out.println("Stop");
+        if (s.representation[i][j] >= 1 && getTGrid()[j][x].getNb() >= 1) {
           this.myBoardGame.setPlay();
           return true;
         }
@@ -117,6 +112,7 @@ public class Grid implements Observable{
         }
       }
     }
+    updateObservateur(tGrid);
   }
 
   private void printGrid() {

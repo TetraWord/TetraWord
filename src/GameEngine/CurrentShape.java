@@ -6,14 +6,14 @@ public class CurrentShape extends Shape {
 
   private int curX, curY;
 
-  public CurrentShape(String name, Color color, int[][] representation) {
-    super(name, color, representation);
+  public CurrentShape(String name, Color color, int[][] representation, Brick[][] composition) {
+    super(name, color, representation, composition);
     curX = 3;
     curY = 0;
   }
 
   CurrentShape(Shape s) {
-    this(s.name, s.color, s.representation);
+    this(s.name, s.color, s.representation, s.composition);
   }
 
   public int getX() {

@@ -19,7 +19,7 @@ public class CurrentShape2D extends Shape2D implements Observer{
     this.model = model;
   }
 
-	public void paintComponent(Graphics g) {
+	public void draw(Graphics g) {
 		int top = 135;
 		int left = 70;
 		int sizeBrick = 35;

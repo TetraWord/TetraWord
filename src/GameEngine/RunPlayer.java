@@ -15,13 +15,15 @@ public class RunPlayer implements Runnable {
   @Override
   public void run() {
     while (this.player.getBoardGame().getPlay()) {
-      if (!ContextManager.getInstance().isPaused) {
+      if (!ContextManager.getInstance().isPaused && !player.isAnagram()) {
         player.down();
-      }
-      try {
-        Thread.sleep(1000 / player.getLevel());
-      } catch (InterruptedException ex) {
-        Logger.getLogger(RunPlayer.class.getName()).log(Level.SEVERE, null, ex);
+        try {
+          Thread.sleep(1000 / player.getLevel());
+        } catch (InterruptedException ex) {
+          Logger.getLogger(RunPlayer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+      } else if (player.isAnagram()) {
+        player.doAnagram();
       }
     }
     System.out.println("you loose");

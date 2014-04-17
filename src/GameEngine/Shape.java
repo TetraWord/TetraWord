@@ -39,6 +39,13 @@ public class Shape implements Observable {
 		listObserver = new ArrayList<>();
 	}
   
+  public Shape(String name, Color color, int[][] representation, Brick[][] composition){
+    this.name = name;
+    this.color = color;
+    this.representation = representation;
+    this.composition = composition;
+  }
+  
   public Shape(String name, int[] color, int[][] representation){
     this.name = name;
     this.color = new Color(color[0], color[1], color[2]);
@@ -52,8 +59,13 @@ public class Shape implements Observable {
     this.representation = representation;
     setComposition(representation);
   }
+  
+  //Copy constructor
+  public Shape(Shape shape) {
+    this(shape.name, shape.color, shape.representation);
+  }
 
-  protected void setComposition(int[][] representation){
+  private void setComposition(int[][] representation){
     this.composition = new Brick[representation.length][representation[0].length];
     Color color = this.getColor();
     for (int i = 0; i < representation.length; ++i) {
@@ -78,11 +90,6 @@ public class Shape implements Observable {
 
   public Color getRGB() {
     return color;
-  }
-
-  //Copy constructor
-  public Shape(Shape shape) {
-    this(shape.name, shape.color, shape.representation);
   }
 
   public String getName() {

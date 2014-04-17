@@ -57,8 +57,8 @@ public class Grid2D extends JPanel implements Observer {
     int sizeBrick = 35;
 		Player myPlayer = model.getPlayer();
 
-    if (currentShape != null) {
-      currentShape.paintComponent(g);
+    if (currentShape != null && !myPlayer.isAnagram()) {
+      currentShape.draw(g);
 			if (shadowed && !myPlayer.isAnagram() ) {
 				currentShape.paintShadow(g, model.getTGrid());
 			}
@@ -71,9 +71,6 @@ public class Grid2D extends JPanel implements Observer {
         //System.out.println(i+" "+j);
         Brick b = t[i][j];
         if (b.getNb() > 0 && compositionBrick2D[i][j] != null) {
-          if (i == 0 && j == 0) {
-            System.out.println("ahah");
-          }
           BufferedImage monImage;
           if (b.isClicked()){
             monImage = currentShape.getBrickImage(Color.GRAY);

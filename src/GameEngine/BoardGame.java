@@ -15,7 +15,7 @@ public class BoardGame implements Observable, Observer {
   private final Player myPlayer;
   private final Queue<Shape> listNextShape = new LinkedList<>();
   private boolean play;
-	private final Hub hub = new Hub();
+  private final Hub hub = new Hub();
   private boolean allowClick = false;
 
   public BoardGame(int nb, Shape s, Shape s2, Player p) {
@@ -24,7 +24,7 @@ public class BoardGame implements Observable, Observer {
     this.play = true;
 
     listNextShape.add(s2);
-		p.addObservateur(hub);
+    p.addObservateur(hub);
 
     grid = new Grid(this, new CurrentShape(s));
   }
@@ -101,32 +101,25 @@ public class BoardGame implements Observable, Observer {
     listObserver = new ArrayList<>();
   }
 
-  void removeFullLine() {
+  public int removeFullLine() {
+    int numLineRemoved = 0;
     int line = grid.getFirstFullLine();
 
     while (line != -1) {
-      myPlayer.switchToAnagram(true);
       setAllowClick(true);
 
-      while (myPlayer.isAnagram()) {
-        System.out.println("Pour le moment : "+myPlayer.getWord());
-        if(myPlayer.isWordFinished()){
-          //System.out.println("j'ai tapé : "+myPlayer.getWord());
-        }
+      if (myPlayer.isWordFinished()) {
+        System.out.println("j'ai tapé : " + myPlayer.getWord());
+        myPlayer.clearWord();
+        grid.removeLine(line);
+        ++numLineRemoved;
       }
-      
-      myPlayer.clearWord();
-      grid.removeLine(line);
 
       line = grid.getFirstFullLine();
-      /* Remove this later it's just for some test 
-       myBoardGame.getPlayer().setLevelUp();
-       int level = myBoardGame.getPlayer().getLevel();
-       myBoardGame.updateObservateur(level); */
-
     }
 
     myPlayer.switchToAnagram(false);
+    return numLineRemoved;
   }
 
   public void setAllowClick(boolean b) {
@@ -140,7 +133,7 @@ public class BoardGame implements Observable, Observer {
       int x = ((int[]) args)[0];
       int y = ((int[]) args)[1];
       Brick b = grid.getTGrid()[y][x];
-      if( y == grid.getFirstFullLine() && !b.isClicked()){
+      if (y == grid.getFirstFullLine() && !b.isClicked()) {
         myPlayer.addNewChar(b.getLetter());
         b.setClicked(true);
       }

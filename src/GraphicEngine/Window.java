@@ -6,6 +6,7 @@ import static GraphicEngine.GraphicEngine.WINDOW_HEIGHT;
 import static GraphicEngine.GraphicEngine.WINDOW_WIDTH;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.util.ArrayList;
 import javax.swing.JFrame;
 
 /**
@@ -17,7 +18,8 @@ public class Window extends JFrame {
   public static final Dimension size = new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT);
   public static final String title = "TetraWord";
   public static Menu2D menu;
-
+  public final ArrayList<BoardGame2D> boardGames = new ArrayList<>();
+  
   public Window() {
 
     //Window settings
@@ -74,6 +76,7 @@ public class Window extends JFrame {
     BoardGame2D boardGame = new BoardGame2D(model);
     model.addObservateur(boardGame);
     pan.add(boardGame);
+    this.boardGames.add(boardGame);  
 
     this.setVisible(true);
   }
