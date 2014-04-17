@@ -59,7 +59,7 @@ public class Grid2D extends JPanel implements Observer {
 
     if (currentShape != null) {
       currentShape.paintComponent(g);
-			if (shadowed && !myPlayer.isAnagram() ) {
+			if (shadowed && myPlayer.isTetris() ) {
 				currentShape.paintShadow(g, model.getTGrid());
 			}
     }

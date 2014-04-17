@@ -5,6 +5,7 @@ import GameEngine.BoardGame;
 import GameEngine.Player;
 import Pattern.Observable;
 import Pattern.Observer;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.io.File;
@@ -25,6 +26,8 @@ public class BoardGame2D extends JPanel implements Observer {
   private final Grid2D gameGrid;
   private final BoardGame model;
   private String background;
+  private String font;
+  private Color color;
   private final GridEventListener event;
 	private boolean shadow;
 
@@ -37,12 +40,12 @@ public class BoardGame2D extends JPanel implements Observer {
     /* UI NextShape */
     nextShape = new Shape2D(model.getNextShape());
 		
-		Hub2D hub = new Hub2D(model.getHub());
-		model.getHub().addObservateur(hub);
-		this.add(hub);
-
 		loadDesign();
 		loadOptions();
+		
+		Hub2D hub = new Hub2D(model.getHub(), font, color);
+		model.getHub().addObservateur(hub);
+		this.add(hub);
 
     
     event = new GridEventListener(this.model);
@@ -70,6 +73,9 @@ public class BoardGame2D extends JPanel implements Observer {
       prop.load(input);
 
       background = prop.getProperty("background");
+      font = prop.getProperty("font");
+      String[] nbColor = prop.getProperty("color").split(",");
+			color = new Color(Integer.parseInt(nbColor[0]), Integer.parseInt(nbColor[1]), Integer.parseInt(nbColor[2]));
 
     } catch (IOException ex) {
       /*Default background*/

@@ -107,8 +107,8 @@ public class Player implements Observable{
 	}
 	
 	public void addToScore(int add){
-		updateObservateur(null);
 		score = score + add;
+		updateObservateur(null);
 	}
 
 	public InGameState getState() {
@@ -134,6 +134,14 @@ public class Player implements Observable{
   public boolean isAnagram() {
 		return state == InGameState.ANAGRAMME;
   }
+
+	public boolean isTetris() {
+		return state == InGameState.TETRIS;
+	}
+
+	public boolean isWordle() {
+		return state == InGameState.WORDLE;
+	}
   
   public void addNewChar(char c){
     word.append(c);
