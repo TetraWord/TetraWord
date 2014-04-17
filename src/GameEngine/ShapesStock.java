@@ -145,10 +145,6 @@ public final class ShapesStock {
     return newShape;
   }
 
-  public static void main(String[] args) {
-    ShapesStock ss = new ShapesStock();
-  }
-
   private static class ShapesStockHolder {
 
     private static final ShapesStock INSTANCE = new ShapesStock();

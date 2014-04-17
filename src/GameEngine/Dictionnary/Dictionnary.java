@@ -23,12 +23,12 @@ public class Dictionnary {
         throw new FileNotFoundException("Can't find the file : " + file);
       }
       InputStreamReader ipsr = new InputStreamReader(ips, "UTF8");
-      BufferedReader br = new BufferedReader(ipsr);
-      String line;
-      while ((line = br.readLine()) != null) {
-        dico.add(line);
+      try (BufferedReader br = new BufferedReader(ipsr)) {
+        String line;
+        while ((line = br.readLine()) != null) {
+          dico.add(line);
+        }
       }
-      br.close();
     } catch (FileNotFoundException e) {
       System.out.println(e.getMessage());
     } catch (IOException e) {
@@ -38,15 +38,5 @@ public class Dictionnary {
 
   public boolean included(String s) {
     return dico.contains(s);
-  }
-
-  public static void main(String[] args) {
-    Dictionnary d = new Dictionnary();
-    String s = "désolé";
-    if (d.included(s)) {
-      System.out.println("Bravo tu as trouvé un mot du dico");
-    } else {
-      System.out.println("Non ce mot n'est pas dans le dico");
-    }
   }
 }

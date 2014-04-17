@@ -1,13 +1,12 @@
 package ContextManager;
 
 import GameEngine.Player;
-import GraphicEngine.GraphicEngine;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 public class Config2 extends KeyAdapter {
 
-  private Player p;
+  private final Player p;
 
   public Config2(Player p) {
     this.p = p;
@@ -22,37 +21,32 @@ public class Config2 extends KeyAdapter {
 
     switch (e.getKeyCode()) {
       case KeyEvent.VK_Z:
-        System.out.println("Up pressed");
         p.rotate();
         break;
 
       case KeyEvent.VK_S:
-        System.out.println("Down pressed");
         p.down();
         break;
 
       case KeyEvent.VK_Q:
         p.left();
-        System.out.println("Left pressed");
-
         break;
 
       case KeyEvent.VK_D:
         p.right();
-        System.out.println("Right pressed");
+        break;
+
+      case KeyEvent.VK_E:
+        if (p.isAnagram() && p.getWord().length() > 0) {
+          p.switchToAnagram(false);
+          p.getBoardGame().setAllowClick(false);
+        }
         break;
 
       case KeyEvent.VK_F:
         p.dropDown();
         break;
     }
-
-    repaint();
-  }
-
-  private void repaint() {
-    GraphicEngine g = GraphicEngine.getInstance();
-    g.renderFrame();
 
   }
 }

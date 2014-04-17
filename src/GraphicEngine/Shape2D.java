@@ -1,4 +1,3 @@
-
 package GraphicEngine;
 
 import GameEngine.Brick;
@@ -6,13 +5,14 @@ import GameEngine.Shape;
 import java.awt.Graphics;
 
 public class Shape2D {
+
   private final Shape model;
 	protected final Brick2D[][] compositionBrick2D;
-  
+  private String brick;
+	
   public Shape2D(Shape s){
-
     this.model = s;
-    
+ 
 		int[][] representation = model.getRepresentation();
 		Brick[][] composition = model.getComposition();
 		compositionBrick2D = new Brick2D[composition.length][composition[0].length];
@@ -27,8 +27,7 @@ public class Shape2D {
 			}
   }
 
-  public void draw(Graphics g, int x, int y, double ratio) {
-		
+  public void draw(Graphics g, int x, int y, double ratio) {		
 		int top = y;
 		int left = x;
 		int sizeBrick = (int)(35 * ratio);
@@ -44,4 +43,5 @@ public class Shape2D {
 				}
 			}		
 	}
+
 }

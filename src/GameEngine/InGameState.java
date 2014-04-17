@@ -1,12 +1,13 @@
-
 package GameEngine;
 
 public enum InGameState {
-	TETRIS("Tetris"),
+
+  TETRIS("Tetris"),
   ANAGRAMME("Anagramme"),
-  WORDLE("Wordle");
-	
-	private String name = "";
+  WORDLE("Wordle"),
+  FINISH("Finish");
+
+  private String name = "";
 
   InGameState(String name) {
     this.name = name;

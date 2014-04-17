@@ -29,13 +29,13 @@ public class CurrentShape extends Shape {
   }
 
   public void rotateLeft(Brick[][] g) {
-    int[][] repTmp = new int[4][4];
-    Brick[][] compTmp = new Brick[4][4];
-    
-    for (int i = 0; i < 4; ++i) {
-      for (int j = 0; j < 4; ++j) {
-        repTmp[i][j] = representation[3 - j][i];
-        compTmp[i][j] = composition[3 - j][i];
+    int[][] repTmp = new int[sizeShape][sizeShape];
+    Brick[][] compTmp = new Brick[sizeShape][sizeShape];
+
+    for (int i = 0; i < sizeShape; ++i) {
+      for (int j = 0; j < sizeShape; ++j) {
+        repTmp[i][j] = representation[sizeShape - 1 - j][i];
+        compTmp[i][j] = composition[sizeShape - 1 - j][i];
       }
     }
 
@@ -48,17 +48,17 @@ public class CurrentShape extends Shape {
       representation = repTmp;
       composition = compTmp;
 
-	    //Pour replacer la pièce danbs la grid si lors de la rotation elle se met à dépasser (exemple de la barre en bas)
+      //Pour replacer la pièce danbs la grid si lors de la rotation elle se met à dépasser (exemple de la barre en bas)
       //A VERIFIER SUR UN VRAI TETRIS OU ALORS A SUPPRIMER UNE FOIS LA COLLISION TESTE AU MOINS EN Y
-      while (curX >= (10 - getMaxX(representation))) {
+      while (curX >= (Grid.sizeX - getMaxX(representation))) {
         --curX;
       }
-      while (curY > (20 - getMaxY(representation))) {
+      while (curY > (Grid.sizeY - getMaxY(representation))) {
         --curY;
       }
     }
-    
-		updateObservateur(null);
+
+    updateObservateur(null);
   }
 
   public int getMaxX(int[][] matrix) {
@@ -94,17 +94,17 @@ public class CurrentShape extends Shape {
     }
     return 0;
   }
-  
+
   public int getMinY(Brick[][] matrix) {
     int finalLine = new Integer(getY());
-    
-    while (!tryCollision(matrix, getX(), finalLine)){
-        		++finalLine;
+
+    while (!tryCollision(matrix, getX(), finalLine)) {
+      ++finalLine;
     }
-	  
-    return finalLine-1;
+
+    return finalLine - 1;
   }
-  
+
   private Brick[][] replaceToTopLeftCorner(Brick[][] matrix) {
     boolean lineIsEmpty = true;
     boolean colIsEmpty = true;
@@ -151,7 +151,7 @@ public class CurrentShape extends Shape {
 
     return tmp2;
   }
-  
+
   private int[][] replaceToTopLeftCorner(int[][] matrix) {
     boolean lineIsEmpty = true;
     boolean colIsEmpty = true;
@@ -206,15 +206,15 @@ public class CurrentShape extends Shape {
 
   /* TryCollision pour les mouvements left, right, down */
   public boolean tryCollision(Brick[][] g, int newX, int newY) {
-    if (newX < 0 || newX >= (10 - getMaxX(representation))) {
+    if (newX < 0 || newX >= (Grid.sizeX - getMaxX(representation))) {
       return true;
     }
-    if (newY >= (20 - getMaxY(representation))) {
+    if (newY >= (Grid.sizeY - getMaxY(representation))) {
       return true;
     }
 
-    for (int i = 0; i < 4; ++i) {
-      for (int j = 0; j < 4; ++j) {
+    for (int i = 0; i < sizeShape; ++i) {
+      for (int j = 0; j < sizeShape; ++j) {
         int value = representation[i][j];
         //On teste s'il y a déjà un élément dans la grid
         if (value > 0 && g[newY + i][newX + j].getNb() >= 1) {
@@ -228,15 +228,15 @@ public class CurrentShape extends Shape {
 
   /* TryCollision pour la rotation */
   public boolean tryCollision(Brick[][] g, int newX, int newY, int[][] rep) {
-    if (newX < 0 || newX >= (10 - getMaxX(rep))) {
+    if (newX < 0 || newX >= (Grid.sizeX - getMaxX(rep))) {
       return true;
     }
-    if (newY < 0 || newY >= (20 - getMaxY(rep))) {
+    if (newY < 0 || newY >= (Grid.sizeY - getMaxY(rep))) {
       return true;
     }
 
-    for (int i = 0; i < 4; ++i) {
-      for (int j = 0; j < 4; ++j) {
+    for (int i = 0; i < sizeShape; ++i) {
+      for (int j = 0; j < sizeShape; ++j) {
         int value = rep[i][j];
         //On teste s'il y a déjà un élément dans la grid
         if (value > 0 && g[newY + i][newX + j].getNb() >= 1) {

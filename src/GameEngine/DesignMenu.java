@@ -63,10 +63,6 @@ public class DesignMenu {
     }
   }
 
-  public static void main(String[] args) {
-    DesignMenu dm = new DesignMenu();
-  }
-
   public String[] getNames() {
     return name;
   }

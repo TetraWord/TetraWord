@@ -1,7 +1,6 @@
 package ContextManager;
 
 import GameEngine.Player;
-import GraphicEngine.GraphicEngine;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
@@ -40,11 +39,10 @@ public class Config1 extends KeyAdapter {
       case KeyEvent.VK_NUMPAD0:
         p.dropDown();
         break;
-        
+
       case KeyEvent.VK_ENTER:
-        if(p.isAnagram() && p.getWord().length() > 0){
-          p.switchToAnagram(false);
-          p.getBoardGame().setAllowClick(false);
+        if (p.isAnagram() && p.getWord().length() > 0) {
+          p.setWordFinish();
         }
         break;
 
@@ -52,13 +50,6 @@ public class Config1 extends KeyAdapter {
         ContextManager.getInstance().setPause();
         break;
     }
-
-    repaint();
-  }
-
-  private void repaint() {
-    GraphicEngine g = GraphicEngine.getInstance();
-    g.renderFrame();
 
   }
 }

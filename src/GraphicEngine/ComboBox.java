@@ -11,7 +11,7 @@ public class ComboBox extends JComboBox {
   public ComboBox(String name, String[] tab, int x, int y, int sx, int sy) {
     super(tab);
     this.name = name;
-    this.addItemListener(ContextManager.getInstance().getItemListener());
+    this.addItemListener(ContextManager.getItemListener());
     this.setBounds(x, y, sx, sy);
   }
 

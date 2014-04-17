@@ -29,7 +29,7 @@ public class BoardGame2D extends JPanel implements Observer {
   private String font;
   private Color color;
   private final GridEventListener event;
-	private boolean shadow;
+  private boolean shadow;
 
   public BoardGame2D(BoardGame model) {
     /* Settings */
@@ -39,15 +39,14 @@ public class BoardGame2D extends JPanel implements Observer {
 
     /* UI NextShape */
     nextShape = new Shape2D(model.getNextShape());
-		
-		loadDesign();
-		loadOptions();
-		
-		Hub2D hub = new Hub2D(model.getHub(), font, color);
-		model.getHub().addObservateur(hub);
-		this.add(hub);
 
-    
+    loadDesign();
+    loadOptions();
+
+    Hub2D hub = new Hub2D(model.getHub(), font, color);
+    model.getHub().addObservateur(hub);
+    this.add(hub);
+
     event = new GridEventListener(this.model);
     gameGrid = new Grid2D(model.getGrid(), event, shadow);
     gameGrid.setBounds(70, 135, 350, 700);
@@ -57,9 +56,9 @@ public class BoardGame2D extends JPanel implements Observer {
 
     setShapeToGrid2D();
   }
-	
-	private void loadDesign(){
-		/**
+
+  private void loadDesign() {
+    /**
      * Graphics properties *
      */
     Properties prop = new Properties();
@@ -75,7 +74,7 @@ public class BoardGame2D extends JPanel implements Observer {
       background = prop.getProperty("background");
       font = prop.getProperty("font");
       String[] nbColor = prop.getProperty("color").split(",");
-			color = new Color(Integer.parseInt(nbColor[0]), Integer.parseInt(nbColor[1]), Integer.parseInt(nbColor[2]));
+      color = new Color(Integer.parseInt(nbColor[0]), Integer.parseInt(nbColor[1]), Integer.parseInt(nbColor[2]));
 
     } catch (IOException ex) {
       /*Default background*/
@@ -90,10 +89,10 @@ public class BoardGame2D extends JPanel implements Observer {
         }
       }
     }
-	}
-	
-	private void loadOptions(){
-		Properties prop = new Properties();
+  }
+
+  private void loadOptions() {
+    Properties prop = new Properties();
     InputStream input = null;
 
     /*Get background image from file design*/
@@ -103,7 +102,7 @@ public class BoardGame2D extends JPanel implements Observer {
       // load a properties file
       prop.load(input);
 
-      shadow = Boolean.parseBoolean( prop.getProperty("shadow") );
+      shadow = Boolean.parseBoolean(prop.getProperty("shadow"));
 
     } catch (IOException ex) {
       /*Default background*/
@@ -118,7 +117,7 @@ public class BoardGame2D extends JPanel implements Observer {
         }
       }
     }
-	}
+  }
 
   private void setShapeToGrid2D() {
     gameGrid.setShape2D(model.getGrid().getCurrentShape());

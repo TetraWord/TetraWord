@@ -14,7 +14,7 @@ public class RunPlayer implements Runnable {
 
   @Override
   public void run() {
-    while (this.player.getBoardGame().getPlay()) {
+    while (!this.player.isFinish()) {
       if (!ContextManager.getInstance().isPaused && !player.isAnagram()) {
         player.down();
         try {
