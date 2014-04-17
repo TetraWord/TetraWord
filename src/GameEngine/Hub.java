@@ -7,10 +7,11 @@ import java.util.ArrayList;
 public class Hub implements Observer, Observable {
 
   private ArrayList<Observer> listObserver = new ArrayList<>();
-  int level;
-  InGameState state;
+  private int level;
+  private InGameState state;
+  private String word;
   /*Shape nextShape;*/
-  int score;
+  private int score;
   /*Time Left*/
   /*Time before mode changing*/
   /*Modifier*/
@@ -19,6 +20,14 @@ public class Hub implements Observer, Observable {
     this.level = 1;
     this.score = 0;
     this.state = InGameState.TETRIS;
+  }
+
+  public int getLevel() {
+    return level;
+  }
+
+  public InGameState getState() {
+    return state;
   }
 
   @Override
@@ -32,16 +41,12 @@ public class Hub implements Observer, Observable {
     }
   }
 
-  public int getLevel() {
-    return level;
-  }
-
-  public InGameState getState() {
-    return state;
-  }
-
   public int getScore() {
     return score;
+  }
+
+  public String getWord() {
+    return word;
   }
 
   @Override
