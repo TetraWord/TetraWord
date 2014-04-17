@@ -7,9 +7,11 @@ import GameEngine.Grid;
 import GameEngine.Player;
 import Pattern.Observable;
 import Pattern.Observer;
-import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.image.BufferedImage;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
 import javax.swing.JPanel;
 
 public class Grid2D extends JPanel implements Observer {
@@ -41,6 +43,33 @@ public class Grid2D extends JPanel implements Observer {
 
     Brick[][] tabBrick = model.getTGrid();
     compositionBrick2D = new Brick2D[tabBrick.length][tabBrick[0].length];
+		
+		
+    Properties prop = new Properties();
+		InputStream input = null;
+		
+		/*Get brick image from file design*/
+    try {
+
+      input = new FileInputStream("conf/design.properties");
+
+      // load a properties file
+      prop.load(input);
+			Brick2D.setBrickImage(prop.getProperty("brick"));
+
+    } catch (IOException ex) {
+      /*Default background*/
+			Brick2D.setBrickImage("media/Design/paper/brick.jpg");
+      ex.printStackTrace();
+    } finally {
+      if (input != null) {
+        try {
+          input.close();
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+      }
+    }
 
     this.setVisible(true);
   }
@@ -68,16 +97,9 @@ public class Grid2D extends JPanel implements Observer {
 
     for (int i = 0; i < t.length; ++i) {
       for (int j = 0; j < t[i].length; ++j) {
-        //System.out.println(i+" "+j);
         Brick b = t[i][j];
         if (b.getNb() > 0 && compositionBrick2D[i][j] != null) {
-          BufferedImage monImage;
-          if (b.isClicked()) {
-            monImage = currentShape.getBrickImage(Color.GRAY);
-          } else {
-            monImage = currentShape.getBrickImage(b.getColor());
-          }
-          compositionBrick2D[i][j].draw(g, j * sizeBrick + left, i * sizeBrick + top, monImage, false);
+          compositionBrick2D[i][j].draw(g, j * sizeBrick + left, i * sizeBrick + top, 1, false);
         }
       }
     }
@@ -112,7 +134,6 @@ public class Grid2D extends JPanel implements Observer {
         y = (i + yCS);
         if (tabBrick[i][j] != null) {
           if (tabBrick[i][j].getNb() > 0) {
-            //System.out.println(x + "" + y);
             compositionBrick2D[y][x] = new Brick2D(tabBrick[i][j]);
           }
         }
