@@ -37,6 +37,7 @@ public class Hub implements Observer, Observable {
       this.level = p.getLevel();
       this.score = p.getScore();
       this.state = p.getState();
+      this.word = p.getWord();
       updateObservateur(null);
     }
   }
