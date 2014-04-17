@@ -201,5 +201,6 @@ public class Player implements Observable {
   void doAnagram() {
     numLinesRemoved += boardGame.removeFullLine();
     boardGame.launchNextShape();
+    boardGame.getGrid().updateObservateur(boardGame.getGrid().getTGrid());
   }
 }
