@@ -198,7 +198,7 @@ public class Player implements Observable {
     listObserver = new ArrayList<>();
   }
 
-  void doAnagram() {
+  public void doAnagram() {
     numLinesRemoved += boardGame.removeFullLine();
     boardGame.launchNextShape();
     boardGame.getGrid().updateObservateur(boardGame.getGrid().getTGrid());

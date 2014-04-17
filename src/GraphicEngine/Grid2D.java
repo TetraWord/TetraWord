@@ -92,6 +92,7 @@ public class Grid2D extends JPanel implements Observer {
         currentShape.paintShadow(g, model.getTGrid());
       }
     }
+		
     //Brick draw
     Brick[][] t = model.getTGrid();
 
