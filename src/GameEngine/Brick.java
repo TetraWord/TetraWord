@@ -15,7 +15,7 @@ public class Brick {
   private int number;
   private Color color;
   private boolean clicked = false;
-	private static char[] frequencyLetter = initLetters();
+  private static char[] frequencyLetter = initLetters();
 
   private Brick(char letter, int number, Color c) {
     this.letter = letter;
@@ -37,57 +37,56 @@ public class Brick {
     this(b.letter, b.number, b.color);
   }
 
+  private char getAleaLetter() {
+    int lower = 0;
+    int higher = frequencyLetter.length;
+    int random = (int) (Math.random() * (higher + 1 - lower)) + lower;
+    return frequencyLetter[random];
+  }
 
-	private char getAleaLetter() {
-		int lower = 0;
-		int higher = frequencyLetter.length;
-		int random = (int)(Math.random() * (higher+1-lower)) + lower;
-		return frequencyLetter[random];
-	}
-	
-	private static char[] initLetters(){
-		char[] letters;
-		HashMap<Character, Integer> occurence = new HashMap<>();
-		char c;
-		Scanner scanner;
-		String[] words;
-		/* Read file to save occurence */
-		try {
-			scanner = new Scanner(new File("./media/lettersFrequency.txt"));
-			while (scanner.hasNextLine()) {
-				String l = scanner.nextLine();
-				words = l.split(" ");
-				occurence.put(words[0].charAt(0), Integer.parseInt(words[1]));
-			}
-			
-			/* Count number of letter for the size of the letters table*/
-			int size = 0;
-			Collection<Integer> collec = occurence.values();
-			for(int nb : collec ){
-				size = size + nb;
-			}
-			letters = new char[size];
-			
-			/* Construct table with right number of occurence */
-			int i = 0;
-			for (int l = 0; l < occurence.size(); ++l){
-					for (int nb = 0; nb < occurence.get((char)(l + 97)); ++nb){
-						letters[i] = (char)(l + 97);
-						++i;
-					}
-					
-			}
-			
-			return letters;
-			
-		} catch (FileNotFoundException ex) {
-			Logger.getLogger(Brick.class.getName()).log(Level.SEVERE, null, ex);
-		}
-		
-		
-		return null;
-		
-	}
+  private static char[] initLetters() {
+    char[] letters;
+    HashMap<Character, Integer> occurence = new HashMap<>();
+    char c;
+    Scanner scanner;
+    String[] words;
+    /* Read file to save occurence */
+    try {
+      scanner = new Scanner(new File("./media/lettersFrequency.txt"));
+      while (scanner.hasNextLine()) {
+        String l = scanner.nextLine();
+        words = l.split(" ");
+        occurence.put(words[0].charAt(0), Integer.parseInt(words[1]));
+      }
+
+      /* Count number of letter for the size of the letters table*/
+      int size = 0;
+      Collection<Integer> collec = occurence.values();
+      for (int nb : collec) {
+        size = size + nb;
+      }
+      letters = new char[size];
+
+      /* Construct table with right number of occurence */
+      int i = 0;
+      for (int l = 0; l < occurence.size(); ++l) {
+        for (int nb = 0; nb < occurence.get((char) (l + 97)); ++nb) {
+          letters[i] = (char) (l + 97);
+          ++i;
+        }
+
+      }
+
+      return letters;
+
+    } catch (FileNotFoundException ex) {
+      Logger.getLogger(Brick.class.getName()).log(Level.SEVERE, null, ex);
+    }
+
+    return null;
+
+  }
+
   public int getNb() {
     return number;
   }
@@ -95,8 +94,8 @@ public class Brick {
   public Color getColor() {
     return color;
   }
-	
-  public char getLetter(){
+
+  public char getLetter() {
     return letter;
   }
 
@@ -107,5 +106,5 @@ public class Brick {
   public boolean isClicked() {
     return clicked;
   }
-  
+
 }

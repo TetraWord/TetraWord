@@ -1,4 +1,3 @@
-
 package GraphicEngine;
 
 import GameEngine.Brick;
@@ -19,32 +18,31 @@ import javax.imageio.ImageIO;
 
 public class Shape2D {
 
-  
   private final Shape model;
-	private String brick;
-	protected final Brick2D[][] compositionBrick2D;
-  
-  public Shape2D(Shape s){
+  private String brick;
+  protected final Brick2D[][] compositionBrick2D;
+
+  public Shape2D(Shape s) {
 
     this.model = s;
-    
-		int[][] representation = model.getRepresentation();
-		Brick[][] composition = model.getComposition();
-		compositionBrick2D = new Brick2D[composition.length][composition[0].length];
-		for (int i = 0; i < 4; ++i) {
-				for (int j = 0; j < 4; ++j) {
-					if (representation[i][j] > 0) {
-						compositionBrick2D[i][j] = new Brick2D(composition[i][j]);
-					} else {
-						compositionBrick2D[i][j] = null;
-					}
-				}
-			}
-		
+
+    int[][] representation = model.getRepresentation();
+    Brick[][] composition = model.getComposition();
+    compositionBrick2D = new Brick2D[composition.length][composition[0].length];
+    for (int i = 0; i < 4; ++i) {
+      for (int j = 0; j < 4; ++j) {
+        if (representation[i][j] > 0) {
+          compositionBrick2D[i][j] = new Brick2D(composition[i][j]);
+        } else {
+          compositionBrick2D[i][j] = null;
+        }
+      }
+    }
+
     Properties prop = new Properties();
-		InputStream input = null;
-		
-		/*Get brick image from file design*/
+    InputStream input = null;
+
+    /*Get brick image from file design*/
     try {
 
       input = new FileInputStream("conf/design.properties");
@@ -70,42 +68,41 @@ public class Shape2D {
   }
 
   public void draw(Graphics g, int x, int y, double ratio) {
-		
-		int top = y;
-		int left = x;
-		int sizeBrick = (int)(35 * ratio);
-		Color c = model.getColor();
-    BufferedImage monImage = getBrickImage(c);
-		
-		/*Resize image*/
-		BufferedImage before = monImage;
-		int w = before.getWidth();
-		int h = before.getHeight();
-		BufferedImage after = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
-		AffineTransform at = new AffineTransform();
-		at.scale(ratio, ratio);
-		AffineTransformOp scaleOp = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
-		after = scaleOp.filter(before, after);
-		
-			int[][] representation = model.getRepresentation();
-			for (int i = 0; i < 4; ++i) {
-				for (int j = 0; j < 4; ++j) {
-					if (representation[i][j] > 0) {
-						if (compositionBrick2D[i][j] != null) {
-							compositionBrick2D[i][j].draw(g, j * sizeBrick + left, i * sizeBrick + top, after, false);
-						}
-					}
-				}
-			}		
-	}
 
+    int top = y;
+    int left = x;
+    int sizeBrick = (int) (35 * ratio);
+    Color c = model.getColor();
+    BufferedImage monImage = getBrickImage(c);
+
+    /*Resize image*/
+    BufferedImage before = monImage;
+    int w = before.getWidth();
+    int h = before.getHeight();
+    BufferedImage after = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+    AffineTransform at = new AffineTransform();
+    at.scale(ratio, ratio);
+    AffineTransformOp scaleOp = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
+    after = scaleOp.filter(before, after);
+
+    int[][] representation = model.getRepresentation();
+    for (int i = 0; i < 4; ++i) {
+      for (int j = 0; j < 4; ++j) {
+        if (representation[i][j] > 0) {
+          if (compositionBrick2D[i][j] != null) {
+            compositionBrick2D[i][j].draw(g, j * sizeBrick + left, i * sizeBrick + top, after, false);
+          }
+        }
+      }
+    }
+  }
 
   public BufferedImage getBrickImage(Color myColor) {
     try {
       BufferedImage monImage = ImageIO.read(new File(brick));
       WritableRaster trame = monImage.getRaster();
       ColorModel color = monImage.getColorModel();
-			
+
       for (int i = 0; i < 35; ++i) {
         for (int j = 0; j < 35; ++j) {
           /*Get alpha of the image*/
@@ -124,34 +121,34 @@ public class Shape2D {
       return null;
     }
   }
-  
-  public BufferedImage getBrickShadow (Color myColor){
-    try {
-			BufferedImage monImage = ImageIO.read(new File(brick));
-			WritableRaster trame = monImage.getRaster();
-			ColorModel color = monImage.getColorModel();
 
-			for (int i = 0; i < 35; ++i) {
-				for (int j = 0; j < 35; ++j) {
-					/*Get alpha of the image*/
-					Object pixel = trame.getDataElements(i, j, null);
-					int alpha = color.getAlpha(pixel);
-					if(alpha >=110){
-						alpha -= 110;
-					}else{
-						alpha = 0;
-					}
-					/*Create new color with alpha of the image*/
-					myColor = new Color(myColor.getRed(), myColor.getGreen(), myColor.getBlue(), alpha);
-					int rgb = myColor.getRGB();
-					Object couleur = color.getDataElements(rgb, null);
-					trame.setDataElements(i, j, couleur);
-				}
-			}    
+  public BufferedImage getBrickShadow(Color myColor) {
+    try {
+      BufferedImage monImage = ImageIO.read(new File(brick));
+      WritableRaster trame = monImage.getRaster();
+      ColorModel color = monImage.getColorModel();
+
+      for (int i = 0; i < 35; ++i) {
+        for (int j = 0; j < 35; ++j) {
+          /*Get alpha of the image*/
+          Object pixel = trame.getDataElements(i, j, null);
+          int alpha = color.getAlpha(pixel);
+          if (alpha >= 110) {
+            alpha -= 110;
+          } else {
+            alpha = 0;
+          }
+          /*Create new color with alpha of the image*/
+          myColor = new Color(myColor.getRed(), myColor.getGreen(), myColor.getBlue(), alpha);
+          int rgb = myColor.getRGB();
+          Object couleur = color.getDataElements(rgb, null);
+          trame.setDataElements(i, j, couleur);
+        }
+      }
       return monImage;
     } catch (IOException e) {
-			e.printStackTrace();
+      e.printStackTrace();
       return null;
-		}
+    }
   }
 }

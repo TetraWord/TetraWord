@@ -1,4 +1,3 @@
-
 package ContextManager;
 
 import GameEngine.BoardGame;
@@ -9,27 +8,26 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
-public class GridEventListener extends MouseAdapter implements Observable{
-  
+public final class GridEventListener extends MouseAdapter implements Observable {
+
   private ArrayList<Observer> listObserver = new ArrayList<>();
-  
-  public GridEventListener(BoardGame obs){
+
+  public GridEventListener(BoardGame obs) {
     addObservateur(obs);
   }
-  
+
   @Override
-  public void mouseClicked(MouseEvent e){
+  public void mouseClicked(MouseEvent e) {
     //Get back the BrickButton clicked
-    BrickButton b = (BrickButton)e.getSource();
+    BrickButton b = (BrickButton) e.getSource();
+    //Get his coordonate
     int x = b.getPosX();
     int y = b.getPosy();
-    //System.out.println("b = ("+b.getPosX()+" ; "+b.getPosy()+")");
-    //Get back the Brick2D clicked
     int[] coords = new int[2];
     coords[0] = x;
     coords[1] = y;
+    //Tell the boardGame that the brick is clicked
     updateObservateur(coords);
-    
   }
 
   @Override

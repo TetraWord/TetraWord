@@ -1,4 +1,3 @@
-
 package Pattern;
 
 public interface Observer {

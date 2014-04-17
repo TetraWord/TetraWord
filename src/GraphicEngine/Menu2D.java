@@ -107,12 +107,11 @@ public class Menu2D extends JPanel {
     y = y + step_y;
     this.add(new Button2D("Previous", x, y, sx, sy));
   }
-  
-  
+
   void defineMultiPlayersMenu() {
     lastState = state;
     state = MenuState.MULTI;
-    
+
     setButton2D(3);
     int sx = 300, sy = 50;
     int x = WINDOW_WIDTH / 2 - sx / 2;
@@ -124,11 +123,11 @@ public class Menu2D extends JPanel {
     y = y + step_y;
     this.add(new Button2D("Previous", x, y, sx, sy));
   }
-	
+
   @Override
   public void paintComponent(Graphics g) {
     super.paintComponent(g);
-    if (state != MenuState.DESIGN && state != MenuState.DIFFICULTY ) {
+    if (state != MenuState.DESIGN && state != MenuState.DIFFICULTY) {
       try {
         /*Try to load background image from chosen design*/
 

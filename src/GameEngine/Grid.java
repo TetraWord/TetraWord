@@ -4,10 +4,10 @@ import Pattern.Observable;
 import Pattern.Observer;
 import java.util.ArrayList;
 
-public class Grid implements Observable{
+public class Grid implements Observable {
 
-  private static final int sizeX = 10;
-  private static final int sizeY = 20;
+  public static final int sizeX = 10;
+  public static final int sizeY = 20;
   private final Brick[][] tGrid = new Brick[sizeY][sizeX];
   private CurrentShape currentShape;
   private ArrayList<Observer> listObserver = new ArrayList<>();
@@ -30,8 +30,8 @@ public class Grid implements Observable{
   public CurrentShape getCurrentShape() {
     return currentShape;
   }
-  
-  public void setCurrentShape(CurrentShape cs){
+
+  public void setCurrentShape(CurrentShape cs) {
     currentShape = cs;
   }
 
@@ -54,7 +54,7 @@ public class Grid implements Observable{
 
   public void removeLine(int lineToRemove) {
     for (int i = lineToRemove; i > 0; --i) {
-      for (int j = 0; j < 10; ++j) {
+      for (int j = 0; j < sizeX; ++j) {
         tGrid[i][j] = tGrid[i - 1][j];
       }
     }
@@ -62,19 +62,19 @@ public class Grid implements Observable{
   }
 
   public boolean isComplete(CurrentShape s) {
-    for (int i = 0; i < 4; ++i) {
+    for (int i = 0; i < Shape.sizeShape; ++i) {
       int x = s.getX() + i;
-      if (x >= 10) {
+      if (x >= sizeX) {
         return false;
       }
 
       if (getTGrid()[0][x].getNb() >= 1) {
-        this.myBoardGame.setPlay();
+        this.myBoardGame.finishGame();
         return true;
       }
-      for (int j = 0; j < 4; ++j) {
+      for (int j = 0; j < Shape.sizeShape; ++j) {
         if (s.representation[i][j] >= 1 && getTGrid()[j][x].getNb() >= 1) {
-          this.myBoardGame.setPlay();
+          this.myBoardGame.finishGame();
           return true;
         }
       }
@@ -101,8 +101,8 @@ public class Grid implements Observable{
   }
 
   void setIn(CurrentShape s) {
-    for (int i = 0; i < 4; ++i) {
-      for (int j = 0; j < 4; ++j) {
+    for (int i = 0; i < Shape.sizeShape; ++i) {
+      for (int j = 0; j < Shape.sizeShape; ++j) {
         int y = s.getY() + i;
         int x = s.getX() + j;
         int value = s.representation[i][j];
@@ -124,7 +124,7 @@ public class Grid implements Observable{
     }
   }
 
-	public Player getPlayer() {
-		return myBoardGame.getPlayer();
-	}
+  public Player getPlayer() {
+    return myBoardGame.getPlayer();
+  }
 }

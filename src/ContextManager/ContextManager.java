@@ -5,26 +5,22 @@ import GameEngine.*;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.KeyAdapter;
-import java.util.ArrayList;
+
 /*
  * Chocolate spread
  */
-
 public class ContextManager {
 
-  private GameState lastState;
   private final GameEngine gameEngine = GameEngine.getInstance();
   private final GraphicEngine graphicEngine = GraphicEngine.getInstance();
   private static final ContextManager INSTANCE = new ContextManager();
   private static final MenuEventListener menuListener = new MenuEventListener();
   private static final ItemActionListener itemListener = new ItemActionListener();
-  private final ArrayList<Thread> playersThread = new ArrayList<>();
   private static Config1 player1Listener = null;
   private static Config2 player2Listener = null;
   public boolean isPaused = false;
 
   private ContextManager() {
-    lastState = GameState.NO_STATE;
   }
 
   public static ContextManager getInstance() {
@@ -51,7 +47,6 @@ public class ContextManager {
 
   public void init() {
     graphicEngine.init();
-    gameEngine.init();
   }
 
   public void update() {
@@ -64,38 +59,36 @@ public class ContextManager {
   public void defineMainMenu() {
     Window w = graphicEngine.getWindow();
     w.defineMainMenu();
-    w.repaint();
   }
 
   public void defineGameMenu() {
     Window w = graphicEngine.getWindow();
     w.defineGameMenu();
-    w.repaint();
+  }
+
+  public void defineMultiPlayersMenu() {
+    Window w = graphicEngine.getWindow();
+    w.defineMultiPlayersMenu();
   }
 
   public void defineOptionGameMenu() {
     Window w = graphicEngine.getWindow();
     w.defineOptionGameMenu();
-    w.repaint();
   }
 
   public void defineDesignMenu() {
     Window w = graphicEngine.getWindow();
     w.defineDesignMenu();
-    w.repaint();
   }
 
-	void defineDifficultyMenu() {
-		Window w = graphicEngine.getWindow();
+  public void defineDifficultyMenu() {
+    Window w = graphicEngine.getWindow();
     w.defineDifficultyMenu();
-    w.repaint();
-	}
+  }
 
   public void reloadApercuBackground(String item) {
-
     Window w = graphicEngine.getWindow();
     w.reloadApercuBackground(item);
-    w.validate();
   }
 
   public void getBack() {
@@ -121,10 +114,9 @@ public class ContextManager {
   }
 
   public void definePlayersGame(double numPlayer) {
-    //Graphic
+    /* Define the new settings of the window */
     Window w = graphicEngine.getWindow();
     w.clear();
-    w.setLocationRelativeTo(null);
 
     if (numPlayer > 1) {
       Dimension size = w.getSize();
@@ -133,6 +125,9 @@ public class ContextManager {
       w.setLayout(new GridLayout(1, 2));
     }
 
+    w.setLocationRelativeTo(null);
+
+    /* Add the players with the same shapes */
     Shape s = ShapesStock.getInstance().getRandomShape();
     Shape s2 = ShapesStock.getInstance().getRandomShape();
     for (int i = 0; i < numPlayer; ++i) {
@@ -150,19 +145,10 @@ public class ContextManager {
       w.defineNewBoardGame(players[i].getBoardGame());
 
       Thread t = new Thread(new RunPlayer(players[i]));
-      playersThread.add(t);
       t.setDaemon(true);
       t.start();
     }
 
     w.addWindowListener();
-    update();
-
-  }
-
-  void defineMultiPlayersMenu() {
-    Window w = graphicEngine.getWindow();
-    w.defineMultiPlayersMenu();
-    w.repaint();
   }
 }

@@ -16,7 +16,7 @@ public class Button2D extends JButton {
     this.name = name;
     this.setBounds(x, y, sx, sy);
     this.setFocusable(false);
-    this.addActionListener(ContextManager.getInstance().getMenuListener());
+    this.addActionListener(ContextManager.getMenuListener());
 
     /*Design*/
     this.setIcon(new ImageIcon("media/Design/btnBG.jpg"));
@@ -28,7 +28,7 @@ public class Button2D extends JButton {
   }
 
   public void removeListener() {
-    this.removeActionListener(ContextManager.getInstance().getMenuListener());
+    this.removeActionListener(ContextManager.getMenuListener());
   }
 
   @Override

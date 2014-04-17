@@ -19,7 +19,7 @@ public class Window extends JFrame {
   public static final String title = "TetraWord";
   public static Menu2D menu;
   public final ArrayList<BoardGame2D> boardGames = new ArrayList<>();
-  
+
   public Window() {
 
     //Window settings
@@ -58,12 +58,12 @@ public class Window extends JFrame {
     this.setVisible(true);
   }
 
-	public void defineDifficultyMenu() {
-		menu = new DifficultyMenu2D();
+  public void defineDifficultyMenu() {
+    menu = new DifficultyMenu2D();
     this.setContentPane(menu);
     this.setVisible(true);
-	}
-  
+  }
+
   public void defineMultiPlayersMenu() {
     menu = new Menu2D();
     menu.defineMultiPlayersMenu();
@@ -76,7 +76,7 @@ public class Window extends JFrame {
     BoardGame2D boardGame = new BoardGame2D(model);
     model.addObservateur(boardGame);
     pan.add(boardGame);
-    this.boardGames.add(boardGame);  
+    this.boardGames.add(boardGame);
 
     this.setVisible(true);
   }
@@ -89,7 +89,7 @@ public class Window extends JFrame {
 
   public void reloadApercuBackground(String item) {
     Container pan = getContentPane();
-    if (pan instanceof DesignMenu2D ) {
+    if (pan instanceof DesignMenu2D) {
       ((DesignMenu2D) pan).loadApercus(item);
     }
   }
@@ -101,5 +101,5 @@ public class Window extends JFrame {
   public Menu2D getMenu() {
     return menu;
   }
-  
+
 }

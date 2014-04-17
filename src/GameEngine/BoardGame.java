@@ -9,36 +9,25 @@ import java.util.Queue;
 public class BoardGame implements Observable, Observer {
 
   private final Grid grid;
-  private final static ShapesStock ss = ShapesStock.getInstance();
-  private final int nb;
-  private ArrayList<Observer> listObserver = new ArrayList<>();
+  private final Hub hub;
   private final Player myPlayer;
+  private final static ShapesStock ss = ShapesStock.getInstance();
   private final Queue<Shape> listNextShape = new LinkedList<>();
-  private boolean play;
-  private final Hub hub = new Hub();
+  private ArrayList<Observer> listObserver = new ArrayList<>();
   private boolean allowClick = false;
 
   public BoardGame(int nb, Shape s, Shape s2, Player p) {
-    this.nb = nb;
+    /* Init attributes */
     this.myPlayer = p;
-    this.play = true;
+    this.grid = new Grid(this, new CurrentShape(s));
+    this.hub = new Hub();
+    this.listNextShape.add(s2);
 
-    listNextShape.add(s2);
-    p.addObservateur(hub);
-
-    grid = new Grid(this, new CurrentShape(s));
+    this.myPlayer.addObservateur(hub);
   }
 
-  public void setPlay() {
-    this.play = false;
-  }
-
-  public boolean getPlay() {
-    return this.play;
-  }
-
-  public void setInGrid(CurrentShape s) {
-    grid.setIn(s);
+  public void finishGame() {
+    this.myPlayer.finish();
   }
 
   public Grid getGrid() {
@@ -47,10 +36,6 @@ public class BoardGame implements Observable, Observer {
 
   public Hub getHub() {
     return hub;
-  }
-
-  public int getNb() {
-    return nb;
   }
 
   public Player getPlayer() {
@@ -77,6 +62,7 @@ public class BoardGame implements Observable, Observer {
       grid.setCurrentShape(cs);
     }
     grid.updateObservateur(cs);
+    grid.updateObservateur(grid.getTGrid());
 
   }
 
@@ -133,10 +119,21 @@ public class BoardGame implements Observable, Observer {
       int x = ((int[]) args)[0];
       int y = ((int[]) args)[1];
       Brick b = grid.getTGrid()[y][x];
+      /*If the brick is on the full line and if it's not clicked yet */
       if (y == grid.getFirstFullLine() && !b.isClicked()) {
         myPlayer.addNewChar(b.getLetter());
         b.setClicked(true);
       }
+    }
+  }
+
+  public void finishFall(CurrentShape s) {
+    grid.setIn(s);
+    if (grid.getFirstFullLine() != -1) {
+      grid.setCurrentShape(null);
+      myPlayer.switchToAnagram(true);
+    } else {
+      launchNextShape();
     }
   }
 

@@ -1,4 +1,3 @@
-
 package GraphicEngine;
 
 import GameEngine.MenuState;
@@ -17,52 +16,50 @@ import javax.swing.JOptionPane;
 
 class DifficultyMenu2D extends Menu2D {
 
-	JCheckBox shadow;
-	
-	public DifficultyMenu2D() {
-		defineMenu();
-	}
-	
-	
+  JCheckBox shadow;
 
-	void defineMenu() {
-		state = MenuState.DIFFICULTY;
+  public DifficultyMenu2D() {
+    defineMenu();
+  }
+
+  private void defineMenu() {
+    state = MenuState.DIFFICULTY;
     lastState = MenuState.OPTION;
-		
-		int sx = 300, sy = 50;
+
+    int sx = 300, sy = 50;
     int x = WINDOW_WIDTH / 2 - sx / 2;
     int y = 50;
     int step_y = 50 + sy;
-		
-		/* Title */
-		JLabel title = new JLabel("Difficulty");
+
+    /* Title */
+    JLabel title = new JLabel("Difficulty");
     title.setBounds(x, y, sx, sy);
     title.setFont(new Font("Champagne & Limousines", 50, 50));
     title.setForeground(Color.white);
-		title.setHorizontalAlignment(JLabel.CENTER);
-		title.setVerticalAlignment(JLabel.CENTER);
+    title.setHorizontalAlignment(JLabel.CENTER);
+    title.setVerticalAlignment(JLabel.CENTER);
     this.add(title);
-		
-		y = y + step_y;
-		
-		/* Shadow */
-		JLabel label = new JLabel("Show shadow");
+
+    y = y + step_y;
+
+    /* Shadow */
+    JLabel label = new JLabel("Show shadow");
     label.setBounds(x, y, sx, sy);
     label.setFont(new Font("Champagne & Limousines", 20, 20));
     label.setForeground(Color.white);
     this.add(label);
-		
-		x = x + sx / 2;
-		shadow = new JCheckBox("");
+
+    x = x + sx / 2;
+    shadow = new JCheckBox("");
     shadow.setBounds(x, y, sx, sy);
-		shadow.setOpaque(false);
-		shadow.putClientProperty("JComponent.sizeVariant", "large");
+    shadow.setOpaque(false);
+    shadow.putClientProperty("JComponent.sizeVariant", "large");
     this.add(shadow);
-		
-		y = y + step_y;
-		
-		x = x - sx / 2;
-		
+
+    y = y + step_y;
+
+    x = x - sx / 2;
+
     setButton2D(2);
     Button2D b = new Button2D("Save options", x, y, sx, sy);
     b.removeListener();
@@ -70,7 +67,7 @@ class DifficultyMenu2D extends Menu2D {
 
       @Override
       public void actionPerformed(ActionEvent e) {
-				boolean shadowBool = shadow.isSelected();
+        boolean shadowBool = shadow.isSelected();
 
         Properties prop = new Properties();
         OutputStream output = null;
@@ -103,8 +100,7 @@ class DifficultyMenu2D extends Menu2D {
     this.add(b);
     y = y + step_y;
     this.add(new Button2D("Previous", x, y, sx, sy));
-    
-	}
 
-	
+  }
+
 }

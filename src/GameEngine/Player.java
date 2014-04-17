@@ -50,14 +50,7 @@ public class Player implements Observable {
         }
         //Si on ne peut pas faire descendre la pièce plus bas, on l'inscrit dans la Grid
         if (tmpY == s.getY()) {
-          boardGame.setInGrid(s);
-          Grid g = boardGame.getGrid();
-          if (g.getFirstFullLine() != -1) {
-            g.setCurrentShape(null);
-            switchToAnagram(true);
-          } else {
-            boardGame.launchNextShape();
-          }
+          boardGame.finishFall(s);
         }
       }
     }
@@ -91,14 +84,7 @@ public class Player implements Observable {
 
       s.move(s.getX(), finalLine - 1);
 
-      boardGame.setInGrid(s);
-      Grid g = boardGame.getGrid();
-      if (g.getFirstFullLine() != -1) {
-        g.setCurrentShape(null);
-        switchToAnagram(true);
-      } else {
-        boardGame.launchNextShape();
-      }
+      boardGame.finishFall(s);
     }
   }
 
@@ -123,14 +109,14 @@ public class Player implements Observable {
     }
   }
 
-	public int getScore(){
-		return score;
-	}
-	
-	public void addToScore(int add){
-		score = score + add;
-		updateObservateur(null);
-	}
+  public int getScore() {
+    return score;
+  }
+
+  public void addToScore(int add) {
+    score = score + add;
+    updateObservateur(null);
+  }
 
   public InGameState getState() {
     return state;
@@ -155,15 +141,23 @@ public class Player implements Observable {
     return state == InGameState.ANAGRAMME;
   }
 
-	public boolean isTetris() {
-		return state == InGameState.TETRIS;
-	}
+  public boolean isTetris() {
+    return state == InGameState.TETRIS;
+  }
 
-	public boolean isWordle() {
-		return state == InGameState.WORDLE;
-	}
-  
-  public void addNewChar(char c){
+  public boolean isWordle() {
+    return state == InGameState.WORDLE;
+  }
+
+  public boolean isFinish() {
+    return state == InGameState.FINISH;
+  }
+
+  public void finish() {
+    state = InGameState.FINISH;
+  }
+
+  public void addNewChar(char c) {
     word.append(c);
   }
 
@@ -197,9 +191,8 @@ public class Player implements Observable {
     listObserver = new ArrayList<>();
   }
 
-  void doAnagram() {
+  public void doAnagram() {
     numLinesRemoved += boardGame.removeFullLine();
     boardGame.launchNextShape();
-    boardGame.getGrid().updateObservateur(boardGame.getGrid().getTGrid());
   }
 }

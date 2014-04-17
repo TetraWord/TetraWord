@@ -10,7 +10,7 @@ public class BrickButton extends JButton {
   public BrickButton(int posX, int posY) {
     this.posX = posX;
     this.posY = posY;
-    
+
     int sizeBrick = 35;
 
     setBounds(posX * sizeBrick, posY * sizeBrick, sizeBrick, sizeBrick);

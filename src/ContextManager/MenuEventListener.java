@@ -23,14 +23,14 @@ public class MenuEventListener implements ActionListener {
       case "Multiplayer game":
         c.defineMultiPlayersMenu();
         break;
-      
+
       case "Load game":
         break;
-        
+
       case "Versus human":
         c.definePlayersGame(2);
         break;
-        
+
       case "Versus IA":
         c.definePlayersGame(1.5);
         break;
@@ -59,7 +59,6 @@ public class MenuEventListener implements ActionListener {
         System.out.println("No implemented yet");
         break;
     }
-    c.update();
   }
 
 }

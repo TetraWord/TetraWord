@@ -4,48 +4,47 @@ import Pattern.Observable;
 import Pattern.Observer;
 import java.util.ArrayList;
 
-public class Hub implements Observer, Observable{
-	
+public class Hub implements Observer, Observable {
+
   private ArrayList<Observer> listObserver = new ArrayList<>();
-	int level;
-	InGameState state;
-	/*Shape nextShape;*/
-	int score;
-	/*Time Left*/
-	/*Time before mode changing*/
-	/*Modifier*/
-	
-	
-	public Hub(){
-		this.level = 1;
-		this.score = 0;
-		this.state = InGameState.TETRIS;
-	}
+  int level;
+  InGameState state;
+  /*Shape nextShape;*/
+  int score;
+  /*Time Left*/
+  /*Time before mode changing*/
+  /*Modifier*/
 
-	@Override
-	public void update(Observable o, Object args) {
-		if ( o instanceof Player ){
-			Player p = (Player)o;
-			this.level = p.getLevel();
-			this.score = p.getScore();
-			this.state = p.getState();
-			updateObservateur(null);
-		}
-	}
-	
-	public int getLevel(){
-		return level;
-	}
-	
-	public InGameState getState(){
-		return state;
-	}
+  public Hub() {
+    this.level = 1;
+    this.score = 0;
+    this.state = InGameState.TETRIS;
+  }
 
-	public int getScore() {
-		return score;
-	}
+  @Override
+  public void update(Observable o, Object args) {
+    if (o instanceof Player) {
+      Player p = (Player) o;
+      this.level = p.getLevel();
+      this.score = p.getScore();
+      this.state = p.getState();
+      updateObservateur(null);
+    }
+  }
 
-	@Override
+  public int getLevel() {
+    return level;
+  }
+
+  public InGameState getState() {
+    return state;
+  }
+
+  public int getScore() {
+    return score;
+  }
+
+  @Override
   public void addObservateur(Observer obs) {
     listObserver.add(obs);
   }
