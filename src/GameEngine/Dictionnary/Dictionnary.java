@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.HashSet;
+import java.util.Iterator;
+
 
 public class Dictionnary {
 
@@ -39,4 +41,44 @@ public class Dictionnary {
   public boolean included(String s) {
     return dico.contains(s);
   }
+
+  public boolean isAnagramme ( String s){
+  	boolean anagramme = true;
+		// --- Vérifie que les caractères du mot entré
+		// --- sont contenus dans le mot du dictionnaire
+		Iterator it = dico.iterator();
+		
+		while(it.hasNext()){
+			anagramme = true;
+			int i = 0;
+			String str2 = it.next().toString();
+			while ( i < s.length() && anagramme == true ){
+				if ( str2.indexOf( s.charAt(i) ) == -1 ){
+					anagramme = false;
+				}else{
+					i++;
+				}
+			}
+			//Idem : on vérifie que les caractères du mot du dictionnaire sont contenus dans le mot entré
+			if (anagramme == true){
+				System.out.println("mot:" + str2);
+			}
+			i=0;
+			while ( i < str2.length() && anagramme == true ){
+				if ( s.indexOf( str2.charAt(i) )  == -1 )
+					anagramme = false;
+				else i++;
+			}
+			
+			if (anagramme == true){
+				System.out.println("Il y a un mot qui correspond:");
+				System.out.println(str2);
+				return anagramme;
+			}
+		}
+		System.out.println("Pas d'anagramme");
+		
+		return anagramme;
+	}
+    
 }

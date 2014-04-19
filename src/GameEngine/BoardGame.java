@@ -1,5 +1,6 @@
 package GameEngine;
 
+import GameEngine.Dictionnary.Dictionnary;
 import Pattern.Observable;
 import Pattern.Observer;
 import java.util.ArrayList;
@@ -96,6 +97,8 @@ public class BoardGame implements Observable, Observer {
 
       if (myPlayer.isWordFinished()) {
         System.out.println("j'ai tapé : " + myPlayer.getWord());
+        Dictionnary d = new Dictionnary();
+        d.isAnagramme(myPlayer.getWord());
         myPlayer.clearWord();
         grid.removeLine(line);
         ++numLineRemoved;
