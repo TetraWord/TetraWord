@@ -52,6 +52,9 @@ public class Dictionnary {
 			anagramme = true;
 			int i = 0;
 			String str2 = it.next().toString();
+			if( s.length() != str2.length() ){
+				anagramme = false;
+			}
 			while ( i < s.length() && anagramme == true ){
 				if ( str2.indexOf( s.charAt(i) ) == -1 ){
 					anagramme = false;
