@@ -80,6 +80,11 @@ public class Window extends JFrame {
 
     this.setVisible(true);
   }
+  
+  public void definePauseMenu() {
+    menu = new Menu2D();
+    menu.definePauseMenu();
+  }
 
   public void addWindowListener() {
     this.addKeyListener(ContextManager.getInstance().getPlayerListener(0));

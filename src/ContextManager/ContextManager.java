@@ -149,6 +149,7 @@ public class ContextManager {
       t.start();
     }
 
+    w.definePauseMenu();
     w.addWindowListener();
   }
 }

@@ -123,6 +123,23 @@ public class Menu2D extends JPanel {
     y = y + step_y;
     this.add(new Button2D("Précédent", x, y, sx, sy));
   }
+  
+  void definePauseMenu() {
+    lastState = state;
+    state = MenuState.GAME;
+    
+    setButton2D(3);
+    int sx = 300, sy = 50;
+    int x = WINDOW_WIDTH / 2 - sx / 2;
+    int y = 300;
+    int step_y = 50 + sy;
+    this.add(new Button2D("Reprendre", x, y, sx, sy));
+    y = y + step_y;
+    this.add(new Button2D("Sauvegarder", x, y, sx, sy));
+    y = y + step_y;
+    this.add(new Button2D("Quitter", x, y, sx, sy));
+  }
+
 
   @Override
   public void paintComponent(Graphics g) {
@@ -150,5 +167,4 @@ public class Menu2D extends JPanel {
 
     }
   }
-
 }
