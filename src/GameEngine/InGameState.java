@@ -4,7 +4,7 @@ public enum InGameState {
 
   TETRIS("Tetris"),
   ANAGRAMME("Anagramme"),
-  WORDLE("Wordle"),
+  WORDDLE("Worddle"),
   FINISH("Finish");
 
   private String name = "";

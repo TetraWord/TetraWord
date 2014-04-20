@@ -15,6 +15,7 @@ public class Player implements Observable {
   private int score;
   private int numLinesTotalRemoved;
   private Shape shapeStocked;
+  private CurrentShape currentShapeStocked = null;
   private final Object monitor = new Object();
   private ArrayList<Observer> listObserver = new ArrayList<>();
 
@@ -149,8 +150,8 @@ public class Player implements Observable {
     return state == InGameState.TETRIS;
   }
 
-  public boolean isWordle() {
-    return state == InGameState.WORDLE;
+  public boolean isWorddle() {
+    return state == InGameState.WORDDLE;
   }
 
   public boolean isFinish() {
@@ -210,5 +211,17 @@ public class Player implements Observable {
 
   public void setWordFinish() {
     wordFinish = true;
+  }
+
+  public void switchToWorddle(boolean b) {
+    if(!b){ boardGame.getGrid().setCurrentShape(currentShapeStocked); }
+    boardGame.setAllowClick(b);
+    state = b ? InGameState.WORDDLE : InGameState.TETRIS;
+    updateObservateur(null);
+  }
+
+  public void stockCurrentShape() {
+    currentShapeStocked = boardGame.getGrid().getCurrentShape();
+    boardGame.getGrid().setCurrentShape(null);
   }
 }

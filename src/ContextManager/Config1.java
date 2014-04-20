@@ -47,6 +47,15 @@ public class Config1 extends KeyAdapter {
         }
         break;
 
+      case KeyEvent.VK_NUMPAD1:
+        if(!p.isWorddle()){
+          p.switchToWorddle(true);
+          p.stockCurrentShape();
+        }else{
+          p.switchToWorddle(false);
+        }
+        break;
+
       case KeyEvent.VK_P:
         ContextManager.getInstance().setPause();
         break;

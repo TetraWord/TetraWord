@@ -83,5 +83,4 @@ public class Dictionnary {
 		
 		return anagramme;
 	}
-    
 }
