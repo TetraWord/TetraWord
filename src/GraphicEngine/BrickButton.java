@@ -25,7 +25,7 @@ public class BrickButton extends JButton {
     return posX;
   }
 
-  public int getPosy() {
+  public int getPosY() {
     return posY;
   }
 }

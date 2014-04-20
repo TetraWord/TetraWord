@@ -214,7 +214,8 @@ public class Player implements Observable {
   }
 
   public void switchToWorddle(boolean b) {
-    if(!b){ boardGame.getGrid().setCurrentShape(currentShapeStocked); }
+    if(!b){ boardGame.getGrid().setCurrentShape(currentShapeStocked); clearWord(); }
+    wordFinish = b != true;
     boardGame.setAllowClick(b);
     state = b ? InGameState.WORDDLE : InGameState.TETRIS;
     updateObservateur(null);
@@ -223,5 +224,17 @@ public class Player implements Observable {
   public void stockCurrentShape() {
     currentShapeStocked = boardGame.getGrid().getCurrentShape();
     boardGame.getGrid().setCurrentShape(null);
+  }
+
+  void doWorddle() {
+    if (wordFinish){
+      clearWord();
+      boardGame.setAllowDoubleClick(true);
+      updateObservateur(null);
+    //Si le timer atteind 0
+    }else if(0 == 1){
+      boardGame.getGrid().destroyAllSelectedBrick();
+      switchToAnagram(false);
+    }
   }
 }

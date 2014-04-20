@@ -2,7 +2,9 @@ package GameEngine;
 
 import Pattern.Observable;
 import Pattern.Observer;
+import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Grid implements Observable {
 
@@ -127,4 +129,59 @@ public class Grid implements Observable {
   public Player getPlayer() {
     return myBoardGame.getPlayer();
   }
+
+  public Brick clickedOneBrick() {
+    Random r = new Random();
+    
+    int x, y;
+    do{
+      x = (int)(Math.random() * 10);
+      y = (int)(Math.random() * 20);
+    }while(tGrid[y][x].getNb() < 0);
+    tGrid[y][x].setClicked(true);
+    return tGrid[y][x];
+  }
+
+  public void declickedAllBrick() {
+    for(int i = 0; i < sizeY; ++i){
+      for(int j = 0; j < sizeX; ++j){
+        tGrid[i][j].setClicked(false);
+      }
+    }
+  }
+
+  public void destroyAllSelectedBrick() {
+    for(int i = 0; i < sizeY; ++i){
+      for(int j = 0; j < sizeX; ++j){
+        if(tGrid[i][j].isClicked()){
+          tGrid[i][j] = new Brick(' ', -1);
+        }
+      }
+    }
+  }
+
+  public void doubleClickedAllBrickClicked(Brick b) {
+    for(int i = 0; i < sizeY; ++i){
+      for(int j = 0; j < sizeX; ++j){
+        if(tGrid[i][j].isClicked() && tGrid[i][j] != b){
+          tGrid[i][j].setClicked(true);
+        }
+      }
+    }
+  }
+  
+  public int[] getXY(Brick b){
+    int[] coords = new int[2];
+    for(int i = 0; i < sizeY; ++i){
+      for(int j = 0; j < sizeX; ++j){
+        if(tGrid[i][j] == b){
+          coords[0] = j;
+          coords[1] = i;
+          return coords;
+        }
+      }
+    }
+    return null;
+  }
+
 }
