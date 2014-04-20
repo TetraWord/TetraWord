@@ -49,11 +49,11 @@ public class Config1 extends KeyAdapter {
         break;
 
       case KeyEvent.VK_NUMPAD1:
-        if(!p.isWorddle()){
+        if(!p.isWorddle() && !p.isAnagram()){
           p.switchToWorddle(true);
           p.stockCurrentShape();
           p.addNewChar(p.getBoardGame().clickedOneBrick());
-        }else{
+        }else if(!p.isAnagram()){
           p.switchToWorddle(false);
           p.getBoardGame().declickedAllBrick();
         }
