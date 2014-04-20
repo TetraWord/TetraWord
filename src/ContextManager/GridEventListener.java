@@ -20,12 +20,15 @@ public final class GridEventListener extends MouseAdapter implements Observable 
   public void mouseClicked(MouseEvent e) {
     //Get back the BrickButton clicked
     BrickButton b = (BrickButton) e.getSource();
+
     //Get his coordonate
     int x = b.getPosX();
-    int y = b.getPosy();
+    int y = b.getPosY();
+ 
     int[] coords = new int[2];
     coords[0] = x;
     coords[1] = y;
+
     //Tell the boardGame that the brick is clicked
     updateObservateur(coords);
   }

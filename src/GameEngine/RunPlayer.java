@@ -15,7 +15,7 @@ public class RunPlayer implements Runnable {
   @Override
   public void run() {
     while (!this.player.isFinish()) {
-      if (!ContextManager.getInstance().isPaused && !player.isAnagram()) {
+      if (!ContextManager.getInstance().isPaused && player.isTetris()) {
         player.down();
         try {
           Thread.sleep(1000 / player.getLevel());
@@ -24,6 +24,8 @@ public class RunPlayer implements Runnable {
         }
       } else if (player.isAnagram()) {
         player.doAnagram();
+      } else if (player.isWorddle()) {
+        player.doWorddle();
       }
     }
     System.out.println("you loose");

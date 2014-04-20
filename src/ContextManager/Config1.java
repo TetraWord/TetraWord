@@ -42,17 +42,20 @@ public class Config1 extends KeyAdapter {
         break;
 
       case KeyEvent.VK_ENTER:
-        if (p.isAnagram() && p.getWord().length() > 0) {
+        if ( (p.isAnagram() || p.isWorddle()) && p.getWord().length() > 0) {
           p.setWordFinish();
+          p.getBoardGame().setNoLastBrickClicked();
         }
         break;
 
       case KeyEvent.VK_NUMPAD1:
-        if(!p.isWorddle()){
+        if(!p.isWorddle() && !p.isAnagram()){
           p.switchToWorddle(true);
           p.stockCurrentShape();
-        }else{
+          p.addNewChar(p.getBoardGame().clickedOneBrick());
+        }else if(!p.isAnagram()){
           p.switchToWorddle(false);
+          p.getBoardGame().declickedAllBrick();
         }
         break;
 
