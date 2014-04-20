@@ -13,7 +13,7 @@ public class Player implements Observable {
   private boolean wordFinish = false;
   private final StringBuilder word = new StringBuilder();
   private int score;
-  private int numLinesRemoved;
+  private int numLinesTotalRemoved;
   private Shape shapeStocked;
   private final Object monitor = new Object();
   private ArrayList<Observer> listObserver = new ArrayList<>();
@@ -22,7 +22,7 @@ public class Player implements Observable {
     boardGame = new BoardGame(nb, s, s2, this);
     score = 0;
     level = 1;
-    numLinesRemoved = 0;
+    numLinesTotalRemoved = 0;
     number = nb;
   }
 
@@ -81,7 +81,8 @@ public class Player implements Observable {
       while (!s.tryCollision(boardGame.getGrid().getTGrid(), s.getX(), finalLine)) {
         ++finalLine;
       }
-
+      int interval = finalLine - s.getY();
+      this.addToScore(interval * 2);
       s.move(s.getX(), finalLine - 1);
 
       boardGame.finishFall(s);
@@ -115,6 +116,9 @@ public class Player implements Observable {
 
   public void addToScore(int add) {
     score = score + add;
+    if((int)score / 1000 >= level){
+      setLevelUp();
+    }
     updateObservateur(null);
   }
 
@@ -159,7 +163,7 @@ public class Player implements Observable {
 
   public void addNewChar(char c) {
     word.append(c);
-		updateObservateur(null);
+    updateObservateur(null);
   }
 
   public String getWord() {
@@ -193,7 +197,14 @@ public class Player implements Observable {
   }
 
   public void doAnagram() {
-    numLinesRemoved += boardGame.removeFullLine();
+    int numLinesRemoved = boardGame.removeFullLine();
+    if (numLinesRemoved == 4) {
+      System.out.println("Tetris ! ");
+      addToScore(1000);
+    } else {
+      addToScore(numLinesRemoved * 100);
+    }
+    numLinesTotalRemoved += numLinesRemoved;
     boardGame.launchNextShape();
   }
 
