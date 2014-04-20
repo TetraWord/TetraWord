@@ -96,9 +96,14 @@ public class BoardGame implements Observable, Observer {
       setAllowClick(true);
       
       if (myPlayer.isWordFinished()) {
+      	String bestWord = grid.findBestAnagramm(myPlayer.getDico());
         System.out.println("j'ai tapé : " + myPlayer.getWord());
-        Dictionnary d = new Dictionnary();
-        d.isAnagramme(myPlayer.getWord());
+        if(myPlayer.getDico().included(myPlayer.getWord())) {
+        	System.out.println("Ce mot existe dans le dictionnaire");
+        	if ( myPlayer.getWord().equals(bestWord)){
+        		System.out.println("Le meilleure mot a ete trouve");
+        	}
+        }
         myPlayer.clearWord();
         grid.removeLine(line);
         ++numLineRemoved;

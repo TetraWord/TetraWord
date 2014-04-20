@@ -42,7 +42,7 @@ public class Dictionnary {
     return dico.contains(s);
   }
 
-  public boolean isAnagramme ( String s){
+  public String isAnagramme ( String s){
   	boolean anagramme = true;
 		// --- Vérifie que les caractères du mot entré
 		// --- sont contenus dans le mot du dictionnaire
@@ -63,9 +63,6 @@ public class Dictionnary {
 				}
 			}
 			//Idem : on vérifie que les caractères du mot du dictionnaire sont contenus dans le mot entré
-			if (anagramme == true){
-				System.out.println("mot:" + str2);
-			}
 			i=0;
 			while ( i < str2.length() && anagramme == true ){
 				if ( s.indexOf( str2.charAt(i) )  == -1 )
@@ -74,13 +71,11 @@ public class Dictionnary {
 			}
 			
 			if (anagramme == true){
-				System.out.println("Il y a un mot qui correspond:");
-				System.out.println(str2);
-				return anagramme;
+				System.out.println("Le meilleur mot possible est:" + str2);
+				return str2;
 			}
 		}
-		System.out.println("Pas d'anagramme");
 		
-		return anagramme;
+		return null;
 	}
 }

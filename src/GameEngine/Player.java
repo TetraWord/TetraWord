@@ -1,7 +1,9 @@
 package GameEngine;
 
+import GameEngine.Dictionnary.Dictionnary;
 import Pattern.Observable;
 import Pattern.Observer;
+
 import java.util.ArrayList;
 
 public class Player implements Observable {
@@ -18,13 +20,15 @@ public class Player implements Observable {
   private CurrentShape currentShapeStocked = null;
   private final Object monitor = new Object();
   private ArrayList<Observer> listObserver = new ArrayList<>();
+  private final Dictionnary dico;
 
-  public Player(int nb, Shape s, Shape s2) {
+  public Player(int nb, Shape s, Shape s2, Dictionnary d) {
     boardGame = new BoardGame(nb, s, s2, this);
     score = 0;
     level = 1;
     numLinesTotalRemoved = 0;
     number = nb;
+    dico = d;
   }
 
   public Shape useShapeStocked() {
@@ -39,6 +43,10 @@ public class Player implements Observable {
 
   public int getNumber() {
     return number;
+  }
+  
+  public Dictionnary getDico() {
+  	return dico;
   }
 
   public void down() {
@@ -170,7 +178,7 @@ public class Player implements Observable {
   public String getWord() {
     return word.toString();
   }
-
+  
   public boolean isWordFinished() {
     return wordFinish;
   }
