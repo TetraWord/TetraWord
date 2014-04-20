@@ -1,5 +1,6 @@
 package GameEngine.Dictionnary;
 
+import static GameEngine.Grid.sizeX;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -43,7 +44,7 @@ public class Dictionnary {
   }
 
   public String isAnagramme ( String s){
-  	boolean anagramme = true;
+  	boolean anagramme;
 		// --- Vérifie que les caractères du mot entré
 		// --- sont contenus dans le mot du dictionnaire
 		Iterator it = dico.iterator();
@@ -78,4 +79,26 @@ public class Dictionnary {
 		
 		return null;
 	}
+  
+  public String findBestAnagramm(StringBuilder sb){
+    
+  	if(isAnagramme(sb.toString()) != null){
+			return sb.toString();
+		}
+  	int start = 1;
+  	String tmp;
+  	
+  	while(start < sb.length()){
+  		tmp = sb.substring(start);
+  		for(int h=0; h<tmp.length();++h){
+  			tmp = sb.reverse().substring(start);
+  			if(isAnagramme(tmp) != null){
+  				return tmp;
+  			}
+  		}
+  		start++;
+  	}
+  	
+  	return sb.toString();
+  }
 }

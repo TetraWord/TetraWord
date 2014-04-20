@@ -1,6 +1,6 @@
 package GameEngine;
 
-import GameEngine.Dictionnary.Dictionnary;
+import static GameEngine.Grid.sizeX;
 import Pattern.Observable;
 import Pattern.Observer;
 import java.util.ArrayList;
@@ -98,7 +98,11 @@ public class BoardGame implements Observable, Observer {
       setAllowClick(true);
 
       if (myPlayer.isWordFinished()) {
-      	String bestWord = grid.findBestAnagramm(myPlayer.getDico());
+        StringBuilder sb = new StringBuilder();
+        for(int j=0; j< sizeX; ++j) {
+          sb.append(this.getGrid().getTGrid()[line][j].getLetter());
+        }
+      	String bestWord = myPlayer.getDico().findBestAnagramm(sb);
         System.out.println("j'ai tapé : " + myPlayer.getWord());
         if(myPlayer.getDico().included(myPlayer.getWord())) {
         	System.out.println("Ce mot existe dans le dictionnaire");

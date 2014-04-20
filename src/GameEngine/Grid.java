@@ -3,7 +3,6 @@ package GameEngine;
 import GameEngine.Dictionnary.Dictionnary;
 import Pattern.Observable;
 import Pattern.Observer;
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -53,33 +52,6 @@ public class Grid implements Observable {
     }
 
     return -1;
-  }
-  
-  public String findBestAnagramm(Dictionnary dico){
-  	StringBuilder sb = new StringBuilder();
-  	int i = getFirstFullLine();
-  	for(int j=0; j< sizeX; ++j) {
-  		sb.append(tGrid[i][j].getLetter());
-  	}
-  	
-  	if(dico.isAnagramme(sb.toString()) != null){
-			return sb.toString();
-		}
-  	int start = 1;
-  	String tmp;
-  	
-  	while(start < sb.length()){
-  		tmp = sb.substring(start);
-  		for(int h=0; h<tmp.length();++h){
-  			tmp = sb.reverse().substring(start);
-  			if(dico.isAnagramme(tmp) != null){
-  				return tmp;
-  			}
-  		}
-  		start++;
-  	}
-  	
-  	return sb.toString();
   }
 
   public void removeLine(int lineToRemove) {
