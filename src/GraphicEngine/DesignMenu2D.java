@@ -46,7 +46,7 @@ public class DesignMenu2D extends Menu2D {
 
     dm = new DesignMenu();
 
-    JLabel label = new JLabel("Choose a theme");
+    JLabel label = new JLabel("Choisir un thème");
     label.setBounds(x, y, sx, sy);
     label.setFont(new Font("Champagne & Limousines", 20, 20));
     label.setForeground(Color.white);
@@ -62,7 +62,7 @@ public class DesignMenu2D extends Menu2D {
     y = 600;
     int step_y = 100;
     setButton2D(2);
-    Button2D b = new Button2D("Save design", x, y, sx, sy);
+    Button2D b = new Button2D("Sauvegarder", x, y, sx, sy);
     b.removeListener();
     b.addActionListener(new ActionListener() {
 
@@ -103,7 +103,7 @@ public class DesignMenu2D extends Menu2D {
 
             // save properties to project root folder
             prop.store(output, null);
-            JOptionPane.showMessageDialog(null, "Design saved");
+            JOptionPane.showMessageDialog(null, "Préférences sauvegardées");
 
           } catch (IOException io) {
             io.printStackTrace();
@@ -146,7 +146,7 @@ public class DesignMenu2D extends Menu2D {
 
     this.add(b);
     y = y + step_y;
-    this.add(new Button2D("Previous", x, y, sx, sy));
+    this.add(new Button2D("Précédent", x, y, sx, sy));
 
     loadApercus((String) combo.getSelectedItem());
   }
@@ -175,7 +175,7 @@ public class DesignMenu2D extends Menu2D {
     int y = WINDOW_HEIGHT / 2 + 40;
     int step = WINDOW_WIDTH / 7;
 
-    JLabel label = new JLabel("Choose your bricks");
+    JLabel label = new JLabel("Choisir sa brique");
     this.add(label);
 
     for (int i = 0; i < bricks.length; ++i) {

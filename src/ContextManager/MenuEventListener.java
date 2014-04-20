@@ -12,26 +12,26 @@ public class MenuEventListener implements ActionListener {
     Button2D click = (Button2D) e.getSource();
 
     switch (click.getName()) {
-      case "Start new game":
+      case "Nouvelle partie":
         c.defineGameMenu();
         break;
 
-      case "Single game":
+      case "Jouer seul":
         c.definePlayersGame(1);
         break;
 
-      case "Multiplayer game":
+      case "Jouer à plusieurs":
         c.defineMultiPlayersMenu();
         break;
 
-      case "Load game":
+      case "Charger partie":
         break;
 
-      case "Versus human":
+      case "Contre un joueur":
         c.definePlayersGame(2);
         break;
 
-      case "Versus IA":
+      case "Contre un IA":
         c.definePlayersGame(1.5);
         break;
 
@@ -39,19 +39,19 @@ public class MenuEventListener implements ActionListener {
         c.defineOptionGameMenu();
         break;
 
-      case "Design & Theme":
+      case "Préférences":
         c.defineDesignMenu();
         break;
 
-      case "Difficulty":
+      case "Difficulté":
         c.defineDifficultyMenu();
         break;
 
-      case "Exit":
+      case "Quitter":
         System.exit(0);
         break;
 
-      case "Previous":
+      case "Précédent":
         c.getBack();
         break;
 

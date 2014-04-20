@@ -32,7 +32,7 @@ class DifficultyMenu2D extends Menu2D {
     int step_y = 50 + sy;
 
     /* Title */
-    JLabel title = new JLabel("Difficulty");
+    JLabel title = new JLabel("Difficulté");
     title.setBounds(x, y, sx, sy);
     title.setFont(new Font("Champagne & Limousines", 50, 50));
     title.setForeground(Color.white);
@@ -43,7 +43,7 @@ class DifficultyMenu2D extends Menu2D {
     y = y + step_y;
 
     /* Shadow */
-    JLabel label = new JLabel("Show shadow");
+    JLabel label = new JLabel("Montrer l'ombre");
     label.setBounds(x, y, sx, sy);
     label.setFont(new Font("Champagne & Limousines", 20, 20));
     label.setForeground(Color.white);
@@ -61,7 +61,7 @@ class DifficultyMenu2D extends Menu2D {
     x = x - sx / 2;
 
     setButton2D(2);
-    Button2D b = new Button2D("Save options", x, y, sx, sy);
+    Button2D b = new Button2D("Sauvegarder", x, y, sx, sy);
     b.removeListener();
     b.addActionListener(new ActionListener() {
 
@@ -80,7 +80,7 @@ class DifficultyMenu2D extends Menu2D {
 
           // save properties to project root folder
           prop.store(output, null);
-          JOptionPane.showMessageDialog(null, "Options saved");
+          JOptionPane.showMessageDialog(null, "Options sauvegardées");
 
         } catch (IOException io) {
           io.printStackTrace();
@@ -99,7 +99,7 @@ class DifficultyMenu2D extends Menu2D {
 
     this.add(b);
     y = y + step_y;
-    this.add(new Button2D("Previous", x, y, sx, sy));
+    this.add(new Button2D("Précédent", x, y, sx, sy));
 
   }
 

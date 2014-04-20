@@ -65,13 +65,13 @@ public class Menu2D extends JPanel {
     int x = WINDOW_WIDTH / 2 - sx / 2;
     int y = 300;
     int step_y = 50 + sy;
-    this.add(new Button2D("Start new game", x, y, sx, sy));
+    this.add(new Button2D("Nouvelle partie", x, y, sx, sy));
     y = y + step_y;
-    this.add(new Button2D("Load game", x, y, sx, sy));
+    this.add(new Button2D("Charger partie", x, y, sx, sy));
     y = y + step_y;
     this.add(new Button2D("Options", x, y, sx, sy));
     y = y + step_y;
-    this.add(new Button2D("Exit", x, y, sx, sy));
+    this.add(new Button2D("Quitter", x, y, sx, sy));
   }
 
   public void defineGameMenu() {
@@ -83,11 +83,11 @@ public class Menu2D extends JPanel {
     int x = WINDOW_WIDTH / 2 - sx / 2;
     int y = 300;
     int step_y = 50 + sy;
-    this.add(new Button2D("Single game", x, y, sx, sy));
+    this.add(new Button2D("Jouer seul", x, y, sx, sy));
     y = y + step_y;
-    this.add(new Button2D("Multiplayer game", x, y, sx, sy));
+    this.add(new Button2D("Jouer à plusieurs", x, y, sx, sy));
     y = y + step_y;
-    this.add(new Button2D("Previous", x, y, sx, sy));
+    this.add(new Button2D("Précédent", x, y, sx, sy));
   }
 
   public void defineOptionGameMenu() {
@@ -99,13 +99,13 @@ public class Menu2D extends JPanel {
     int x = WINDOW_WIDTH / 2 - sx / 2;
     int y = 300;
     int step_y = 50 + sy;
-    this.add(new Button2D("Design & Theme", x, y, sx, sy));
+    this.add(new Button2D("Préférences", x, y, sx, sy));
     y = y + step_y;
-    this.add(new Button2D("Edit pieces", x, y, sx, sy));
+    this.add(new Button2D("Editeur de pièces", x, y, sx, sy));
     y = y + step_y;
-    this.add(new Button2D("Difficulty", x, y, sx, sy));
+    this.add(new Button2D("Difficulté", x, y, sx, sy));
     y = y + step_y;
-    this.add(new Button2D("Previous", x, y, sx, sy));
+    this.add(new Button2D("Précédent", x, y, sx, sy));
   }
 
   void defineMultiPlayersMenu() {
@@ -117,11 +117,11 @@ public class Menu2D extends JPanel {
     int x = WINDOW_WIDTH / 2 - sx / 2;
     int y = 300;
     int step_y = 50 + sy;
-    this.add(new Button2D("Versus human", x, y, sx, sy));
+    this.add(new Button2D("Contre un joueur", x, y, sx, sy));
     y = y + step_y;
-    this.add(new Button2D("Versus IA", x, y, sx, sy));
+    this.add(new Button2D("Contre un IA", x, y, sx, sy));
     y = y + step_y;
-    this.add(new Button2D("Previous", x, y, sx, sy));
+    this.add(new Button2D("Précédent", x, y, sx, sy));
   }
 
   @Override
