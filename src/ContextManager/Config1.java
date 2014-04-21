@@ -1,5 +1,6 @@
 package ContextManager;
 
+import GameEngine.GameEngine;
 import GameEngine.Player;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -51,11 +52,9 @@ public class Config1 extends KeyAdapter {
       case KeyEvent.VK_NUMPAD1:
         if(!p.isWorddle() && !p.isAnagram()){
           p.switchToWorddle(true);
+          GameEngine.getInstance().beginWorddleTimer(p);
           p.stockCurrentShape();
           p.addNewChar(p.getBoardGame().clickedOneBrick());
-        }else if(!p.isAnagram()){
-          p.switchToWorddle(false);
-          p.getBoardGame().declickedAllBrick();
         }
         break;
 

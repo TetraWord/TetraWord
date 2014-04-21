@@ -144,9 +144,6 @@ public class BoardGame implements Observable, Observer {
         lastY = coordsLastBrickClicked[1];
       }
       
-      int toto = Math.abs(lastX - x);
-      int tata = Math.abs(lastY - y);
-
       Brick b = grid.getTGrid()[y][x];
 
       /*If the brick is on the full line and if it's not clicked yet */

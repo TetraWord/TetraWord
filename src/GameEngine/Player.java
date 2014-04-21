@@ -44,9 +44,9 @@ public class Player implements Observable {
   public int getNumber() {
     return number;
   }
-  
+
   public Dictionnary getDico() {
-  	return dico;
+    return dico;
   }
 
   public void down() {
@@ -125,7 +125,7 @@ public class Player implements Observable {
 
   public void addToScore(int add) {
     score = score + add;
-    if((int)score / 1000 >= level){
+    if ((int) score / 1000 >= level) {
       setLevelUp();
     }
     updateObservateur(null);
@@ -178,7 +178,7 @@ public class Player implements Observable {
   public String getWord() {
     return word.toString();
   }
-  
+
   public boolean isWordFinished() {
     return wordFinish;
   }
@@ -222,9 +222,12 @@ public class Player implements Observable {
   }
 
   public void switchToWorddle(boolean b) {
-    if(!b){ boardGame.getGrid().setCurrentShape(currentShapeStocked); clearWord(); }
+    if(!b){
+      GameEngine.getInstance().finishTimerWorddle();
+    }
     wordFinish = b != true;
     boardGame.setAllowClick(b);
+    boardGame.setNoLastBrickClicked();
     state = b ? InGameState.WORDDLE : InGameState.TETRIS;
     updateObservateur(null);
   }
@@ -234,15 +237,24 @@ public class Player implements Observable {
     boardGame.getGrid().setCurrentShape(null);
   }
 
-  void doWorddle() {
-    if (wordFinish){
+  public void doWorddle() {
+    if (wordFinish && GameEngine.getInstance().timerWorddleIsAlive()) {
+      String s = getWord();
+      if (dico.included(s)) {
+        System.out.println("Ce mot fait partie du dico bravo");
+        addToScore(s.length() * 3);
+      } else {
+        System.out.println("Mot n'est pas dans le dico");
+      }
       clearWord();
       boardGame.setAllowDoubleClick(true);
       updateObservateur(null);
-    //Si le timer atteind 0
-    }else if(0 == 1){
+    } else if(!GameEngine.getInstance().timerWorddleIsAlive()) {
+      boardGame.setAllowDoubleClick(false);
+      boardGame.getGrid().setCurrentShape(currentShapeStocked);
       boardGame.getGrid().destroyAllSelectedBrick();
-      switchToAnagram(false);
+      clearWord();
+      updateObservateur(null);
     }
   }
 }

@@ -1,6 +1,5 @@
 package GameEngine;
 
-import GameEngine.Dictionnary.Dictionnary;
 import Pattern.Observable;
 import Pattern.Observer;
 import java.util.ArrayList;
