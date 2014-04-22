@@ -5,6 +5,7 @@ import Pattern.Observable;
 import Pattern.Observer;
 
 import java.util.ArrayList;
+import java.util.Timer;
 
 public class Player implements Observable {
 
@@ -21,6 +22,9 @@ public class Player implements Observable {
   private final Object monitor = new Object();
   private ArrayList<Observer> listObserver = new ArrayList<>();
   private final Dictionnary dico;
+  private boolean worddle = false;
+  private Timer timerBeforeWorddle = null;
+  private long t = 0;
 
   public Player(int nb, Shape s, Shape s2, Dictionnary d) {
     boardGame = new BoardGame(nb, s, s2, this);
@@ -29,6 +33,7 @@ public class Player implements Observable {
     numLinesTotalRemoved = 0;
     number = nb;
     dico = d;
+    startTimerBeforeWorddle();
   }
 
   public Shape useShapeStocked() {
@@ -224,6 +229,7 @@ public class Player implements Observable {
   public void switchToWorddle(boolean b) {
     if(!b){
       GameEngine.getInstance().finishTimerWorddle();
+      startTimerBeforeWorddle();
     }
     wordFinish = b != true;
     boardGame.setAllowClick(b);
@@ -239,6 +245,7 @@ public class Player implements Observable {
 
   public void doWorddle() {
     if (wordFinish && GameEngine.getInstance().timerWorddleIsAlive()) {
+      System.out.println("get t : "+getTime());
       String s = getWord();
       if (dico.included(s)) {
         System.out.println("Ce mot fait partie du dico bravo");
@@ -260,5 +267,25 @@ public class Player implements Observable {
       clearWord();
       updateObservateur(null);
     }
+  }
+  
+  public final void startTimerBeforeWorddle() {
+    timerBeforeWorddle = new Timer();
+    timerBeforeWorddle.schedule(new WorddleTimerTask((this)), 30000);
+    t = System.nanoTime();
+    setWorddle(false);
+  }
+  
+  public boolean canWorddle() {
+    return worddle;
+  }
+
+  public void setWorddle(boolean b) {
+    System.out.println("worddle peut : "+b);
+    worddle = b;
+  }
+  
+  public long getTime() {
+    return System.nanoTime() - t;
   }
 }

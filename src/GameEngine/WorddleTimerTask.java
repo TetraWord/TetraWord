@@ -8,10 +8,14 @@ public class WorddleTimerTask extends TimerTask{
   public WorddleTimerTask(Player p){
     this.p = p;
   }
-  
+
   @Override
   public void run() {
-    p.switchToWorddle(false);
+    if(p.isWorddle()){
+      p.switchToWorddle(false);
+    }else{
+      p.setWorddle(true);
+    }
   }
   
 }

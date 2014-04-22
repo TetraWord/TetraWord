@@ -185,7 +185,6 @@ public class Grid implements Observable {
   }
 
   public void doGravityOnBrick(int y, int x) {
-    System.out.println("je passe une fois pour y = "+y+" et x = "+x);
     while(y > 1){
       tGrid[y][x] = new Brick(tGrid[y - 1][x]);
       --y;

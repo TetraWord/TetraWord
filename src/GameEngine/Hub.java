@@ -13,12 +13,13 @@ public class Hub implements Observer, Observable {
   /*Shape nextShape;*/
   private int score;
   /*Time Left*/
-  /*Time before mode changing*/
+  private int secondBeforeWorddle;
   /*Modifier*/
 
   public Hub() {
     this.level = 1;
     this.score = 0;
+    this.secondBeforeWorddle = 30;
     this.state = InGameState.TETRIS;
   }
 
@@ -38,6 +39,8 @@ public class Hub implements Observer, Observable {
       this.score = p.getScore();
       this.state = p.getState();
       this.word = p.getWord();
+      double seconds = (double)p.getTime() / 1000000000.0;
+      this.secondBeforeWorddle = 30 - (int)Math.round(seconds);
       updateObservateur(null);
     }
   }
@@ -65,5 +68,9 @@ public class Hub implements Observer, Observable {
   @Override
   public void delObservateur() {
     listObserver = new ArrayList<>();
+  }
+
+  public String getTimeBeforeWorddle() {
+    return Integer.toString(secondBeforeWorddle);
   }
 }

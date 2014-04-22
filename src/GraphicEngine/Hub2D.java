@@ -18,6 +18,7 @@ public class Hub2D extends JPanel implements Observer {
   private final JLabel level;
   private final JLabel score;
   private final JLabel word;
+  private final JLabel timerBeforeWorddle;
 
   public Hub2D(Hub hub, String font, Color color) {
 
@@ -49,10 +50,15 @@ public class Hub2D extends JPanel implements Observer {
     setJLabel(score, 520, 690, 57, 23);
     this.add(score);
 
-    /* UI Word anagramme/wordle */
+    /* UI Word anagramme/wordlle */
     word = new JLabel(hub.getWord(), CENTER);
     setJLabel(word, 71, 836, 420, 23);
     this.add(word);
+    
+    /* UI Timer worddle */
+    timerBeforeWorddle = new JLabel(hub.getTimeBeforeWorddle(), CENTER);
+    setJLabel(timerBeforeWorddle, 400, 600, 300, 23);
+    this.add(timerBeforeWorddle);
   }
 
   private void setJLabel(JLabel jl, int x, int y, int sx, int sy) {
@@ -69,6 +75,13 @@ public class Hub2D extends JPanel implements Observer {
       level.setText(Integer.toString(hub.getLevel()));
       score.setText(Integer.toString(hub.getScore()));
       word.setText(hub.getWord());
+      if(Integer.decode(hub.getTimeBeforeWorddle()) > 0){
+        timerBeforeWorddle.setText(hub.getTimeBeforeWorddle());
+      }else if(hub.getState().getStateName().compareTo("Worddle") != 0){
+        timerBeforeWorddle.setText("Worddle ready !");
+      }else{
+        timerBeforeWorddle.setText("Worddle used !");
+      }
     }
   }
 }
