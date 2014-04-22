@@ -108,8 +108,13 @@ public class BoardGame implements Observable, Observer {
         if(myPlayer.getDico().included(myPlayer.getWord())) {
         	System.out.println("Ce mot existe dans le dictionnaire");
         	if ( myPlayer.getWord().equals(bestWord) || myPlayer.getWord().length() > bestWord.length()){
+            myPlayer.addToScore(1000);
         		System.out.println("Le meilleure mot a ete trouve");
-        	}
+        	} else {
+            myPlayer.addToScore(myPlayer.getWord().length() * 50);
+          }
+        }else{
+          myPlayer.addToScore(- (myPlayer.getScore()%1000));
         }
         myPlayer.clearWord();
         grid.removeLine(line);
