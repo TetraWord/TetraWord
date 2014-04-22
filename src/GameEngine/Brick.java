@@ -16,6 +16,7 @@ public class Brick {
   private Color color;
   private boolean clicked = false;
   private boolean doubleClicked = false;
+  private boolean isInWord = false;
   private static char[] frequencyLetter = initLetters();
 
   private Brick(char letter, int number, Color c) {
@@ -100,8 +101,16 @@ public class Brick {
     return letter;
   }
 
+  public void setInWord() {
+    isInWord = true;
+  }
+  
+  public boolean isInWord() {
+    return isInWord;
+  }
+
   public void setClicked(boolean b) {
-    if(clicked == b){
+    if (clicked == b) {
       doubleClicked = b;
     }
     clicked = b;

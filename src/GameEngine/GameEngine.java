@@ -35,7 +35,7 @@ public class GameEngine {
   
   public void beginWorddleTimer(Player p) {
     worddleTimer = new Timer();
-    worddleTimer.schedule(new WorddleTimerTask((p)), 10000);
+    worddleTimer.schedule(new WorddleTimerTask((p)), 30000);
   }
 
   public void finishTimerWorddle(){
@@ -44,5 +44,15 @@ public class GameEngine {
   
   public boolean timerWorddleIsAlive() {
     return worddleTimer != null;
+  }
+
+  public boolean isPlayersInWordMode() {
+    for(int i = 0; i < nbPlayer; ++i ){
+      if(!players[i].isTetris()){
+        return true;
+      }
+    }
+    return false;
+
   }
 }

@@ -1,5 +1,6 @@
 package ContextManager;
 
+import GameEngine.GameEngine;
 import GameEngine.Player;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -37,10 +38,19 @@ public class Config2 extends KeyAdapter {
         p.right();
         break;
 
+      case KeyEvent.VK_2:
+        if ( (p.isAnagram() || p.isWorddle()) && p.getWord().length() > 0) {
+          p.setWordFinish();
+          p.getBoardGame().setNoLastBrickClicked();
+        }
+        break;
+        
       case KeyEvent.VK_E:
-        if (p.isAnagram() && p.getWord().length() > 0) {
-          p.switchToAnagram(false);
-          p.getBoardGame().setAllowClick(false);
+        if(!GameEngine.getInstance().isPlayersInWordMode()){
+          p.switchToWorddle(true);
+          GameEngine.getInstance().beginWorddleTimer(p);
+          p.stockCurrentShape();
+          p.addNewChar(p.getBoardGame().clickedOneBrick());
         }
         break;
 

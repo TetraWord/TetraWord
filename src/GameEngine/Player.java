@@ -242,9 +242,12 @@ public class Player implements Observable {
       String s = getWord();
       if (dico.included(s)) {
         System.out.println("Ce mot fait partie du dico bravo");
+        boardGame.setBricksToDestroy();
         addToScore(s.length() * 3);
       } else {
         System.out.println("Mot n'est pas dans le dico");
+        boardGame.clearTabBrickClicked();
+        addToScore(-s.length() * 4);
       }
       clearWord();
       boardGame.setAllowDoubleClick(true);
@@ -252,7 +255,8 @@ public class Player implements Observable {
     } else if(!GameEngine.getInstance().timerWorddleIsAlive()) {
       boardGame.setAllowDoubleClick(false);
       boardGame.getGrid().setCurrentShape(currentShapeStocked);
-      boardGame.getGrid().destroyAllSelectedBrick();
+      boardGame.getGrid().destroyAllSelectedBrickInWord();
+      boardGame.getGrid().declickedAllBrick();
       clearWord();
       updateObservateur(null);
     }

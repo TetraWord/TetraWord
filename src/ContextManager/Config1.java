@@ -50,7 +50,7 @@ public class Config1 extends KeyAdapter {
         break;
 
       case KeyEvent.VK_NUMPAD1:
-        if(!p.isWorddle() && !p.isAnagram()){
+        if(!GameEngine.getInstance().isPlayersInWordMode()){
           p.switchToWorddle(true);
           GameEngine.getInstance().beginWorddleTimer(p);
           p.stockCurrentShape();

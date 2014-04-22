@@ -17,6 +17,7 @@ public class BoardGame implements Observable, Observer {
   private ArrayList<Observer> listObserver = new ArrayList<>();
   private boolean allowClick = false;
   private boolean allowDoubleClicked = false;
+  private final ArrayList<Brick> tabBrickClicked = new ArrayList<>();
   private int[] coordsLastBrickClicked = new int[2];
 
   public BoardGame(int nb, Shape s, Shape s2, Player p) {
@@ -99,16 +100,16 @@ public class BoardGame implements Observable, Observer {
 
       if (myPlayer.isWordFinished()) {
         StringBuilder sb = new StringBuilder();
-        for(int j=0; j< sizeX; ++j) {
+        for (int j = 0; j < sizeX; ++j) {
           sb.append(this.getGrid().getTGrid()[line][j].getLetter());
         }
-      	String bestWord = myPlayer.getDico().findBestAnagramm(sb);
+        String bestWord = myPlayer.getDico().findBestAnagramm(sb);
         System.out.println("j'ai tapé : " + myPlayer.getWord());
-        if(myPlayer.getDico().included(myPlayer.getWord())) {
-        	System.out.println("Ce mot existe dans le dictionnaire");
-        	if ( myPlayer.getWord().equals(bestWord)){
-        		System.out.println("Le meilleure mot a ete trouve");
-        	}
+        if (myPlayer.getDico().included(myPlayer.getWord())) {
+          System.out.println("Ce mot existe dans le dictionnaire");
+          if (myPlayer.getWord().equals(bestWord)) {
+            System.out.println("Le meilleure mot a ete trouve");
+          }
         }
         myPlayer.clearWord();
         grid.removeLine(line);
@@ -143,7 +144,7 @@ public class BoardGame implements Observable, Observer {
         lastX = coordsLastBrickClicked[0];
         lastY = coordsLastBrickClicked[1];
       }
-      
+
       Brick b = grid.getTGrid()[y][x];
 
       /*If the brick is on the full line and if it's not clicked yet */
@@ -155,6 +156,7 @@ public class BoardGame implements Observable, Observer {
       } else if (myPlayer.isWorddle()) {
         if (!b.isClicked() && !allowDoubleClicked && Math.abs(lastX - x) < 2 && Math.abs(lastY - y) < 2) {
           b.setClicked(true);
+          tabBrickClicked.add(b);
           myPlayer.addNewChar(b.getLetter());
           coordsLastBrickClicked = grid.getXY(b);
         } else if (allowDoubleClicked && !b.isDoubleClicked() && b.isClicked() && Math.abs(lastX - x) < 2 && Math.abs(lastY - y) < 2) {
@@ -178,6 +180,7 @@ public class BoardGame implements Observable, Observer {
 
   public char clickedOneBrick() {
     Brick b = grid.clickedOneBrick();
+    tabBrickClicked.add(b);
     coordsLastBrickClicked = grid.getXY(b);
     return b.getLetter();
   }
@@ -193,6 +196,17 @@ public class BoardGame implements Observable, Observer {
 
   public void setNoLastBrickClicked() {
     coordsLastBrickClicked = null;
+  }
+
+  public void setBricksToDestroy() {
+    for (int i = 0; i < tabBrickClicked.size(); ++i) {
+      tabBrickClicked.get(i).setInWord();
+    }
+    clearTabBrickClicked();
+  }
+  
+  public void clearTabBrickClicked() {
+    tabBrickClicked.clear();
   }
 
 }

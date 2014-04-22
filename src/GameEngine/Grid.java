@@ -149,10 +149,10 @@ public class Grid implements Observable {
     }
   }
 
-  public void destroyAllSelectedBrick() {
+  public void destroyAllSelectedBrickInWord() {
     for(int i = 0; i < sizeY; ++i){
       for(int j = 0; j < sizeX; ++j){
-        if(tGrid[i][j].isClicked()){
+        if(tGrid[i][j].isClicked() && tGrid[i][j].isInWord()){
           tGrid[i][j] = new Brick(' ', -1);
         }
       }
