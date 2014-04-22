@@ -131,49 +131,50 @@ public class Grid implements Observable {
 
   public Brick clickedOneBrick() {
     Random r = new Random();
-    
+
     int x, y;
-    do{
-      x = (int)(Math.random() * 10);
-      y = (int)(Math.random() * 20);
-    }while(tGrid[y][x].getNb() < 0);
+    do {
+      x = (int) (Math.random() * 10);
+      y = (int) (Math.random() * 20);
+    } while (tGrid[y][x].getNb() < 0);
     tGrid[y][x].setClicked(true);
     return tGrid[y][x];
   }
 
   public void declickedAllBrick() {
-    for(int i = 0; i < sizeY; ++i){
-      for(int j = 0; j < sizeX; ++j){
+    for (int i = 0; i < sizeY; ++i) {
+      for (int j = 0; j < sizeX; ++j) {
         tGrid[i][j].setClicked(false);
       }
     }
   }
 
   public void destroyAllSelectedBrickInWord() {
-    for(int i = 0; i < sizeY; ++i){
-      for(int j = 0; j < sizeX; ++j){
-        if(tGrid[i][j].isClicked() && tGrid[i][j].isInWord()){
-          tGrid[i][j] = new Brick(' ', -1);
+    for (int i = 0; i < sizeY; ++i) {
+      for (int j = 0; j < sizeX; ++j) {
+        if (tGrid[i][j].isClicked() && tGrid[i][j].isInWord()) {
+          doGravityOnBrick(i, j);
         }
       }
     }
+    updateObservateur(tGrid);
   }
 
   public void doubleClickedAllBrickClicked(Brick b) {
-    for(int i = 0; i < sizeY; ++i){
-      for(int j = 0; j < sizeX; ++j){
-        if(tGrid[i][j].isClicked() && tGrid[i][j] != b){
+    for (int i = 0; i < sizeY; ++i) {
+      for (int j = 0; j < sizeX; ++j) {
+        if (tGrid[i][j].isClicked() && tGrid[i][j] != b) {
           tGrid[i][j].setClicked(true);
         }
       }
     }
   }
-  
-  public int[] getXY(Brick b){
+
+  public int[] getXY(Brick b) {
     int[] coords = new int[2];
-    for(int i = 0; i < sizeY; ++i){
-      for(int j = 0; j < sizeX; ++j){
-        if(tGrid[i][j] == b){
+    for (int i = 0; i < sizeY; ++i) {
+      for (int j = 0; j < sizeX; ++j) {
+        if (tGrid[i][j] == b) {
           coords[0] = j;
           coords[1] = i;
           return coords;
@@ -181,6 +182,14 @@ public class Grid implements Observable {
       }
     }
     return null;
+  }
+
+  public void doGravityOnBrick(int y, int x) {
+    System.out.println("je passe une fois pour y = "+y+" et x = "+x);
+    while(y > 1){
+      tGrid[y][x] = new Brick(tGrid[y - 1][x]);
+      --y;
+    }
   }
 
 }

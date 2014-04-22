@@ -110,8 +110,8 @@ public class Brick {
   }
 
   public void setClicked(boolean b) {
-    if (clicked == b) {
-      doubleClicked = b;
+    if (clicked == true) {
+      doubleClicked = true;
     }
     clicked = b;
   }
