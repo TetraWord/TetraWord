@@ -81,9 +81,10 @@ public class Dictionnary {
 	}
   
   public String findBestAnagramm(StringBuilder sb){
+    String res = null;
     
-  	if(isAnagramme(sb.toString()) != null){
-			return sb.toString();
+  	if((res =isAnagramme(sb.toString())) != null){
+			return res;
 		}
   	int start = 1;
   	String tmp;
@@ -92,13 +93,13 @@ public class Dictionnary {
   		tmp = sb.substring(start);
   		for(int h=0; h<tmp.length();++h){
   			tmp = sb.reverse().substring(start);
-  			if(isAnagramme(tmp) != null){
-  				return tmp;
+  			if((res = isAnagramme(tmp)) != null){
+  				return res;
   			}
   		}
   		start++;
   	}
   	
-  	return sb.toString();
+  	return res;
   }
 }
