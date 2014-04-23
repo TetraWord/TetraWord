@@ -46,7 +46,6 @@ public class Hub implements Observer, Observable {
       this.state = p.getState();
       this.word = p.getWord();
 			this.nbRemovedLine = p.getNbLines();
-			System.out.println(p.getNbLines());
       double seconds = (double)p.getTime() / 1000000000.0;
       this.secondBeforeWorddle = 30 - (int)Math.round(seconds);
       updateObservateur(null);
