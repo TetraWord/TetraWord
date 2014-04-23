@@ -42,7 +42,7 @@ public class Brick {
   private char getAleaLetter() {
     int lower = 0;
     int higher = frequencyLetter.length;
-    int random = (int) (Math.random() * (higher + 1 - lower)) + lower;
+    int random = (int) (Math.random() * (higher - lower)) + lower;
     return frequencyLetter[random];
   }
 

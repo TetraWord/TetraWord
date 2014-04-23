@@ -19,7 +19,7 @@ public class RunPlayer implements Runnable {
         player.down(1);
         player.updateObservateur(null);
         try {
-          Thread.sleep(1000 / player.getLevel());
+          Thread.sleep(player.getSpeedFall());
         } catch (InterruptedException ex) {
           Logger.getLogger(RunPlayer.class.getName()).log(Level.SEVERE, null, ex);
         }
