@@ -10,6 +10,8 @@ import java.util.Timer;
 public class Player implements Observable {
 
   private final BoardGame boardGame;
+  private int speedFall;
+  private int speedFallInit;
   private final int number;
   private int level;
   private InGameState state = InGameState.TETRIS;
@@ -34,6 +36,8 @@ public class Player implements Observable {
     numLinesTotalRemoved = 0;
     number = nb;
     dico = d;
+    speedFall = 1000;
+    speedFallInit = speedFall;
     startTimerBeforeWorddle();
   }
 
@@ -55,13 +59,13 @@ public class Player implements Observable {
     return dico;
   }
 
-  public void down(int speed) {
+  public void down(int step) {
     synchronized (monitor) {
       CurrentShape s = getCurrentShape();
       if (s != null) {
         int tmpY = s.getY();
-        if (!s.tryCollision(boardGame.getGrid().getTGrid(), s.getX(), s.getY() + speed)) {
-          s.move(s.getX(), s.getY() + speed);
+        if (!s.tryCollision(boardGame.getGrid().getTGrid(), s.getX(), s.getY() + step)) {
+          s.move(s.getX(), s.getY() + step);
         }
         //Si on ne peut pas faire descendre la pièce plus bas, on l'inscrit dans la Grid
         if (tmpY == s.getY()) {
@@ -130,7 +134,8 @@ public class Player implements Observable {
   }
 
   public void addToScore(int add) {
-    score = score + add;
+    //score = score + add;
+    score += 1100;
     if ((int) score / 1000 >= level) {
       setLevelUp();
     }
@@ -149,8 +154,13 @@ public class Player implements Observable {
 		return numLinesTotalRemoved;
 	}
 
+  public int getSpeedFall() {
+    return speedFall;
+  }
+  
   public void setLevelUp() {
     ++level;
+    setNewSpeedFall(speedFallInit - level * 83);
     updateObservateur(null);
   }
 
@@ -251,7 +261,6 @@ public class Player implements Observable {
 
   public void doWorddle() {
     if (wordFinish && GameEngine.getInstance().timerWorddleIsAlive()) {
-      System.out.println("get t : "+getTime());
       String s = getWord();
       if (dico.included(s)) {
         System.out.println("Ce mot fait partie du dico bravo");
@@ -287,11 +296,18 @@ public class Player implements Observable {
   }
 
   public void setWorddle(boolean b) {
-    System.out.println("worddle peut : "+b);
     worddle = b;
   }
   
   public long getTime() {
     return System.nanoTime() - t;
+  }
+  
+  public void setNewSpeedFall(int s) {
+    speedFall = s;
+  }
+
+  public int getSpeedFallInit() {
+    return speedFallInit;
   }
 }
