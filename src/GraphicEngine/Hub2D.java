@@ -72,7 +72,7 @@ public class Hub2D extends JPanel implements Observer {
 	
 	
   public void draw(Graphics g) {	
-			nextShape.draw(g, 500, 150, 0.7);
+			nextShape.draw(g, 515, 130, 0.7);
   }
 
   @Override

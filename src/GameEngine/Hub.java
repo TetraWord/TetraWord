@@ -50,7 +50,6 @@ public class Hub implements Observer, Observable {
 		if (o instanceof BoardGame){
 			this.nextShape = ((BoardGame)o).getNextShape();
       updateObservateur(null);
-			System.out.println("coucou");
 		}
   }
 
