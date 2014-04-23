@@ -5,93 +5,99 @@ import Pattern.Observer;
 
 public class Modifier implements Observable {
 	
-	public enum modifierEnum {
-		Speed, Shake, Storm, Reversal, Exchange, Score, Bomb, TimeTravel, Worddle 
-	};
 	public String name;
+	public int timer;
 	
 	public Modifier(String name){
 		this.name = name;
+		this.timer = 10;
 	}
 	
 	public String getName() {
 		return this.name;
 	}
 	
-	public void active(){
+	public void setTimer(int timer) {
+		this.timer = timer;
+	}
+	
+	public void active(Player p){
 		switch(this.name){
 			case "Speed":
-				this.speed();
+				this.speed(p);
 				break;
 				
 			case "Shake":
-				this.shake();
+				this.shake(p);
 				break;
 				
 			case "Storm":
-				this.storm();
+				this.storm(p);
 				break;
 				
 			case "Reversal":
-				this.reversal();
+				this.reversal(p);
 				break;
 				
 			case "Exchange":
-				this.exchange();
+				this.exchange(p);
 				break;
 				
 			case "Score":
-				this.score();
+				this.score(p);
 				break;
 				
 			case "Bomb":
-				this.bomb();
+				this.bomb(p);
 				break;
 			
 			case "TimeTravel":
-				this.timeTravel();
+				this.timeTravel(p);
 				break;
 				
 			case "Worddle":
-				this.worddle();
+				this.worddle(p);
 				break;
 		}
 	}
 	
-	public void speed(){
+	public void speed(Player p){
 		
 	}
 	
-	public void shake(){
+	public void shake(Player p){
 		
 	}
 	
-	public void storm(){
+	public void storm(Player p){
+		while(timer !=0 ) {
+			p.right();
+			timer--;
+		}		
+	}
+	
+	public void reversal(Player p){
 		
 	}
 	
-	public void reversal(){
+	public void exchange(Player p){
 		
 	}
 	
-	public void exchange(){
+	public void score(Player p){
 		
 	}
 	
-	public void score(){
+	public void bomb(Player p){
 		
 	}
 	
-	public void bomb(){
+	public void timeTravel(Player p){
 		
 	}
 	
-	public void timeTravel(){
-		
-	}
-	
-	public void worddle(){
-		
+	public void worddle(Player p){
+		p.switchToWorddle(true);
 	}
 
 	@Override

@@ -22,6 +22,7 @@ public class Player implements Observable {
   private final Object monitor = new Object();
   private ArrayList<Observer> listObserver = new ArrayList<>();
   private final Dictionnary dico;
+  private Modifier modifier = null;
   private boolean worddle = false;
   private Timer timerBeforeWorddle = null;
   private long t = 0;
