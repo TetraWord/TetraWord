@@ -59,13 +59,13 @@ public class Player implements Observable {
     return dico;
   }
 
-  public void down(int speed) {
+  public void down(int step) {
     synchronized (monitor) {
       CurrentShape s = getCurrentShape();
       if (s != null) {
         int tmpY = s.getY();
-        if (!s.tryCollision(boardGame.getGrid().getTGrid(), s.getX(), s.getY() + speed)) {
-          s.move(s.getX(), s.getY() + speed);
+        if (!s.tryCollision(boardGame.getGrid().getTGrid(), s.getX(), s.getY() + step)) {
+          s.move(s.getX(), s.getY() + step);
         }
         //Si on ne peut pas faire descendre la pièce plus bas, on l'inscrit dans la Grid
         if (tmpY == s.getY()) {
