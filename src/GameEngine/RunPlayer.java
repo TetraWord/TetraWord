@@ -16,7 +16,7 @@ public class RunPlayer implements Runnable {
   public void run() {
     while (!this.player.isFinish()) {
       if (!ContextManager.getInstance().isPaused && player.isTetris()) {
-        player.down();
+        player.down(1);
         player.updateObservateur(null);
         try {
           Thread.sleep(1000 / player.getLevel());

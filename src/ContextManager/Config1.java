@@ -26,7 +26,7 @@ public class Config1 extends KeyAdapter {
         break;
 
       case KeyEvent.VK_DOWN:
-        p.down();
+        p.down(1);
         p.addToScore(1);
         break;
 

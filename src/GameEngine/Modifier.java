@@ -62,7 +62,10 @@ public class Modifier implements Observable {
 	}
 	
 	public void speed(Player p){
-		
+		while(timer !=0 ) {
+			p.down(3);
+			timer--;
+		}
 	}
 	
 	public void shake(Player p){
@@ -73,7 +76,7 @@ public class Modifier implements Observable {
 		while(timer !=0 ) {
 			p.right();
 			timer--;
-		}		
+		}
 	}
 	
 	public void reversal(Player p){
