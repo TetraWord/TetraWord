@@ -145,6 +145,10 @@ public class Player implements Observable {
     return level;
   }
 
+	int getNbLines() {
+		return numLinesTotalRemoved;
+	}
+
   public void setLevelUp() {
     ++level;
     updateObservateur(null);
@@ -220,6 +224,7 @@ public class Player implements Observable {
       addToScore(numLinesRemoved * 100);
     }
     numLinesTotalRemoved += numLinesRemoved;
+    updateObservateur(null);
     boardGame.launchNextShape();
   }
 

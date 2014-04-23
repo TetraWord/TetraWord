@@ -19,6 +19,7 @@ public class Hub2D extends JPanel implements Observer {
   private final JLabel level;
   private final JLabel score;
   private final JLabel word;
+  private final JLabel nbLines;
   private final JLabel timerBeforeWorddle;
 	private Shape2D nextShape;
 
@@ -50,13 +51,19 @@ public class Hub2D extends JPanel implements Observer {
     /* UI Score */
     score = new JLabel(Integer.toString(hub.getScore()), CENTER);
     setJLabel(score, 520, 700, 70, 23);
-		score.setBackground(Color.black);
     this.add(score);
 
     /* UI Word anagramme/wordlle */
     word = new JLabel(hub.getWord(), CENTER);
-    setJLabel(word, 71, 836, 420, 23);
+    setJLabel(word, 70, 0, 367, 55);
+		word.setVerticalTextPosition(CENTER);
+		word.setHorizontalAlignment(CENTER);
     this.add(word);
+
+    /* UI Lines */
+    nbLines = new JLabel(Integer.toString(hub.getNbLines()), CENTER);
+    setJLabel(nbLines, 583, 760, 30, 23);
+    this.add(nbLines);
     
     /* UI Timer worddle */
     timerBeforeWorddle = new JLabel(hub.getTimeBeforeWorddle(), CENTER);
@@ -82,10 +89,18 @@ public class Hub2D extends JPanel implements Observer {
       mode.setText(modeName);
       level.setText(Integer.toString(hub.getLevel()));
       score.setText(Integer.toString(hub.getScore()));
+			nbLines.setText(Integer.toString(hub.getNbLines()));
+			
+			String wordInProgress = hub.getWord();
+			if(!wordInProgress.isEmpty()){
+				System.out.println(wordInProgress);
+				word.setText("Mot en cours : " + wordInProgress);
+			}else{
+				word.setText("");
+			}
 			
 			this.nextShape = new Shape2D(hub.getNextShape());
 			
-      word.setText(hub.getWord());
       if(Integer.decode(hub.getTimeBeforeWorddle()) > 0){
         timerBeforeWorddle.setText(hub.getTimeBeforeWorddle());
       }else if(hub.getState().getStateName().compareTo("Worddle") != 0){

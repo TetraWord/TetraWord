@@ -12,6 +12,7 @@ public class Hub implements Observer, Observable {
   private String word;
   Shape nextShape;
   private int score;
+	private int nbRemovedLine;
   /*Time Left*/
   private int secondBeforeWorddle;
   /*Modifier*/
@@ -21,6 +22,7 @@ public class Hub implements Observer, Observable {
     this.score = 0;
     this.secondBeforeWorddle = 30;
     this.state = InGameState.TETRIS;
+		this.nbRemovedLine = 0;
   }
 
   public int getLevel() {
@@ -43,6 +45,8 @@ public class Hub implements Observer, Observable {
       this.score = p.getScore();
       this.state = p.getState();
       this.word = p.getWord();
+			this.nbRemovedLine = p.getNbLines();
+			System.out.println(p.getNbLines());
       double seconds = (double)p.getTime() / 1000000000.0;
       this.secondBeforeWorddle = 30 - (int)Math.round(seconds);
       updateObservateur(null);
@@ -81,4 +85,8 @@ public class Hub implements Observer, Observable {
   public String getTimeBeforeWorddle() {
     return Integer.toString(secondBeforeWorddle);
   }
+
+	public int getNbLines() {
+		return nbRemovedLine;
+	}
 }
