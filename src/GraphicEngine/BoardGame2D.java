@@ -156,7 +156,7 @@ public class BoardGame2D extends JPanel implements Observer {
   }
 
   private void drawNextShape(Graphics g) {
-    nextShape.draw(g, 500, 150, 0.8);
+    nextShape.draw(g, 500, 150, 0.7);
   }
 
   private void drawShapeStocked(Player p, Graphics g) {
