@@ -30,6 +30,7 @@ public class BoardGame2D extends JPanel implements Observer {
   private Color color;
   private final GridEventListener event;
   private boolean shadow;
+	private final Hub2D hub;
 
   public BoardGame2D(BoardGame model) {
     /* Settings */
@@ -43,7 +44,7 @@ public class BoardGame2D extends JPanel implements Observer {
     loadDesign();
     loadOptions();
 
-    Hub2D hub = new Hub2D(model.getHub(), font, color);
+    hub = new Hub2D(model.getHub(), font, color);
     model.getHub().addObservateur(hub);
     this.add(hub);
 
@@ -143,24 +144,8 @@ public class BoardGame2D extends JPanel implements Observer {
       /*Load background image from default design*/
       e.printStackTrace();
     }
-    drawHUB(g);
+		hub.draw(g);
     gameGrid.draw(g);
-  }
-
-  private void drawHUB(Graphics g) {
-    Player p = model.getPlayer();
-    if (p.hasShapeStocked()) {
-      drawShapeStocked(p, g);
-    }
-    drawNextShape(g);
-  }
-
-  private void drawNextShape(Graphics g) {
-    nextShape.draw(g, 500, 150, 0.7);
-  }
-
-  private void drawShapeStocked(Player p, Graphics g) {
-    //To do
   }
 
 }

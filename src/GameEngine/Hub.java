@@ -10,7 +10,7 @@ public class Hub implements Observer, Observable {
   private int level;
   private InGameState state;
   private String word;
-  /*Shape nextShape;*/
+  Shape nextShape;
   private int score;
   /*Time Left*/
   private int secondBeforeWorddle;
@@ -31,6 +31,10 @@ public class Hub implements Observer, Observable {
     return state;
   }
 
+	public Shape getNextShape() {
+		return nextShape;
+	}
+
   @Override
   public void update(Observable o, Object args) {
     if (o instanceof Player) {
@@ -43,6 +47,11 @@ public class Hub implements Observer, Observable {
       this.secondBeforeWorddle = 30 - (int)Math.round(seconds);
       updateObservateur(null);
     }
+		if (o instanceof BoardGame){
+			this.nextShape = ((BoardGame)o).getNextShape();
+      updateObservateur(null);
+			System.out.println("coucou");
+		}
   }
 
   public int getScore() {

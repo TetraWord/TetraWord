@@ -28,6 +28,8 @@ public class BoardGame implements Observable, Observer {
     this.listNextShape.add(s2);
 
     this.myPlayer.addObservateur(hub);
+		addObservateur(hub);
+    updateObservateur(null);
   }
 
   public void finishGame() {

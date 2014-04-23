@@ -5,6 +5,7 @@ import Pattern.Observable;
 import Pattern.Observer;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Graphics;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import static javax.swing.SwingConstants.CENTER;
@@ -19,12 +20,13 @@ public class Hub2D extends JPanel implements Observer {
   private final JLabel score;
   private final JLabel word;
   private final JLabel timerBeforeWorddle;
+	private Shape2D nextShape;
 
   public Hub2D(Hub hub, String font, Color color) {
 
     this.font = font;
     this.color = color;
-    System.out.println(font);
+		this.nextShape = new Shape2D(hub.getNextShape());
 
     this.setLayout(null);
     this.setSize(650, 889);
@@ -67,6 +69,11 @@ public class Hub2D extends JPanel implements Observer {
     jl.setBounds(x, y, sx, sy);
     jl.setFont(new Font(font, Font.BOLD, 24));
   }
+	
+	
+  public void draw(Graphics g) {	
+			nextShape.draw(g, 500, 150, 0.7);
+  }
 
   @Override
   public void update(Observable o, Object args) {
@@ -75,6 +82,9 @@ public class Hub2D extends JPanel implements Observer {
       mode.setText(modeName);
       level.setText(Integer.toString(hub.getLevel()));
       score.setText(Integer.toString(hub.getScore()));
+			
+			this.nextShape = new Shape2D(hub.getNextShape());
+			
       word.setText(hub.getWord());
       if(Integer.decode(hub.getTimeBeforeWorddle()) > 0){
         timerBeforeWorddle.setText(hub.getTimeBeforeWorddle());
