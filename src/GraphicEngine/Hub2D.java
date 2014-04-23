@@ -6,6 +6,8 @@ import Pattern.Observer;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.util.Timer;
+import java.util.TimerTask;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import static javax.swing.SwingConstants.CENTER;
@@ -18,12 +20,15 @@ public class Hub2D extends JPanel implements Observer {
   private final JLabel mode;
   private final JLabel level;
   private final JLabel score;
-  private final JLabel word;
+	private String wordInProgress;
+  //private final JLabel word;
   private final JLabel nbLines;
   private final JLabel timerBeforeWorddle;
+	private final JLabel messages;
+	private final Timer tMessage;
 	private Shape2D nextShape;
 
-  public Hub2D(Hub hub, String font, Color color) {
+  public Hub2D(final Hub hub, String font, Color color) {
 
     this.font = font;
     this.color = color;
@@ -54,11 +59,18 @@ public class Hub2D extends JPanel implements Observer {
     this.add(score);
 
     /* UI Word anagramme/wordlle */
-    word = new JLabel(hub.getWord(), CENTER);
+    /*word = new JLabel(hub.getWord(), CENTER);
     setJLabel(word, 70, 0, 367, 55);
 		word.setVerticalTextPosition(CENTER);
 		word.setHorizontalAlignment(CENTER);
-    this.add(word);
+    this.add(word);*/
+
+    /* UI messages */
+    messages = new JLabel("", CENTER);
+    setJLabel(messages, 70, 0, 367, 55);
+		messages.setVerticalTextPosition(CENTER);
+		messages.setHorizontalAlignment(CENTER);
+    this.add(messages);
 
     /* UI Lines */
     nbLines = new JLabel(Integer.toString(hub.getNbLines()), CENTER);
@@ -69,7 +81,25 @@ public class Hub2D extends JPanel implements Observer {
     timerBeforeWorddle = new JLabel(hub.getTimeBeforeWorddle(), CENTER);
     setJLabel(timerBeforeWorddle, 400, 600, 300, 23);
     this.add(timerBeforeWorddle);
-  }
+		
+		tMessage = new Timer();
+		//Set to init speed the player after 5 seconds
+		tMessage.schedule(new TimerTask() {
+			@Override
+			public void run() {
+				String message = hub.getOlderMessage();
+				if (message != null) {
+					messages.setText(message);
+				} else {
+					if (wordInProgress != null) {
+						if (!wordInProgress.isEmpty()) {
+							messages.setText("Mot en cours : " + wordInProgress);
+						}
+					}
+				}
+			}
+		}, 0, 2000);
+	}
 
   private void setJLabel(JLabel jl, int x, int y, int sx, int sy) {
     jl.setForeground(color);
@@ -91,12 +121,11 @@ public class Hub2D extends JPanel implements Observer {
       score.setText(Integer.toString(hub.getScore()));
 			nbLines.setText(Integer.toString(hub.getNbLines()));
 			
-			String wordInProgress = hub.getWord();
-			if(!wordInProgress.isEmpty()){
-				System.out.println(wordInProgress);
-				word.setText("Mot en cours : " + wordInProgress);
-			}else{
-				word.setText("");
+			wordInProgress = hub.getWord();
+			if(wordInProgress != null){
+				if(!wordInProgress.isEmpty()){
+					messages.setText("Mot en cours : " + wordInProgress);
+				}
 			}
 			
 			this.nextShape = new Shape2D(hub.getNextShape());

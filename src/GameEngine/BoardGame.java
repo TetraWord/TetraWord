@@ -106,17 +106,22 @@ public class BoardGame implements Observable, Observer {
           sb.append(this.getGrid().getTGrid()[line][j].getLetter());
         }
         String bestWord = myPlayer.getDico().findBestAnagramm(sb);
-        System.out.println("j'ai tapé : " + myPlayer.getWord());
+        //System.out.println("j'ai tapé : " + myPlayer.getWord());
         if(myPlayer.getDico().included(myPlayer.getWord())) {
-        	System.out.println("Ce mot existe dans le dictionnaire");
+        	//System.out.println("Ce mot existe dans le dictionnaire");
+					updateObservateur("Ce mot existe dans le dictionnaire");
         	if ( myPlayer.getWord().equals(bestWord) || myPlayer.getWord().length() >= bestWord.length()){
             myPlayer.addToScore(1000);
-        		System.out.println("Le meilleur mot a ete trouve");
+        		//System.out.println("Le meilleur mot a ete trouve");
+						updateObservateur("C'est le meilleur mot \0/");
         	} else {
             myPlayer.addToScore(myPlayer.getWord().length() * 50);
+						updateObservateur("Le meilleur mot était " + bestWord);
           }
         }else{
           myPlayer.addToScore(- (myPlayer.getScore()%1000));
+					updateObservateur("Ce mot n'existe pas");
+					updateObservateur("Le meilleur mot était " + bestWord);
         }
         myPlayer.clearWord();
         grid.removeLine(line);

@@ -134,8 +134,8 @@ public class Player implements Observable {
   }
 
   public void addToScore(int add) {
-    //score = score + add;
-    score += 1100;
+    score = score + add;
+   //score += 1100;
     if ((int) score / 1000 >= level) {
       setLevelUp();
     }
@@ -206,6 +206,7 @@ public class Player implements Observable {
   void clearWord() {
     word.delete(0, word.length());
     wordFinish = false;
+    updateObservateur(null);
   }
 
   @Override
@@ -240,6 +241,7 @@ public class Player implements Observable {
 
   public void setWordFinish() {
     wordFinish = true;
+    updateObservateur(null);
   }
 
   public void switchToWorddle(boolean b) {

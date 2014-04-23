@@ -72,7 +72,7 @@ public class Dictionnary {
 			}
 			
 			if (anagramme == true){
-				System.out.println("Le meilleur mot possible est:" + str2);
+				//System.out.println("Le meilleur mot possible est:" + str2);
 				return str2;
 			}
 		}

@@ -3,6 +3,8 @@ package GameEngine;
 import Pattern.Observable;
 import Pattern.Observer;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class Hub implements Observer, Observable {
 
@@ -10,9 +12,11 @@ public class Hub implements Observer, Observable {
   private int level;
   private InGameState state;
   private String word;
-  Shape nextShape;
+  private Shape nextShape;
   private int score;
 	private int nbRemovedLine;
+  private final Queue<String> listMessage = new LinkedList<>();
+	private boolean wordFinish;
   /*Time Left*/
   private int secondBeforeWorddle;
   /*Modifier*/
@@ -23,6 +27,7 @@ public class Hub implements Observer, Observable {
     this.secondBeforeWorddle = 30;
     this.state = InGameState.TETRIS;
 		this.nbRemovedLine = 0;
+		this.wordFinish = true;
   }
 
   public int getLevel() {
@@ -36,7 +41,15 @@ public class Hub implements Observer, Observable {
 	public Shape getNextShape() {
 		return nextShape;
 	}
-
+	
+	public String getOlderMessage() {
+		return listMessage.poll();
+	}
+	
+	public boolean isWordFinish() {
+		return wordFinish;
+	}
+	
   @Override
   public void update(Observable o, Object args) {
     if (o instanceof Player) {
@@ -44,15 +57,27 @@ public class Hub implements Observer, Observable {
       this.level = p.getLevel();
       this.score = p.getScore();
       this.state = p.getState();
-      this.word = p.getWord();
+			if(p.isWordFinished()){
+				this.word = null;
+			}else{
+				this.word = p.getWord();
+			}
+			this.wordFinish = p.isWordFinished();
 			this.nbRemovedLine = p.getNbLines();
       double seconds = (double)p.getTime() / 1000000000.0;
       this.secondBeforeWorddle = 30 - (int)Math.round(seconds);
       updateObservateur(null);
     }
 		if (o instanceof BoardGame){
-			this.nextShape = ((BoardGame)o).getNextShape();
-      updateObservateur(null);
+			if (args == null){
+				this.nextShape = ((BoardGame)o).getNextShape();
+				updateObservateur(null);
+			} else {
+				if(args instanceof String){
+					listMessage.add(((String)args));
+					updateObservateur(null);
+				}
+			}
 		}
   }
 
