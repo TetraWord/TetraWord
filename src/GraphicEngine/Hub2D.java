@@ -42,12 +42,13 @@ public class Hub2D extends JPanel implements Observer {
 
     /* UI Level */
     level = new JLabel(Integer.toString(hub.getLevel()), CENTER);
-    setJLabel(level, 516, 786, 57, 23);
+    setJLabel(level, 583, 805, 30, 23);
     this.add(level);
 
     /* UI Score */
     score = new JLabel(Integer.toString(hub.getScore()), CENTER);
-    setJLabel(score, 520, 690, 57, 23);
+    setJLabel(score, 520, 700, 70, 23);
+		score.setBackground(Color.black);
     this.add(score);
 
     /* UI Word anagramme/wordlle */
@@ -64,7 +65,7 @@ public class Hub2D extends JPanel implements Observer {
   private void setJLabel(JLabel jl, int x, int y, int sx, int sy) {
     jl.setForeground(color);
     jl.setBounds(x, y, sx, sy);
-    jl.setFont(new Font(font, Font.BOLD, 22));
+    jl.setFont(new Font(font, Font.BOLD, 24));
   }
 
   @Override
