@@ -17,7 +17,8 @@ public class MenuEventListener implements ActionListener {
         break;
 
       case "Jouer seul":
-        c.definePlayersGame(1);
+				c.initGame(1);
+        //c.definePlayersGame(1);
         break;
 
       case "Jouer à plusieurs":
@@ -28,11 +29,15 @@ public class MenuEventListener implements ActionListener {
         break;
 
       case "Contre un joueur":
-        c.definePlayersGame(2);
+				c.initGame(2);
         break;
 
       case "Contre un IA":
-        c.definePlayersGame(1.5);
+				c.initGame(1.5);
+        break;
+
+      case "Jouer":
+        c.definePlayersGame();
         break;
 
       case "Options":

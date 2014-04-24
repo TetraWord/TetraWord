@@ -131,14 +131,14 @@ public class BoardGame2D extends JPanel implements Observer {
   public void paintComponent(Graphics g) {
 
     try {
-      /*Try to load background image from chosen design*/
+      // Try to load background image from chosen design
 
       Image img = ImageIO.read(new File(background));
       g.drawImage(img, 0, 0, this);
     } catch (IOException e) {
-      /*Load background image from default design*/
       e.printStackTrace();
     }
+		
 		hub.draw(g);
     gameGrid.draw(g);
   }

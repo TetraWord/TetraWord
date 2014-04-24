@@ -38,7 +38,6 @@ public class Player implements Observable {
     dico = d;
     speedFall = 1000;
     speedFallInit = speedFall;
-    startTimerBeforeWorddle();
   }
 
   public Shape useShapeStocked() {

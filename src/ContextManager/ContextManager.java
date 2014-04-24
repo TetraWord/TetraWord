@@ -113,10 +113,45 @@ public class ContextManager {
     isPaused = !isPaused;
   }
 
-  public void definePlayersGame(double numPlayer) {
-    /* Define the new settings of the window */
+  public void definePlayersGame() {
+    
     Window w = graphicEngine.getWindow();
     w.clear();
+		int numPlayer = gameEngine.getNbPlayers();
+
+    if (numPlayer > 1) {
+      w.setLayout(new GridLayout(1, 2));
+    }
+    Player[] players = gameEngine.getPlayers();
+    for (int i = 0; i < numPlayer; ++i) {
+      if (i == 0) {
+        player1Listener = new Config1(players[i]);
+      }
+      if (i == 1 && numPlayer != 1.5) {
+        player2Listener = new Config2(players[i]);
+      }
+			
+			w.defineNewBoardGame(players[i].getBoardGame());
+			players[i].startTimerBeforeWorddle();
+
+      Thread t = new Thread(new RunPlayer(players[i]));
+      t.setDaemon(true);
+      t.start();
+    }
+
+    w.addWindowListener();
+  }
+
+	void initGame(double numPlayer) {
+		/* Define the new settings of the window */
+    Window w = graphicEngine.getWindow();
+    w.clear();
+    /* Add the players with the same shapes */
+    Shape s = ShapesStock.getInstance().getRandomShape();
+    Shape s2 = ShapesStock.getInstance().getRandomShape();
+    for (int i = 0; i < numPlayer; ++i) {
+      gameEngine.addNewPlayer(s, s2);
+    }
 
     if (numPlayer > 1) {
       Dimension size = w.getSize();
@@ -127,29 +162,9 @@ public class ContextManager {
 
     w.setLocationRelativeTo(null);
 
-    /* Add the players with the same shapes */
-    Shape s = ShapesStock.getInstance().getRandomShape();
-    Shape s2 = ShapesStock.getInstance().getRandomShape();
-    for (int i = 0; i < numPlayer; ++i) {
-      gameEngine.addNewPlayer(s, s2);
-    }
-
     Player[] players = gameEngine.getPlayers();
     for (int i = 0; i < numPlayer; ++i) {
-      if (i == 0) {
-        player1Listener = new Config1(players[i]);
-      }
-      if (i == 1 && numPlayer != 1.5) {
-        player2Listener = new Config2(players[i]);
-      }
-      w.defineNewBoardGame(players[i].getBoardGame());
-
-      Thread t = new Thread(new RunPlayer(players[i]));
-      t.setDaemon(true);
-      t.start();
+			w.defineCommande(i);
     }
-
-    w.definePauseMenu();
-    w.addWindowListener();
-  }
+	}
 }

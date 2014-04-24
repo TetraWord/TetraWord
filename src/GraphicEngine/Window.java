@@ -80,6 +80,13 @@ public class Window extends JFrame {
 
     this.setVisible(true);
   }
+
+  public void defineCommande(int numPlayer) {
+    Container pan = getContentPane();
+		OverBoard2D overBoard = new OverBoard2D(numPlayer);
+    pan.add(overBoard);
+    this.setVisible(true);
+  }
   
   public void definePauseMenu() {
     menu = new Menu2D();
