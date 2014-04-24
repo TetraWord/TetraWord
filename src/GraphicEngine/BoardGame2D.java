@@ -2,7 +2,6 @@ package GraphicEngine;
 
 import ContextManager.GridEventListener;
 import GameEngine.BoardGame;
-import GameEngine.Player;
 import Pattern.Observable;
 import Pattern.Observer;
 import java.awt.Color;
@@ -22,7 +21,6 @@ import javax.swing.JPanel;
  */
 public class BoardGame2D extends JPanel implements Observer {
 
-  private Shape2D nextShape;
   private final Grid2D gameGrid;
   private final BoardGame model;
   private String background;
@@ -37,9 +35,6 @@ public class BoardGame2D extends JPanel implements Observer {
     this.setLayout(null);
     this.setSize(650, 889);
     this.model = model;
-
-    /* UI NextShape */
-    nextShape = new Shape2D(model.getNextShape());
 
     loadDesign();
     loadOptions();
@@ -127,7 +122,7 @@ public class BoardGame2D extends JPanel implements Observer {
   @Override
   public void update(Observable o, Object args) {
     if (args == null) {
-      nextShape = new Shape2D(model.getNextShape());
+      hub.update(o, args);
     }
 
   }
