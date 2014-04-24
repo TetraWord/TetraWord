@@ -1,6 +1,8 @@
 package ContextManager;
 
+import GameEngine.CurrentShape;
 import GameEngine.GameEngine;
+import GameEngine.Grid;
 import GameEngine.Player;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -39,18 +41,32 @@ public class Config2 extends KeyAdapter {
         break;
 
       case KeyEvent.VK_2:
-        if ( (p.isAnagram() || p.isWorddle()) && p.getWord().length() > 0) {
+        if ((p.isAnagram() || p.isWorddle()) && p.getWord().length() > 0) {
           p.setWordFinish();
           p.getBoardGame().setNoLastBrickClicked();
+        } else if (p.hasModifier()) {
+          p.activeModifier();
         }
         break;
-        
+
       case KeyEvent.VK_E:
-        if(!GameEngine.getInstance().isPlayersInWordMode()){
+        if (!GameEngine.getInstance().isPlayersInWordMode()) {
           p.switchToWorddle(true);
           GameEngine.getInstance().beginWorddleTimer(p);
           p.stockCurrentShape();
           p.addNewChar(p.getBoardGame().clickedOneBrick());
+        }
+        break;
+
+      case KeyEvent.VK_R:
+        Grid grid = p.getBoardGame().getGrid();
+        CurrentShape cs = grid.getCurrentShape();
+        if (!p.hasShapeStocked()) {
+          p.stockShape(cs);
+          p.getBoardGame().launchNextShape();
+        } else {
+          grid.setCurrentShape(new CurrentShape(p.useShapeStocked()));
+          p.stockShape(cs);
         }
         break;
 

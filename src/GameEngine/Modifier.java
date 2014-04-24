@@ -159,13 +159,8 @@ public class Modifier implements Observable {
     int maxX = s.getMaxX(representation);
     int maxY = s.getMaxY(representation);
 
-    System.out.println("maxX vaut : "+maxX);
-    System.out.println("maxY vaut : "+maxY);
     for (int i = y; i <= y + maxY; ++i) {
       for (int j = x; j <= x + maxX; ++j) {
-        System.out.println("radius vaut : "+radius);
-        System.out.println("i vaut maintenant : "+i);
-        System.out.println("j vaut maintenant : "+j);
         if (i + radius < sizeY) {
           if (j + radius < sizeX) {
             tGrid[i + radius][j + radius] = new Brick(' ', -1);
