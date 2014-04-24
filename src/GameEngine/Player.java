@@ -24,7 +24,7 @@ public class Player implements Observable {
   private final Object monitor = new Object();
   private ArrayList<Observer> listObserver = new ArrayList<>();
   private final Dictionnary dico;
-  private Modifier modifier = new Modifier("Exchange");
+  private Modifier modifier = new Modifier("Bomb");
   private boolean worddle = false;
   private Timer timerBeforeWorddle = null;
   private long t = 0;
@@ -125,11 +125,16 @@ public class Player implements Observable {
   private CurrentShape getCurrentShape() {
     return boardGame.getGrid().getCurrentShape();
   }
+  
+  public Shape getStockShape() {
+    return shapeStocked;
+  }
 
-  public void stockShape() {
-    if (shapeStocked != null) {
-      shapeStocked = getCurrentShape();
+  public void stockShape(CurrentShape cs) {
+    if (shapeStocked == null) {
+      shapeStocked = new Shape(cs, true);
     }
+    updateObservateur(null);
   }
 
   public int getScore() {

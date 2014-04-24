@@ -1,6 +1,8 @@
 package ContextManager;
 
+import GameEngine.CurrentShape;
 import GameEngine.GameEngine;
+import GameEngine.Grid;
 import GameEngine.Player;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -57,6 +59,18 @@ public class Config1 extends KeyAdapter {
           GameEngine.getInstance().beginWorddleTimer(p);
           p.stockCurrentShape();
           p.addNewChar(p.getBoardGame().clickedOneBrick());
+        }
+        break;
+        
+      case KeyEvent.VK_NUMPAD2:
+        Grid grid = p.getBoardGame().getGrid();
+        CurrentShape cs = grid.getCurrentShape();
+        if (!p.hasShapeStocked()) {
+          p.stockShape(cs);
+          p.getBoardGame().launchNextShape();
+        } else {
+          grid.setCurrentShape(new CurrentShape(p.useShapeStocked()));
+          p.stockShape(cs);
         }
         break;
 
