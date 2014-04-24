@@ -118,6 +118,7 @@ public class ContextManager {
     Window w = graphicEngine.getWindow();
     w.clear();
 		int numPlayer = gameEngine.getNbPlayers();
+		boolean ia = gameEngine.hasIA();
 
     if (numPlayer > 1) {
       w.setLayout(new GridLayout(1, 2));
@@ -127,7 +128,7 @@ public class ContextManager {
       if (i == 0) {
         player1Listener = new Config1(players[i]);
       }
-      if (i == 1 && numPlayer != 1.5) {
+      if (i == 1 && ia == false) {
         player2Listener = new Config2(players[i]);
       }
 			
@@ -158,13 +159,22 @@ public class ContextManager {
       size.width *= 2;
       w.setSize(size);
       w.setLayout(new GridLayout(1, 2));
+			if(numPlayer == 1.5){
+				gameEngine.setIA(true);
+			}
     }
 
     w.setLocationRelativeTo(null);
 
     Player[] players = gameEngine.getPlayers();
     for (int i = 0; i < numPlayer; ++i) {
-			w.defineCommande(i);
+			if(numPlayer != 1.5){
+				w.defineCommande(i);
+			}else{
+				if(i == 0){
+					w.defineCommande(i);	
+				}
+			}
     }
 	}
 }

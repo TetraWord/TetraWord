@@ -9,6 +9,7 @@ public class GameEngine {
   private final Player[] players;
   private int nbPlayer = 0;
   private final Dictionnary dictionnary = new Dictionnary();
+	private boolean ia = false;
   private Timer worddleTimer = null;
 
   //Singleton
@@ -90,4 +91,11 @@ public class GameEngine {
     p2Grid.updateObservateur(p1TGrid);
     
   }
+
+	public boolean hasIA() {
+		return ia;
+	}
+	public void setIA(boolean ia) {
+		this.ia = ia;
+	}
 }
