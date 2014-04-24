@@ -24,7 +24,7 @@ public class Player implements Observable {
   private final Object monitor = new Object();
   private ArrayList<Observer> listObserver = new ArrayList<>();
   private final Dictionnary dico;
-  private Modifier modifier = null;
+  private Modifier modifier = new Modifier("Storm");
   private boolean worddle = false;
   private Timer timerBeforeWorddle = null;
   private long t = 0;
@@ -315,5 +315,14 @@ public class Player implements Observable {
 
   public int getSpeedFallInit() {
     return speedFallInit;
+  }
+
+  public boolean hasModifier() {
+    return modifier != null;
+  }
+
+  public void activeModifier() {
+    modifier.active(this);
+    modifier = null;
   }
 }

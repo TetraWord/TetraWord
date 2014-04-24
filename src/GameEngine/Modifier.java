@@ -2,6 +2,7 @@ package GameEngine;
 
 import Pattern.Observable;
 import Pattern.Observer;
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -77,19 +78,39 @@ public class Modifier implements Observable {
       }
     }, 5000);
 
-    //Set the player speed fall to his current speed fall * 2
-    p.setNewSpeedFall(p.getSpeedFall() * 2);
+    //Set the player speed fall to his current speed fall / 2
+    p.setNewSpeedFall(p.getSpeedFall() / 3);
   }
 
   private void shake(Player p) {
 
   }
 
-  private void storm(Player p) {
-    while (timer != 0) {
-      p.right();
-      timer--;
-    }
+  private void storm(final Player p) {
+    t = new Timer();
+
+    final int r = (int) Math.random();
+
+    //Lateral movement every 0.7 seconds 
+    t.schedule(new TimerTask() {
+      @Override
+      public void run() {
+        if(r == 0){
+          p.left();
+        }else{
+          p.right();
+        }
+      }
+    }, 0, 700);
+    
+    //Stop after 10 secondes 
+    t.schedule(new TimerTask() {
+      @Override
+      public void run() {
+        t.purge();
+        t.cancel();
+      }
+    }, 10000);
   }
 
   private void reversal(Player p) {
@@ -123,19 +144,19 @@ public class Modifier implements Observable {
 
   @Override
   public void addObservateur(Observer obs) {
-		// TODO Auto-generated method stub
+    // TODO Auto-generated method stub
 
   }
 
   @Override
   public void updateObservateur(Object args) {
-		// TODO Auto-generated method stub
+    // TODO Auto-generated method stub
 
   }
 
   @Override
   public void delObservateur() {
-		// TODO Auto-generated method stub
+    // TODO Auto-generated method stub
 
   }
 }
