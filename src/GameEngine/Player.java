@@ -138,8 +138,8 @@ public class Player implements Observable {
   }
 
   public void addToScore(int add) {
-    //score = score + add;
-    score += 1100;
+    score = score + add;
+   //score += 1100;
     if ((int) score / 1000 >= level) {
       setLevelUp();
     }
@@ -153,6 +153,10 @@ public class Player implements Observable {
   public int getLevel() {
     return level;
   }
+
+	int getNbLines() {
+		return numLinesTotalRemoved;
+	}
 
   public int getSpeedFall() {
     return speedFall;
@@ -206,6 +210,7 @@ public class Player implements Observable {
   void clearWord() {
     word.delete(0, word.length());
     wordFinish = false;
+    updateObservateur(null);
   }
 
   @Override
@@ -234,11 +239,13 @@ public class Player implements Observable {
       addToScore(numLinesRemoved * 100);
     }
     numLinesTotalRemoved += numLinesRemoved;
+    updateObservateur(null);
     boardGame.launchNextShape();
   }
 
   public void setWordFinish() {
     wordFinish = true;
+    updateObservateur(null);
   }
 
   public void switchToWorddle(boolean b) {
