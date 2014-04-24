@@ -12,6 +12,7 @@ public class Hub implements Observer, Observable {
   private String word;
   /*Shape nextShape;*/
   private int score;
+  private int numLinesRemoved;
   /*Time Left*/
   private int secondBeforeWorddle;
   /*Modifier*/
@@ -31,6 +32,22 @@ public class Hub implements Observer, Observable {
     return state;
   }
 
+  public int getScore() {
+    return score;
+  }
+
+  public String getWord() {
+    return word;
+  }
+
+  public int getNumLinesRemoved() {
+    return numLinesRemoved;
+  }
+
+  public String getTimeBeforeWorddle() {
+    return Integer.toString(secondBeforeWorddle);
+  }
+
   @Override
   public void update(Observable o, Object args) {
     if (o instanceof Player) {
@@ -39,18 +56,11 @@ public class Hub implements Observer, Observable {
       this.score = p.getScore();
       this.state = p.getState();
       this.word = p.getWord();
-      double seconds = (double)p.getTime() / 1000000000.0;
-      this.secondBeforeWorddle = 30 - (int)Math.round(seconds);
+      this.numLinesRemoved = p.getNumLinesTotalRemoved();
+      double seconds = (double) p.getTime() / 1000000000.0;
+      this.secondBeforeWorddle = 30 - (int) Math.round(seconds);
       updateObservateur(null);
     }
-  }
-
-  public int getScore() {
-    return score;
-  }
-
-  public String getWord() {
-    return word;
   }
 
   @Override
@@ -70,7 +80,4 @@ public class Hub implements Observer, Observable {
     listObserver = new ArrayList<>();
   }
 
-  public String getTimeBeforeWorddle() {
-    return Integer.toString(secondBeforeWorddle);
-  }
 }

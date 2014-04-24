@@ -19,6 +19,7 @@ public class Hub2D extends JPanel implements Observer {
   private final JLabel score;
   private final JLabel word;
   private final JLabel timerBeforeWorddle;
+  private final JLabel numLinesRemoved;
 
   public Hub2D(Hub hub, String font, Color color) {
 
@@ -59,6 +60,11 @@ public class Hub2D extends JPanel implements Observer {
     timerBeforeWorddle = new JLabel(hub.getTimeBeforeWorddle(), CENTER);
     setJLabel(timerBeforeWorddle, 400, 600, 300, 23);
     this.add(timerBeforeWorddle);
+    
+    /* UI Lines Removed */
+    numLinesRemoved = new JLabel(Integer.toString(hub.getNumLinesRemoved()), CENTER);
+    setJLabel(numLinesRemoved, 520, 710, 57, 23);
+    this.add(numLinesRemoved);
   }
 
   private void setJLabel(JLabel jl, int x, int y, int sx, int sy) {

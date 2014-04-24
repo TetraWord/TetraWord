@@ -54,6 +54,10 @@ public class Player implements Observable {
   public int getNumber() {
     return number;
   }
+  
+  public int getNumLinesTotalRemoved() {
+    return numLinesTotalRemoved;
+  }
 
   public Dictionnary getDico() {
     return dico;
