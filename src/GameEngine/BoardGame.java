@@ -109,19 +109,19 @@ public class BoardGame implements Observable, Observer {
         //System.out.println("j'ai tapé : " + myPlayer.getWord());
         if(myPlayer.getDico().included(myPlayer.getWord())) {
         	//System.out.println("Ce mot existe dans le dictionnaire");
-					updateObservateur("Ce mot existe dans le dictionnaire");
+					updateObservateur("Mot existant");
         	if ( myPlayer.getWord().equals(bestWord) || myPlayer.getWord().length() >= bestWord.length()){
             myPlayer.addToScore(1000);
         		//System.out.println("Le meilleur mot a ete trouve");
-						updateObservateur("C'est le meilleur mot \0/");
+						updateObservateur("Meilleur mot \0/");
         	} else {
             myPlayer.addToScore(myPlayer.getWord().length() * 50);
-						updateObservateur("Le meilleur mot était " + bestWord);
+						updateObservateur("Meilleur mot : " + bestWord);
           }
         }else{
           myPlayer.addToScore(- (myPlayer.getScore()%1000));
-					updateObservateur("Ce mot n'existe pas");
-					updateObservateur("Le meilleur mot était " + bestWord);
+					updateObservateur("Non Existant");
+					updateObservateur("Meilleur mot : " + bestWord);
         }
         myPlayer.clearWord();
         grid.removeLine(line);
