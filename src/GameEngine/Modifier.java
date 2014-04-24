@@ -1,5 +1,7 @@
 package GameEngine;
 
+import static GameEngine.Grid.sizeX;
+import static GameEngine.Grid.sizeY;
 import Pattern.Observable;
 import Pattern.Observer;
 import java.util.Timer;
@@ -47,7 +49,7 @@ public class Modifier implements Observable {
         break;
       
       case "Exchange":
-        this.exchange(p);
+        this.exchange();
         break;
       
       case "Score+":
@@ -129,8 +131,11 @@ public class Modifier implements Observable {
     
   }
   
-  private void exchange(Player p) {
-    
+  private void exchange() {
+    GameEngine g = GameEngine.getInstance();
+    if(g.getNbPlayers() == 2){
+      g.exchange();
+    }
   }
   
   private void score(Player p, char sign) {

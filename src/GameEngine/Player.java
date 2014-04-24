@@ -11,7 +11,7 @@ public class Player implements Observable {
 
   private final BoardGame boardGame;
   private int speedFall;
-  private int speedFallInit;
+  private final int speedFallInit;
   private final int number;
   private int level;
   private InGameState state = InGameState.TETRIS;
@@ -24,7 +24,7 @@ public class Player implements Observable {
   private final Object monitor = new Object();
   private ArrayList<Observer> listObserver = new ArrayList<>();
   private final Dictionnary dico;
-  private Modifier modifier = new Modifier("Storm");
+  private Modifier modifier = new Modifier("Exchange");
   private boolean worddle = false;
   private Timer timerBeforeWorddle = null;
   private long t = 0;

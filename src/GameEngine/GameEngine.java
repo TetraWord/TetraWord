@@ -55,4 +55,39 @@ public class GameEngine {
     return false;
 
   }
+
+  public Brick[][][] getBrickGrids() {
+    Brick[][][] tabBrick = new Brick[nbPlayer][Grid.sizeY][Grid.sizeX];
+    for(int i = 0; i < nbPlayer; ++i){
+      tabBrick[i] = players[i].getBoardGame().getGrid().getTGrid();
+    }
+    return tabBrick;
+  }
+
+  public void exchange() {
+    Player p1 = players[0];
+    Player p2 = players[1];
+    
+    Grid p1Grid = p1.getBoardGame().getGrid();
+    Grid p2Grid = p2.getBoardGame().getGrid();
+    
+    CurrentShape p1CS = p1Grid.getCurrentShape();
+    CurrentShape p2CS = p2Grid.getCurrentShape();
+    
+    p1Grid.setCurrentShape(p2CS);
+    p2Grid.setCurrentShape(p1CS);
+    
+    Brick[][] p1TGrid = p1Grid.getTGrid();
+    Brick[][] p2TGrid = p2Grid.getTGrid();
+    
+    Brick[][] tmp = (Brick[][]) p1TGrid.clone();
+    p1Grid.setTGrid(p2TGrid);
+    p2Grid.setTGrid(tmp);
+        
+    p1Grid.updateObservateur(p2CS);
+    p2Grid.updateObservateur(p1CS);
+    p1Grid.updateObservateur(p2TGrid);
+    p2Grid.updateObservateur(p1TGrid);
+    
+  }
 }

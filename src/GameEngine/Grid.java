@@ -9,7 +9,7 @@ public class Grid implements Observable {
 
   public static final int sizeX = 10;
   public static final int sizeY = 20;
-  private final Brick[][] tGrid = new Brick[sizeY][sizeX];
+  private Brick[][] tGrid = new Brick[sizeY][sizeX];
   private CurrentShape currentShape;
   private ArrayList<Observer> listObserver = new ArrayList<>();
   private final BoardGame myBoardGame;
@@ -26,6 +26,10 @@ public class Grid implements Observable {
 
   public Brick[][] getTGrid() {
     return tGrid;
+  }
+  
+  public void setTGrid(Brick[][] newTGrid) {
+    tGrid = (Brick[][]) newTGrid.clone();
   }
 
   public CurrentShape getCurrentShape() {
