@@ -2,72 +2,79 @@ package GameEngine;
 
 import Pattern.Observable;
 import Pattern.Observer;
-import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class Modifier implements Observable {
-
+  
   public String name;
   public int timer;
   public Timer t = null;
-
+  
   public Modifier(String name) {
     this.name = name;
     this.timer = 10;
   }
-
+  
   public String getName() {
     return this.name;
   }
-
+  
   public void setTimer(int timer) {
     this.timer = timer;
   }
-
+  
   public void active(Player p) {
     switch (this.name) {
       case "Speed":
-        this.speed(p);
+        this.changeSpeed(p, '+');
         break;
-
+      
+      case "Slow":
+        this.changeSpeed(p, '-');
+        break;
+      
       case "Shake":
         this.shake(p);
         break;
-
+      
       case "Storm":
         this.storm(p);
         break;
-
+      
       case "Reversal":
         this.reversal(p);
         break;
-
+      
       case "Exchange":
         this.exchange(p);
         break;
-
-      case "Score":
-        this.score(p);
+      
+      case "Score+":
+        this.score(p, '+');
         break;
-
+      
+      case "Score-":
+        this.score(p, '-');
+        break;
+      
       case "Bomb":
         this.bomb(p);
         break;
-
+      
       case "TimeTravel":
         this.timeTravel(p);
         break;
-
+      
       case "Worddle":
         this.worddle(p);
         break;
     }
   }
-
-  private void speed(final Player p) {
+  
+  private void changeSpeed(final Player p, char sign) {
     t = new Timer();
-
+    
     final int speedBefore = p.getSpeedFall();
 
     //Set to init speed the player after 5 seconds
@@ -79,30 +86,35 @@ public class Modifier implements Observable {
     }, 5000);
 
     //Set the player speed fall to his current speed fall / 2
-    p.setNewSpeedFall(p.getSpeedFall() / 3);
+    if (sign == '+') {
+      p.setNewSpeedFall(p.getSpeedFall() / 3);
+    } else if (sign == '-') {
+      p.setNewSpeedFall(p.getSpeedFall() * 3);
+    }
+    
   }
-
+  
   private void shake(Player p) {
-
+    
   }
-
+  
   private void storm(final Player p) {
     t = new Timer();
-
-    final int r = (int) Math.random();
+    
+    final int r = (int) Math.round(Math.random());
 
     //Lateral movement every 0.7 seconds 
     t.schedule(new TimerTask() {
       @Override
       public void run() {
-        if(r == 0){
+        if (r == 0) {
           p.left();
-        }else{
+        } else {
           p.right();
         }
       }
     }, 0, 700);
-    
+
     //Stop after 10 secondes 
     t.schedule(new TimerTask() {
       @Override
@@ -112,27 +124,31 @@ public class Modifier implements Observable {
       }
     }, 10000);
   }
-
+  
   private void reversal(Player p) {
-
+    
   }
-
+  
   private void exchange(Player p) {
-
+    
   }
-
-  private void score(Player p) {
-
+  
+  private void score(Player p, char sign) {
+    if(sign == '+'){
+      p.addToScore(500);
+    }else if(sign == '-'){
+      p.addToScore(-500);
+    }
   }
-
+  
   private void bomb(Player p) {
-
+    
   }
-
+  
   private void timeTravel(Player p) {
-
+    
   }
-
+  
   private void worddle(Player p) {
     if (!GameEngine.getInstance().isPlayersInWordMode() && p.canWorddle()) {
       p.switchToWorddle(true);
@@ -141,19 +157,19 @@ public class Modifier implements Observable {
       p.addNewChar(p.getBoardGame().clickedOneBrick());
     }
   }
-
+  
   @Override
   public void addObservateur(Observer obs) {
     // TODO Auto-generated method stub
 
   }
-
+  
   @Override
   public void updateObservateur(Object args) {
     // TODO Auto-generated method stub
 
   }
-
+  
   @Override
   public void delObservateur() {
     // TODO Auto-generated method stub
