@@ -12,7 +12,7 @@ public class CurrentShape extends Shape {
     curY = 0;
   }
 
-  CurrentShape(Shape s) {
+  public CurrentShape(Shape s) {
     this(s.name, s.color, s.representation, s.composition);
   }
 

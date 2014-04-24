@@ -38,6 +38,7 @@ public class Grid implements Observable {
 
   public void setCurrentShape(CurrentShape cs) {
     currentShape = cs;
+    updateObservateur(cs);
   }
 
   public int getFirstFullLine() {

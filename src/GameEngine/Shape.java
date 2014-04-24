@@ -58,8 +58,11 @@ public class Shape implements Observable {
   }
 
   //Copy constructor
-  public Shape(Shape shape) {
+  public Shape(Shape shape, boolean copyComposition) {
     this(shape.name, shape.color, shape.representation);
+    if(copyComposition){
+      this.composition = shape.composition;
+    }
   }
 
   private void setComposition(int[][] representation) {

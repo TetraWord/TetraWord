@@ -27,6 +27,7 @@ public class Hub2D extends JPanel implements Observer {
   private final JLabel messages;
   private final Timer tMessage;
   private Shape2D nextShape;
+  private Shape2D stockShape;
 
   public Hub2D(final Hub hub, String font, Color color) {
 
@@ -109,6 +110,9 @@ public class Hub2D extends JPanel implements Observer {
 
   public void draw(Graphics g) {
     nextShape.draw(g, 515, 130, 0.7);
+    if (stockShape != null) {
+      stockShape.draw(g, 515, 290, 0.7);
+    }
   }
 
   @Override
@@ -128,6 +132,10 @@ public class Hub2D extends JPanel implements Observer {
       }
 
       this.nextShape = new Shape2D(hub.getNextShape());
+
+      if (hub.getStockShape() != null) {
+        this.stockShape = new Shape2D(hub.getStockShape());
+      }
 
       if (hub.getTimeBeforeWorddle() > 0) {
         timerBeforeWorddle.setText(Integer.toString(hub.getTimeBeforeWorddle()));

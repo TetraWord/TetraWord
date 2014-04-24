@@ -126,11 +126,16 @@ public class Player implements Observable {
   private CurrentShape getCurrentShape() {
     return boardGame.getGrid().getCurrentShape();
   }
+  
+  public Shape getStockShape() {
+    return shapeStocked;
+  }
 
-  public void stockShape() {
-    if (shapeStocked != null) {
-      shapeStocked = getCurrentShape();
+  public void stockShape(CurrentShape cs) {
+    if (shapeStocked == null) {
+      shapeStocked = new Shape(cs, true);
     }
+    updateObservateur(null);
   }
 
   public int getScore() {
