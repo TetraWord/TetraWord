@@ -23,7 +23,7 @@ public class BoardGame2D extends JPanel implements Observer {
 
   private final Grid2D gameGrid;
   private final BoardGame model;
-  private String background;
+  private Image img;
   private String font;
   private Color color;
   private final GridEventListener event;
@@ -61,6 +61,7 @@ public class BoardGame2D extends JPanel implements Observer {
     InputStream input = null;
 
     /*Get background image from file design*/
+		String background;
     try {
       input = new FileInputStream("conf/design.properties");
 
@@ -84,6 +85,13 @@ public class BoardGame2D extends JPanel implements Observer {
           e.printStackTrace();
         }
       }
+    }
+		
+    try {
+      // Try to load background image from chosen design
+      this.img = ImageIO.read(new File(background));
+    } catch (IOException e) {
+      e.printStackTrace();
     }
   }
 
@@ -129,15 +137,7 @@ public class BoardGame2D extends JPanel implements Observer {
 
   @Override
   public void paintComponent(Graphics g) {
-
-    try {
-      // Try to load background image from chosen design
-
-      Image img = ImageIO.read(new File(background));
-      g.drawImage(img, 0, 0, this);
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
+    g.drawImage(img, 0, 0, this);
 		
 		hub.draw(g);
     gameGrid.draw(g);

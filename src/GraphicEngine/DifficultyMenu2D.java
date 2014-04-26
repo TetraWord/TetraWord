@@ -100,6 +100,8 @@ class DifficultyMenu2D extends Menu2D {
     this.add(b);
     y = y + step_y;
     this.add(new Button2D("Précédent", x, y, sx, sy));
+		
+		loadBackground();
 
   }
 

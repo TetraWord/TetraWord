@@ -149,6 +149,8 @@ public class DesignMenu2D extends Menu2D {
     this.add(new Button2D("Précédent", x, y, sx, sy));
 
     loadApercus((String) combo.getSelectedItem());
+		
+		loadBackground();
   }
 
   @Override
