@@ -1,5 +1,6 @@
 package GraphicEngine;
 
+import ContextManager.ContextManager;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -69,7 +70,9 @@ public class GraphicEngine {
   }
 
   public void stop() {
-    //TO DO
+    //remove listener on window
+    window.removeKeyListener(ContextManager.getInstance().getPlayerListener(0));
+    window.removeKeyListener(ContextManager.getInstance().getPlayerListener(1));
   }
 
 }
