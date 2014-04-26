@@ -13,16 +13,17 @@ import javax.swing.JTextField;
 
 public class OverBoard2D extends JPanel {
 
-  private final String imgCmd;
+  private final Image img;
   private final JTextField namePlayer;
 	//private final Menu2D menu;
 
-  public OverBoard2D(int numPlayer) {
+  public OverBoard2D(int numPlayer) throws IOException {
     /* Settings */
     this.setLayout(null);
     this.setSize(650, 889);
 
-    this.imgCmd = "media/Design/commandes/c" + numPlayer + ".png";
+    String imgCmd = "media/Design/commandes/c" + numPlayer + ".png";
+    img = ImageIO.read(new File(imgCmd));
 
     int sx = 300, sy = 50;
     int x = WINDOW_WIDTH / 2 - sx / 2;
@@ -45,14 +46,6 @@ public class OverBoard2D extends JPanel {
 
   @Override
   public void paintComponent(Graphics g) {
-    try {
-      /*Try to load background image from chosen design*/
-
-      Image img = ImageIO.read(new File(imgCmd));
-      g.drawImage(img, 0, 0, this);
-    } catch (IOException e) {
-      /*Load background image from default design*/
-      e.printStackTrace();
-    }
+		g.drawImage(img, 0, 0, this);
   }
 }

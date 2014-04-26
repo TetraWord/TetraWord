@@ -6,7 +6,10 @@ import static GraphicEngine.GraphicEngine.WINDOW_HEIGHT;
 import static GraphicEngine.GraphicEngine.WINDOW_WIDTH;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 
 /**
@@ -83,11 +86,15 @@ public class Window extends JFrame {
   }
 
   public void defineCommande(int numPlayer) {
-    Container pan = getContentPane();
-		OverBoard2D overBoard = new OverBoard2D(numPlayer);
-    pan.add(overBoard);
-    this.overBoards.add(overBoard);
-    this.setVisible(true);
+		try {
+			Container pan = getContentPane();
+			OverBoard2D overBoard = new OverBoard2D(numPlayer);
+			pan.add(overBoard);
+			this.overBoards.add(overBoard);
+			this.setVisible(true);
+		} catch (IOException ex) {
+			Logger.getLogger(Window.class.getName()).log(Level.SEVERE, null, ex);
+		}
   }
   
   public void definePauseMenu() {
