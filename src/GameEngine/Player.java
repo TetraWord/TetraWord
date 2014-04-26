@@ -187,7 +187,9 @@ public class Player implements Observable {
   }
   
   public void setLevelUp() {
-    ++level;
+    if(level < 10) {
+      ++level;
+    }
     setNewSpeedFall(speedFallInit - level * 83);
     updateObservateur(null);
   }
