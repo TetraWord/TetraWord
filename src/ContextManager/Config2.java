@@ -64,7 +64,7 @@ public class Config2 extends KeyAdapter {
         if (!p.hasShapeStocked()) {
           p.stockShape(cs);
           p.getBoardGame().launchNextShape();
-        } else {
+        } else if (p.canSwitchShape()) {
           grid.setCurrentShape(new CurrentShape(p.useShapeStocked()));
           p.stockShape(cs);
         }

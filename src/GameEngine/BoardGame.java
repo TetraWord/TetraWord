@@ -61,6 +61,8 @@ public class BoardGame implements Observable, Observer {
     for (int i = 0; i < GameEngine.getInstance().getNbPlayers(); ++i) {
       tabP[i].getBoardGame().listNextShape.add(s);
     }
+    
+    myPlayer.canSwitchShape(true);
 
     updateObservateur(null);
 

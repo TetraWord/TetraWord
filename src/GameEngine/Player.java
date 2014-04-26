@@ -21,6 +21,7 @@ public class Player implements Observable {
   private int numLinesTotalRemoved;
   private Shape shapeStocked;
   private CurrentShape currentShapeStocked = null;
+  private boolean switchShape = false;
   private final Object monitor = new Object();
   private ArrayList<Observer> listObserver = new ArrayList<>();
   private final Dictionnary dico;
@@ -39,16 +40,37 @@ public class Player implements Observable {
     speedFall = 1000;
     speedFallInit = speedFall;
   }
-
+  
   public Shape useShapeStocked() {
     Shape s = shapeStocked;
     shapeStocked = null;
-    return s; //vérifier si ca ne retourne pas toujours null... 
+    return s;
   }
 
   public boolean hasShapeStocked() {
     return shapeStocked != null;
   }
+  
+  public boolean canSwitchShape() {
+    return switchShape;
+  }
+
+  public void canSwitchShape(boolean b) {
+    switchShape = b;
+  }
+  
+  public Shape getStockShape() {
+    return shapeStocked;
+  }
+
+  public void stockShape(CurrentShape cs) {
+    if (shapeStocked == null) {
+      shapeStocked = new Shape(cs, true);
+      switchShape = false;
+    }
+    updateObservateur(null);
+  }
+
 
   public int getNumber() {
     return number;
@@ -126,17 +148,6 @@ public class Player implements Observable {
     return boardGame.getGrid().getCurrentShape();
   }
   
-  public Shape getStockShape() {
-    return shapeStocked;
-  }
-
-  public void stockShape(CurrentShape cs) {
-    if (shapeStocked == null) {
-      shapeStocked = new Shape(cs, true);
-    }
-    updateObservateur(null);
-  }
-
   public int getScore() {
     return score;
   }

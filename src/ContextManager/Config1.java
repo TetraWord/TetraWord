@@ -45,30 +45,30 @@ public class Config1 extends KeyAdapter {
         break;
 
       case KeyEvent.VK_ENTER:
-        if ( (p.isAnagram() || p.isWorddle()) && p.getWord().length() > 0) {
+        if ((p.isAnagram() || p.isWorddle()) && p.getWord().length() > 0) {
           p.setWordFinish();
           p.getBoardGame().setNoLastBrickClicked();
-        } else if(p.hasModifier()){
+        } else if (p.hasModifier()) {
           p.activeModifier();
         }
         break;
 
       case KeyEvent.VK_NUMPAD1:
-        if(!GameEngine.getInstance().isPlayersInWordMode() && p.canWorddle()){
+        if (!GameEngine.getInstance().isPlayersInWordMode() && p.canWorddle()) {
           p.switchToWorddle(true);
           GameEngine.getInstance().beginWorddleTimer(p);
           p.stockCurrentShape();
           p.addNewChar(p.getBoardGame().clickedOneBrick());
         }
         break;
-        
+
       case KeyEvent.VK_NUMPAD2:
         Grid grid = p.getBoardGame().getGrid();
         CurrentShape cs = grid.getCurrentShape();
         if (!p.hasShapeStocked()) {
           p.stockShape(cs);
           p.getBoardGame().launchNextShape();
-        } else {
+        } else if (p.canSwitchShape()) {
           grid.setCurrentShape(new CurrentShape(p.useShapeStocked()));
           p.stockShape(cs);
         }
