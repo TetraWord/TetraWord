@@ -17,6 +17,7 @@ public class Hub2D extends JPanel implements Observer {
   private final Hub hub;
   private final String font;
   private final Color color;
+  private final JLabel playerName;
   private final JLabel mode;
   private final JLabel level;
   private final JLabel score;
@@ -43,6 +44,12 @@ public class Hub2D extends JPanel implements Observer {
 
     this.hub = hub;
 
+    /* UI Player name */
+    playerName = new JLabel(hub.getPlayerName(), CENTER);
+    setJLabel(playerName, 480, 10, 150, 45);
+    playerName.setFont(new Font(font, Font.BOLD, 20));
+    this.add(playerName);
+    
     /*UI Mode*/
     String modeName = "Mode " + hub.getState().getStateName();
     mode = new JLabel(modeName, CENTER);
@@ -124,6 +131,7 @@ public class Hub2D extends JPanel implements Observer {
   @Override
   public void update(Observable o, Object args) {
     if (o instanceof Hub) {
+      playerName.setText(hub.getPlayerName());
       String modeName = "Mode " + hub.getState().getStateName();
       mode.setText(modeName);
       level.setText(Integer.toString(hub.getLevel()));

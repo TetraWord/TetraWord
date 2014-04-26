@@ -12,6 +12,7 @@ public class Hub implements Observer, Observable {
   private final Queue<String> listMessage = new LinkedList<>();
   private InGameState state;
   private int level;
+  private String playerName;
   private String word;
   private Shape nextShape;
   private Shape stockShape;
@@ -46,6 +47,10 @@ public class Hub implements Observer, Observable {
   public String getWord() {
     return word;
   }
+  
+  public String getPlayerName() {
+    return playerName;
+  }
 
   public int getNbLines() {
     return nbRemovedLine;
@@ -79,6 +84,7 @@ public class Hub implements Observer, Observable {
   public void update(Observable o, Object args) {
     if (o instanceof Player) {
       Player p = (Player) o;
+      this.playerName = p.getName();
       this.stockShape = p.getStockShape();
       this.level = p.getLevel();
       this.score = p.getScore();

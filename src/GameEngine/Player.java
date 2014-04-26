@@ -10,6 +10,7 @@ import java.util.Timer;
 public class Player implements Observable {
 
   private final BoardGame boardGame;
+  private String name = "player";
   private int speedFall;
   private final int speedFallInit;
   private final int number;
@@ -39,6 +40,14 @@ public class Player implements Observable {
     dico = d;
     speedFall = 1000;
     speedFallInit = speedFall;
+  }
+  
+  public String getName() {
+    return name;
+  }
+  
+  public void setName( String name ) {
+    this.name = name;
   }
   
   public Shape useShapeStocked() {

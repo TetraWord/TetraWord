@@ -19,6 +19,7 @@ public class Window extends JFrame {
   public static final String title = "TetraWord";
   public static Menu2D menu;
   public final ArrayList<BoardGame2D> boardGames = new ArrayList<>();
+  public final ArrayList<OverBoard2D> overBoards = new ArrayList<>();
 
   public Window() {
 
@@ -85,6 +86,7 @@ public class Window extends JFrame {
     Container pan = getContentPane();
 		OverBoard2D overBoard = new OverBoard2D(numPlayer);
     pan.add(overBoard);
+    this.overBoards.add(overBoard);
     this.setVisible(true);
   }
   
@@ -112,6 +114,10 @@ public class Window extends JFrame {
 
   public Menu2D getMenu() {
     return menu;
+  }
+  
+  public ArrayList<OverBoard2D> getOverBoards() {
+    return overBoards;
   }
 
 }

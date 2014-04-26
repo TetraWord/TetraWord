@@ -119,7 +119,7 @@ public class ContextManager {
     isPaused = !isPaused;
   }
 
-  public void definePlayersGame() {
+  public void definePlayersGame(String[] playersName) {
     
     Window w = graphicEngine.getWindow();
     w.clear();
@@ -140,6 +140,7 @@ public class ContextManager {
 			
 			w.defineNewBoardGame(players[i].getBoardGame());
 			players[i].startTimerBeforeWorddle();
+      players[i].setName(playersName[i]);
 
       Thread t = new Thread(new RunPlayer(players[i]));
       t.setDaemon(true);

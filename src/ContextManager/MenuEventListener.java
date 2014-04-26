@@ -1,8 +1,11 @@
 package ContextManager;
 
 import GraphicEngine.Button2D;
+import GraphicEngine.GraphicEngine;
+import GraphicEngine.OverBoard2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class MenuEventListener implements ActionListener {
 
@@ -18,7 +21,6 @@ public class MenuEventListener implements ActionListener {
 
       case "Jouer seul":
 				c.initGame(1);
-        //c.definePlayersGame(1);
         break;
 
       case "Jouer à plusieurs":
@@ -37,7 +39,12 @@ public class MenuEventListener implements ActionListener {
         break;
 
       case "Jouer":
-        c.definePlayersGame();
+        ArrayList<OverBoard2D> tab = GraphicEngine.getInstance().getWindow().getOverBoards();
+        String[] playersName = new String[tab.size()];
+        for(int i = 0; i < tab.size(); ++i){
+          playersName[i] = tab.get(i).getPlayerName();
+        }
+        c.definePlayersGame(playersName);
         break;
 
       case "Options":
