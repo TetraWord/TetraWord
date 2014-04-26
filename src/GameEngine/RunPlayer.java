@@ -17,7 +17,6 @@ public class RunPlayer implements Runnable {
     while (!this.player.isFinish()) {
       if (!ContextManager.getInstance().isPaused && player.isTetris()) {
         player.down(1);
-        player.updateObservateur(null);
         try {
           Thread.sleep(player.getSpeedFall());
         } catch (InterruptedException ex) {
@@ -28,6 +27,8 @@ public class RunPlayer implements Runnable {
       } else if (player.isWorddle()) {
         player.doWorddle();
       }
+
+      player.updateObservateur(null);
     }
     System.out.println("you loose");
     // TODO: on ne doit plus pouvoir utiliser le clavier
