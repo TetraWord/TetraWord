@@ -14,6 +14,7 @@ public class RunPlayer implements Runnable {
 
   @Override
   public void run() {
+    player.updateObservateur("Bienvenue "+ player.getName());
     while (!this.player.isFinish()) {
       if (!ContextManager.getInstance().isPaused && player.isTetris()) {
         player.down(1);
@@ -30,8 +31,10 @@ public class RunPlayer implements Runnable {
 
       player.updateObservateur(null);
     }
-    System.out.println("you loose");
-    // TODO: on ne doit plus pouvoir utiliser le clavier
+   
+    player.updateObservateur("Perdu");
+    
+    ContextManager.getInstance().stop();
   }
 
 }

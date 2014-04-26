@@ -99,6 +99,10 @@ public class Hub implements Observer, Observable {
         this.word = p.getWord();
       }
       this.wordFinish = p.isWordFinished();
+              
+      if(args instanceof String) {
+        listMessage.add(((String) args));
+      }
     }
     if (o instanceof BoardGame) {
       if (args == null) {

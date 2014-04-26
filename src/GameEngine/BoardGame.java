@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class BoardGame implements Observable, Observer {
+public final class BoardGame implements Observable, Observer {
 
   private final Grid grid;
   private final Hub hub;
