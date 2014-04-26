@@ -44,7 +44,7 @@ public class Config2 extends KeyAdapter {
         if ((p.isAnagram() || p.isWorddle()) && p.getWord().length() > 0) {
           p.setWordFinish();
           p.getBoardGame().setNoLastBrickClicked();
-        } else if (p.hasModifier()) {
+        } else if (p.hasModifier() && p.isTetris()) {
           p.activeModifier();
         }
         break;
