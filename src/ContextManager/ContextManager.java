@@ -55,6 +55,12 @@ public class ContextManager {
     }
     graphicEngine.renderFrame();
   }
+  
+  public void stop() {
+    //TO DO
+    gameEngine.stop();
+    graphicEngine.stop();
+  }
 
   public void defineMainMenu() {
     Window w = graphicEngine.getWindow();
@@ -139,7 +145,9 @@ public class ContextManager {
       t.setDaemon(true);
       t.start();
     }
-
+    
+    gameEngine.setGameTimer();
+    
     w.addWindowListener();
   }
 

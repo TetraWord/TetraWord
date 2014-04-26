@@ -68,4 +68,8 @@ public class GraphicEngine {
     window.repaint();
   }
 
+  public void stop() {
+    //TO DO
+  }
+
 }

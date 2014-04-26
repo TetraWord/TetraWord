@@ -18,7 +18,7 @@ public class Hub implements Observer, Observable {
   private int score;
   private int nbRemovedLine;
   private boolean wordFinish;
-  /*Time Left*/
+  private long timeLeft;
   private int secondBeforeWorddle;
   /*Modifier*/
 
@@ -51,6 +51,10 @@ public class Hub implements Observer, Observable {
     return nbRemovedLine;
   }
 
+  public long getTimeLeft() {
+    return timeLeft;
+  }
+  
   public int getTimeBeforeWorddle() {
     return secondBeforeWorddle;
   }
@@ -89,19 +93,19 @@ public class Hub implements Observer, Observable {
         this.word = p.getWord();
       }
       this.wordFinish = p.isWordFinished();
-      updateObservateur(null);
     }
     if (o instanceof BoardGame) {
       if (args == null) {
         this.nextShape = ((BoardGame) o).getNextShape();
-        updateObservateur(null);
       } else {
         if (args instanceof String) {
           listMessage.add(((String) args));
-          updateObservateur(null);
         }
       }
     }
+    
+    timeLeft = GameEngine.getInstance().getTimeLeft();
+    updateObservateur(null);
   }
 
   @Override

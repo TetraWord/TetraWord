@@ -23,6 +23,7 @@ public class Hub2D extends JPanel implements Observer {
   private String wordInProgress;
   //private final JLabel word;
   private final JLabel nbLinesRemoved;
+  private final JLabel timerTimeLeft;
   private final JLabel timerBeforeWorddle;
   private final JLabel messages;
   private final Timer tMessage;
@@ -77,6 +78,11 @@ public class Hub2D extends JPanel implements Observer {
     messages.setVerticalTextPosition(CENTER);
     messages.setHorizontalAlignment(CENTER);
     this.add(messages);
+    
+    /* UI Timer time left */
+    timerTimeLeft = new JLabel(Long.toString(hub.getTimeLeft()), CENTER);
+    setJLabel(timerTimeLeft, 400, 500, 300, 23);
+    this.add(timerTimeLeft);
 
     /* UI Timer worddle */
     timerBeforeWorddle = new JLabel(Integer.toString(hub.getTimeBeforeWorddle()), CENTER);
@@ -136,13 +142,19 @@ public class Hub2D extends JPanel implements Observer {
       if (hub.getStockShape() != null) {
         this.stockShape = new Shape2D(hub.getStockShape());
       }
+      
+      if (hub.getTimeLeft() > 0) {
+        timerTimeLeft.setText(Long.toString(hub.getTimeLeft()));
+      } else {
+        timerTimeLeft.setText("Fini");
+      }
 
       if (hub.getTimeBeforeWorddle() > 0) {
         timerBeforeWorddle.setText(Integer.toString(hub.getTimeBeforeWorddle()));
       } else if (hub.getState().getStateName().compareTo("Worddle") != 0) {
-        timerBeforeWorddle.setText("Worddle ready !");
+        timerBeforeWorddle.setText("Worddle prêt !");
       } else {
-        timerBeforeWorddle.setText("Worddle used !");
+        timerBeforeWorddle.setText("Worddle en cours !");
       }
     }
   }
