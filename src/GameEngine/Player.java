@@ -126,7 +126,6 @@ public class Player implements Observable {
   }
 
   public void down(int step) {
-		System.out.println(speedFall);
     synchronized (monitor) {
       CurrentShape s = getCurrentShape();
       if (s != null) {
