@@ -27,8 +27,12 @@ public class GameEngine {
     return INSTANCE;
   }
 
-  public void addNewPlayer(Shape s, Shape s2) {
-    players[nbPlayer] = new Player(nbPlayer, s, s2, dictionnary);
+  public void addNewPlayer(Shape s, Shape s2, boolean isIA) {
+    if( isIA ){
+      players[nbPlayer] = new IA(nbPlayer, s, s2, dictionnary);
+    } else {
+      players[nbPlayer] = new Player(nbPlayer, s, s2, dictionnary);
+    }
     ++nbPlayer;
   }
 

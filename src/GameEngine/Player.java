@@ -9,7 +9,7 @@ import java.util.Timer;
 
 public class Player implements Observable {
 
-  private final BoardGame boardGame;
+  protected final BoardGame boardGame;
   private String name = "player";
   private int speedFall;
   private final int speedFallInit;
@@ -40,6 +40,10 @@ public class Player implements Observable {
     dico = d;
     speedFall = 1000;
     speedFallInit = speedFall;
+  }
+  
+  protected Player(Player p) {
+    this(p.number, p.boardGame.getNextShape(), p.boardGame.getGrid().getCurrentShape(), p.dico);
   }
   
   public String getName() {
@@ -153,7 +157,7 @@ public class Player implements Observable {
     return boardGame;
   }
 
-  private CurrentShape getCurrentShape() {
+  protected CurrentShape getCurrentShape() {
     return boardGame.getGrid().getCurrentShape();
   }
   

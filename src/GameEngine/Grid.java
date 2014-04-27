@@ -58,6 +58,18 @@ public class Grid implements Observable {
     return -1;
   }
 
+  public int getMaxY(int x) {
+    boolean isBrick = false;
+    for( int y = 0; y < sizeY; ++y ) {
+      if(tGrid[y][x].getNb() > 0) {
+        isBrick = true;
+        return y - 1;
+      }
+    }
+    
+    return sizeY - 1;
+  }
+  
   public void removeLine(int lineToRemove) {
     for (int i = lineToRemove; i > 0; --i) {
       for (int j = 0; j < sizeX; ++j) {
