@@ -1,5 +1,6 @@
 package ContextManager;
 
+import GameEngine.GameEngine;
 import GraphicEngine.Button2D;
 import GraphicEngine.GraphicEngine;
 import GraphicEngine.OverBoard2D;
@@ -40,7 +41,15 @@ public class MenuEventListener implements ActionListener {
 
       case "Jouer":
         ArrayList<OverBoard2D> tab = GraphicEngine.getInstance().getWindow().getOverBoards();
-        String[] playersName = new String[tab.size()];
+        String[] playersName;
+        
+        if(GameEngine.getInstance().hasIA()){
+          playersName = new String[tab.size() + 1];
+          playersName[tab.size()] = "IA";
+        } else {  
+          playersName = new String[tab.size()];
+        }
+        
         for(int i = 0; i < tab.size(); ++i){
           playersName[i] = tab.get(i).getPlayerName();
         }
