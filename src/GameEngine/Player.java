@@ -3,8 +3,12 @@ package GameEngine;
 import GameEngine.Dictionnary.Dictionnary;
 import Pattern.Observable;
 import Pattern.Observer;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 import java.util.ArrayList;
+import java.util.Properties;
 import java.util.Timer;
 
 public class Player implements Observable {
@@ -12,7 +16,7 @@ public class Player implements Observable {
   protected final BoardGame boardGame;
   private String name = "player";
   private int speedFall;
-  private final int speedFallInit;
+  private int speedFallInit;
   private final int number;
   private int level;
   private InGameState state = InGameState.TETRIS;
@@ -40,10 +44,35 @@ public class Player implements Observable {
     dico = d;
     speedFall = 1000;
     speedFallInit = speedFall;
+    loadOptions();
   }
   
-  protected Player(Player p) {
-    this(p.number, p.boardGame.getNextShape(), p.boardGame.getGrid().getCurrentShape(), p.dico);
+  private void loadOptions() {
+    Properties prop = new Properties();
+    InputStream input = null;
+
+    /*Get background image from file design*/
+    try {
+      input = new FileInputStream("conf/options.properties");
+
+      // load a properties file
+      prop.load(input);
+
+      speedFallInit = Integer.parseInt(prop.getProperty("speed"));
+
+    } catch (IOException ex) {
+      /*Default background*/
+      speedFallInit = 1000;
+      ex.printStackTrace();
+    } finally {
+      if (input != null) {
+        try {
+          input.close();
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
   
   public String getName() {
