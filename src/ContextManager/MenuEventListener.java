@@ -52,7 +52,7 @@ public class MenuEventListener implements ActionListener {
         } else {  
           playersName = new String[tab.size()];
 					for(int i = 0; i < tab.size(); ++i){
-						playersName[i] = tab.get(tab.size()).getPlayerName();
+						playersName[i] = tab.get(i).getPlayerName();
 					}
         }
         c.definePlayersGame(playersName);

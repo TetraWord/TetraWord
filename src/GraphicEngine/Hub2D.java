@@ -5,9 +5,14 @@ import Pattern.Observable;
 import Pattern.Observer;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.FontFormatException;
 import java.awt.Graphics;
+import java.io.File;
+import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
@@ -30,6 +35,7 @@ public class Hub2D extends JPanel implements Observer {
   private final JProgressBar timerBeforeWorddle;
   private final JLabel messages;
   private final Timer tMessage;
+	private Font f;
   private Shape2D nextShape;
   private Shape2D stockShape;
 
@@ -46,10 +52,20 @@ public class Hub2D extends JPanel implements Observer {
 
     this.hub = hub;
 
+		try {
+			File fis = new File("media/font/" + font);
+			f = Font.createFont(Font.TRUETYPE_FONT, fis);
+			f = f.deriveFont((float) 20.0);
+		} catch (FontFormatException ex) {
+			Logger.getLogger(Hub2D.class.getName()).log(Level.SEVERE, null, ex);
+		} catch (IOException ex) {
+			Logger.getLogger(Hub2D.class.getName()).log(Level.SEVERE, null, ex);
+		}
+
     /* UI Player name */
     playerName = new JLabel(hub.getPlayerName(), CENTER);
     setJLabel(playerName, 480, 10, 150, 45);
-    playerName.setFont(new Font(font, Font.BOLD, 20));
+    playerName.setFont(f);
     this.add(playerName);
 
     /*UI Mode*/
@@ -123,7 +139,7 @@ public class Hub2D extends JPanel implements Observer {
   private void setJLabel(JLabel jl, int x, int y, int sx, int sy) {
     jl.setForeground(color);
     jl.setBounds(x, y, sx, sy);
-    jl.setFont(new Font(font, Font.BOLD, 24));
+    jl.setFont(f);
   }
 
   public void draw(Graphics g) {
