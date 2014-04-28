@@ -14,7 +14,8 @@ import javax.swing.JTextField;
 public class OverBoard2D extends JPanel {
 
   private final Image img;
-  private final JTextField namePlayer;
+  private final JTextField namePlayer = new JTextField("Pseudo");
+	private static final Button2D play = new Button2D("Jouer", WINDOW_WIDTH / 2 - 150, 780, 300, 50);
 	//private final Menu2D menu;
 
   public OverBoard2D(int numPlayer) throws IOException {
@@ -25,19 +26,20 @@ public class OverBoard2D extends JPanel {
     String imgCmd = "media/Design/commandes/c" + numPlayer + ".png";
     img = ImageIO.read(new File(imgCmd));
 
-    int sx = 300, sy = 50;
-    int x = WINDOW_WIDTH / 2 - sx / 2;
-    int y = 780;
-
-    Button2D b = new Button2D("Jouer", x, y, sx, sy);
-    this.add(b);
-
-    namePlayer = new JTextField("Pseudo");
-    namePlayer.setBackground(Color.gray);
-    namePlayer.setFont(new Font("Champagne & Limousines", 30, 30));
-    namePlayer.setHorizontalAlignment(JTextField.CENTER);
-    namePlayer.setBounds(x, y - 50, sx, sy);
-    this.add(namePlayer);
+		int sx = 300, sy = 50;
+		int x = WINDOW_WIDTH / 2 - sx / 2;
+		int y = 780;
+		if(numPlayer == 0){
+			this.add(play);
+		}
+		
+		if(numPlayer != 2){
+			namePlayer.setBackground(Color.gray);
+			namePlayer.setFont(new Font("Champagne & Limousines", 30, 30));
+			namePlayer.setHorizontalAlignment(JTextField.CENTER);
+			namePlayer.setBounds(x, y - 50, sx, sy);
+			this.add(namePlayer);
+		}
   }
 
   public String getPlayerName() {

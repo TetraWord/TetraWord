@@ -182,6 +182,8 @@ public class ContextManager {
 			}else{
 				if(i == 0){
 					w.defineCommande(i);	
+				}else{
+					w.defineCommande(2);
 				}
 			}
     }
