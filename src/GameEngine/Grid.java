@@ -24,10 +24,20 @@ public class Grid implements Observable {
     }
   }
 
+  Grid(Grid g) {
+    this(g.myBoardGame, g.getCurrentShape());
+    this.tGrid = new Brick[sizeY][sizeX];
+    for (int i = 0; i < sizeY; ++i) {
+      for (int j = 0; j < sizeX; ++j) {
+        tGrid[i][j] = new Brick(g.tGrid[i][j]);
+      }
+    }
+  }
+
   public Brick[][] getTGrid() {
     return tGrid;
   }
-  
+
   public void setTGrid(Brick[][] newTGrid) {
     tGrid = (Brick[][]) newTGrid.clone();
   }
@@ -58,18 +68,36 @@ public class Grid implements Observable {
     return -1;
   }
 
+  public int getNbFullLine() {
+    boolean isLineFull = true;
+    int nbLineFull = 0;
+    for (int i = 0; i < sizeY; ++i) {
+      for (int j = 0; j < sizeX; ++j) {
+        if (tGrid[i][j].getNb() < 0) {
+          isLineFull = false;
+        }
+      }
+      if (isLineFull) {
+        ++nbLineFull;
+      }
+      isLineFull = true;
+    }
+
+    return nbLineFull;
+  }
+
   public int getMaxY(int x) {
     boolean isBrick = false;
-    for( int y = 0; y < sizeY; ++y ) {
-      if(tGrid[y][x].getNb() > 0) {
+    for (int y = 0; y < sizeY; ++y) {
+      if (tGrid[y][x].getNb() > 0) {
         isBrick = true;
         return y - 1;
       }
     }
-    
+
     return sizeY - 1;
   }
-  
+
   public void removeLine(int lineToRemove) {
     for (int i = lineToRemove; i > 0; --i) {
       for (int j = 0; j < sizeX; ++j) {
@@ -124,7 +152,7 @@ public class Grid implements Observable {
         int y = s.getY() + i;
         int x = s.getX() + j;
         int value = s.representation[i][j];
-        if (value > 0 && y < sizeY && x < sizeX) {
+        if (value > 0 && y < sizeY && y > 0 && x < sizeX) {
           Brick b = s.getComposition()[i][j];
           tGrid[y][x] = new Brick(b);
         }
@@ -133,13 +161,17 @@ public class Grid implements Observable {
     updateObservateur(tGrid);
   }
 
-  private void printGrid() {
+  public void printGrid() {
     for (int i = 0; i < sizeY; ++i) {
       for (int j = 0; j < sizeX; ++j) {
-        System.out.print(tGrid[i][j]);
+        System.out.print(tGrid[i][j].getNb());
       }
       System.out.println();
     }
+
+    System.out.println();
+    System.out.println();
+    System.out.println();
   }
 
   public Player getPlayer() {
@@ -202,10 +234,184 @@ public class Grid implements Observable {
   }
 
   public void doGravityOnBrick(int y, int x) {
-    while(y > 1){
+    while (y > 1) {
       tGrid[y][x] = new Brick(tGrid[y - 1][x]);
       --y;
     }
+  }
+
+  public int[] DetermineAccessibleTranslationsForPieceOrientation(CurrentShape shape, int moveIsPossible, int minDeltaX, int maxDeltaX) {
+    // Clear Results.
+    moveIsPossible = 0;
+    minDeltaX = 0;
+    maxDeltaX = 0;
+
+    int width = sizeX;
+    int height = sizeY;
+
+    int[] result = new int[3];
+    result[0] = moveIsPossible;
+    result[1] = minDeltaX;
+    result[2] = maxDeltaX;
+
+    CurrentShape tmp_Shape;
+    int moveAcceptable = 0;
+    int trialTranslationDelta = 0;
+
+    // Check if we can move at all.
+    moveAcceptable = IsGoalAcceptable(shape);
+    if (0 != moveAcceptable) {
+      moveIsPossible = 1;
+    } else {
+      return result;
+    }
+
+    // Scan from center to left to find left limit.
+    int stillAcceptable = 1;
+    for (trialTranslationDelta = shape.getX(); trialTranslationDelta >= 0; trialTranslationDelta--) {
+
+      if (stillAcceptable == 0) {
+        break;
+      }
+      // Copy piece to temp and translate
+      tmp_Shape = new CurrentShape(shape);
+      tmp_Shape.move(trialTranslationDelta, 0);
+
+      moveAcceptable = IsGoalAcceptable(tmp_Shape);
+      if (0 != moveAcceptable) {
+        minDeltaX = trialTranslationDelta;
+      } else {
+        stillAcceptable = 0;
+      }
+    }
+
+    // Scan from center to right to find right limit.
+    stillAcceptable = 1;
+    for (trialTranslationDelta = shape.getX(); trialTranslationDelta < width; trialTranslationDelta++) {
+      if (stillAcceptable == 0) {
+        break;
+      }
+      // Copy piece to temp and translate
+      tmp_Shape = new CurrentShape(shape);
+      tmp_Shape.move(trialTranslationDelta, 0);
+
+      moveAcceptable = IsGoalAcceptable(tmp_Shape);
+      if (0 != moveAcceptable) {
+        maxDeltaX = trialTranslationDelta;
+      } else {
+        stillAcceptable = 0;
+      }
+    }
+
+    result[0] = moveIsPossible;
+    result[1] = minDeltaX;
+    result[2] = maxDeltaX;
+
+    return result;
+  }
+
+  public int IsGoalAcceptable(CurrentShape shape) {
+    // Fast check: If piece origin lies outside board, goal is not acceptable.
+    if (shape.getX() < 0) {
+      return (0);
+    }
+
+    if (shape.getY() < 0) {
+      return (0);
+    }
+
+    if (shape.getX() >= sizeX) {
+      return (0);
+    }
+
+    if (shape.getY() >= sizeY) {
+      return (0);
+    }
+
+    // Consider the absolute position of all points of the piece.
+    // If any of the points lie outside the board, goal is not acceptable.
+    // If any of the points coincide with an occupied cell of the board,
+    //  the goal is not acceptable.
+    for (int y = 0; y <= shape.getMaxY(shape.getRepresentation()); ++y) {
+      for (int x = 0; x <= shape.getMaxX(shape.getRepresentation()); ++x) {
+        // Absolute point must be in the board area        
+        int absoluteX = shape.getX() + x;
+        int absoluteY = shape.getY() + y;
+
+        if (absoluteX < 0) {
+          return (0);
+        }
+
+        if (absoluteX >= sizeX) {
+          return (0);
+        }
+
+        if (absoluteY < 0) {
+          return (0);
+        }
+
+        if (absoluteY >= sizeY) {
+          return (0);
+        }
+
+        // Absolute point cannot overlap an occupied cell of the board.
+        if (tGrid[y][x].getNb() > 0) {
+          return (0);
+        }
+      }
+    }
+
+    // If we made it to this point, the goal is acceptable.
+    return (1);
+  }
+
+  public void FullDropAndAddPieceToBoard(CurrentShape tmpShape) {
+    int finalLine = tmpShape.getY();
+    while (!tmpShape.tryCollision(getTGrid(), tmpShape.getX(), finalLine)) {
+      ++finalLine;
+    }
+    int interval = finalLine - tmpShape.getY();
+    tmpShape.move(tmpShape.getX(), finalLine - 1);
+    setIn(tmpShape);
+    //printGrid();
+  }
+
+  public int PileHeightWeightedCells() {
+    int maxY = 0;
+    int tmpY;
+
+    for (int x = 0; x < sizeX; ++x) {
+      for (int y = 0; y < sizeY; ++y) {
+        int cellValue = 0;
+        cellValue = tGrid[y][x].getNb();
+        if (cellValue > 0) {
+          tmpY = 20 - y;
+          if (maxY < tmpY) {
+            maxY = tmpY;
+          }
+          y = sizeY;
+        }
+      }
+    }
+
+    return maxY;
+  }
+
+  public int SumOfWellHeights() {
+    int totalWeightedCells = 0;
+
+    for (int x = 0; x < sizeX; ++x) {
+      for (int y = 0; y < sizeY; ++y) {
+        int cellValue = 0;
+        cellValue = tGrid[y][x].getNb();
+        if (cellValue > 0) {
+          totalWeightedCells += 20 - y;
+          y = sizeY;
+        }
+      }
+    }
+
+    return (totalWeightedCells);
   }
 
 }
