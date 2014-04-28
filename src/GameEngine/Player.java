@@ -13,7 +13,7 @@ import java.util.Timer;
 
 public class Player implements Observable {
 
-  private final BoardGame boardGame;
+  protected final BoardGame boardGame;
   private String name = "player";
   private int speedFall;
   private int speedFallInit;
@@ -42,10 +42,11 @@ public class Player implements Observable {
     numLinesTotalRemoved = 0;
     number = nb;
     dico = d;
-		loadOptions();
-    speedFall = speedFallInit;
+    speedFall = 1000;
+    speedFallInit = speedFall;
+    loadOptions();
   }
-
+  
   private void loadOptions() {
     Properties prop = new Properties();
     InputStream input = null;
@@ -185,7 +186,7 @@ public class Player implements Observable {
     return boardGame;
   }
 
-  private CurrentShape getCurrentShape() {
+  protected CurrentShape getCurrentShape() {
     return boardGame.getGrid().getCurrentShape();
   }
   

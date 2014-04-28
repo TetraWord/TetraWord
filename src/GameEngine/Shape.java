@@ -60,7 +60,7 @@ public class Shape implements Observable {
   //Copy constructor
   public Shape(Shape shape, boolean copyComposition) {
     this(shape.name, shape.color, shape.representation);
-    if(copyComposition){
+    if (copyComposition) {
       this.composition = shape.composition;
     }
   }
@@ -100,5 +100,27 @@ public class Shape implements Observable {
 
   public int[][] getRepresentation() {
     return representation;
+  }
+
+  public int getHeight(int x) {
+    int height = 0;
+    for (int i = 0; i < representation.length; ++i) {
+      if (representation[i][x] > 0) {
+        height++;
+      }
+    }
+    return height;
+  }
+
+  public int getWidth() {
+    int maxWidth = 0;
+    for (int i = 0; i < representation.length; ++i) {
+      for (int j = 0; j < representation.length; ++j) {
+        if (representation[i][j] > 0 && maxWidth < j) {
+          maxWidth = j;
+        }
+      }
+    }
+    return maxWidth + 1;
   }
 }

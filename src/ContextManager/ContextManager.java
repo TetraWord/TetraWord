@@ -141,8 +141,13 @@ public class ContextManager {
 			w.defineNewBoardGame(players[i].getBoardGame());
 			players[i].startTimerBeforeWorddle();
       players[i].setName(playersName[i]);
-
-      Thread t = new Thread(new RunPlayer(players[i]));
+      
+      Thread t;
+      if ((i == 1 && ia == false) || i == 0) {
+        t = new Thread(new RunPlayer(players[i]));
+      } else {
+        t = new Thread((IA)players[i]);
+      }
       t.setDaemon(true);
       t.start();
     }
@@ -156,13 +161,7 @@ public class ContextManager {
 		/* Define the new settings of the window */
     Window w = graphicEngine.getWindow();
     w.clear();
-    /* Add the players with the same shapes */
-    Shape s = ShapesStock.getInstance().getRandomShape();
-    Shape s2 = ShapesStock.getInstance().getRandomShape();
-    for (int i = 0; i < numPlayer; ++i) {
-      gameEngine.addNewPlayer(s, s2);
-    }
-
+    
     if (numPlayer > 1) {
       Dimension size = w.getSize();
       size.width *= 2;
@@ -171,6 +170,17 @@ public class ContextManager {
 			if(numPlayer == 1.5){
 				gameEngine.setIA(true);
 			}
+    }
+    
+    /* Add the players with the same shapes */
+    Shape s = ShapesStock.getInstance().getRandomShape();
+    Shape s2 = ShapesStock.getInstance().getRandomShape();
+    for (int i = 0; i < numPlayer; ++i) {
+      if(i == 1 && gameEngine.hasIA()){
+        gameEngine.addNewPlayer(s, s2, true);
+      }else{
+        gameEngine.addNewPlayer(s, s2, false);
+      }
     }
 
     w.setLocationRelativeTo(null);

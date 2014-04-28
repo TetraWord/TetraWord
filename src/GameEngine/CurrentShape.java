@@ -247,4 +247,5 @@ public class CurrentShape extends Shape {
 
     return false;
   }
+
 }
