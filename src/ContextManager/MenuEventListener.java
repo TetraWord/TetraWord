@@ -45,13 +45,15 @@ public class MenuEventListener implements ActionListener {
         
         if(GameEngine.getInstance().hasIA()){
           playersName = new String[tab.size() + 1];
-          playersName[tab.size()] = "IA";
+          playersName[tab.size()-1] = "IA";
+					for(int i = 0; i < tab.size() - 1; ++i){
+						playersName[i] = tab.get(i).getPlayerName();
+					}
         } else {  
           playersName = new String[tab.size()];
-        }
-        
-        for(int i = 0; i < tab.size(); ++i){
-          playersName[i] = tab.get(i).getPlayerName();
+					for(int i = 0; i < tab.size(); ++i){
+						playersName[i] = tab.get(tab.size()).getPlayerName();
+					}
         }
         c.definePlayersGame(playersName);
         break;
