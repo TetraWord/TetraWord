@@ -46,7 +46,7 @@ public class Player implements Observable {
     speedFallInit = speedFall;
     loadOptions();
   }
-  
+
   private void loadOptions() {
     Properties prop = new Properties();
     InputStream input = null;
@@ -74,15 +74,15 @@ public class Player implements Observable {
       }
     }
   }
-  
+
   public String getName() {
     return name;
   }
-  
-  public void setName( String name ) {
+
+  public void setName(String name) {
     this.name = name;
   }
-  
+
   public Shape useShapeStocked() {
     Shape s = shapeStocked;
     shapeStocked = null;
@@ -92,7 +92,7 @@ public class Player implements Observable {
   public boolean hasShapeStocked() {
     return shapeStocked != null;
   }
-  
+
   public boolean canSwitchShape() {
     return switchShape;
   }
@@ -100,7 +100,7 @@ public class Player implements Observable {
   public void canSwitchShape(boolean b) {
     switchShape = b;
   }
-  
+
   public Shape getStockShape() {
     return shapeStocked;
   }
@@ -113,11 +113,10 @@ public class Player implements Observable {
     updateObservateur(null);
   }
 
-
   public int getNumber() {
     return number;
   }
-  
+
   public int getNumLinesTotalRemoved() {
     return numLinesTotalRemoved;
   }
@@ -189,14 +188,14 @@ public class Player implements Observable {
   protected CurrentShape getCurrentShape() {
     return boardGame.getGrid().getCurrentShape();
   }
-  
+
   public int getScore() {
     return score;
   }
 
   public void addToScore(int add) {
     score = score + add;
-   //score += 1100;
+    //score += 1100;
     if ((int) score / 1000 >= level) {
       setLevelUp();
     }
@@ -211,16 +210,16 @@ public class Player implements Observable {
     return level;
   }
 
-	int getNbLines() {
-		return numLinesTotalRemoved;
-	}
+  int getNbLines() {
+    return numLinesTotalRemoved;
+  }
 
   public int getSpeedFall() {
     return speedFall;
   }
-  
+
   public void setLevelUp() {
-    if(level < 10) {
+    if (level < 10) {
       ++level;
     }
     setNewSpeedFall(speedFallInit - level * 83);
@@ -289,16 +288,55 @@ public class Player implements Observable {
     listObserver = new ArrayList<>();
   }
 
+  public void verifAnagram(String bestWord) {
+    
+      System.out.println("word : "+getWord());
+    if (dico.included(getWord())) {
+      updateObservateur("Mot existant");
+      if (getWord().equals(bestWord) || getWord().length() >= bestWord.length()) {
+        addToScore(1000);
+        //System.out.println("Le meilleur mot a ete trouve");
+        updateObservateur("Meilleur mot \0/");
+      } else {
+        addToScore(getWord().length() * 50);
+        updateObservateur("Meilleur mot : " + bestWord);
+      }
+    } else {
+      addToScore(-(getScore() % 1000));
+      updateObservateur("Non Existant");
+      updateObservateur("Meilleur mot : " + bestWord);
+    }
+  }
+
   public void doAnagram() {
-    int numLinesRemoved = boardGame.removeFullLine();
+    boardGame.setAllowClick(true);
+    int numLinesRemoved = 0;
+    while (boardGame.getGrid().getFirstFullLine() != -1) {
+      if (wordFinish) {
+        StringBuilder sb = boardGame.getAllLetterFromTheRemovedLine();
+        String bestWord = dico.findBestAnagramm(sb);
+        verifAnagram(bestWord);
+        clearWord();
+        boardGame.removeLine();
+        ++numLinesRemoved;
+      }
+    }
+    finishAnagram(numLinesRemoved);
+  }
+
+  public void finishAnagram(int numLinesRemoved) {
+    switchToAnagram(false);
+
     if (numLinesRemoved == 4) {
       System.out.println("Tetris ! ");
       addToScore(1000);
     } else {
       addToScore(numLinesRemoved * 100);
     }
+
     numLinesTotalRemoved += numLinesRemoved;
     updateObservateur(null);
+    boardGame.setAllowClick(false);
     boardGame.launchNextShape();
   }
 
@@ -308,7 +346,7 @@ public class Player implements Observable {
   }
 
   public void switchToWorddle(boolean b) {
-    if(!b){
+    if (!b) {
       GameEngine.getInstance().finishTimerWorddle();
       startTimerBeforeWorddle();
     }
@@ -328,34 +366,38 @@ public class Player implements Observable {
     if (wordFinish && GameEngine.getInstance().timerWorddleIsAlive()) {
       String s = getWord();
       if (dico.included(s)) {
-        System.out.println("Ce mot fait partie du dico bravo");
+        updateObservateur("Mot Existant !");
         boardGame.setBricksToDestroy();
         addToScore(s.length() * 3);
       } else {
-        System.out.println("Mot n'est pas dans le dico");
+        updateObservateur("Non Existant");
         boardGame.clearTabBrickClicked();
         addToScore(-s.length() * 4);
       }
       clearWord();
       boardGame.setAllowDoubleClick(true);
       updateObservateur(null);
-    } else if(!GameEngine.getInstance().timerWorddleIsAlive()) {
-      boardGame.setAllowDoubleClick(false);
-      boardGame.getGrid().setCurrentShape(currentShapeStocked);
-      boardGame.getGrid().destroyAllSelectedBrickInWord();
-      boardGame.getGrid().declickedAllBrick();
-      clearWord();
-      updateObservateur(null);
+    } else if (!GameEngine.getInstance().timerWorddleIsAlive()) {
+      finishWorddle();
     }
   }
-  
+
+  public void finishWorddle() {
+    boardGame.setAllowDoubleClick(false);
+    boardGame.getGrid().setCurrentShape(currentShapeStocked);
+    boardGame.getGrid().destroyAllSelectedBrickInWord();
+    boardGame.getGrid().declickedAllBrick();
+    clearWord();
+    updateObservateur(null);
+  }
+
   public final void startTimerBeforeWorddle() {
     timerBeforeWorddle = new Timer();
     timerBeforeWorddle.schedule(new WorddleTimerTask((this)), 30000);
     t = System.nanoTime();
     setWorddle(false);
   }
-  
+
   public boolean canWorddle() {
     return worddle;
   }
@@ -363,11 +405,11 @@ public class Player implements Observable {
   public void setWorddle(boolean b) {
     worddle = b;
   }
-  
+
   public long getTime() {
     return System.nanoTime() - t;
   }
-  
+
   public void setNewSpeedFall(int s) {
     speedFall = s;
   }

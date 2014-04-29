@@ -86,18 +86,6 @@ public class Grid implements Observable {
     return nbLineFull;
   }
 
-  public int getMaxY(int x) {
-    boolean isBrick = false;
-    for (int y = 0; y < sizeY; ++y) {
-      if (tGrid[y][x].getNb() > 0) {
-        isBrick = true;
-        return y - 1;
-      }
-    }
-
-    return sizeY - 1;
-  }
-
   public void removeLine(int lineToRemove) {
     for (int i = lineToRemove; i > 0; --i) {
       for (int j = 0; j < sizeX; ++j) {
@@ -114,12 +102,12 @@ public class Grid implements Observable {
         return false;
       }
 
-      if (getTGrid()[0][x].getNb() >= 1) {
+      if (tGrid[0][x].getNb() >= 1) {
         this.myBoardGame.finishGame();
         return true;
       }
       for (int j = 0; j < Shape.sizeShape; ++j) {
-        if (s.representation[i][j] >= 1 && getTGrid()[j][x].getNb() >= 1) {
+        if (s.representation[i][j] >= 1 && tGrid[j][x].getNb() >= 1) {
           this.myBoardGame.finishGame();
           return true;
         }
@@ -171,7 +159,6 @@ public class Grid implements Observable {
 
     System.out.println();
     System.out.println();
-    System.out.println();
   }
 
   public Player getPlayer() {
@@ -183,8 +170,8 @@ public class Grid implements Observable {
 
     int x, y;
     do {
-      x = (int) (Math.random() * 10);
-      y = (int) (Math.random() * 20);
+      x = (int) (Math.random() * sizeX);
+      y = (int) (Math.random() * sizeY);
     } while (tGrid[y][x].getNb() < 0);
     tGrid[y][x].setClicked(true);
     return tGrid[y][x];
@@ -219,7 +206,7 @@ public class Grid implements Observable {
     }
   }
 
-  public int[] getXY(Brick b) {
+  public int[] getBrickCoordInGrid(Brick b) {
     int[] coords = new int[2];
     for (int i = 0; i < sizeY; ++i) {
       for (int j = 0; j < sizeX; ++j) {
@@ -370,10 +357,19 @@ public class Grid implements Observable {
     while (!tmpShape.tryCollision(getTGrid(), tmpShape.getX(), finalLine)) {
       ++finalLine;
     }
-    int interval = finalLine - tmpShape.getY();
     tmpShape.move(tmpShape.getX(), finalLine - 1);
     setIn(tmpShape);
     //printGrid();
+  }
+
+  public int getHeightColAt(int x) {
+    for (int y = 0; y < sizeY; ++y) {
+      if (tGrid[y][x].getNb() > 0) {
+        return sizeY - y;
+      }
+    }
+
+    return 0;
   }
 
   public int PileHeightWeightedCells() {
@@ -382,9 +378,7 @@ public class Grid implements Observable {
 
     for (int x = 0; x < sizeX; ++x) {
       for (int y = 0; y < sizeY; ++y) {
-        int cellValue = 0;
-        cellValue = tGrid[y][x].getNb();
-        if (cellValue > 0) {
+        if (tGrid[y][x].getNb() > 0) {
           tmpY = 20 - y;
           if (maxY < tmpY) {
             maxY = tmpY;
@@ -401,17 +395,28 @@ public class Grid implements Observable {
     int totalWeightedCells = 0;
 
     for (int x = 0; x < sizeX; ++x) {
-      for (int y = 0; y < sizeY; ++y) {
-        int cellValue = 0;
-        cellValue = tGrid[y][x].getNb();
-        if (cellValue > 0) {
-          totalWeightedCells += 20 - y;
-          y = sizeY;
-        }
+      totalWeightedCells += getHeightColAt(x);
+    }
+    
+    return totalWeightedCells;
+  }
+
+  StringBuilder getAllLetterFromeTheRemovedLine() {
+    StringBuilder sb = new StringBuilder();
+    int line = getFirstFullLine();
+    for (int j = 0; j < sizeX; ++j) {
+      sb.append(getTGrid()[line][j].getLetter());
+    }
+    return sb;
+  }
+
+  void selectBrick(int y, char charAt) {
+    for (int i = 0; i < sizeX; ++i) {
+      if (tGrid[y][i].getLetter() == charAt) {
+        tGrid[y][i].setClicked(true);
+        return;
       }
     }
-
-    return (totalWeightedCells);
   }
 
 }

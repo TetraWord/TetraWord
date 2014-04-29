@@ -1,6 +1,5 @@
 package GameEngine;
 
-import static GameEngine.Grid.sizeX;
 import Pattern.Observable;
 import Pattern.Observer;
 import java.util.ArrayList;
@@ -95,48 +94,6 @@ public final class BoardGame implements Observable, Observer {
     listObserver = new ArrayList<>();
   }
 
-  public int removeFullLine() {
-    int numLineRemoved = 0;
-    int line = grid.getFirstFullLine();
-
-    while (line != -1) {
-      setAllowClick(true);
-
-      if (myPlayer.isWordFinished()) {
-        StringBuilder sb = new StringBuilder();
-        for (int j = 0; j < sizeX; ++j) {
-          sb.append(this.getGrid().getTGrid()[line][j].getLetter());
-        }
-        String bestWord = myPlayer.getDico().findBestAnagramm(sb);
-        //System.out.println("j'ai tapé : " + myPlayer.getWord());
-        if(myPlayer.getDico().included(myPlayer.getWord())) {
-        	//System.out.println("Ce mot existe dans le dictionnaire");
-					updateObservateur("Mot existant");
-        	if ( myPlayer.getWord().equals(bestWord) || myPlayer.getWord().length() >= bestWord.length()){
-            myPlayer.addToScore(1000);
-        		//System.out.println("Le meilleur mot a ete trouve");
-						updateObservateur("Meilleur mot \0/");
-        	} else {
-            myPlayer.addToScore(myPlayer.getWord().length() * 50);
-						updateObservateur("Meilleur mot : " + bestWord);
-          }
-        }else{
-          myPlayer.addToScore(- (myPlayer.getScore()%1000));
-					updateObservateur("Non Existant");
-					updateObservateur("Meilleur mot : " + bestWord);
-        }
-        myPlayer.clearWord();
-        grid.removeLine(line);
-        ++numLineRemoved;
-      }
-
-      line = grid.getFirstFullLine();
-    }
-
-    myPlayer.switchToAnagram(false);
-    return numLineRemoved;
-  }
-
   public void setAllowClick(boolean b) {
     allowClick = b;
   }
@@ -172,11 +129,11 @@ public final class BoardGame implements Observable, Observer {
           b.setClicked(true);
           tabBrickClicked.add(b);
           myPlayer.addNewChar(b.getLetter());
-          coordsLastBrickClicked = grid.getXY(b);
+          coordsLastBrickClicked = grid.getBrickCoordInGrid(b);
         } else if (allowDoubleClicked && !b.isDoubleClicked() && b.isClicked() && Math.abs(lastX - x) < 2 && Math.abs(lastY - y) < 2) {
           doubleClickedAllBrickClicked(b);
           myPlayer.addNewChar(b.getLetter());
-          coordsLastBrickClicked = grid.getXY(b);
+          coordsLastBrickClicked = grid.getBrickCoordInGrid(b);
         }
       }
     }
@@ -195,7 +152,7 @@ public final class BoardGame implements Observable, Observer {
   public char clickedOneBrick() {
     Brick b = grid.clickedOneBrick();
     tabBrickClicked.add(b);
-    coordsLastBrickClicked = grid.getXY(b);
+    coordsLastBrickClicked = grid.getBrickCoordInGrid(b);
     return b.getLetter();
   }
 
@@ -221,6 +178,14 @@ public final class BoardGame implements Observable, Observer {
   
   public void clearTabBrickClicked() {
     tabBrickClicked.clear();
+  }
+
+  StringBuilder getAllLetterFromTheRemovedLine() {
+    return grid.getAllLetterFromeTheRemovedLine();
+  }
+
+  void removeLine() {
+    grid.removeLine(grid.getFirstFullLine());
   }
 
 }

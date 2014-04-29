@@ -7,21 +7,66 @@ import java.util.logging.Logger;
 
 public class IA extends Player implements Runnable {
 
-  private int finalX;
-  private int finalY;
   private int bestTranslationDelta;
   private int bestRotationDelta;
   private int bestMerit;
-  private int nbRotation;
 
   public IA(int nb, Shape s, Shape s2, Dictionnary d) {
     super(nb, s, s2, d);
   }
 
-  public void chooseAnagram() {
+  @Override
+  public void doAnagram() {
+    Grid g = boardGame.getGrid();
+    int numLinesRemoved = 0;
+    while (g.getFirstFullLine() != -1) {
+      StringBuilder letters = boardGame.getAllLetterFromTheRemovedLine();
+      System.out.println("letters vaut : "+letters);
+      String bestWord = getDico().findBestAnagramm(letters); 
+      System.out.println("bestWord : "+bestWord);
+      for(int i = 0; i < bestWord.length(); ++i){
+        g.selectBrick(g.getFirstFullLine(), bestWord.charAt(i));
+        addNewChar(bestWord.charAt(i));
+        try {
+          Thread.sleep(400);
+        } catch (InterruptedException ex) {
+          Logger.getLogger(IA.class.getName()).log(Level.SEVERE, null, ex);
+        }
+      }
+      try {
+        Thread.sleep(850);
+      } catch (InterruptedException ex) {
+        Logger.getLogger(IA.class.getName()).log(Level.SEVERE, null, ex);
+      }
+      verifAnagram(bestWord);
+      clearWord();
+      boardGame.removeLine();
+      ++numLinesRemoved;
+    }
 
+    finishAnagram(numLinesRemoved);
   }
-
+  
+  @Override
+  public void doWorddle() {
+    while (GameEngine.getInstance().timerWorddleIsAlive()) {
+      String s = getWord();
+      if (getDico().included(s)) {
+        updateObservateur("Mot Existant !");
+        boardGame.setBricksToDestroy();
+        addToScore(s.length() * 3);
+      } else {
+        System.out.println("Non Existant");
+        boardGame.clearTabBrickClicked();
+        addToScore(-s.length() * 4);
+      }
+      clearWord();
+      boardGame.setAllowDoubleClick(true);
+      updateObservateur(null);
+    } 
+    finishWorddle();
+  }
+  
   public int[] gestBestMoveShape() {
 
     CurrentShape s = getCurrentShape();
@@ -65,7 +110,7 @@ public class IA extends Player implements Runnable {
       moveIsPossible = result[0];
       minDeltaX = result[1];
       maxDeltaX = result[2];
-      
+
       // Consider all allowed translations for the current rotation.
       if (0 != moveIsPossible) {
         for (trialTranslationDelta = minDeltaX; trialTranslationDelta <= maxDeltaX; trialTranslationDelta++) {
@@ -99,14 +144,14 @@ public class IA extends Player implements Runnable {
             double weightSumOfWellHeights = (-0.20);
 
             int rowsEliminated = tmpGrid.getNbFullLine();
-            
+
             // Averages around 1310 rows in 10 games, with a min of 445 and a max of 3710.
             trialMerit = (weightRowElimination) * (double) (rowsEliminated);
-           // trialMerit += (weightTotalOccupiedCells) * (double) (tmpGrid.TotalOccupiedCells());
-           // trialMerit += (weightTotalShadowedHoles) * (double) (tmpGrid.TotalShadowedHoles());
+            // trialMerit += (weightTotalOccupiedCells) * (double) (tmpGrid.TotalOccupiedCells());
+            // trialMerit += (weightTotalShadowedHoles) * (double) (tmpGrid.TotalShadowedHoles());
             trialMerit += (weightPileHeightWeightedCells) * (double) (tmpGrid.PileHeightWeightedCells());
-            trialMerit += (weightSumOfWellHeights) * (double) (tmpGrid.SumOfWellHeights()); 
- 
+            trialMerit += (weightSumOfWellHeights) * (double) (tmpGrid.SumOfWellHeights());
+
             // If this move is better than any move considered before,
             // or if this move is equally ranked but has a higher priority,
             // then update this to be our best move.
@@ -121,13 +166,13 @@ public class IA extends Player implements Runnable {
       }
 
     }
-    
+
     // Commit to this move
     int[] returnValue = new int[3];
     returnValue[0] = currentBestTranslationDelta;
     returnValue[1] = currentBestRotationDelta;
     returnValue[2] = (int) currentBestMerit;
-    
+
     return returnValue;
   }
 
@@ -153,14 +198,16 @@ public class IA extends Player implements Runnable {
     while (!this.isFinish()) {
       if (!ContextManager.getInstance().isPaused && isTetris()) {
         int nbMove = (int) (Math.random() * 3);
-        while (nbMove > 0) {
+        while (nbMove > 0 && isTetris()) {
           int[] result = gestBestMoveShape();
           bestTranslationDelta = result[0];
           bestRotationDelta = result[1];
           bestMerit = result[2];
-          System.out.println("bestTranslation : "+bestTranslationDelta);
-          System.out.println("bestRotation : "+bestRotationDelta);
-          System.out.println("bestMerit : "+bestMerit);
+          /*
+          System.out.println("bestTranslation : " + bestTranslationDelta);
+          System.out.println("bestRotation : " + bestRotationDelta);
+          System.out.println("bestMerit : " + bestMerit);
+                  */
           move();
           nbMove--;
         }
