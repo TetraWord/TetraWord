@@ -296,7 +296,7 @@ public class Player implements Observable {
       if (getWord().equals(bestWord) || getWord().length() >= bestWord.length()) {
         addToScore(1000);
         //System.out.println("Le meilleur mot a ete trouve");
-        updateObservateur("Meilleur mot \0/");
+        updateObservateur("1000 points !");
       } else {
         addToScore(getWord().length() * 50);
         updateObservateur("Meilleur mot : " + bestWord);
