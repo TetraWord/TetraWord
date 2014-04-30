@@ -21,20 +21,36 @@ public class IA extends Player implements Runnable {
     int numLinesRemoved = 0;
     while (g.getFirstFullLine() != -1) {
       StringBuilder letters = boardGame.getAllLetterFromTheRemovedLine();
-      System.out.println("letters vaut : "+letters);
-      String bestWord = getDico().findBestAnagramm(letters); 
-      System.out.println("bestWord : "+bestWord);
-      for(int i = 0; i < bestWord.length(); ++i){
+      String[] bestWords = getDico().findAnagramms(letters.toString());
+      String bestWord;
+      try {
+        Thread.sleep(3000);
+      } catch (InterruptedException ex) {
+        Logger.getLogger(IA.class.getName()).log(Level.SEVERE, null, ex);
+      }
+      int r = (int) Math.random() * 100;
+      if (r < 70) {
+        //Select the bestWord
+        System.out.println("je prend le meilleur");
+        bestWord = bestWords[0];
+      } else if (r > 70 && r < 95) {
+        System.out.println("je prend dedans au hasard");
+        bestWord = bestWords[(int) Math.random() * bestWords.length - 2];
+      } else {
+        System.out.println("je prend un mauvais ");
+        bestWord = bestWords[bestWords.length - 1];
+      }
+      for (int i = 0; i < bestWord.length(); ++i) {
         g.selectBrick(g.getFirstFullLine(), bestWord.charAt(i));
         addNewChar(bestWord.charAt(i));
         try {
-          Thread.sleep(400);
+          Thread.sleep(700);
         } catch (InterruptedException ex) {
           Logger.getLogger(IA.class.getName()).log(Level.SEVERE, null, ex);
         }
       }
       try {
-        Thread.sleep(850);
+        Thread.sleep(1200);
       } catch (InterruptedException ex) {
         Logger.getLogger(IA.class.getName()).log(Level.SEVERE, null, ex);
       }
@@ -46,13 +62,14 @@ public class IA extends Player implements Runnable {
 
     finishAnagram(numLinesRemoved);
   }
-  
+
   @Override
   public void doWorddle() {
     while (GameEngine.getInstance().timerWorddleIsAlive()) {
+      
       String s = getWord();
       if (getDico().included(s)) {
-        updateObservateur("Mot Existant !");
+        updateObservateur("Mot valide !");
         boardGame.setBricksToDestroy();
         addToScore(s.length() * 3);
       } else {
@@ -63,10 +80,10 @@ public class IA extends Player implements Runnable {
       clearWord();
       boardGame.setAllowDoubleClick(true);
       updateObservateur(null);
-    } 
+    }
     finishWorddle();
   }
-  
+
   public int[] gestBestMoveShape() {
 
     CurrentShape s = getCurrentShape();
@@ -197,27 +214,37 @@ public class IA extends Player implements Runnable {
   public void run() {
     while (!this.isFinish()) {
       if (!ContextManager.getInstance().isPaused && isTetris()) {
-        int nbMove = (int) (Math.random() * 3);
-        while (nbMove > 0 && isTetris()) {
-          int[] result = gestBestMoveShape();
-          bestTranslationDelta = result[0];
-          bestRotationDelta = result[1];
-          bestMerit = result[2];
-          /*
-          System.out.println("bestTranslation : " + bestTranslationDelta);
-          System.out.println("bestRotation : " + bestRotationDelta);
-          System.out.println("bestMerit : " + bestMerit);
-                  */
-          move();
-          nbMove--;
-        }
-        down(1);
-        try {
-          Thread.sleep(getSpeedFall());
+        int r = (int) (Math.random() * 100);
+        if (r > 70 || GameEngine.getInstance().isPlayersInWordMode() || !canWorddle() ) {
+          //Do movement
+          int nbMove = (int) (Math.random() * 3);
+          while (nbMove > 0 && isTetris()) {
+            int[] result = gestBestMoveShape();
+            bestTranslationDelta = result[0];
+            bestRotationDelta = result[1];
+            bestMerit = result[2];
+            /*
+             System.out.println("bestTranslation : " + bestTranslationDelta);
+             System.out.println("bestRotation : " + bestRotationDelta);
+             System.out.println("bestMerit : " + bestMerit);
+             */
+            move();
+            nbMove--;
+          }
+          down(1);
+          try {
+            Thread.sleep(getSpeedFall());
 
-        } catch (InterruptedException ex) {
-          Logger.getLogger(RunPlayer.class
-                  .getName()).log(Level.SEVERE, null, ex);
+          } catch (InterruptedException ex) {
+            Logger.getLogger(RunPlayer.class
+                    .getName()).log(Level.SEVERE, null, ex);
+          }
+        } else if( !GameEngine.getInstance().isPlayersInWordMode() && canWorddle() ) {
+          switchToWorddle(true);
+          boardGame.setAllowClick(false);
+          GameEngine.getInstance().beginWorddleTimer(this);
+          stockCurrentShape();
+          addNewChar(getBoardGame().clickedOneBrick());
         }
       } else if (isAnagram()) {
         doAnagram();

@@ -6,9 +6,11 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
-
 
 public class Dictionnary {
 
@@ -42,63 +44,91 @@ public class Dictionnary {
     return dico.contains(s);
   }
 
-  public String isAnagramme ( String s){
-  	boolean anagramme;
-		// --- Vérifie que les caractères du mot entré
-		// --- sont contenus dans le mot du dictionnaire
-		Iterator it = dico.iterator();
-		
-		while(it.hasNext()){
-			anagramme = true;
-			int i = 0;
-			String str2 = it.next().toString();
-			if( s.length() != str2.length() ){
-				anagramme = false;
+  public String[] findAnagramms(String s) {
+	ArrayList<String> list = new ArrayList<String>();
+	String[] res = new String[10];
+    boolean anagramme = false;
+    System.out.println(" s : " + s);
+
+    // --- Vérifie que les caractères du mot entré
+    // --- sont contenus dans le mot du dictionnaire
+    Iterator it = dico.iterator();
+
+    while (it.hasNext()) {
+      anagramme = true;
+      int i;
+      String str = it.next().toString();
+
+      ArrayList tabCharOfString = new ArrayList<>();
+      for (i = 0; i < s.length(); ++i) {
+        tabCharOfString.add(s.charAt(i));
+      }
+
+      i = 0;
+
+      while (i < str.length() && anagramme == true) {
+        char c = str.charAt(i);
+        if (s.indexOf(c) == -1) {
+          anagramme = false;
+        } else {
+          if (tabCharOfString.contains(c)) {
+            int index = tabCharOfString.indexOf(c);
+            tabCharOfString.remove(index);
+          } else {
+            anagramme = false;
+          }
+          i++;
+        }
+      }
+
+      if (anagramme == true) {
+    	list.add(str);
+    	//res[cpt++] = str2;
+        System.out.println("str2 vaut : " + str );
+      }
+
+    }
+
+    Collections.sort(list, new Comparator<String>(){
+		public int compare(String s1, String s2) {
+			if(s1.length() < s2.length()){
+				return 1;
+			}else if (s1.length() > s2.length()) {
+				return -1;
 			}
-			while ( i < s.length() && anagramme == true ){
-				if ( str2.indexOf( s.charAt(i) ) == -1 ){
-					anagramme = false;
-				}else{
-					i++;
-				}
-			}
-			//Idem : on vérifie que les caractères du mot du dictionnaire sont contenus dans le mot entré
-			i=0;
-			while ( i < str2.length() && anagramme == true ){
-				if ( s.indexOf( str2.charAt(i) )  == -1 )
-					anagramme = false;
-				else i++;
-			}
-			
-			if (anagramme == true){
-				//System.out.println("Le meilleur mot possible est:" + str2);
-				return str2;
-			}
+			return 0;
 		}
-		
-		return null;
-	}
-  
-  public String findBestAnagramm(StringBuilder sb){
-    String res = null;
+    });
     
-  	if((res =isAnagramme(sb.toString())) != null){
-			return res;
-		}
-  	int start = 1;
-  	String tmp;
-  	
-  	while(start < sb.length()){
-  		tmp = sb.substring(start);
-  		for(int h=0; h<tmp.length();++h){
-  			tmp = sb.reverse().substring(start);
-  			if((res = isAnagramme(tmp)) != null){
-  				return res;
-  			}
-  		}
-  		start++;
-  	}
-  	
-  	return res;
+    for(int cpt=0; cpt < 10; ++cpt){
+    	res[cpt] = list.get(cpt);
+    }
+
+    return res;
+  }
+
+  public String findBestAnagramm(StringBuilder sb) {
+    String bestWord = findAnagramms(sb.toString())[0];
+   
+    return bestWord;
+  }
+
+  public static void main(String[] args) {
+    Dictionnary d = new Dictionnary();
+    StringBuilder s = new StringBuilder();
+    s.append('i');
+    s.append('b');
+    s.append('t');
+    s.append('s');
+    s.append('e');
+    s.append('f');
+    s.append('p');
+    s.append('a');
+    s.append('l');
+    String[] t = d.findAnagramms(s.toString());
+    for (int i = 0; i < t.length; ++i) {
+     System.out.println("t : " + t[i]);
+     }
+
   }
 }
