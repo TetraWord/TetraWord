@@ -96,8 +96,52 @@ public class Modifier implements Observable {
 
   }
 
-  private void shake(Player p) {
-
+  private void shake(final Player p) {
+		
+    final int lower = -10;
+    final int higher = 10;
+		
+    t = new Timer();
+		
+				t.schedule(new TimerTask() {
+					@Override
+					public void run() {
+						int random = (int) (Math.random() * (higher - lower)) + lower;
+						int offsetX = random;
+						random = (int) (Math.random() * (higher - lower)) + lower;
+						int offsetY = random;
+						p.shake(offsetX, offsetY);
+					}
+				},0 , 25);
+						
+				t.schedule(new TimerTask() {
+					@Override
+					public void run() {
+						int random = (int) (Math.random() * 3);
+						switch(random){
+							case 0:
+								p.left();
+								break;
+							case 1:
+								p.right();
+								break;
+							default:
+								break;
+						}
+					}
+				},0 , 500);
+				
+		//Stop after 5 secondes 
+    t.schedule(new TimerTask() {
+      @Override
+      public void run() {  
+				p.shake(0, 0);
+        t.purge();
+        t.cancel();
+      }
+    }, 10000);
+		
+		
   }
 
   private void storm(final Player p) {

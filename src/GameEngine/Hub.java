@@ -21,6 +21,8 @@ public class Hub implements Observer, Observable {
   private boolean wordFinish;
   private long timeLeft;
   private int secondBeforeWorddle;
+	private int offsetX;
+	private int offsetY;
   /*Modifier*/
 
   public Hub() {
@@ -30,6 +32,8 @@ public class Hub implements Observer, Observable {
     this.state = InGameState.TETRIS;
     this.nbRemovedLine = 0;
     this.wordFinish = true;
+		this.offsetX = 0;
+		this.offsetY = 0;
   }
 
   public int getLevel() {
@@ -102,7 +106,13 @@ public class Hub implements Observer, Observable {
               
       if(args instanceof String) {
         listMessage.add(((String) args));
-      }
+      } else {
+				if (args instanceof int[]){
+					offsetX = ((int[])(args))[0];
+					offsetY = ((int[])(args))[1];
+					updateObservateur((int[])args);
+				}
+			}
     }
     if (o instanceof BoardGame) {
       if (args == null) {

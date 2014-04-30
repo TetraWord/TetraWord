@@ -14,6 +14,9 @@ import java.io.InputStream;
 import java.util.Properties;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
+import javax.swing.border.Border;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
 
 /**
  * *
@@ -137,10 +140,13 @@ public class BoardGame2D extends JPanel implements Observer {
 
   @Override
   public void paintComponent(Graphics g) {
-    g.drawImage(img, 0, 0, this);
 		
-		hub.draw(g);
-    gameGrid.draw(g);
+		int offsetX = model.getOffsetX();
+		int offsetY =  model.getOffsetY();
+    g.drawImage(img, offsetX, offsetY, this);
+		
+		hub.draw(g, offsetX, offsetY);
+    gameGrid.draw(g, offsetX, offsetY);
   }
 
 }

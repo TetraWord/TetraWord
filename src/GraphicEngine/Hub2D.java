@@ -106,7 +106,7 @@ public class Hub2D extends JPanel implements Observer {
 
     /* UI Timer time left */
     timerTimeLeft = new JLabel(Long.toString(hub.getTimeLeft()), CENTER);
-    setJLabel(timerTimeLeft, 400, 500, 300, 23);
+    setJLabel(timerTimeLeft, 400, 510, 300, 23);
     this.add(timerTimeLeft);
 
     /* UI Timer worddle */
@@ -142,10 +142,10 @@ public class Hub2D extends JPanel implements Observer {
     jl.setFont(f);
   }
 
-  public void draw(Graphics g) {
-    nextShape.draw(g, 515, 130, 0.7);
+  public void draw(Graphics g,  int offsetX, int offsetY) {
+    nextShape.draw(g, 515 + offsetX, 130 + offsetY, 0.7);
     if (stockShape != null) {
-      stockShape.draw(g, 515, 290, 0.7);
+      stockShape.draw(g, 515 + offsetX, 290 + offsetY, 0.7);
     }
   }
 
@@ -187,6 +187,22 @@ public class Hub2D extends JPanel implements Observer {
         timerBeforeWorddle.setValue(0);
         timerBeforeWorddle.setString("Worddle en cours !");
       }
+			
+			
+			if (args != null ){
+				if (args instanceof int[]){
+					int offsetX = ((int[])(args))[0];
+					int offsetY = ((int[])(args))[1];
+					timerBeforeWorddle.setBounds(473 + offsetX, 602 + offsetY, 157, 23);
+					setJLabel(playerName, 480 + offsetX, 10 + offsetY, 150, 45);
+					setJLabel(mode, 69 + offsetX, 85 + offsetY, 351, 45);
+					setJLabel(level, 583 + offsetX, 805 + offsetY, 30, 23);
+					setJLabel(score, 520 + offsetX, 700 + offsetY, 70, 23);
+					setJLabel(nbLinesRemoved, 583 + offsetX, 760 + offsetY, 30, 23);
+					setJLabel(messages, 70 + offsetX, 0, 367 + offsetY, 55);
+					setJLabel(timerTimeLeft, 400 + offsetX, 510 + offsetY, 300, 23);
+				}
+			}
     }
   }
 }

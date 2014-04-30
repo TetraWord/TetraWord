@@ -4,6 +4,7 @@ import GameEngine.Brick;
 import GameEngine.Shape;
 import java.awt.Graphics;
 
+
 public class Shape2D {
 
   private final Shape model;

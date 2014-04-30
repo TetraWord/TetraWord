@@ -81,17 +81,17 @@ public class Grid2D extends JPanel implements Observer {
     s.addObservateur(currentShape);
   }
 
-  public void draw(Graphics g) {
+  public void draw(Graphics g, int offsetX, int offsetY) {
     //Grid draw
-    int top = 135;
-    int left = 70;
+    int top = 135 + offsetY;
+    int left = 70 + offsetX;
     int sizeBrick = 35;
     Player myPlayer = model.getPlayer();
 
     if (currentShape != null && myPlayer.isTetris()) {
-      currentShape.draw(g);
+      currentShape.draw(g, offsetX, offsetY);
       if (shadowed) {
-        currentShape.paintShadow(g, model.getTGrid());
+        currentShape.paintShadow(g, model.getTGrid(), offsetX, offsetY);
       }
     }
 		

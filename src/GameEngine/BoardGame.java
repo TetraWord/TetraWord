@@ -18,6 +18,8 @@ public final class BoardGame implements Observable, Observer {
   private boolean allowDoubleClicked = false;
   private final ArrayList<Brick> tabBrickClicked = new ArrayList<>();
   private int[] coordsLastBrickClicked = new int[2];
+	private int offsetX = 0;
+	private int offsetY = 0;
 
   public BoardGame(int nb, Shape s, Shape s2, Player p) {
     /* Init attributes */
@@ -47,6 +49,19 @@ public final class BoardGame implements Observable, Observer {
     return myPlayer;
   }
 
+	void setOffset(int offsetX, int offsetY) {
+		this.offsetX = offsetX;
+		this.offsetY = offsetY;
+	}
+
+	public int getOffsetX() {
+		return offsetX;
+	}
+
+	public int getOffsetY() {
+		return offsetY;
+	}
+	
   public Shape getRandomShape() {
     return ss.getRandomShape();
   }

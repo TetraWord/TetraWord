@@ -17,9 +17,9 @@ public class CurrentShape2D extends Shape2D implements Observer {
     this.model = model;
   }
 
-	public void draw(Graphics g) {
-		int top = 135;
-		int left = 70;
+	public void draw(Graphics g, int offsetX, int offsetY) {
+		int top = 135 + offsetY;
+		int left = 70 + offsetX;
 		int sizeBrick = 35;
 		for (int i = 0; i < 4; ++i) {
 				for (int j = 0; j < 4; ++j) {
@@ -34,9 +34,9 @@ public class CurrentShape2D extends Shape2D implements Observer {
 
 
   /* Paint the shadow of the current shape */
-  public void paintShadow(Graphics g, Brick[][] matrix) {
-    int top = 135;
-    int left = 70;
+  public void paintShadow(Graphics g, Brick[][] matrix, int offsetX, int offsetY) {
+    int top = 135 + offsetY;
+    int left = 70 + offsetX;
     int sizeBrick = 35;
 
     for (int i = 0; i < 4; ++i) {

@@ -30,7 +30,7 @@ public class Player implements Observable {
   private final Object monitor = new Object();
   private ArrayList<Observer> listObserver = new ArrayList<>();
   private final Dictionnary dico;
-  private Modifier modifier = new Modifier("Bomb");
+  private Modifier modifier = new Modifier("Shake");
   private boolean worddle = false;
   private Timer timerBeforeWorddle = null;
   private long t = 0;
@@ -426,4 +426,12 @@ public class Player implements Observable {
     modifier.active(this);
     modifier = null;
   }
+  
+  public void shake(int offsetX, int offsetY) {
+		boardGame.setOffset(offsetX, offsetY);
+		int[] offset = new int[2];
+		offset[0] = offsetX;
+		offset[1] = offsetY;
+		updateObservateur(offset);
+	}
 }
