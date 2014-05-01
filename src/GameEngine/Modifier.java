@@ -24,13 +24,15 @@ public class Modifier implements Observable {
 		Random r = new Random();
 		int random = r.nextInt(11);
 		this.name = ModifierEnum.values()[random].toString();
-		
+		this.coordX = r.nextInt(10);
+		this.coordY = r.nextInt(20);
 	}
 
   public Modifier(String name) {
-    this.name = name;
-    this.coordX = 5;
-    this.coordY = 8;
+  	Random r = new Random();
+		this.name = name;
+		this.coordX = r.nextInt(10);
+		this.coordY = r.nextInt(20);
   }
 
   public String getName() {

@@ -32,8 +32,8 @@ public class Modifier2D {
 	}
 	
 	public void draw(Graphics g, int offsetX, int offsetY, double ratio) {
-		int top = 100 + offsetY;
-		int left = 35 + offsetX;
+		int top = 135 + offsetY;
+		int left = 70 + offsetX;
 		int sizeBrick = 35;
 		Color c = Color.RED;
 		BufferedImage monImage = getModifierImage(c);
