@@ -40,18 +40,30 @@ public class Dictionnary {
     }
   }
 
+  /**
+   * Look if the string is a word contains in the dictionary
+   * 
+   * @param s
+   * @return true if the String is included in the dictionary
+   */
   public boolean included(String s) {
     return dico.contains(s);
   }
 
+  /**
+   * Search possible anagrams with the chars of String in the dictionary  
+   * 
+   * @param s: String formed by chars selected
+   * @return Array of 10 Strings : the first is the best one, the last isn't an anagram
+   *
+   */
   public String[] findAnagramms(String s) {
-	ArrayList<String> list = new ArrayList<String>();
-	String[] res = new String[10];
+		ArrayList<String> list = new ArrayList<String>();
+		String[] res = new String[10];
     boolean anagramme = false;
     System.out.println(" s : " + s);
 
-    // --- Vérifie que les caractères du mot entré
-    // --- sont contenus dans le mot du dictionnaire
+    // --- Verify that the chars of the word entered are contained in a word of the dictionary
     Iterator it = dico.iterator();
 
     while (it.hasNext()) {
@@ -81,12 +93,14 @@ public class Dictionnary {
         }
       }
 
+      //if the word is an anagram, add in the list of anagram
       if (anagramme == true) {
       	list.add(str);
         System.out.println("str vaut : " + str );
       }
     }
 
+    //Sort words by length
     Collections.sort(list, new Comparator<String>(){
 			public int compare(String s1, String s2) {
 				if(s1.length() < s2.length()){
@@ -107,34 +121,20 @@ public class Dictionnary {
 	  	}
     }
     
+    //The first word is the best and the last isn't an anagram
     res[0] = list.get(0);
     res[9] = s.toString();
 
     return res;
   }
 
+  /**
+   * Call findBestAnagramm to getting the best one
+   * 
+   * @param sb: StringBuilder contains chars selected to form a word
+   * @return the best anagram find in a String
+   */
   public String findBestAnagramm(StringBuilder sb) {
-    String bestWord = findAnagramms(sb.toString())[0];
-   
-    return bestWord;
-  }
-
-  public static void main(String[] args) {
-    Dictionnary d = new Dictionnary();
-    StringBuilder s = new StringBuilder();
-    s.append('i');
-    s.append('b');
-    s.append('t');
-    s.append('s');
-    s.append('e');
-    s.append('f');
-    s.append('p');
-    s.append('a');
-    s.append('l');
-    String[] t = d.findAnagramms(s.toString());
-    for (int i = 0; i < t.length; ++i) {
-     System.out.println("t : " + t[i]);
-     }
-
+    return findAnagramms(sb.toString())[0];
   }
 }
