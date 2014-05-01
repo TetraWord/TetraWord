@@ -74,6 +74,7 @@ public class DesignMenu2D extends Menu2D {
         String font;
         String[] color;
         String colors;
+        String imgModifier;
         /*Open propertie file of selected design to read it*/
         String file = "conf/Design/" + combo.getSelectedItem() + ".properties";
         Properties readprop = new Properties();
@@ -89,6 +90,7 @@ public class DesignMenu2D extends Menu2D {
           font = readprop.getProperty("font");
           color = readprop.getProperty("color").split(",");
           colors = color[0] + "," + color[1] + "," + color[2];
+          imgModifier = readprop.getProperty("modifier");
           Properties prop = new Properties();
           OutputStream output = null;
           try {
@@ -98,6 +100,7 @@ public class DesignMenu2D extends Menu2D {
             // set the properties value
             prop.setProperty("background", apercuBackground);
             prop.setProperty("brick", imgBrick);
+            prop.setProperty("modifier", imgModifier);
             prop.setProperty("font", font);
             prop.setProperty("color", colors);
 

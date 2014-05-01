@@ -13,6 +13,7 @@ import java.awt.image.ColorModel;
 import java.awt.image.WritableRaster;
 import java.io.File;
 import java.io.IOException;
+import java.util.Properties;
 
 import javax.imageio.ImageIO;
 
@@ -50,7 +51,7 @@ public class Modifier2D {
 			monImage = after;
 		}
 
-		g.drawImage(monImage, sizeBrick + left, sizeBrick + top, null);
+		g.drawImage(monImage, model.getX() * sizeBrick + left, model.getY() * sizeBrick + top, null);
 		g.setColor(Color.black);
 	}
 

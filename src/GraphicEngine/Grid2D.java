@@ -65,7 +65,7 @@ public class Grid2D extends JPanel implements Observer {
     } catch (IOException ex) {
       /*Default background*/
 			Brick2D.setBrickImage("media/Design/paper/brick.png");
-			Modifier2D.setModifierImage(prop.getProperty("media/Design/paper/modifier.png"));
+			Modifier2D.setModifierImage("media/Design/paper/modifier.png");
       ex.printStackTrace();
     } finally {
       if (input != null) {
