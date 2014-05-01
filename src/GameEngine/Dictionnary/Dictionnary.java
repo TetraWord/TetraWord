@@ -100,9 +100,10 @@ public class Dictionnary {
 		}
     });
     
-    for(int cpt=0; cpt < 10; ++cpt){
+    for(int cpt=0; cpt < 9; ++cpt){
     	res[cpt] = list.get(cpt);
     }
+    res[9] = s.toString();
 
     return res;
   }
