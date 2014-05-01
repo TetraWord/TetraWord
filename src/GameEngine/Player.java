@@ -30,7 +30,7 @@ public class Player implements Observable {
   private final Object monitor = new Object();
   private ArrayList<Observer> listObserver = new ArrayList<>();
   private final Dictionnary dico;
-  private Modifier modifier = new Modifier("Shake");
+  private Modifier modifier = new Modifier();
   private boolean worddle = false;
   private Timer timerBeforeWorddle = null;
   private long t = 0;
@@ -45,7 +45,7 @@ public class Player implements Observable {
     speedFall = 1000;
     speedFallInit = speedFall;
     loadOptions();
-    boardGame.getGrid().setCurrentModifier(new Modifier("Shake"));
+    boardGame.getGrid().setCurrentModifier(modifier);
   }
 
   private void loadOptions() {
@@ -133,6 +133,9 @@ public class Player implements Observable {
         int tmpY = s.getY();
         if (!s.tryCollision(boardGame.getGrid().getTGrid(), s.getX(), s.getY() + step)) {
           s.move(s.getX(), s.getY() + step);
+        }
+        if(modifier!= null && s.tryCollision(boardGame.getGrid().getTGrid(), modifier)){
+        	System.out.println("catch modifier");
         }
         //Si on ne peut pas faire descendre la pièce plus bas, on l'inscrit dans la Grid
         if (tmpY == s.getY()) {
