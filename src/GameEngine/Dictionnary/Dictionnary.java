@@ -82,27 +82,32 @@ public class Dictionnary {
       }
 
       if (anagramme == true) {
-    	list.add(str);
-    	//res[cpt++] = str2;
-        System.out.println("str2 vaut : " + str );
+      	list.add(str);
+        System.out.println("str vaut : " + str );
       }
-
     }
 
     Collections.sort(list, new Comparator<String>(){
-		public int compare(String s1, String s2) {
-			if(s1.length() < s2.length()){
-				return 1;
-			}else if (s1.length() > s2.length()) {
-				return -1;
+			public int compare(String s1, String s2) {
+				if(s1.length() < s2.length()){
+					return 1;
+				}else if (s1.length() > s2.length()) {
+					return -1;
+				}
+				return 0;
 			}
-			return 0;
-		}
     });
     
-    for(int cpt=0; cpt < 9; ++cpt){
-    	res[cpt] = list.get(cpt);
+
+    int cpt=1;
+    for(int i=1; i<list.size() ; i=i+10){
+	    if(list.get(i).length() > 2 && cpt < 9){
+	    	System.out.println("length():" +list.get(i).length());
+	  		res[cpt++] = list.get(i);
+	  	}
     }
+    
+    res[0] = list.get(0);
     res[9] = s.toString();
 
     return res;
