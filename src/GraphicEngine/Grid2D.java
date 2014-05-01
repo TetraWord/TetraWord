@@ -4,14 +4,17 @@ import ContextManager.GridEventListener;
 import GameEngine.Brick;
 import GameEngine.CurrentShape;
 import GameEngine.Grid;
+import GameEngine.Modifier;
 import GameEngine.Player;
 import Pattern.Observable;
 import Pattern.Observer;
+
 import java.awt.Graphics;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
+
 import javax.swing.JPanel;
 
 public class Grid2D extends JPanel implements Observer {
@@ -21,6 +24,7 @@ public class Grid2D extends JPanel implements Observer {
   private final Brick2D[][] compositionBrick2D;
   private final BrickButton[][] clickGrid;
   private final boolean shadowed;
+  private Modifier2D currentModifier = null;
 
   public Grid2D(Grid model, GridEventListener event, boolean shadow) {
     this.model = model;
@@ -80,6 +84,10 @@ public class Grid2D extends JPanel implements Observer {
     currentShape = new CurrentShape2D(s);
     s.addObservateur(currentShape);
   }
+  
+  public void setModifier2D(Modifier m) {
+  	currentModifier = new Modifier2D(m);
+  }
 
   public void draw(Graphics g, int offsetX, int offsetY) {
     //Grid draw
@@ -87,6 +95,10 @@ public class Grid2D extends JPanel implements Observer {
     int left = 70 + offsetX;
     int sizeBrick = 35;
     Player myPlayer = model.getPlayer();
+    
+    if(currentModifier != null && myPlayer.isTetris()) {
+    	currentModifier.draw(g, offsetX , offsetY, 1);
+    }
 
     if (currentShape != null && myPlayer.isTetris()) {
       currentShape.draw(g, offsetX, offsetY);

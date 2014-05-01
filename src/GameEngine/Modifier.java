@@ -9,21 +9,27 @@ import java.util.TimerTask;
 
 public class Modifier implements Observable {
 
-  public String name;
-  public int timer;
-  public Timer t = null;
+  private String name;
+  private Timer t = null;
+	private int coordX;
+	private int coordY;
 
   public Modifier(String name) {
     this.name = name;
-    this.timer = 10;
+    this.coordX = 5;
+    this.coordY = 8;
   }
 
   public String getName() {
     return this.name;
   }
-
-  public void setTimer(int timer) {
-    this.timer = timer;
+  
+  public int getX() {
+  	return this.coordX;
+  }
+  
+  public int getY() {
+  	return this.coordY;
   }
 
   public void active(Player p) {

@@ -45,6 +45,7 @@ public class Player implements Observable {
     speedFall = 1000;
     speedFallInit = speedFall;
     loadOptions();
+    boardGame.getGrid().setCurrentModifier(new Modifier("Shake"));
   }
 
   private void loadOptions() {
