@@ -57,7 +57,7 @@ public class Grid implements Observable {
   }
 
   public void setCurrentModifier(Modifier cm) {
-    currentModifier = new Modifier("Shake");
+    currentModifier = new Modifier();
     updateObservateur(cm);
   }
 

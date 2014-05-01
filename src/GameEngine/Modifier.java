@@ -4,15 +4,28 @@ import static GameEngine.Grid.sizeX;
 import static GameEngine.Grid.sizeY;
 import Pattern.Observable;
 import Pattern.Observer;
+
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class Modifier implements Observable {
+	
+	private enum ModifierEnum {
+    Speed, Slow, Shake, Storm, Reversal, Exchange, ScorePlus, ScoreMoins, Bomb, TimeTravel, Worddle
+  };
 
   private String name;
   private Timer t = null;
 	private int coordX;
 	private int coordY;
+	
+	public Modifier() {
+		Random r = new Random();
+		int random = r.nextInt(11);
+		this.name = ModifierEnum.values()[random].toString();
+		
+	}
 
   public Modifier(String name) {
     this.name = name;
@@ -58,11 +71,11 @@ public class Modifier implements Observable {
         this.exchange();
         break;
 
-      case "Score+":
+      case "ScorePlus":
         this.score(p, '+');
         break;
 
-      case "Score-":
+      case "ScoreMoins":
         this.score(p, '-');
         break;
 
