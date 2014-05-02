@@ -30,7 +30,8 @@ public class Player implements Observable {
   private final Object monitor = new Object();
   private ArrayList<Observer> listObserver = new ArrayList<>();
   private final Dictionnary dico;
-  private Modifier modifier = new Modifier();
+  private Modifier modifier = null;
+  private Modifier currentModifier = new Modifier();
   private boolean worddle = false;
   private Timer timerBeforeWorddle = null;
   private long t = 0;
@@ -45,7 +46,7 @@ public class Player implements Observable {
     speedFall = 1000;
     speedFallInit = speedFall;
     loadOptions();
-    boardGame.getGrid().setCurrentModifier(modifier);
+    boardGame.getGrid().setCurrentModifier(currentModifier);
   }
 
   private void loadOptions() {
@@ -134,7 +135,8 @@ public class Player implements Observable {
         if (!s.tryCollision(boardGame.getGrid().getTGrid(), s.getX(), s.getY() + step)) {
           s.move(s.getX(), s.getY() + step);
         }
-        if(modifier!= null && s.tryCollision(boardGame.getGrid().getTGrid(), modifier)){
+        if(currentModifier!= null && s.tryCollision(currentModifier,  s.getX(), s.getY() + step)){
+        	this.modifier = new Modifier(this.currentModifier);
         	System.out.println("catch modifier");
         }
         //Si on ne peut pas faire descendre la pièce plus bas, on l'inscrit dans la Grid

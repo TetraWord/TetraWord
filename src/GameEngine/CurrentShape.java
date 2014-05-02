@@ -249,15 +249,15 @@ public class CurrentShape extends Shape {
   }
   
   /* TryCollision pour le modifier */
-  public boolean tryCollision(Brick[][] g, Modifier m) {
-  	int newX = m.getX();
-  	int newY = m.getY();
+  public boolean tryCollision(Modifier m, int newX, int newY ) {
+  	int X = m.getX();
+  	int Y = m.getY();
   	
   	for (int i = 0; i < sizeShape; ++i) {
       for (int j = 0; j < sizeShape; ++j) {
         int value = representation[i][j];
         //On teste s'il y a déjà un élément dans la grid
-        if (value > 0 && g[newY + i][newX + j].getNb() >= 1) {
+        if (value > 0 && newX + j == X && newY + i == Y) {
           return true;
         }
       }

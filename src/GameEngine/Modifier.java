@@ -34,6 +34,12 @@ public class Modifier implements Observable {
 		this.coordX = r.nextInt(10);
 		this.coordY = r.nextInt(20);
   }
+  
+  public Modifier( Modifier m) {
+  	this.name = m.getName();
+  	this.coordX = m.getX();
+  	this.coordY = m.getY();
+  }
 
   public String getName() {
     return this.name;
