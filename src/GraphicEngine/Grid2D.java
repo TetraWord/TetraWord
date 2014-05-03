@@ -2,6 +2,7 @@ package GraphicEngine;
 
 import ContextManager.GridEventListener;
 import GameEngine.Brick;
+import GameEngine.CurrentModifier;
 import GameEngine.CurrentShape;
 import GameEngine.Grid;
 import GameEngine.Modifier;
@@ -85,7 +86,7 @@ public class Grid2D extends JPanel implements Observer {
     s.addObservateur(currentShape);
   }
   
-  public void setModifier2D(Modifier m) {
+  public void setModifier2D(CurrentModifier m) {
   	currentModifier = new Modifier2D(m);
   }
 

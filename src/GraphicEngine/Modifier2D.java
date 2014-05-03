@@ -17,13 +17,13 @@ import java.util.Properties;
 
 import javax.imageio.ImageIO;
 
-import GameEngine.Modifier;
+import GameEngine.CurrentModifier;
 
 public class Modifier2D {
-	private final Modifier model;
+	private final CurrentModifier model;
 	private static String modifierImg;
 	
-	public Modifier2D(Modifier model) {
+	public Modifier2D(CurrentModifier model) {
 		this.model = model;
 	}
 	

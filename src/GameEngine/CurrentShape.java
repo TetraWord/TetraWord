@@ -249,7 +249,7 @@ public class CurrentShape extends Shape {
   }
   
   /* TryCollision pour le modifier */
-  public boolean tryCollision(Modifier m, int newX, int newY ) {
+  public boolean tryCollision(CurrentModifier m, int newX, int newY ) {
   	int X = m.getX();
   	int Y = m.getY();
   	

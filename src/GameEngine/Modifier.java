@@ -17,40 +17,24 @@ public class Modifier implements Observable {
 
   private String name;
   private Timer t = null;
-	private int coordX;
-	private int coordY;
+	
 	
 	public Modifier() {
 		Random r = new Random();
 		int random = r.nextInt(11);
 		this.name = ModifierEnum.values()[random].toString();
-		this.coordX = r.nextInt(10);
-		this.coordY = r.nextInt(20);
 	}
 
   public Modifier(String name) {
-  	Random r = new Random();
 		this.name = name;
-		this.coordX = r.nextInt(10);
-		this.coordY = r.nextInt(20);
   }
   
   public Modifier( Modifier m) {
   	this.name = m.getName();
-  	this.coordX = m.getX();
-  	this.coordY = m.getY();
   }
 
   public String getName() {
     return this.name;
-  }
-  
-  public int getX() {
-  	return this.coordX;
-  }
-  
-  public int getY() {
-  	return this.coordY;
   }
 
   public void active(Player p) {

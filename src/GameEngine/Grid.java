@@ -11,7 +11,7 @@ public class Grid implements Observable {
   public static final int sizeY = 20;
   private Brick[][] tGrid = new Brick[sizeY][sizeX];
   private CurrentShape currentShape;
-  private Modifier currentModifier;
+  private CurrentModifier currentModifier;
   private ArrayList<Observer> listObserver = new ArrayList<>();
   private final BoardGame myBoardGame;
 
@@ -52,11 +52,11 @@ public class Grid implements Observable {
     updateObservateur(cs);
   }
   
-  public Modifier getCurrentModifier() {
+  public CurrentModifier getCurrentModifier() {
     return currentModifier;
   }
 
-  public void setCurrentModifier(Modifier cm) {
+  public void setCurrentModifier(CurrentModifier cm) {
     currentModifier = cm;
     updateObservateur(cm);
   }
