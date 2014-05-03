@@ -2,14 +2,11 @@ package GameEngine;
 
 import static GameEngine.Grid.sizeX;
 import static GameEngine.Grid.sizeY;
-import Pattern.Observable;
-import Pattern.Observer;
-
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class Modifier implements Observable {
+public class Modifier {
 	
 	private enum ModifierEnum {
     Speed, Slow, Shake, Storm, Reversal, Exchange, ScorePlus, ScoreMoins, Bomb, TimeTravel, Worddle
@@ -17,8 +14,7 @@ public class Modifier implements Observable {
 
   private String name;
   private Timer t = null;
-	
-	
+ 
 	public Modifier() {
 		Random r = new Random();
 		int random = r.nextInt(11);
@@ -253,21 +249,4 @@ public class Modifier implements Observable {
     }
   }
 
-  @Override
-  public void addObservateur(Observer obs) {
-    // TODO Auto-generated method stub
-
-  }
-
-  @Override
-  public void updateObservateur(Object args) {
-    // TODO Auto-generated method stub
-
-  }
-
-  @Override
-  public void delObservateur() {
-    // TODO Auto-generated method stub
-
-  }
 }
