@@ -137,7 +137,7 @@ public class Player implements Observable {
         if (!s.tryCollision(boardGame.getGrid().getTGrid(), s.getX(), s.getY() + step)) {
           s.move(s.getX(), s.getY() + step);
         }
-        if(currentModifier!= null && s.tryCollision(currentModifier,  s.getX(), s.getY() + step)){
+        if(currentModifier!= null && s.tryCollision(currentModifier,  s.getX(), s.getY())){
         	this.modifier = new Modifier(this.currentModifier);
         	System.out.println("catch modifier");
         	this.currentModifier = null;
@@ -179,6 +179,13 @@ public class Player implements Observable {
       int interval = finalLine - s.getY();
       this.addToScore(interval * 2);
       s.move(s.getX(), finalLine - 1);
+      
+      if(currentModifier!= null && s.tryCollision(currentModifier,  s.getX(), s.getY())){
+      	this.modifier = new Modifier(this.currentModifier);
+      	System.out.println("catch modifier");
+      	this.currentModifier = null;
+      	boardGame.getGrid().setCurrentModifier(currentModifier);
+      }
 
       boardGame.finishFall(s);
     }
