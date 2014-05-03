@@ -3,13 +3,14 @@ package GameEngine;
 import GameEngine.Dictionnary.Dictionnary;
 import Pattern.Observable;
 import Pattern.Observer;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-
 import java.util.ArrayList;
 import java.util.Properties;
 import java.util.Timer;
+import java.util.TimerTask;
 
 public class Player implements Observable {
 
@@ -34,6 +35,7 @@ public class Player implements Observable {
   private CurrentModifier currentModifier = null;
   private boolean worddle = false;
   private Timer timerBeforeWorddle = null;
+  private Timer timerBeforeModifier = null;
   private long t = 0;
 
   public Player(int nb, Shape s, Shape s2, Dictionnary d) {
@@ -46,8 +48,7 @@ public class Player implements Observable {
     speedFall = 1000;
     speedFallInit = speedFall;
     loadOptions();
-    currentModifier = new CurrentModifier(boardGame.getGrid().getTGrid());
-    boardGame.getGrid().setCurrentModifier(currentModifier);
+    displayModifier();
   }
 
   private void loadOptions() {
@@ -425,6 +426,29 @@ public class Player implements Observable {
 
   public int getSpeedFallInit() {
     return speedFallInit;
+  }
+  
+  public void displayModifier() {
+  	 timerBeforeModifier = new Timer();
+  	 
+  	 timerBeforeModifier.schedule(new TimerTask() {
+  		 @Override
+  		 public void run() {
+  			 System.out.println("New Modifier");
+  			 currentModifier = new CurrentModifier(boardGame.getGrid().getTGrid());
+  		   boardGame.getGrid().setCurrentModifier(currentModifier);
+  		 }
+  	 }, 30000, 65000);
+  	 
+  	 timerBeforeModifier.schedule(new TimerTask() {
+			@Override
+			public void run() {
+				System.out.println("Delete modifier");
+				currentModifier = null;
+				boardGame.getGrid().setCurrentModifier(currentModifier);
+			}
+  	 }, 35000);
+  	
   }
 
   public boolean hasModifier() {

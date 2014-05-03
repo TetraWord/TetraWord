@@ -87,7 +87,10 @@ public class Grid2D extends JPanel implements Observer {
   }
   
   public void setModifier2D(CurrentModifier m) {
-  	currentModifier = new Modifier2D(m);
+  	if(m != null) {
+
+    	currentModifier = new Modifier2D(m);
+  	}
   }
 
   public void draw(Graphics g, int offsetX, int offsetY) {
@@ -130,6 +133,10 @@ public class Grid2D extends JPanel implements Observer {
     if (args instanceof Brick) {
       /*We put a new brick in the grid -> create a brick2D*/
       saveBrick();
+    }
+    if (args instanceof CurrentModifier) {
+      /*We put a new modifier in the grid -> create a modifier2D*/
+      setModifier2D((CurrentModifier) args);
     }
     if (args instanceof Brick[][]) {
       /*We put a new brick in the grid -> create a brick2D*/
