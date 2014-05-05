@@ -9,15 +9,19 @@ import java.util.TimerTask;
 public class Modifier {
 	
 	private enum ModifierEnum {
-    Speed, Slow, Shake, Storm, Reversal, Exchange, ScorePlus, ScoreMoins, Bomb, TimeTravel, Worddle
+    Speed, Shake, Storm, Exchange, Score, Bomb, Worddle
   };
+	/*Non implémenté
+		Reversal
+		TimeTravel
+	*/
 
   private String name;
   private Timer t = null;
  
 	public Modifier() {
 		Random r = new Random();
-		int random = r.nextInt(11);
+		int random = r.nextInt(7);
 		this.name = ModifierEnum.values()[random].toString();
 	}
 
@@ -34,14 +38,17 @@ public class Modifier {
   }
 
   public void active(Player p) {
+		int random;
     switch (this.name) {
       case "Speed":
-        this.changeSpeed(p, '+');
+				random = (int) Math.random();
+				if(random == 0){
+					this.changeSpeed(p, '+');
+				} else {
+					this.changeSpeed(p, '-');
+				}
         break;
-
-      case "Slow":
-        this.changeSpeed(p, '-');
-        break;
+				
 
       case "Shake":
         this.shake(p);
@@ -59,12 +66,13 @@ public class Modifier {
         this.exchange();
         break;
 
-      case "ScorePlus":
-        this.score(p, '+');
-        break;
-
-      case "ScoreMoins":
-        this.score(p, '-');
+      case "Score":
+				random = (int) Math.random();
+				if(random == 0){
+					this.score(p, '+');
+				} else {
+				 this.score(p, '-');
+				}
         break;
 
       case "Bomb":

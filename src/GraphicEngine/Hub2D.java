@@ -1,18 +1,21 @@
 package GraphicEngine;
 
 import GameEngine.Hub;
+import static GraphicEngine.GraphicEngine.WINDOW_WIDTH;
 import Pattern.Observable;
 import Pattern.Observer;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
@@ -38,6 +41,7 @@ public class Hub2D extends JPanel implements Observer {
 	private Font f;
   private Shape2D nextShape;
   private Shape2D stockShape;
+	private Image modifier;
 
   public Hub2D(final Hub hub, String font, Color color) {
 
@@ -147,6 +151,9 @@ public class Hub2D extends JPanel implements Observer {
     if (stockShape != null) {
       stockShape.draw(g, 515 + offsetX, 290 + offsetY, 0.7);
     }
+		if(modifier != null){
+			g.drawImage(modifier,532 + offsetX, 432 + offsetY, 35, 35, this);
+		}
   }
 
   @Override
@@ -188,6 +195,17 @@ public class Hub2D extends JPanel implements Observer {
         timerBeforeWorddle.setString("Worddle en cours !");
       }
 			
+			if (hub.getModifier() != null ){
+				String m = hub.getModifier().getName();
+				String file = "./media/Design/modifieurs/" + m + ".png";
+				try {
+					modifier = ImageIO.read(new File(file));
+				} catch (IOException ex) {
+					ex.printStackTrace();
+				}
+			}else{
+				modifier = null;
+			}
 			
 			if (args != null ){
 				if (args instanceof int[]){

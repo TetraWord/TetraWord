@@ -139,7 +139,7 @@ public class Player implements Observable {
         }
         if(currentModifier!= null && s.tryCollision(currentModifier,  s.getX(), s.getY())){
         	this.modifier = new Modifier(this.currentModifier);
-        	System.out.println("catch modifier");
+					updateObservateur(this.modifier);
         	this.currentModifier = null;
         	boardGame.getGrid().setCurrentModifier(currentModifier);
         }
@@ -434,6 +434,10 @@ public class Player implements Observable {
   public int getSpeedFallInit() {
     return speedFallInit;
   }
+
+	public Modifier getModifier() {
+		return modifier;
+	}
   
   public void displayModifier() {
   	 timerBeforeModifier = new Timer();
@@ -465,6 +469,7 @@ public class Player implements Observable {
   public void activeModifier() {
     modifier.active(this);
     modifier = null;
+		updateObservateur(modifier);
   }
   
   /*public void throwModifier() {

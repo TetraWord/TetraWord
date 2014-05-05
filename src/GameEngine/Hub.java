@@ -23,7 +23,7 @@ public class Hub implements Observer, Observable {
   private int secondBeforeWorddle;
 	private int offsetX;
 	private int offsetY;
-  /*Modifier*/
+  private Modifier modifier;
 
   public Hub() {
     this.level = 1;
@@ -34,6 +34,7 @@ public class Hub implements Observer, Observable {
     this.wordFinish = true;
 		this.offsetX = 0;
 		this.offsetY = 0;
+		this.modifier = null;
   }
 
   public int getLevel() {
@@ -80,6 +81,10 @@ public class Hub implements Observer, Observable {
     return listMessage.poll();
   }
 
+	public Modifier getModifier() {
+		return modifier;
+	}
+
   public boolean isWordFinish() {
     return wordFinish;
   }
@@ -103,6 +108,7 @@ public class Hub implements Observer, Observable {
         this.word = p.getWord();
       }
       this.wordFinish = p.isWordFinished();
+			this.modifier = p.getModifier();
               
       if(args instanceof String) {
         listMessage.add(((String) args));
@@ -111,7 +117,7 @@ public class Hub implements Observer, Observable {
 					offsetX = ((int[])(args))[0];
 					offsetY = ((int[])(args))[1];
 					updateObservateur((int[])args);
-				}
+				}	
 			}
     }
     if (o instanceof BoardGame) {
