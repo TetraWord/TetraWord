@@ -2,11 +2,9 @@ package GameEngine;
 
 import java.util.Random;
 
-import GameEngine.Modifier;
-
 public class CurrentModifier extends Modifier {
-	private int coordX;
-	private int coordY;
+	private final int coordX;
+	private final int coordY;
 	
 	public CurrentModifier(Brick [][] gridRep) {
 		super();

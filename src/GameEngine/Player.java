@@ -39,7 +39,7 @@ public class Player implements Observable {
   private long t = 0;
 
   public Player(int nb, Shape s, Shape s2, Dictionnary d) {
-    boardGame = new BoardGame(nb, s, s2, this);
+    boardGame = new BoardGame(s, s2, this);
     score = 0;
     level = 1;
     numLinesTotalRemoved = 0;
