@@ -334,11 +334,11 @@ public class Player implements Observable {
     int numLinesRemoved = 0;
     while (boardGame.getGrid().getFirstFullLine() != -1) {
       if (wordFinish) {
-        StringBuilder sb = boardGame.getAllLetterFromTheRemovedLine();
+        StringBuilder sb = getGrid().getAllLetterFromTheRemovedLine();
         String bestWord = dico.findBestAnagramm(sb);
         verifAnagram(bestWord);
         clearWord();
-        boardGame.removeLine();
+        getGrid().removeLine(getGrid().getFirstFullLine());
         ++numLinesRemoved;
       }
     }

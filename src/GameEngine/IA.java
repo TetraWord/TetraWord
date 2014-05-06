@@ -20,7 +20,7 @@ public class IA extends Player implements Runnable {
     Grid g = boardGame.getGrid();
     int numLinesRemoved = 0;
     while (g.getFirstFullLine() != -1) {
-      StringBuilder letters = boardGame.getAllLetterFromTheRemovedLine();
+      StringBuilder letters = getGrid().getAllLetterFromTheRemovedLine();
       String[] bestWords = getDico().findAnagramms(letters.toString());
       String bestWord;
       try {
@@ -56,7 +56,7 @@ public class IA extends Player implements Runnable {
       }
       verifAnagram(bestWord);
       clearWord();
-      boardGame.removeLine();
+      getGrid().removeLine(getGrid().getFirstFullLine());
       ++numLinesRemoved;
     }
 
@@ -244,7 +244,7 @@ public class IA extends Player implements Runnable {
           boardGame.getGrid().setAllowClick(false);
           GameEngine.getInstance().beginWorddleTimer(this);
           stockCurrentShape();
-          addNewChar(getBoardGame().clickedOneBrick());
+          addNewChar(getGrid().clickedOneBrick());
         }
       } else if (isAnagram()) {
         doAnagram();

@@ -490,7 +490,7 @@ public class Grid implements Observable, Observer {
     return totalWeightedCells;
   }
 
-  StringBuilder getAllLetterFromeTheRemovedLine() {
+  public StringBuilder getAllLetterFromTheRemovedLine() {
     StringBuilder sb = new StringBuilder();
     int line = getFirstFullLine();
     for (int j = 0; j < sizeX; ++j) {

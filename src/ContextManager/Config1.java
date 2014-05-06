@@ -113,7 +113,7 @@ public class Config1 extends KeyAdapter {
           p.switchToWorddle(true);
           GameEngine.getInstance().beginWorddleTimer(p);
           p.stockCurrentShape();
-          p.addNewChar(p.getBoardGame().clickedOneBrick());
+          p.addNewChar(p.getGrid().clickedOneBrick());
         }
         break;
 

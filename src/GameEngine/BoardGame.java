@@ -10,8 +10,7 @@ import java.util.Queue;
 /**
  * <b> BoardGame is a logical part of the game.</b>
  * <p> Each <b> Player </p> in the game has a BoardGame </p>.
- * <p> The BoardGame is observable by the BoardGame2D, his graphical part.
- * <p> The BoardGame is observer of the hub.
+ * <p> The BoardGame is observable by the hub. </p>
  * <p> The BoardGame contains : 
  *  <ul>
  *  <li> The Player who played on this BoardGame </li>
@@ -20,8 +19,6 @@ import java.util.Queue;
  *  <li> The ShapesStock. Singleton. </li>
  *  <li> A Queue with the next Shape of the Player </li>
  *  <li> An ArrayList of his observateur object </li>
- *  <li> An ArrayList of the Brick clicked in the Grid </li>
- *  <li> The coordonates of the last Brick clicked in the Grid </li>
  *  <li> The offsetX and the offsetY of the BoardGame for the shake Modifier </li>
  * </ul>
  * </p>
@@ -139,22 +136,6 @@ public final class BoardGame implements Observable {
     } else {
       launchNextShape();
     }
-  }
-
-  public char clickedOneBrick() {
-    return grid.clickedOneBrick();
-  }
-
-  public void declickedAllBrick() {
-    grid.declickedAllBrick();
-  }
-
-  StringBuilder getAllLetterFromTheRemovedLine() {
-    return grid.getAllLetterFromeTheRemovedLine();
-  }
-
-  void removeLine() {
-    grid.removeLine(grid.getFirstFullLine());
   }
 
   void finishWorddle(CurrentShape cs) {

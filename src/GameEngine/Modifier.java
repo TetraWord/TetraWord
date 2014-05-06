@@ -253,7 +253,7 @@ public class Modifier {
       p.switchToWorddle(true);
       GameEngine.getInstance().beginWorddleTimer(p);
       p.stockCurrentShape();
-      p.addNewChar(p.getBoardGame().clickedOneBrick());
+      p.addNewChar(p.getGrid().clickedOneBrick());
     }
   }
 
