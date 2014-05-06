@@ -13,7 +13,7 @@ public final class GridEventListener extends MouseAdapter implements Observable 
   private ArrayList<Observer> listObserver = new ArrayList<>();
 
   public GridEventListener(BoardGame obs) {
-    addObservateur(obs);
+    addObservateur(obs.getGrid());
   }
 
   @Override

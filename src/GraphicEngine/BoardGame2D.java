@@ -14,9 +14,6 @@ import java.io.InputStream;
 import java.util.Properties;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
-import javax.swing.border.Border;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.EmptyBorder;
 
 /**
  * *

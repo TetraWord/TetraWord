@@ -70,7 +70,7 @@ public class GameEngine {
   public Brick[][][] getBrickGrids() {
     Brick[][][] tabBrick = new Brick[nbPlayer][Grid.sizeY][Grid.sizeX];
     for (int i = 0; i < nbPlayer; ++i) {
-      tabBrick[i] = players[i].getBoardGame().getGrid().getTGrid();
+      tabBrick[i] = players[i].getGrid().getTGrid();
     }
     return tabBrick;
   }
@@ -79,8 +79,8 @@ public class GameEngine {
     Player p1 = players[0];
     Player p2 = players[1];
 
-    Grid p1Grid = p1.getBoardGame().getGrid();
-    Grid p2Grid = p2.getBoardGame().getGrid();
+    Grid p1Grid = p1.getGrid();
+    Grid p2Grid = p2.getGrid();
 
     CurrentShape p1CS = p1Grid.getCurrentShape();
     CurrentShape p2CS = p2Grid.getCurrentShape();

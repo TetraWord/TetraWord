@@ -5,7 +5,7 @@ import Pattern.Observer;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Grid implements Observable {
+public class Grid implements Observable, Observer {
 
   public static final int sizeX = 10;
   public static final int sizeY = 20;
@@ -14,6 +14,10 @@ public class Grid implements Observable {
   private CurrentModifier currentModifier;
   private ArrayList<Observer> listObserver = new ArrayList<>();
   private final BoardGame myBoardGame;
+  private boolean allowClick = false;
+  private boolean allowDoubleClicked = false;
+  private final ArrayList<Brick> tabBrickClicked = new ArrayList<>();
+  private int[] coordsLastBrickClicked = new int[2];
 
   public Grid(BoardGame b, CurrentShape cS) {
     this.myBoardGame = b;
@@ -59,6 +63,62 @@ public class Grid implements Observable {
   public void setCurrentModifier(CurrentModifier cm) {
     currentModifier = cm;
     updateObservateur(cm);
+  }
+  
+  public void setAllowClick(boolean b) {
+    allowClick = b;
+  }
+
+  public boolean isAllowClick() {
+    return allowClick;
+  }
+  
+  public void setAllowDoubleClick(boolean b) {
+    allowDoubleClicked = b;
+  }
+  
+  public boolean isAllowDoubleClick() {
+    return allowDoubleClicked;
+  }
+  
+  @Override
+  public void update(Observable o, Object args) {
+    if (args instanceof int[] && isAllowClick()) {
+      /*We select the clicked Brick */
+      int x = ((int[]) args)[0];
+      int y = ((int[]) args)[1];
+      int lastX = x;
+      int lastY = y;
+
+      if (coordsLastBrickClicked != null) {
+        lastX = coordsLastBrickClicked[0];
+        lastY = coordsLastBrickClicked[1];
+      }
+
+      Brick b = tGrid[y][x];
+
+      /*If the brick is on the full line and if it's not clicked yet */
+      Player p = myBoardGame.getPlayer();
+      
+      if (p.isAnagram()) {
+        if (y == getFirstFullLine() && !b.isClicked()) {
+          p.addNewChar(b.getLetter());
+          b.setClicked(true);
+        }
+      } else if (p.isWorddle()) {
+        if (!b.isClicked() && !isAllowDoubleClick() && Math.abs(lastX - x) < 2 && Math.abs(lastY - y) < 2) {
+          b.setClicked(true);
+          tabBrickClicked.add(b);
+          p.addNewChar(b.getLetter());
+          coordsLastBrickClicked = getBrickCoordInGrid(b);
+        } else if (isAllowDoubleClick() && !b.isDoubleClicked() && b.isClicked() && Math.abs(lastX - x) < 2 && Math.abs(lastY - y) < 2) {
+          doubleClickedAllBrickClicked(b);
+          setAllowDoubleClick(false);
+          p.addNewChar(b.getLetter());
+          coordsLastBrickClicked = getBrickCoordInGrid(b);
+        }
+      }
+    }
   }
 
   public int getFirstFullLine() {
@@ -175,7 +235,7 @@ public class Grid implements Observable {
     return myBoardGame.getPlayer();
   }
 
-  public Brick clickedOneBrick() {
+  public char clickedOneBrick() {
     Random r = new Random();
 
     int x, y;
@@ -183,8 +243,27 @@ public class Grid implements Observable {
       x = (int) (Math.random() * sizeX);
       y = (int) (Math.random() * sizeY);
     } while (tGrid[y][x].getNb() < 0);
-    tGrid[y][x].setClicked(true);
-    return tGrid[y][x];
+    Brick b = tGrid[y][x];
+    b.setClicked(true);
+    
+    tabBrickClicked.add(b);
+    coordsLastBrickClicked = getBrickCoordInGrid(b);
+    return b.getLetter();
+  }
+  
+  public void setNoLastBrickClicked() {
+    coordsLastBrickClicked = null;
+  }
+
+  public void setBricksToDestroy() {
+    for (int i = 0; i < tabBrickClicked.size(); ++i) {
+      tabBrickClicked.get(i).setInWord();
+    }
+    clearTabBrickClicked();
+  }
+  
+  public void clearTabBrickClicked() {
+    tabBrickClicked.clear();
   }
 
   public void declickedAllBrick() {

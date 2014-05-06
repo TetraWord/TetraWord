@@ -70,15 +70,15 @@ public class IA extends Player implements Runnable {
       String s = getWord();
       if (getDico().included(s)) {
         updateObservateur("Mot valide !");
-        boardGame.setBricksToDestroy();
+        boardGame.getGrid().setBricksToDestroy();
         addToScore(s.length() * 3);
       } else {
         System.out.println("Non Existant");
-        boardGame.clearTabBrickClicked();
+        boardGame.getGrid().clearTabBrickClicked();
         addToScore(-s.length() * 4);
       }
       clearWord();
-      boardGame.setAllowDoubleClick(true);
+      boardGame.getGrid().setAllowDoubleClick(true);
       updateObservateur(null);
     }
     finishWorddle();
@@ -241,7 +241,7 @@ public class IA extends Player implements Runnable {
           }
         } else if( !GameEngine.getInstance().isPlayersInWordMode() && canWorddle() ) {
           switchToWorddle(true);
-          boardGame.setAllowClick(false);
+          boardGame.getGrid().setAllowClick(false);
           GameEngine.getInstance().beginWorddleTimer(this);
           stockCurrentShape();
           addNewChar(getBoardGame().clickedOneBrick());

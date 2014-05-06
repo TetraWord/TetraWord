@@ -201,6 +201,10 @@ public class Player implements Observable {
   public BoardGame getBoardGame() {
     return boardGame;
   }
+  
+  public Grid getGrid() {
+    return boardGame.getGrid();
+  }
 
   protected CurrentShape getCurrentShape() {
     return boardGame.getGrid().getCurrentShape();
@@ -326,7 +330,7 @@ public class Player implements Observable {
   }
 
   public void doAnagram() {
-    boardGame.setAllowClick(true);
+    boardGame.getGrid().setAllowClick(true);
     int numLinesRemoved = 0;
     while (boardGame.getGrid().getFirstFullLine() != -1) {
       if (wordFinish) {
@@ -353,7 +357,7 @@ public class Player implements Observable {
 
     numLinesTotalRemoved += numLinesRemoved;
     updateObservateur(null);
-    boardGame.setAllowClick(false);
+    boardGame.getGrid().setAllowClick(false);
     boardGame.launchNextShape();
   }
 
@@ -368,8 +372,8 @@ public class Player implements Observable {
       startTimerBeforeWorddle();
     }
     wordFinish = b != true;
-    boardGame.setAllowClick(b);
-    boardGame.setNoLastBrickClicked();
+    boardGame.getGrid().setAllowClick(b);
+    boardGame.getGrid().setNoLastBrickClicked();
     state = b ? InGameState.WORDDLE : InGameState.TETRIS;
     updateObservateur(null);
   }
@@ -384,15 +388,15 @@ public class Player implements Observable {
       String s = getWord();
       if (dico.included(s)) {
         updateObservateur("Mot Existant !");
-        boardGame.setBricksToDestroy();
+        boardGame.getGrid().setBricksToDestroy();
         addToScore(s.length() * 3);
       } else {
         updateObservateur("Non Existant");
-        boardGame.clearTabBrickClicked();
+        boardGame.getGrid().clearTabBrickClicked();
         addToScore(-s.length() * 4);
       }
       clearWord();
-      boardGame.setAllowDoubleClick(true);
+      boardGame.getGrid().setAllowDoubleClick(true);
       updateObservateur(null);
     } else if (!GameEngine.getInstance().timerWorddleIsAlive()) {
       finishWorddle();
@@ -400,10 +404,7 @@ public class Player implements Observable {
   }
 
   public void finishWorddle() {
-    boardGame.setAllowDoubleClick(false);
-    boardGame.getGrid().setCurrentShape(currentShapeStocked);
-    boardGame.getGrid().destroyAllSelectedBrickInWord();
-    boardGame.getGrid().declickedAllBrick();
+    boardGame.finishWorddle(currentShapeStocked);
     clearWord();
     updateObservateur(null);
   }

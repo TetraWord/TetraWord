@@ -102,7 +102,7 @@ public class Config1 extends KeyAdapter {
       case KeyEvent.VK_ENTER:
         if ((p.isAnagram() || p.isWorddle()) && p.getWord().length() > 0) {
           p.setWordFinish();
-          p.getBoardGame().setNoLastBrickClicked();
+          p.getGrid().setNoLastBrickClicked();
         } else if (p.hasModifier() && p.isTetris()) {
           p.activeModifier();
         }
@@ -118,7 +118,7 @@ public class Config1 extends KeyAdapter {
         break;
 
       case KeyEvent.VK_NUMPAD2:
-        Grid grid = p.getBoardGame().getGrid();
+        Grid grid = p.getGrid();
         CurrentShape cs = grid.getCurrentShape();
         if (!p.hasShapeStocked()) {
           p.stockShape(cs);

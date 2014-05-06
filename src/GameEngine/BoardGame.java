@@ -1,12 +1,38 @@
 package GameEngine;
 
+import GraphicEngine.BoardGame2D;
 import Pattern.Observable;
 import Pattern.Observer;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public final class BoardGame implements Observable, Observer {
+/**
+ * <b> BoardGame is a logical part of the game.</b>
+ * <p> Each <b> Player </p> in the game has a BoardGame </p>.
+ * <p> The BoardGame is observable by the BoardGame2D, his graphical part.
+ * <p> The BoardGame is observer of the hub.
+ * <p> The BoardGame contains : 
+ *  <ul>
+ *  <li> The Player who played on this BoardGame </li>
+ *  <li> The logical Grid of the Player </li>
+ *  <li> The logical Hub of the Player to display information </li>
+ *  <li> The ShapesStock. Singleton. </li>
+ *  <li> A Queue with the next Shape of the Player </li>
+ *  <li> An ArrayList of his observateur object </li>
+ *  <li> An ArrayList of the Brick clicked in the Grid </li>
+ *  <li> The coordonates of the last Brick clicked in the Grid </li>
+ *  <li> The offsetX and the offsetY of the BoardGame for the shake Modifier </li>
+ * </ul>
+ * </p>
+ * 
+ * @see Player
+ * @see Grid
+ * @see Hub
+ * @see BoardGame2D
+ * 
+ */
+public final class BoardGame implements Observable {
 
   private final Grid grid;
   private final Hub hub;
@@ -14,10 +40,6 @@ public final class BoardGame implements Observable, Observer {
   private final static ShapesStock ss = ShapesStock.getInstance();
   private final Queue<Shape> listNextShape = new LinkedList<>();
   private ArrayList<Observer> listObserver = new ArrayList<>();
-  private boolean allowClick = false;
-  private boolean allowDoubleClicked = false;
-  private final ArrayList<Brick> tabBrickClicked = new ArrayList<>();
-  private int[] coordsLastBrickClicked = new int[2];
 	private int offsetX = 0;
 	private int offsetY = 0;
 
@@ -109,51 +131,6 @@ public final class BoardGame implements Observable, Observer {
     listObserver = new ArrayList<>();
   }
 
-  public void setAllowClick(boolean b) {
-    allowClick = b;
-  }
-
-  void setAllowDoubleClick(boolean b) {
-    allowDoubleClicked = b;
-  }
-
-  @Override
-  public void update(Observable o, Object args) {
-    if (args instanceof int[] && allowClick) {
-      /*We select the clicked Brick */
-      int x = ((int[]) args)[0];
-      int y = ((int[]) args)[1];
-      int lastX = x;
-      int lastY = y;
-
-      if (coordsLastBrickClicked != null) {
-        lastX = coordsLastBrickClicked[0];
-        lastY = coordsLastBrickClicked[1];
-      }
-
-      Brick b = grid.getTGrid()[y][x];
-
-      /*If the brick is on the full line and if it's not clicked yet */
-      if (myPlayer.isAnagram()) {
-        if (y == grid.getFirstFullLine() && !b.isClicked()) {
-          myPlayer.addNewChar(b.getLetter());
-          b.setClicked(true);
-        }
-      } else if (myPlayer.isWorddle()) {
-        if (!b.isClicked() && !allowDoubleClicked && Math.abs(lastX - x) < 2 && Math.abs(lastY - y) < 2) {
-          b.setClicked(true);
-          tabBrickClicked.add(b);
-          myPlayer.addNewChar(b.getLetter());
-          coordsLastBrickClicked = grid.getBrickCoordInGrid(b);
-        } else if (allowDoubleClicked && !b.isDoubleClicked() && b.isClicked() && Math.abs(lastX - x) < 2 && Math.abs(lastY - y) < 2) {
-          doubleClickedAllBrickClicked(b);
-          myPlayer.addNewChar(b.getLetter());
-          coordsLastBrickClicked = grid.getBrickCoordInGrid(b);
-        }
-      }
-    }
-  }
-
   public void finishFall(CurrentShape s) {
     grid.setIn(s);
     if (grid.getFirstFullLine() != -1) {
@@ -165,34 +142,11 @@ public final class BoardGame implements Observable, Observer {
   }
 
   public char clickedOneBrick() {
-    Brick b = grid.clickedOneBrick();
-    tabBrickClicked.add(b);
-    coordsLastBrickClicked = grid.getBrickCoordInGrid(b);
-    return b.getLetter();
+    return grid.clickedOneBrick();
   }
 
   public void declickedAllBrick() {
     grid.declickedAllBrick();
-  }
-
-  private void doubleClickedAllBrickClicked(Brick b) {
-    grid.doubleClickedAllBrickClicked(b);
-    setAllowDoubleClick(false);
-  }
-
-  public void setNoLastBrickClicked() {
-    coordsLastBrickClicked = null;
-  }
-
-  public void setBricksToDestroy() {
-    for (int i = 0; i < tabBrickClicked.size(); ++i) {
-      tabBrickClicked.get(i).setInWord();
-    }
-    clearTabBrickClicked();
-  }
-  
-  public void clearTabBrickClicked() {
-    tabBrickClicked.clear();
   }
 
   StringBuilder getAllLetterFromTheRemovedLine() {
@@ -201,6 +155,13 @@ public final class BoardGame implements Observable, Observer {
 
   void removeLine() {
     grid.removeLine(grid.getFirstFullLine());
+  }
+
+  void finishWorddle(CurrentShape cs) {
+    grid.setAllowDoubleClick(false);
+    grid.setCurrentShape(cs);
+    grid.destroyAllSelectedBrickInWord();
+    grid.declickedAllBrick();
   }
 
 }

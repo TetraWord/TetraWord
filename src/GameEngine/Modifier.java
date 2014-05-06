@@ -206,7 +206,7 @@ public class Modifier {
   }
 
   private void bomb(Player p) {
-    Grid grid = p.getBoardGame().getGrid();
+    Grid grid = p.getGrid();
     Brick[][] tGrid = grid.getTGrid();
     CurrentShape s = grid.getCurrentShape();
     //Random beetween 1 and 2;
