@@ -7,6 +7,17 @@ import GameEngine.Player;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+/**
+ * <b> Config2 is an KeyEventListener class for the player 2. </b>
+ * <p>
+ * Config2 contains the player who plays with it. </p>
+ * <p>
+ * It extends from KeyAdapter, and override the keyPressed method </p>
+ * <p>
+ * Same methods as Config1 with other keys listened </p>
+ *
+ * @see Config1
+ */
 public class Config2 extends KeyAdapter {
 
   private final Player p;
