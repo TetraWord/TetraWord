@@ -2,6 +2,7 @@ package GraphicEngine;
 
 import ContextManager.GridEventListener;
 import GameEngine.Brick;
+import GameEngine.CurrentModifier;
 import GameEngine.CurrentShape;
 import GameEngine.Grid;
 import GameEngine.Modifier;
@@ -65,7 +66,7 @@ public class Grid2D extends JPanel implements Observer {
     } catch (IOException ex) {
       /*Default background*/
 			Brick2D.setBrickImage("media/Design/paper/brick.png");
-			Modifier2D.setModifierImage(prop.getProperty("media/Design/paper/modifier.png"));
+			Modifier2D.setModifierImage("media/Design/paper/modifier.png");
       ex.printStackTrace();
     } finally {
       if (input != null) {
@@ -85,8 +86,14 @@ public class Grid2D extends JPanel implements Observer {
     s.addObservateur(currentShape);
   }
   
-  public void setModifier2D(Modifier m) {
-  	currentModifier = new Modifier2D(m);
+  public void setModifier2D(CurrentModifier m) {
+  	if(m != null){
+    	currentModifier = new Modifier2D(m);
+  	}
+  }
+  
+  public void removeModifier2D(){
+  	currentModifier = null;
   }
 
   public void draw(Graphics g, int offsetX, int offsetY) {
@@ -129,6 +136,14 @@ public class Grid2D extends JPanel implements Observer {
     if (args instanceof Brick) {
       /*We put a new brick in the grid -> create a brick2D*/
       saveBrick();
+    }
+    if (args instanceof CurrentModifier) {
+      /*We put a new modifier in the grid -> create a modifier2D*/
+      setModifier2D((CurrentModifier) args);
+    }
+    if (args == null) {
+      /*We remove the modifier*/
+      removeModifier2D();
     }
     if (args instanceof Brick[][]) {
       /*We put a new brick in the grid -> create a brick2D*/

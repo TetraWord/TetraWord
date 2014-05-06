@@ -16,13 +16,13 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import GameEngine.Modifier;
+import GameEngine.CurrentModifier;
 
 public class Modifier2D {
-	private final Modifier model;
+	private final CurrentModifier model;
 	private static String modifierImg;
 	
-	public Modifier2D(Modifier model) {
+	public Modifier2D(CurrentModifier model) {
 		this.model = model;
 	}
 	
@@ -31,8 +31,8 @@ public class Modifier2D {
 	}
 	
 	public void draw(Graphics g, int offsetX, int offsetY, double ratio) {
-		int top = 100 + offsetY;
-		int left = 35 + offsetX;
+		int top = 135 + offsetY;
+		int left = 70 + offsetX;
 		int sizeBrick = 35;
 		Color c = Color.RED;
 		BufferedImage monImage = getModifierImage(c);
@@ -50,7 +50,7 @@ public class Modifier2D {
 			monImage = after;
 		}
 
-		g.drawImage(monImage, sizeBrick + left, sizeBrick + top, null);
+		g.drawImage(monImage, model.getX() * sizeBrick + left, model.getY() * sizeBrick + top, null);
 		g.setColor(Color.black);
 	}
 

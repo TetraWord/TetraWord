@@ -61,7 +61,6 @@ public class Dictionnary {
 		ArrayList<String> list = new ArrayList<String>();
 		String[] res = new String[10];
     boolean anagramme = false;
-    System.out.println(" s : " + s);
 
     // --- Verify that the chars of the word entered are contained in a word of the dictionary
     Iterator it = dico.iterator();
@@ -96,7 +95,6 @@ public class Dictionnary {
       //if the word is an anagram, add in the list of anagram
       if (anagramme == true) {
       	list.add(str);
-        System.out.println("str vaut : " + str );
       }
     }
 
@@ -116,7 +114,6 @@ public class Dictionnary {
     int cpt=1;
     for(int i=1; i<list.size() ; i=i+10){
 	    if(list.get(i).length() > 2 && cpt < 9){
-	    	System.out.println("length():" +list.get(i).length());
 	  		res[cpt++] = list.get(i);
 	  	}
     }

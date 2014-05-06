@@ -3,13 +3,14 @@ package GameEngine;
 import GameEngine.Dictionnary.Dictionnary;
 import Pattern.Observable;
 import Pattern.Observer;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-
 import java.util.ArrayList;
 import java.util.Properties;
 import java.util.Timer;
+import java.util.TimerTask;
 
 public class Player implements Observable {
 
@@ -30,9 +31,11 @@ public class Player implements Observable {
   private final Object monitor = new Object();
   private ArrayList<Observer> listObserver = new ArrayList<>();
   private final Dictionnary dico;
-  private Modifier modifier = new Modifier("Shake");
+  private Modifier modifier = null;
+  private CurrentModifier currentModifier = null;
   private boolean worddle = false;
   private Timer timerBeforeWorddle = null;
+  private Timer timerBeforeModifier = null;
   private long t = 0;
 
   public Player(int nb, Shape s, Shape s2, Dictionnary d) {
@@ -45,7 +48,7 @@ public class Player implements Observable {
     speedFall = 1000;
     speedFallInit = speedFall;
     loadOptions();
-    boardGame.getGrid().setCurrentModifier(new Modifier("Shake"));
+    displayModifier();
   }
 
   private void loadOptions() {
@@ -134,6 +137,12 @@ public class Player implements Observable {
         if (!s.tryCollision(boardGame.getGrid().getTGrid(), s.getX(), s.getY() + step)) {
           s.move(s.getX(), s.getY() + step);
         }
+        if(currentModifier!= null && s.tryCollision(currentModifier,  s.getX(), s.getY())){
+        	this.modifier = new Modifier(this.currentModifier);
+					updateObservateur(this.modifier);
+        	this.currentModifier = null;
+        	boardGame.getGrid().setCurrentModifier(currentModifier);
+        }
         //Si on ne peut pas faire descendre la pièce plus bas, on l'inscrit dans la Grid
         if (tmpY == s.getY()) {
           boardGame.finishFall(s);
@@ -170,6 +179,13 @@ public class Player implements Observable {
       int interval = finalLine - s.getY();
       this.addToScore(interval * 2);
       s.move(s.getX(), finalLine - 1);
+      
+      if(currentModifier!= null && s.tryCollision(currentModifier,  s.getX(), s.getY())){
+      	this.modifier = new Modifier(this.currentModifier);
+      	System.out.println("catch modifier");
+      	this.currentModifier = null;
+      	boardGame.getGrid().setCurrentModifier(currentModifier);
+      }
 
       boardGame.finishFall(s);
     }
@@ -419,6 +435,33 @@ public class Player implements Observable {
     return speedFallInit;
   }
 
+	public Modifier getModifier() {
+		return modifier;
+	}
+  
+  public void displayModifier() {
+  	 timerBeforeModifier = new Timer();
+  	 
+  	 timerBeforeModifier.schedule(new TimerTask() {
+  		 @Override
+  		 public void run() {
+  			 System.out.println("New Modifier");
+  			 currentModifier = new CurrentModifier(boardGame.getGrid().getTGrid());
+  		   boardGame.getGrid().setCurrentModifier(currentModifier);
+  		 }
+  	 }, 30000, 65000);
+  	 
+  	 timerBeforeModifier.schedule(new TimerTask() {
+			@Override
+			public void run() {
+				System.out.println("Delete modifier");
+				currentModifier = null;
+				boardGame.getGrid().setCurrentModifier(currentModifier);
+			}
+  	 }, 35000);
+  	
+  }
+
   public boolean hasModifier() {
     return modifier != null;
   }
@@ -426,7 +469,13 @@ public class Player implements Observable {
   public void activeModifier() {
     modifier.active(this);
     modifier = null;
+		updateObservateur(modifier);
   }
+  
+  /*public void throwModifier() {
+  	modifier.active(Adversaire);
+    modifier = null;
+  }*/
   
   public void shake(int offsetX, int offsetY) {
 		boardGame.setOffset(offsetX, offsetY);

@@ -2,45 +2,53 @@ package GameEngine;
 
 import static GameEngine.Grid.sizeX;
 import static GameEngine.Grid.sizeY;
-import Pattern.Observable;
-import Pattern.Observer;
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class Modifier implements Observable {
+public class Modifier {
+	
+	private enum ModifierEnum {
+    Speed, Shake, Storm, Exchange, Score, Bomb, Worddle
+  };
+	/*Non implémenté
+		Reversal
+		TimeTravel
+	*/
 
   private String name;
   private Timer t = null;
-	private int coordX;
-	private int coordY;
+ 
+	public Modifier() {
+		Random r = new Random();
+		int random = r.nextInt(7);
+		this.name = ModifierEnum.values()[random].toString();
+	}
 
   public Modifier(String name) {
-    this.name = name;
-    this.coordX = 5;
-    this.coordY = 8;
+		this.name = name;
+  }
+  
+  public Modifier( Modifier m) {
+  	this.name = m.getName();
   }
 
   public String getName() {
     return this.name;
   }
-  
-  public int getX() {
-  	return this.coordX;
-  }
-  
-  public int getY() {
-  	return this.coordY;
-  }
 
   public void active(Player p) {
+		int random;
     switch (this.name) {
       case "Speed":
-        this.changeSpeed(p, '+');
+				random = (int) Math.random();
+				if(random == 0){
+					this.changeSpeed(p, '+');
+				} else {
+					this.changeSpeed(p, '-');
+				}
         break;
-
-      case "Slow":
-        this.changeSpeed(p, '-');
-        break;
+				
 
       case "Shake":
         this.shake(p);
@@ -58,12 +66,13 @@ public class Modifier implements Observable {
         this.exchange();
         break;
 
-      case "Score+":
-        this.score(p, '+');
-        break;
-
-      case "Score-":
-        this.score(p, '-');
+      case "Score":
+				random = (int) Math.random();
+				if(random == 0){
+					this.score(p, '+');
+				} else {
+				 this.score(p, '-');
+				}
         break;
 
       case "Bomb":
@@ -248,21 +257,4 @@ public class Modifier implements Observable {
     }
   }
 
-  @Override
-  public void addObservateur(Observer obs) {
-    // TODO Auto-generated method stub
-
-  }
-
-  @Override
-  public void updateObservateur(Object args) {
-    // TODO Auto-generated method stub
-
-  }
-
-  @Override
-  public void delObservateur() {
-    // TODO Auto-generated method stub
-
-  }
 }

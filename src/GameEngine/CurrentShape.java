@@ -247,5 +247,23 @@ public class CurrentShape extends Shape {
 
     return false;
   }
+  
+  /* TryCollision pour le modifier */
+  public boolean tryCollision(CurrentModifier m, int newX, int newY ) {
+  	int X = m.getX();
+  	int Y = m.getY();
+  	
+  	for (int i = 0; i < sizeShape; ++i) {
+      for (int j = 0; j < sizeShape; ++j) {
+        int value = representation[i][j];
+        //On teste s'il y a déjà un élément dans la grid
+        if (value > 0 && newX + j == X && newY + i == Y) {
+          return true;
+        }
+      }
+    }
+  	
+  	return false;
+  }
 
 }
