@@ -264,7 +264,7 @@ public class Grid implements Observable, Observer {
 
   public void setBricksToDestroy() {
     for (int i = 0; i < tabBrickClicked.size(); ++i) {
-      tabBrickClicked.get(i).setInWord();
+      tabBrickClicked.get(i).setToDestroy();
     }
     clearTabBrickClicked();
   }
@@ -284,7 +284,7 @@ public class Grid implements Observable, Observer {
   public void destroyAllSelectedBrickInWord() {
     for (int i = 0; i < sizeY; ++i) {
       for (int j = 0; j < sizeX; ++j) {
-        if (tGrid[i][j].isClicked() && tGrid[i][j].isInWord()) {
+        if (tGrid[i][j].isClicked() && tGrid[i][j].gonnaBeDestroyed()) {
           doGravityOnBrick(i, j);
         }
       }

@@ -1,47 +1,178 @@
 package GameEngine;
 
 import ContextManager.ContextManager;
-import GameEngine.Dictionnary.Dictionnary;
+import GameEngine.Dictionnary.Dictionary;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * <b> GameEngine is the logical engine of the game</b>.
+ * <p>
+ * It's a singleton class, so it can be called everywhere with its <b>
+ * getInstance() </b> method. </p>
+ * <p>
+ * It's the main logical part of the game. It knows all players and contains
+ * timer for the game. </p>
+ * <p>
+ * This class contains :
+ * <ul>
+ * <li> An instance of the singleton GameEngine. </li>
+ * <li> An array of players in game. </li>
+ * <li> The number of player in game. </li>
+ * <li> The Dictionary to check the right word. </li>
+ * <li> A boolean to know if an IA is in the game. </li>
+ * <li> The worddleTimer of the Player. </li>
+ * <li> The game timer </li>
+ * <li> The time until the game stop </li>
+ * </ul>
+ * </p>
+ *
+ * @see Dictionary
+ *
+ */
 public class GameEngine {
 
+  /**
+   * Contains the instance of the singleton. Not modifiable.
+   *
+   * @see GameEngine#getInstance()
+   */
   private static final GameEngine INSTANCE = new GameEngine();
+
+  /**
+   * The array of players in game.
+   *
+   * @see GameEngine#addNewPlayer(GameEngine.Shape, GameEngine.Shape, boolean)
+   * @see GameEngine#getPlayers()
+   */
   private final Player[] players;
+
+  /**
+   * The number of player in game. Set to 0.
+   *
+   * @see GameEngine#getNbPlayers()
+   */
   private int nbPlayer = 0;
-  private final Dictionnary dictionnary = new Dictionnary();
+
+  /**
+   * The game Dictionary.
+   *
+   * @see Dictionary
+   */
+  private final Dictionary dictionary = new Dictionary();
+
+  /**
+   * To know if there is an IA in the game.
+   *
+   * @see GameEngine#hasIA()
+   * @see GameEngine#setIA(boolean)
+   */
   private boolean ia = false;
+
+  /**
+   *
+   */
   private Timer worddleTimer = null;
+
+  /**
+   * The timer before the game end
+   *
+   * @see GameEngine#setGameTimer()
+   * @see GameEngine#getTimeLeft()
+   */
   private Timer gameTimer = null;
+
+  /**
+   * The time when begin the timer. To know how many time left.
+   */
   private long tBegin;
-  //10 minutes
+
+  /**
+   * The game's time last. Not modifiable. Match for 10 minutes.
+   */
   private final long timeToEndGame = 10 * 60 * 1000;
 
-  //Singleton
+  /**
+   * GameEngine constructor. Singleton.
+   *
+   * Initialize the game for 4 players max.
+   */
   private GameEngine() {
     players = new Player[4];
   }
 
+  /**
+   * To get the instance of the singleton GameEngine.
+   *
+   * @return The instance of the GameEngine.
+   *
+   * @see GameEngine#GameEngine()
+   * @see GameEngine#INSTANCE
+   */
   public static GameEngine getInstance() {
     return INSTANCE;
   }
 
+  /**
+   * Add a new Player to the gameEngine. Create the new Player / IA. Increments
+   * the number of Player.
+   *
+   * @param s The first Shape of the Player
+   * @param s2 The second Shape of the Player.
+   * @param isIA To know if the new Player is an IA or not.
+   * @see Player#Player(int, GameEngine.Shape, GameEngine.Shape,
+   * GameEngine.Dictionnary.Dictionary)
+   * @see IA#IA(int, GameEngine.Shape, GameEngine.Shape,
+   * GameEngine.Dictionnary.Dictionary)
+   * @see GameEngine#nbPlayer
+   */
   public void addNewPlayer(Shape s, Shape s2, boolean isIA) {
-    if( isIA ){
-      players[nbPlayer] = new IA(nbPlayer, s, s2, dictionnary);
+    if (isIA) {
+      players[nbPlayer] = new IA(nbPlayer, s, s2, dictionary);
     } else {
-      players[nbPlayer] = new Player(nbPlayer, s, s2, dictionnary);
+      players[nbPlayer] = new Player(nbPlayer, s, s2, dictionary);
     }
     ++nbPlayer;
   }
 
+  /**
+   * Get the array of the Players in the game.
+   *
+   * @return The array of the Players in the game.
+   * @see GameEngine#players
+   */
   public Player[] getPlayers() {
     return players;
   }
 
+  /**
+   * Get the number of players in the game.
+   *
+   * @return The number of players in the game.
+   * @see GameEngine#nbPlayer
+   */
   public int getNbPlayers() {
     return nbPlayer;
+  }
+
+  /**
+   * To know if there is an IA in the game.
+   *
+   * @return true if there is an IA, false otherwise.
+   * @see GameEngine#ia
+   */
+  public boolean hasIA() {
+    return ia;
+  }
+
+  /**
+   * To set the ia variable
+   *
+   * @param ia the value of the boolean
+   * @see GameEngine#ia
+   */
+  public void setIA(boolean ia) {
+    this.ia = ia;
   }
 
   public void beginWorddleTimer(Player p) {
@@ -57,6 +188,11 @@ public class GameEngine {
     return worddleTimer != null;
   }
 
+  /**
+   * To know if a Player is in a word mode (Worddle / Anagram).
+   *
+   * @return true if a Player is in a word mode, false otherwise.
+   */
   public boolean isPlayersInWordMode() {
     for (int i = 0; i < nbPlayer; ++i) {
       if (!players[i].isTetris()) {
@@ -64,17 +200,41 @@ public class GameEngine {
       }
     }
     return false;
+  }
+  
+  /**
+   * Set the game timer to begin
+   * 
+   * @see GameEngine#gameTimer
+   * @see GameEngine#tBegin
+   */
+  public void setGameTimer() {
+    gameTimer = new Timer();
+    tBegin = System.nanoTime();
+    gameTimer.schedule(new TimerTask() {
 
+      @Override
+      public void run() {
+        ContextManager.getInstance().stop();
+      }
+    }, timeToEndGame);
   }
 
-  public Brick[][][] getBrickGrids() {
-    Brick[][][] tabBrick = new Brick[nbPlayer][Grid.sizeY][Grid.sizeX];
-    for (int i = 0; i < nbPlayer; ++i) {
-      tabBrick[i] = players[i].getGrid().getTGrid();
-    }
-    return tabBrick;
+  /**
+   * Get the time last before the game ends.
+   * 
+   * @return the time last before the game ends. 
+   */
+  public long getTimeLeft() {
+    return ((timeToEndGame * 1000000 - (System.nanoTime() - tBegin)) / 1000000000);
   }
 
+  /**
+   * Exchange two Player's Grid.
+   * Called by a Modifier.
+   * 
+   * @see Modifier#exchange() 
+   */
   public void exchange() {
     Player p1 = players[0];
     Player p2 = players[1];
@@ -102,31 +262,10 @@ public class GameEngine {
 
   }
 
-  public boolean hasIA() {
-    return ia;
-  }
-
-  public void setIA(boolean ia) {
-    this.ia = ia;
-  }
-  
+  /**
+   * Stop the game. 
+   */
   public void stop() {
     //TO DO
-  }
-
-  public void setGameTimer() {
-    gameTimer = new Timer();
-    tBegin = System.nanoTime();
-    gameTimer.schedule(new TimerTask() {
-
-      @Override
-      public void run() {
-        ContextManager.getInstance().stop();
-      }
-    }, timeToEndGame);
-  }
-  
-  public long getTimeLeft() {
-    return ((timeToEndGame * 1000000 - (System.nanoTime() - tBegin)) / 1000000000);
   }
 }

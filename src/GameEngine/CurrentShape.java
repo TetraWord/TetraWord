@@ -3,7 +3,8 @@ package GameEngine;
 import java.awt.Color;
 
 /**
- * <b> CurrentShape is a logical part of the game representing the Shape falling in the Grid.</b>
+ * <b> CurrentShape is a logical part of the game representing the Shape falling
+ * in the Grid.</b>
  * <p>
  * The CurrentShape inherits from the Shape. </p>
  * <p>
@@ -21,24 +22,24 @@ public class CurrentShape extends Shape {
 
   /**
    * The position of the CurrentShape in the Grid
-   * 
-   * @see CurrentShape#getX() 
+   *
+   * @see CurrentShape#getX()
    * @see CurrentShape#getY()
-   * @see CurrentShape#move(int, int) 
+   * @see CurrentShape#move(int, int)
    */
   private int curX, curY;
 
   /**
-   * Private CurrentShape constructor. 
-   * Call the Shape constructor
-   * Initialize the position of the CurrentShape to (3,0).
-   * 
+   * Private CurrentShape constructor. Call the Shape constructor Initialize the
+   * position of the CurrentShape to (3,0).
+   *
    * @param name The name of the Shape
    * @param color The Color of the Shape
    * @param representation The representation of the Shape
    * @param composition The Brick composition of the Shape
-   * 
-   * @see Shape#Shape(java.lang.String, java.awt.Color, int[][], GameEngine.Brick[][]) 
+   *
+   * @see Shape#Shape(java.lang.String, java.awt.Color, int[][],
+   * GameEngine.Brick[][])
    */
   private CurrentShape(String name, Color color, int[][] representation, Brick[][] composition) {
     super(name, color, representation, composition);
@@ -47,11 +48,11 @@ public class CurrentShape extends Shape {
   }
 
   /**
-   * CurrentShape constructor.
-   * Call the private constructor of CurrentShape.
-   * 
+   * CurrentShape constructor. Call the private constructor of CurrentShape.
+   *
    * @param s The Shape who become a CurrentShape
-   * @see CurrentShape#CurrentShape(java.lang.String, java.awt.Color, int[][], GameEngine.Brick[][]) 
+   * @see CurrentShape#CurrentShape(java.lang.String, java.awt.Color, int[][],
+   * GameEngine.Brick[][])
    */
   public CurrentShape(Shape s) {
     this(s.name, s.color, s.representation, s.composition);
@@ -59,6 +60,7 @@ public class CurrentShape extends Shape {
 
   /**
    * Get the horizontal position of the CurrentShape.
+   *
    * @return The horizontal position.
    * @see CurrentShape#curX
    */
@@ -68,16 +70,17 @@ public class CurrentShape extends Shape {
 
   /**
    * Get the vertical position of the CurrentShape.
+   *
    * @return The vertical position.
    * @see CurrentShape#curY
    */
   public int getY() {
     return curY;
   }
-  
+
   /**
    * Set the CurrentShape new position.
-   * 
+   *
    * @param newX The new horizontal position.
    * @param newY The new vertical position.
    * @see CurrentShape#curX
@@ -87,12 +90,11 @@ public class CurrentShape extends Shape {
     curX = newX;
     curY = newY;
   }
-  
-  
+
   /**
-   * Test if the CurrentShape collides with an other Shape in the Grid.
-   * Method called for down(), left(), right() and dropDown() method from Player().
-   * 
+   * Test if the CurrentShape collides with an other Shape in the Grid. Method
+   * called for down(), left(), right() and dropDown() method from Player().
+   *
    * @param g The brick composition of the CurrentShape
    * @param newX The horizontal position of the CurrentShape wanted
    * @param newY The vertical position of the CurrentShape wanted
@@ -121,17 +123,17 @@ public class CurrentShape extends Shape {
 
   /**
    * Test if the CurrentShape collides with a Modifier in the Grid.
-   * 
+   *
    * @param m The CurrentModifier in the Grid.
    * @param newX The new horizontal position of the CurrentShape
    * @param newY The new vertical position of the CurrentShape
    * @return true if there is collision, false if not.
    */
-  public boolean tryCollision(CurrentModifier m, int newX, int newY ) {
-  	int X = m.getX();
-  	int Y = m.getY();
-  	
-  	for (int i = 0; i < sizeShape; ++i) {
+  public boolean tryCollision(CurrentModifier m, int newX, int newY) {
+    int X = m.getX();
+    int Y = m.getY();
+
+    for (int i = 0; i < sizeShape; ++i) {
       for (int j = 0; j < sizeShape; ++j) {
         int value = representation[i][j];
         //On teste s'il y a déjà un élément dans la grid
@@ -140,13 +142,13 @@ public class CurrentShape extends Shape {
         }
       }
     }
-  	
-  	return false;
+
+    return false;
   }
-  
+
   /**
    * Rotate the CurrentShape.
-   * 
+   *
    * @param g The Brick composition of the CurrentShape
    */
   public void rotateLeft(Brick[][] g) {
@@ -162,10 +164,10 @@ public class CurrentShape extends Shape {
 
     repTmp = replaceToTopLeftCorner(repTmp);
     compTmp = replaceToTopLeftCorner(compTmp);
-    
+
     int[][] prevRepresentation = (this.representation).clone();
     this.representation = repTmp.clone();
-    
+
     if (!tryCollision(g, curX, curY)) {
       representation = repTmp;
       composition = compTmp;
@@ -176,7 +178,7 @@ public class CurrentShape extends Shape {
       while (curY > (Grid.sizeY - getMaxHeight(representation))) {
         --curY;
       }
-    }else {
+    } else {
       representation = prevRepresentation.clone();
     }
 
@@ -185,7 +187,7 @@ public class CurrentShape extends Shape {
 
   /**
    * Replace the Shape to the top left corner of the 4*4 representation.
-   * 
+   *
    * @param matrix The Brick composition of the CurrentShape
    * @return The new Brick composition replace to the top left corner.
    */
@@ -238,7 +240,7 @@ public class CurrentShape extends Shape {
 
   /**
    * Replace the Shape to the top left corner of the 4*4 representation.
-   * 
+   *
    * @param matrix The Shape representation
    * @return The new Shape representation replace to the top left corner.
    */
@@ -291,7 +293,7 @@ public class CurrentShape extends Shape {
 
   /**
    * Get the max width of the CurrentShape.
-   * 
+   *
    * @param matrix The representation of the Shape.
    * @return the max width of the CurrentShape.
    */
@@ -314,7 +316,7 @@ public class CurrentShape extends Shape {
 
   /**
    * Get the max height of the CurrentShape
-   * 
+   *
    * @param matrix The representation of the Shape.
    * @return the max height of the CurrentShape.
    */
@@ -337,6 +339,7 @@ public class CurrentShape extends Shape {
 
   /**
    * Get the final line where the CurrentShape can go.
+   *
    * @param matrix The Brick composition of the CurrentShape.
    * @return the final line where the CurrentShape can go.
    */
@@ -349,5 +352,5 @@ public class CurrentShape extends Shape {
 
     return finalLine - 1;
   }
-  
+
 }

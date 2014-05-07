@@ -12,11 +12,11 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
 
-public class Dictionnary {
+public class Dictionary {
 
   HashSet dico;
 
-  public Dictionnary() {
+  public Dictionary() {
     dico = new HashSet();
     String file = "./media/dictionnary.txt";
 

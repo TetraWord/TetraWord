@@ -1,7 +1,7 @@
 package GameEngine;
 
 import ContextManager.ContextManager;
-import GameEngine.Dictionnary.Dictionnary;
+import GameEngine.Dictionnary.Dictionary;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -11,7 +11,7 @@ public class IA extends Player implements Runnable {
   private int bestRotationDelta;
   private int bestMerit;
 
-  public IA(int nb, Shape s, Shape s2, Dictionnary d) {
+  public IA(int nb, Shape s, Shape s2, Dictionary d) {
     super(nb, s, s2, d);
   }
 
