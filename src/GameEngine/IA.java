@@ -118,11 +118,11 @@ public class IA extends Player implements Runnable {
       }
 
       // Determine the translation limits for this rotated piece.
-      int moveIsPossible = 0;
-      int minDeltaX = 0;
-      int maxDeltaX = 0;
+      int moveIsPossible;
+      int minDeltaX;
+      int maxDeltaX;
 
-      int[] result = g.DetermineAccessibleTranslationsForPieceOrientation(tmpShape, moveIsPossible, minDeltaX, maxDeltaX);
+      int[] result = g.DetermineAccessibleTranslationsForShapeOrientation(tmpShape);
 
       moveIsPossible = result[0];
       minDeltaX = result[1];
@@ -150,7 +150,7 @@ public class IA extends Player implements Runnable {
             // out a drop and evaluating the move.
             tmpGrid = new Grid(g);
 
-            tmpGrid.FullDropAndAddPieceToBoard(tmpShape);
+            tmpGrid.FullDropAndAddShapeToGrid(tmpShape);
 
             trialPriority = 0;
 
