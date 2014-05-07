@@ -101,13 +101,6 @@ public class Hud2D extends JPanel implements Observer {
      word.setHorizontalAlignment(CENTER);
      this.add(word);*/
 
-    /* UI messages */
-    messages = new JLabel("", CENTER);
-    setJLabel(messages, 70, 0, 367, 55);
-    messages.setVerticalTextPosition(CENTER);
-    messages.setHorizontalAlignment(CENTER);
-    this.add(messages);
-
     /* UI Timer time left */
     timerTimeLeft = new JLabel(Long.toString(hub.getTimeLeft()), CENTER);
     setJLabel(timerTimeLeft, 400, 510, 300, 23);
@@ -120,6 +113,24 @@ public class Hud2D extends JPanel implements Observer {
     timerBeforeWorddle.setBounds(473, 602, 157, 23);
     timerBeforeWorddle.setFont(new Font(font, Font.BOLD, 18));
     this.add(timerBeforeWorddle);
+		
+		try {
+			File fis = new File("media/font/cinnamon cake.ttf");
+			f = Font.createFont(Font.TRUETYPE_FONT, fis);
+			f = f.deriveFont((float) 20.0);
+		} catch (FontFormatException ex) {
+			Logger.getLogger(Hud2D.class.getName()).log(Level.SEVERE, null, ex);
+		} catch (IOException ex) {
+			Logger.getLogger(Hud2D.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		
+    /* UI messages */
+    messages = new JLabel("", CENTER);
+    setJLabel(messages, 70, 0, 367, 55);
+    messages.setVerticalTextPosition(CENTER);
+    messages.setHorizontalAlignment(CENTER);
+		messages.setForeground(Color.BLACK);
+    this.add(messages);
 
     tMessage = new Timer();
     //Set to init speed the player after 5 seconds
