@@ -15,7 +15,7 @@ import java.util.Queue;
  *  <ul>
  *  <li> The Player who played on this BoardGame </li>
  *  <li> The logical Grid of the Player </li>
- *  <li> The logical Hub of the Player to display information </li>
+ *  <li> The logical Hud of the Player to display information </li>
  *  <li> The ShapesStock. Singleton. </li>
  *  <li> A Queue with the next Shape of the Player </li>
  *  <li> An ArrayList of his observateur object </li>
@@ -25,14 +25,14 @@ import java.util.Queue;
  * 
  * @see Player
  * @see Grid
- * @see Hub
+ * @see Hud
  * @see BoardGame2D
  * 
  */
 public final class BoardGame implements Observable {
 
   private final Grid grid;
-  private final Hub hub;
+  private final Hud hub;
   private final Player myPlayer;
   private final static ShapesStock ss = ShapesStock.getInstance();
   private final Queue<Shape> listNextShape = new LinkedList<>();
@@ -44,7 +44,7 @@ public final class BoardGame implements Observable {
     /* Init attributes */
     this.myPlayer = p;
     this.grid = new Grid(this, new CurrentShape(s));
-    this.hub = new Hub();
+    this.hub = new Hud();
     this.listNextShape.add(s2);
 
     this.myPlayer.addObservateur(hub);
@@ -60,7 +60,7 @@ public final class BoardGame implements Observable {
     return grid;
   }
 
-  public Hub getHub() {
+  public Hud getHub() {
     return hub;
   }
 
