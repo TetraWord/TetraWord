@@ -1,6 +1,6 @@
 package GraphicEngine;
 
-import GameEngine.Hub;
+import GameEngine.Hud;
 import static GraphicEngine.GraphicEngine.WINDOW_WIDTH;
 import Pattern.Observable;
 import Pattern.Observer;
@@ -21,9 +21,9 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import static javax.swing.SwingConstants.CENTER;
 
-public class Hub2D extends JPanel implements Observer {
+public class Hud2D extends JPanel implements Observer {
 
-  private final Hub hub;
+  private final Hud hub;
   private final String font;
   private final Color color;
   private final JLabel playerName;
@@ -43,7 +43,7 @@ public class Hub2D extends JPanel implements Observer {
   private Shape2D stockShape;
 	private Image modifier;
 
-  public Hub2D(final Hub hub, String font, Color color) {
+  public Hud2D(final Hud hub, String font, Color color) {
 
     this.font = font;
     this.color = color;
@@ -61,9 +61,9 @@ public class Hub2D extends JPanel implements Observer {
 			f = Font.createFont(Font.TRUETYPE_FONT, fis);
 			f = f.deriveFont((float) 20.0);
 		} catch (FontFormatException ex) {
-			Logger.getLogger(Hub2D.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(Hud2D.class.getName()).log(Level.SEVERE, null, ex);
 		} catch (IOException ex) {
-			Logger.getLogger(Hub2D.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(Hud2D.class.getName()).log(Level.SEVERE, null, ex);
 		}
 
     /* UI Player name */
@@ -101,13 +101,6 @@ public class Hub2D extends JPanel implements Observer {
      word.setHorizontalAlignment(CENTER);
      this.add(word);*/
 
-    /* UI messages */
-    messages = new JLabel("", CENTER);
-    setJLabel(messages, 70, 0, 367, 55);
-    messages.setVerticalTextPosition(CENTER);
-    messages.setHorizontalAlignment(CENTER);
-    this.add(messages);
-
     /* UI Timer time left */
     timerTimeLeft = new JLabel(Long.toString(hub.getTimeLeft()), CENTER);
     setJLabel(timerTimeLeft, 400, 510, 300, 23);
@@ -120,6 +113,24 @@ public class Hub2D extends JPanel implements Observer {
     timerBeforeWorddle.setBounds(473, 602, 157, 23);
     timerBeforeWorddle.setFont(new Font(font, Font.BOLD, 18));
     this.add(timerBeforeWorddle);
+		
+		try {
+			File fis = new File("media/font/cinnamon cake.ttf");
+			f = Font.createFont(Font.TRUETYPE_FONT, fis);
+			f = f.deriveFont((float) 20.0);
+		} catch (FontFormatException ex) {
+			Logger.getLogger(Hud2D.class.getName()).log(Level.SEVERE, null, ex);
+		} catch (IOException ex) {
+			Logger.getLogger(Hud2D.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		
+    /* UI messages */
+    messages = new JLabel("", CENTER);
+    setJLabel(messages, 70, 0, 367, 55);
+    messages.setVerticalTextPosition(CENTER);
+    messages.setHorizontalAlignment(CENTER);
+		messages.setForeground(Color.BLACK);
+    this.add(messages);
 
     tMessage = new Timer();
     //Set to init speed the player after 5 seconds
@@ -158,7 +169,7 @@ public class Hub2D extends JPanel implements Observer {
 
   @Override
   public void update(Observable o, Object args) {
-    if (o instanceof Hub) {
+    if (o instanceof Hud) {
       playerName.setText(hub.getPlayerName());
       String modeName = "Mode " + hub.getState().getStateName();
       mode.setText(modeName);

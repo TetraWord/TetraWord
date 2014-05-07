@@ -28,7 +28,7 @@ public class BoardGame2D extends JPanel implements Observer {
   private Color color;
   private final GridEventListener event;
   private boolean shadow;
-	private final Hub2D hub;
+	private final Hud2D hub;
 
   public BoardGame2D(BoardGame model) {
     /* Settings */
@@ -39,7 +39,7 @@ public class BoardGame2D extends JPanel implements Observer {
     loadDesign();
     loadOptions();
 
-    hub = new Hub2D(model.getHub(), font, color);
+    hub = new Hud2D(model.getHub(), font, color);
     model.getHub().addObservateur(hub);
     this.add(hub);
 

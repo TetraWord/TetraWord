@@ -29,7 +29,7 @@ import java.util.Queue;
  *
  * @see Player
  * @see Grid
- * @see Hub
+ * @see Hud
  * @see BoardGame2D
  *
  */
@@ -49,7 +49,7 @@ public final class BoardGame implements Observable {
    * @see Hub
    * @see BoardGame#getHub()
    */
-  private final Hub hub;
+  private final Hud hud;
 
   /**
    * The player of the BoardGame. Not modifiable.
@@ -110,11 +110,11 @@ public final class BoardGame implements Observable {
     /* Init attributes */
     this.myPlayer = p;
     this.grid = new Grid(this, new CurrentShape(s));
-    this.hub = new Hub();
+    this.hud = new Hud();
     this.listNextShape.add(s2);
 
-    this.myPlayer.addObservateur(hub);
-    addObservateur(hub);
+    this.myPlayer.addObservateur(hud);
+    addObservateur(hud);
     updateObservateur(null);
   }
 
@@ -128,7 +128,6 @@ public final class BoardGame implements Observable {
   public Grid getGrid() {
     return grid;
   }
-
   /**
    * Get the BoardGame's Hub
    *
@@ -136,8 +135,8 @@ public final class BoardGame implements Observable {
    *
    * @see Hub
    */
-  public Hub getHub() {
-    return hub;
+  public Hud getHub() {
+    return hud;
   }
 
   /**

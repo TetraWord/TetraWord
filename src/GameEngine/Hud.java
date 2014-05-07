@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class Hub implements Observer, Observable {
+public class Hud implements Observer, Observable {
 
   private ArrayList<Observer> listObserver = new ArrayList<>();
   private final Queue<String> listMessage = new LinkedList<>();
@@ -25,7 +25,7 @@ public class Hub implements Observer, Observable {
 	private int offsetY;
   private Modifier modifier;
 
-  public Hub() {
+  public Hud() {
     this.level = 1;
     this.score = 0;
     this.secondBeforeWorddle = 30;

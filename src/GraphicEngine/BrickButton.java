@@ -1,5 +1,6 @@
 package GraphicEngine;
 
+import ContextManager.GridEventListener;
 import javax.swing.JButton;
 
 public class BrickButton extends JButton {
@@ -7,7 +8,7 @@ public class BrickButton extends JButton {
   private final int posX;
   private final int posY;
 
-  public BrickButton(int posX, int posY) {
+  public BrickButton(int posX, int posY, GridEventListener event) {
     this.posX = posX;
     this.posY = posY;
 
@@ -19,6 +20,7 @@ public class BrickButton extends JButton {
     setOpaque(false);
     setContentAreaFilled(false);
     setBorderPainted(false);
+		addMouseListener(event);
   }
 
   public int getPosX() {
