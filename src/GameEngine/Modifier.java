@@ -215,8 +215,8 @@ public class Modifier {
     int[][] representation = s.getRepresentation();
     int x = s.getX();
     int y = s.getY();
-    int maxX = s.getMaxX(representation);
-    int maxY = s.getMaxY(representation);
+    int maxX = s.getMaxWidth(representation);
+    int maxY = s.getMaxHeight(representation);
 
     for (int i = y; i <= y + maxY; ++i) {
       for (int j = x; j <= x + maxX; ++j) {

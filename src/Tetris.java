@@ -9,7 +9,7 @@ import ContextManager.ContextManager;
  * </p>
  * <p>
  * A Tetris game is composed of a manager that must be init from the method <b>
- * init</b>.
+ * init()</b>.
  * </p>
  *
  * @see ContextManager

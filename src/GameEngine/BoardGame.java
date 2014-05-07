@@ -10,7 +10,7 @@ import java.util.Queue;
 /**
  * <b> BoardGame is a logical part of the game.</b>
  * <p>
- * Each <b> Player </p> in the game has a BoardGame </p>.
+ * Each <b> Player </b> in the game has a BoardGame </p>.
  * <p>
  * The BoardGame is observable by the hub. </p>
  * <p>
@@ -267,10 +267,22 @@ public final class BoardGame implements Observable {
     listObserver = new ArrayList<>();
   }
 
+  /**
+   * Finish the game if the Player looses
+   * 
+   * @see Player#finish() 
+   */
   public void finishGame() {
     this.myPlayer.finish();
   }
 
+  /**
+   * Method called when the CurrentShape stop his fall.
+   * The CurrentShape is set in the Grid and it verifies if a full line is done.
+   * Switch the Player in Anagram mode if he has to.
+   * 
+   * @param s The CurrentShape to set in the Grid.
+   */
   public void finishFall(CurrentShape s) {
     grid.setIn(s);
     if (grid.getFirstFullLine() != -1) {
@@ -280,12 +292,4 @@ public final class BoardGame implements Observable {
       launchNextShape();
     }
   }
-
-  void finishWorddle(CurrentShape cs) {
-    grid.setAllowDoubleClick(false);
-    grid.setCurrentShape(cs);
-    grid.destroyAllSelectedBrickInWord();
-    grid.declickedAllBrick();
-  }
-
 }

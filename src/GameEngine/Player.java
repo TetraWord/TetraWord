@@ -404,7 +404,7 @@ public class Player implements Observable {
   }
 
   public void finishWorddle() {
-    boardGame.finishWorddle(currentShapeStocked);
+    getGrid().finishWorddle(currentShapeStocked);
     clearWord();
     updateObservateur(null);
   }

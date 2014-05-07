@@ -186,7 +186,14 @@ public class Grid implements Observable, Observer {
 
     return false;
   }
-
+  
+  void finishWorddle(CurrentShape cs) {
+    setAllowDoubleClick(false);
+    setCurrentShape(cs);
+    destroyAllSelectedBrickInWord();
+    declickedAllBrick();
+  }
+  
   @Override
   public void addObservateur(Observer obs) {
     listObserver.add(obs);
@@ -408,8 +415,8 @@ public class Grid implements Observable, Observer {
     // If any of the points lie outside the board, goal is not acceptable.
     // If any of the points coincide with an occupied cell of the board,
     //  the goal is not acceptable.
-    for (int y = 0; y <= shape.getMaxY(shape.getRepresentation()); ++y) {
-      for (int x = 0; x <= shape.getMaxX(shape.getRepresentation()); ++x) {
+    for (int y = 0; y <= shape.getMaxHeight(shape.getRepresentation()); ++y) {
+      for (int x = 0; x <= shape.getMaxWidth(shape.getRepresentation()); ++x) {
         // Absolute point must be in the board area        
         int absoluteX = shape.getX() + x;
         int absoluteY = shape.getY() + y;
