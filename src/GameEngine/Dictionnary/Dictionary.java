@@ -12,11 +12,11 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
 
-public class Dictionnary {
+public class Dictionary {
 
   HashSet dico;
 
-  public Dictionnary() {
+  public Dictionary() {
     dico = new HashSet();
     String file = "./media/dictionnary.txt";
 
@@ -41,9 +41,9 @@ public class Dictionnary {
   }
 
   /**
-   * Look if the string is a word contains in the dictionary
+   * Look if the string is a word contains in the dictionary.
    * 
-   * @param s
+   * @param s 
    * @return true if the String is included in the dictionary
    */
   public boolean included(String s) {
@@ -51,9 +51,9 @@ public class Dictionnary {
   }
 
   /**
-   * Search possible anagrams with the chars of String in the dictionary  
+   * Search possible anagrams with the chars of String in the dictionary.
    * 
-   * @param s: String formed by chars selected
+   * @param s : String formed by chars selected
    * @return Array of 10 Strings : the first is the best one, the last isn't an anagram
    *
    */
@@ -126,9 +126,9 @@ public class Dictionnary {
   }
 
   /**
-   * Call findBestAnagramm to getting the best one
+   * Call findBestAnagramm to getting the best one.
    * 
-   * @param sb: StringBuilder contains chars selected to form a word
+   * @param sb : StringBuilder contains chars selected to form a word
    * @return the best anagram find in a String
    */
   public String findBestAnagramm(StringBuilder sb) {

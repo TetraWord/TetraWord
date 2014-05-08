@@ -10,7 +10,7 @@ import java.util.Queue;
 /**
  * <b> BoardGame is a logical part of the game.</b>
  * <p>
- * Each <b> Player </p> in the game has a BoardGame </p>.
+ * Each <b> Player </b> in the game has a BoardGame </p>.
  * <p>
  * The BoardGame is observable by the hub. </p>
  * <p>
@@ -145,16 +145,16 @@ public final class BoardGame implements Observable {
    * @return The BoardGame's Player
    *
    * @see Player
-   */  
+   */
   public Player getPlayer() {
     return myPlayer;
   }
 
   /**
    * Get the offsetX.
-   * 
+   *
    * @return The offsetX
-   * 
+   *
    * @see BoardGame#offsetX
    */
   public int getOffsetX() {
@@ -163,21 +163,21 @@ public final class BoardGame implements Observable {
 
   /**
    * Get the offsetY.
-   * 
+   *
    * @return The offsetY
-   * 
+   *
    * @see BoardGame#offsetY
    */
   public int getOffsetY() {
     return offsetY;
   }
-  
+
   /**
    * Set new offset x and new offset y.
-   * 
+   *
    * @param offsetX
    * @param offsetY
-   * 
+   *
    * @see BoardGame#offsetX
    * @see BoardGame#offsetY
    */
@@ -185,13 +185,13 @@ public final class BoardGame implements Observable {
     this.offsetX = offsetX;
     this.offsetY = offsetY;
   }
-  
+
   /**
    * Get a random Shape from the ShapeStock.
-   * 
+   *
    * @return The random Shape create by the ShapeStock
-   * 
-   * @see ShapesStock#getRandomShape() 
+   *
+   * @see ShapesStock#getRandomShape()
    */
   public Shape getRandomShape() {
     return ss.getRandomShape();
@@ -199,9 +199,9 @@ public final class BoardGame implements Observable {
 
   /**
    * Get the next Shape in the Queue.
-   * 
+   *
    * @return The Shape get in the Queue
-   * 
+   *
    * @see BoardGame#listNextShape
    */
   public Shape getNextShape() {
@@ -209,12 +209,10 @@ public final class BoardGame implements Observable {
   }
 
   /**
-   * Launch the next Shape.
-   * Create a new CurrentShape from the first Shape of the Queue.
-   * Add a new random Shape in the Players's next Shape Queue.
-   * Set the new CurrentShape in the Grid.
-   * Update
-   * 
+   * Launch the next Shape. Create a new CurrentShape from the first Shape of
+   * the Queue. Add a new random Shape in the Players's next Shape Queue. Set
+   * the new CurrentShape in the Grid. Update
+   *
    * @see CurrentShape
    * @see Grid
    */
@@ -241,15 +239,15 @@ public final class BoardGame implements Observable {
   }
 
   /**
-   * @see Observable 
+   * @see Observable
    */
   @Override
   public void addObservateur(Observer obs) {
     listObserver.add(obs);
   }
-  
+
   /**
-   * @see Observable 
+   * @see Observable
    */
   @Override
   public void updateObservateur(Object args) {
@@ -257,19 +255,31 @@ public final class BoardGame implements Observable {
       obs.update(this, args);
     }
   }
-  
+
   /**
-   * @see Observable 
+   * @see Observable
    */
   @Override
   public void delObservateur() {
     listObserver = new ArrayList<>();
   }
 
+  /**
+   * Finish the game if the Player looses
+   *
+   * @see Player#finish()
+   */
   public void finishGame() {
     this.myPlayer.finish();
   }
 
+  /**
+   * Method called when the CurrentShape stop his fall. The CurrentShape is set
+   * in the Grid and it verifies if a full line is done. Switch the Player in
+   * Anagram mode if he has to.
+   *
+   * @param s The CurrentShape to set in the Grid.
+   */
   public void finishFall(CurrentShape s) {
     grid.setIn(s);
     if (grid.getFirstFullLine() != -1) {
@@ -279,12 +289,4 @@ public final class BoardGame implements Observable {
       launchNextShape();
     }
   }
-
-  void finishWorddle(CurrentShape cs) {
-    grid.setAllowDoubleClick(false);
-    grid.setCurrentShape(cs);
-    grid.destroyAllSelectedBrickInWord();
-    grid.declickedAllBrick();
-  }
-
 }

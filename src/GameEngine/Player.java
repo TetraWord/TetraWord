@@ -1,6 +1,6 @@
 package GameEngine;
 
-import GameEngine.Dictionnary.Dictionnary;
+import GameEngine.Dictionnary.Dictionary;
 import Pattern.Observable;
 import Pattern.Observer;
 
@@ -30,7 +30,7 @@ public class Player implements Observable {
   private boolean switchShape = false;
   private final Object monitor = new Object();
   private ArrayList<Observer> listObserver = new ArrayList<>();
-  private final Dictionnary dico;
+  private final Dictionary dico;
   private Modifier modifier = null;
   private CurrentModifier currentModifier = null;
   private boolean worddle = false;
@@ -38,7 +38,7 @@ public class Player implements Observable {
   private Timer timerBeforeModifier = null;
   private long t = 0;
 
-  public Player(int nb, Shape s, Shape s2, Dictionnary d) {
+  public Player(int nb, Shape s, Shape s2, Dictionary d) {
     boardGame = new BoardGame(s, s2, this);
     score = 0;
     level = 1;
@@ -125,7 +125,7 @@ public class Player implements Observable {
     return numLinesTotalRemoved;
   }
 
-  public Dictionnary getDico() {
+  public Dictionary getDico() {
     return dico;
   }
 
@@ -404,7 +404,7 @@ public class Player implements Observable {
   }
 
   public void finishWorddle() {
-    boardGame.finishWorddle(currentShapeStocked);
+    getGrid().finishWorddle(currentShapeStocked);
     clearWord();
     updateObservateur(null);
   }

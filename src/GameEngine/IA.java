@@ -1,7 +1,7 @@
 package GameEngine;
 
 import ContextManager.ContextManager;
-import GameEngine.Dictionnary.Dictionnary;
+import GameEngine.Dictionnary.Dictionary;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -11,7 +11,7 @@ public class IA extends Player implements Runnable {
   private int bestRotationDelta;
   private int bestMerit;
 
-  public IA(int nb, Shape s, Shape s2, Dictionnary d) {
+  public IA(int nb, Shape s, Shape s2, Dictionary d) {
     super(nb, s, s2, d);
   }
 
@@ -118,11 +118,11 @@ public class IA extends Player implements Runnable {
       }
 
       // Determine the translation limits for this rotated piece.
-      int moveIsPossible = 0;
-      int minDeltaX = 0;
-      int maxDeltaX = 0;
+      int moveIsPossible;
+      int minDeltaX;
+      int maxDeltaX;
 
-      int[] result = g.DetermineAccessibleTranslationsForPieceOrientation(tmpShape, moveIsPossible, minDeltaX, maxDeltaX);
+      int[] result = g.DetermineAccessibleTranslationsForShapeOrientation(tmpShape);
 
       moveIsPossible = result[0];
       minDeltaX = result[1];
@@ -150,7 +150,7 @@ public class IA extends Player implements Runnable {
             // out a drop and evaluating the move.
             tmpGrid = new Grid(g);
 
-            tmpGrid.FullDropAndAddPieceToBoard(tmpShape);
+            tmpGrid.FullDropAndAddShapeToGrid(tmpShape);
 
             trialPriority = 0;
 
