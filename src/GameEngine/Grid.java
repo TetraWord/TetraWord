@@ -739,7 +739,7 @@ public class Grid implements Observable, Observer {
    */
   void selectBrick(int y, char charAt) {
     for (int i = 0; i < sizeX; ++i) {
-      if (tGrid[y][i].getLetter() == charAt) {
+      if (tGrid[y][i].getLetter() == charAt && !tGrid[y][i].isClicked()) {
         tGrid[y][i].setClicked(true);
         return;
       }

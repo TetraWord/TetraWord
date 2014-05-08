@@ -20,7 +20,7 @@ import java.util.TimerTask;
  * <li> An array of players in game. </li>
  * <li> The number of player in game. </li>
  * <li> The Dictionary to check the right word. </li>
- * <li> A boolean to know if an IA is in the game. </li>
+ * <li> A boolean to know if an AI is in the game. </li>
  * <li> The worddleTimer of the Player. </li>
  * <li> The game timer </li>
  * <li> The time until the game stop </li>
@@ -62,12 +62,12 @@ public class GameEngine {
   private final Dictionary dictionary = new Dictionary();
 
   /**
-   * To know if there is an IA in the game.
+   * To know if there is an AI in the game.
    *
-   * @see GameEngine#hasIA()
-   * @see GameEngine#setIA(boolean)
+   * @see GameEngine#hasAI()
+   * @see GameEngine#setAI(boolean)
    */
-  private boolean ia = false;
+  private boolean ai = false;
 
   /**
    *
@@ -114,21 +114,21 @@ public class GameEngine {
   }
 
   /**
-   * Add a new Player to the gameEngine. Create the new Player / IA. Increments
-   * the number of Player.
+   * Add a new Player to the gameEngine. Create the new Player / AI. Increments
+ the number of Player.
    *
    * @param s The first Shape of the Player
    * @param s2 The second Shape of the Player.
-   * @param isIA To know if the new Player is an IA or not.
+   * @param isAI To know if the new Player is an AI oAInot.
    * @see Player#Player(int, GameEngine.Shape, GameEngine.Shape,
    * GameEngine.Dictionnary.Dictionary)
-   * @see IA#IA(int, GameEngine.Shape, GameEngine.Shape,
+   * @see AI#AI(int, GameEngine.Shape, GameEngine.Shape,
    * GameEngine.Dictionnary.Dictionary)
    * @see GameEngine#nbPlayer
    */
-  public void addNewPlayer(Shape s, Shape s2, boolean isIA) {
-    if (isIA) {
-      players[nbPlayer] = new IA(nbPlayer, s, s2, dictionary);
+  public void addNewPlayer(Shape s, Shape s2, boolean isAI) {
+    if (isAI) {
+      players[nbPlayer] = new AI(nbPlayer, s, s2, dictionary);
     } else {
       players[nbPlayer] = new Player(nbPlayer, s, s2, dictionary);
     }
@@ -156,23 +156,23 @@ public class GameEngine {
   }
 
   /**
-   * To know if there is an IA in the game.
+   * To know if there is an AI in the game.
    *
-   * @return true if there is an IA, false otherwise.
-   * @see GameEngine#ia
+   * @return true if there is an AI, AIlse otherwise.
+   * @see GameEngine#ai
    */
-  public boolean hasIA() {
-    return ia;
+  public boolean hasAI() {
+    return ai;
   }
 
   /**
-   * To set the ia variable
+   * To set the ai variable
    *
-   * @param ia the value of the boolean
-   * @see GameEngine#ia
+   * @param ai the value of the boolean
+   * @see GameEngine#ai
    */
-  public void setIA(boolean ia) {
-    this.ia = ia;
+  public void setAI(boolean ai) {
+    this.ai = ai;
   }
 
   public void beginWorddleTimer(Player p) {
