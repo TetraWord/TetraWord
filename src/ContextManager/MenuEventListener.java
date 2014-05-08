@@ -58,7 +58,7 @@ public class MenuEventListener implements ActionListener {
         ArrayList<OverBoard2D> tab = GraphicEngine.getInstance().getWindow().getOverBoards();
         String[] playersName;
 
-        if (GameEngine.getInstance().hasIA()) {
+        if (GameEngine.getInstance().hasAI()) {
           playersName = new String[tab.size() + 1];
           playersName[tab.size() - 1] = "IA";
           for (int i = 0; i < tab.size() - 1; ++i) {

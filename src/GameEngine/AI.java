@@ -5,16 +5,52 @@ import GameEngine.Dictionnary.Dictionary;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class IA extends Player implements Runnable {
+/**
+ * <b> AI is the Artificial Intelligence of the game. </b>
+ * <p>
+ * AI inherits from the Player. It's a Player who can play alone.
+ * AI is a Runnable. 
+ * </p>
+ * <p>
+ * The AI can do Tetris mode and Anagram mode. 
+ * </p>
+ */
+public class AI extends Player implements Runnable {
 
-  private int bestTranslationDelta;
-  private int bestRotationDelta;
+  /**
+   * The best translation that the CurrentShape in the Grid must do.
+   * @see AI#getBestMoveShape() 
+   */
+  private int bestTranslation;
+  /**
+   * The best rotation that the CurrentShape in the Grid must do.
+   * @see AI#getBestMoveShape() 
+   */
+  private int bestRotation;
+  /**
+   * The best score of the CurrentShape's position.
+   * @see AI#getBestMoveShape() 
+   */
   private int bestMerit;
 
-  public IA(int nb, Shape s, Shape s2, Dictionary d) {
+  /**
+   * AI constructor.
+   * 
+   * @see Player#Player(int, GameEngine.Shape, GameEngine.Shape, GameEngine.Dictionnary.Dictionary) 
+   * @param nb The number of the Player
+   * @param s The first Shape of the Player
+   * @param s2 The second Shape of the Player
+   * @param d The dictionnary
+   */
+  public AI(int nb, Shape s, Shape s2, Dictionary d) {
     super(nb, s, s2, d);
   }
 
+  /**
+   * Override the doAnagram method of the Player.
+   * AI get back all the possible word possible in the Line to remove. 
+   * AI choose one of this word and click all the Brick needed to do this word.
+   */
   @Override
   public void doAnagram() {
     Grid g = boardGame.getGrid();
@@ -26,18 +62,16 @@ public class IA extends Player implements Runnable {
       try {
         Thread.sleep(3000);
       } catch (InterruptedException ex) {
-        Logger.getLogger(IA.class.getName()).log(Level.SEVERE, null, ex);
+        Logger.getLogger(AI.class.getName()).log(Level.SEVERE, null, ex);
       }
-      int r = (int) Math.random() * 100;
-      if (r < 70) {
+      int r = (int) (Math.random() * 100);
+      System.out.println("r vaut : "+r);
+      if (r < 25) {
         //Select the bestWord
-        System.out.println("je prend le meilleur");
         bestWord = bestWords[0];
-      } else if (r > 70 && r < 95) {
-        System.out.println("je prend dedans au hasard");
-        bestWord = bestWords[(int) Math.random() * bestWords.length - 2];
+      } else if (r > 25 && r < 75) {
+        bestWord = bestWords[(int) (Math.random() * bestWords.length - 2)];
       } else {
-        System.out.println("je prend un mauvais ");
         bestWord = bestWords[bestWords.length - 1];
       }
       for (int i = 0; i < bestWord.length(); ++i) {
@@ -46,13 +80,13 @@ public class IA extends Player implements Runnable {
         try {
           Thread.sleep(700);
         } catch (InterruptedException ex) {
-          Logger.getLogger(IA.class.getName()).log(Level.SEVERE, null, ex);
+          Logger.getLogger(AI.class.getName()).log(Level.SEVERE, null, ex);
         }
       }
       try {
         Thread.sleep(1200);
       } catch (InterruptedException ex) {
-        Logger.getLogger(IA.class.getName()).log(Level.SEVERE, null, ex);
+        Logger.getLogger(AI.class.getName()).log(Level.SEVERE, null, ex);
       }
       verifAnagram(bestWord);
       clearWord();
@@ -63,17 +97,19 @@ public class IA extends Player implements Runnable {
     finishAnagram(numLinesRemoved);
   }
 
+  /**
+   * Override the doWorddle method of the Player.
+   * Not implemented.
+   */
   @Override
   public void doWorddle() {
     while (GameEngine.getInstance().timerWorddleIsAlive()) {
-      
+
       String s = getWord();
       if (getDico().included(s)) {
-        updateObservateur("Mot valide !");
         boardGame.getGrid().setBricksToDestroy();
         addToScore(s.length() * 3);
       } else {
-        System.out.println("Non Existant");
         boardGame.getGrid().clearTabBrickClicked();
         addToScore(-s.length() * 4);
       }
@@ -84,7 +120,11 @@ public class IA extends Player implements Runnable {
     finishWorddle();
   }
 
-  public int[] gestBestMoveShape() {
+  /**
+   * Get the best number of translation and rotation that the CurrentShape must do to go to the better place of the Grid.
+   * @return The best translation, the best rotation and the coefficient of the best place.
+   */
+  public int[] getBestMoveShape() {
 
     CurrentShape s = getCurrentShape();
     Grid g = boardGame.getGrid();
@@ -96,18 +136,17 @@ public class IA extends Player implements Runnable {
     double currentBestMerit = (-1.0e20);
     int currentBestPriority = 0;
 
-    int trialTranslationDelta = 0;
-    int trialRotationDelta = 0;
-    double trialMerit = 0.0;
-    int trialPriority = 0;
+    int trialTranslationDelta;
+    int trialRotationDelta;
+    double trialMerit;
+    int trialPriority;
 
-    int maxOrientations = 0;
-    int moveAcceptable = 0;
+    int moveAcceptable;
 
     CurrentShape tmpShape;
     Grid tmpGrid;
 
-    maxOrientations = 4;
+    int maxOrientations = 4;
 
     for (trialRotationDelta = 0; trialRotationDelta < maxOrientations; ++trialRotationDelta) {
       // Make temporary copy of piece, and rotate the copy.
@@ -162,7 +201,6 @@ public class IA extends Player implements Runnable {
 
             int rowsEliminated = tmpGrid.getNbFullLine();
 
-            // Averages around 1310 rows in 10 games, with a min of 445 and a max of 3710.
             trialMerit = (weightRowElimination) * (double) (rowsEliminated);
             // trialMerit += (weightTotalOccupiedCells) * (double) (tmpGrid.TotalOccupiedCells());
             // trialMerit += (weightTotalShadowedHoles) * (double) (tmpGrid.TotalShadowedHoles());
@@ -193,14 +231,18 @@ public class IA extends Player implements Runnable {
     return returnValue;
   }
 
+  /**
+   * Move the CurrentShape to the best position determines by the getBestMoveShape method.
+   * @see AI#getBestMoveShape() 
+   */
   public void move() {
     CurrentShape s = getCurrentShape();
     int curX = s.getX(), curY = s.getY();
-    if (bestRotationDelta != 0) {
+    if (bestRotation != 0) {
       s.rotateLeft(boardGame.getGrid().getTGrid());
-      --bestRotationDelta;
-    } else if (bestTranslationDelta != curX) {
-      if (curX > bestTranslationDelta) {
+      --bestRotation;
+    } else if (bestTranslation != curX) {
+      if (curX > bestTranslation) {
         left();
       } else {
         right();
@@ -210,24 +252,25 @@ public class IA extends Player implements Runnable {
     }
   }
 
+  /**
+   * To launch an AI.
+   * AI choose the best place to the CurrentShape and try to move it to this place. 
+   * When the Worddle mode is ready, the AI has a chance to go to this mode.
+   * 
+   */
   @Override
   public void run() {
     while (!this.isFinish()) {
       if (!ContextManager.getInstance().isPaused && isTetris()) {
         int r = (int) (Math.random() * 100);
-        if (r > 70 || GameEngine.getInstance().isPlayersInWordMode() || !canWorddle() ) {
+        if (r > 20 || GameEngine.getInstance().isPlayersInWordMode() || !canWorddle()) {
           //Do movement
           int nbMove = (int) (Math.random() * 3);
           while (nbMove > 0 && isTetris()) {
-            int[] result = gestBestMoveShape();
-            bestTranslationDelta = result[0];
-            bestRotationDelta = result[1];
+            int[] result = getBestMoveShape();
+            bestTranslation = result[0];
+            bestRotation = result[1];
             bestMerit = result[2];
-            /*
-             System.out.println("bestTranslation : " + bestTranslationDelta);
-             System.out.println("bestRotation : " + bestRotationDelta);
-             System.out.println("bestMerit : " + bestMerit);
-             */
             move();
             nbMove--;
           }
@@ -239,13 +282,13 @@ public class IA extends Player implements Runnable {
             Logger.getLogger(RunPlayer.class
                     .getName()).log(Level.SEVERE, null, ex);
           }
-        } else if( !GameEngine.getInstance().isPlayersInWordMode() && canWorddle() ) {
+        } /*else if (!GameEngine.getInstance().isPlayersInWordMode() && canWorddle()) {
           switchToWorddle(true);
           boardGame.getGrid().setAllowClick(false);
           GameEngine.getInstance().beginWorddleTimer(this);
           stockCurrentShape();
           addNewChar(getGrid().clickedOneBrick());
-        }
+        } */
       } else if (isAnagram()) {
         doAnagram();
       } else if (isWorddle()) {

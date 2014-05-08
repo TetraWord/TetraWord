@@ -323,7 +323,7 @@ public final class ContextManager {
     Window w = graphicEngine.getWindow();
     w.clear();
     int numPlayer = gameEngine.getNbPlayers();
-    boolean ia = gameEngine.hasIA();
+    boolean ia = gameEngine.hasAI();
 
     if (numPlayer > 1) {
       w.setLayout(new GridLayout(1, 2));
@@ -345,7 +345,7 @@ public final class ContextManager {
       if ((i == 1 && ia == false) || i == 0) {
         t = new Thread(new RunPlayer(players[i]));
       } else {
-        t = new Thread((IA) players[i]);
+        t = new Thread((AI) players[i]);
       }
       t.setDaemon(true);
       t.start();
@@ -361,7 +361,7 @@ public final class ContextManager {
    * <p>
    * Create the number of player wanted </p>
    * <p>
-   * Create an IA if wanted </p>
+   * Create an AI if wanted </p>
    * <p>
    * Add this players to the GameEngine </p>
    * <p>
@@ -372,7 +372,7 @@ public final class ContextManager {
    * @param numPlayer The number of player wanted :
    * <ul>
    * <li> 1 -> 1 player </li>
-   * <li> 1.5 -> 1 player and 1 IA </li>
+   * <li> 1.5 -> 1 player and 1 AI <AIi>
    * <li> 2 -> 2 player </li>
    * </ul>
    *
@@ -390,7 +390,7 @@ public final class ContextManager {
       w.setSize(size);
       w.setLayout(new GridLayout(1, 2));
       if (numPlayer == 1.5) {
-        gameEngine.setIA(true);
+        gameEngine.setAI(true);
       }
     }
 
@@ -398,7 +398,7 @@ public final class ContextManager {
     Shape s = ShapesStock.getInstance().getRandomShape();
     Shape s2 = ShapesStock.getInstance().getRandomShape();
     for (int i = 0; i < numPlayer; ++i) {
-      if (i == 1 && gameEngine.hasIA()) {
+      if (i == 1 && gameEngine.hasAI()) {
         gameEngine.addNewPlayer(s, s2, true);
       } else {
         gameEngine.addNewPlayer(s, s2, false);
