@@ -271,7 +271,7 @@ public final class BoardGame implements Observable {
    */
   public void finishGame() {
     this.myPlayer.finish();
-    this.myPlayer.updateObservateur("Perdu ! ");
+    this.myPlayer.updateObserver("Perdu ! ");
   }
 
   /**
