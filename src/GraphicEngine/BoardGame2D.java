@@ -28,7 +28,7 @@ public class BoardGame2D extends JPanel implements Observer {
   private Color color;
   private final GridEventListener event;
   private boolean shadow;
-	private final Hud2D hub;
+  private final Hud2D hud;
 
   public BoardGame2D(BoardGame model) {
     /* Settings */
@@ -39,9 +39,9 @@ public class BoardGame2D extends JPanel implements Observer {
     loadDesign();
     loadOptions();
 
-    hub = new Hud2D(model.getHub(), font, color);
-    model.getHub().addObservateur(hub);
-    this.add(hub);
+    hud = new Hud2D(model.getHud(), font, color);
+    model.getHud().addObservateur(hud);
+    this.add(hud);
 
     event = new GridEventListener(this.model);
     gameGrid = new Grid2D(model.getGrid(), event, shadow);
@@ -62,7 +62,7 @@ public class BoardGame2D extends JPanel implements Observer {
     InputStream input = null;
 
     /*Get background image from file design*/
-		String background;
+    String background;
     try {
       input = new FileInputStream("conf/design.properties");
 
@@ -87,7 +87,7 @@ public class BoardGame2D extends JPanel implements Observer {
         }
       }
     }
-		
+
     try {
       // Try to load background image from chosen design
       this.img = ImageIO.read(new File(background));
@@ -127,27 +127,27 @@ public class BoardGame2D extends JPanel implements Observer {
   private void setShapeToGrid2D() {
     gameGrid.setShape2D(model.getGrid().getCurrentShape());
   }
-  
+
   private void setModifierToGrid() {
-  	gameGrid.setModifier2D(model.getGrid().getCurrentModifier());
+    gameGrid.setModifier2D(model.getGrid().getCurrentModifier());
   }
 
   @Override
   public void update(Observable o, Object args) {
     if (args == null) {
-      hub.update(o, args);
+      hud.update(o, args);
     }
 
   }
 
   @Override
   public void paintComponent(Graphics g) {
-		
-		int offsetX = model.getOffsetX();
-		int offsetY =  model.getOffsetY();
+
+    int offsetX = model.getOffsetX();
+    int offsetY = model.getOffsetY();
     g.drawImage(img, offsetX, offsetY, this);
-		
-		hub.draw(g, offsetX, offsetY);
+
+    hud.draw(g, offsetX, offsetY);
     gameGrid.draw(g, offsetX, offsetY);
   }
 

@@ -28,10 +28,7 @@ public class CurrentModifier extends Modifier {
   }
   
   private boolean displayOnABrick(Brick [][] gridRep, int x, int y) {
-  	if(gridRep[y][x].getNb() >= 1) {
-  		return true;
-  	}
-  	return false;
+  	return gridRep[y][x].getNb() >= 1;
   }
 
 }

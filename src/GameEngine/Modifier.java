@@ -19,7 +19,7 @@ public class Modifier {
 		TimeTravel
 	*/
 
-  private String name;
+  private final String name;
   private Timer t = null;
  
 	public Modifier() {

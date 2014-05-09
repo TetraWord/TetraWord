@@ -12,13 +12,13 @@ import java.util.Queue;
  * <p>
  * Each <b> Player </b> in the game has a BoardGame </p>.
  * <p>
- * The BoardGame is observable by the hub. </p>
+ * The BoardGame is observable by the hud. </p>
  * <p>
  * The BoardGame contains :
  * <ul>
  * <li> The Player who played on this BoardGame </li>
  * <li> The logical Grid of the Player </li>
- * <li> The logical Hub of the Player to display information </li>
+ * <li> The logical Hud of the Player to display information </li>
  * <li> The ShapesStock. Singleton. </li>
  * <li> A Queue with the next Shape of the Player </li>
  * <li> An ArrayList of his observateur object </li>
@@ -44,10 +44,10 @@ public final class BoardGame implements Observable {
   private final Grid grid;
 
   /**
-   * The logical Hub. Not modifiable.
+   * The logical Hud. Not modifiable.
    *
-   * @see Hub
-   * @see BoardGame#getHub()
+   * @see Hud
+   * @see BoardGame#getHud()
    */
   private final Hud hud;
 
@@ -94,9 +94,9 @@ public final class BoardGame implements Observable {
   /**
    * Constructor BoardGame.
    * <p>
-   * Initialize the Player of the BoardGame, create a Grid and a Hub for the
+   * Initialize the Player of the BoardGame, create a Grid and a Hud for the
    * BoardGame. Add a Shape to the list of the next Shape for the Player. Add
-   * the new Hub as on Overser of Player and BoardGame for the futur message
+   * the new Hud as on Overser of Player and BoardGame for the futur message
    * displayed during the game.
    * </p>
    *
@@ -129,13 +129,13 @@ public final class BoardGame implements Observable {
     return grid;
   }
   /**
-   * Get the BoardGame's Hub
+   * Get the BoardGame's Hud
    *
-   * @return The Hub in the BoardGame
+   * @return The Hud in the BoardGame
    *
-   * @see Hub
+   * @see Hud
    */
-  public Hud getHub() {
+  public Hud getHud() {
     return hud;
   }
 

@@ -139,7 +139,6 @@ public class Grid implements Observable, Observer {
         tGrid[i][j] = new Brick(' ', -1);
       }
     }
-    System.out.println("je passe ici");
     displayModifier();
   }
 

@@ -42,18 +42,18 @@ public class Hud2D extends JPanel implements Observer {
   private Shape2D stockShape;
 	private Image modifier;
 
-  public Hud2D(final Hud hub, String font, Color color) {
+  public Hud2D(final Hud hud, String font, Color color) {
 
     this.font = font;
     this.color = color;
-    this.nextShape = new Shape2D(hub.getNextShape());
+    this.nextShape = new Shape2D(hud.getNextShape());
 
     this.setLayout(null);
     this.setSize(650, 889);
     this.setOpaque(false);
     this.setVisible(true);
 
-    this.hud = hub;
+    this.hud = hud;
 
 		try {
 			File fis = new File("media/font/" + font);
@@ -66,35 +66,35 @@ public class Hud2D extends JPanel implements Observer {
 		}
 
     /* UI Player name */
-    playerName = new JLabel(hub.getPlayerName(), CENTER);
+    playerName = new JLabel(hud.getPlayerName(), CENTER);
     setJLabel(playerName, 480, 10, 150, 45);
     playerName.setFont(f);
     this.add(playerName);
 
     /*UI Mode*/
-    String modeName = "Mode " + hub.getState().getStateName();
+    String modeName = "Mode " + hud.getState().getStateName();
     mode = new JLabel(modeName, CENTER);
     setJLabel(mode, 69, 85, 351, 45);
     mode.setFont(new Font(font, Font.BOLD, 30));
     this.add(mode);
 
     /* UI Level */
-    level = new JLabel(Integer.toString(hub.getLevel()), CENTER);
+    level = new JLabel(Integer.toString(hud.getLevel()), CENTER);
     setJLabel(level, 583, 805, 30, 23);
     this.add(level);
 
     /* UI Score */
-    score = new JLabel(Integer.toString(hub.getScore()), CENTER);
+    score = new JLabel(Integer.toString(hud.getScore()), CENTER);
     setJLabel(score, 520, 700, 70, 23);
     this.add(score);
 
     /* UI Lines */
-    nbLinesRemoved = new JLabel(Integer.toString(hub.getNbLines()), CENTER);
+    nbLinesRemoved = new JLabel(Integer.toString(hud.getNbLines()), CENTER);
     setJLabel(nbLinesRemoved, 583, 760, 30, 23);
     this.add(nbLinesRemoved);
 
     /* UI Timer time left */
-    timerTimeLeft = new JLabel(Long.toString(hub.getTimeLeft()), CENTER);
+    timerTimeLeft = new JLabel(Long.toString(hud.getTimeLeft()), CENTER);
     setJLabel(timerTimeLeft, 400, 510, 300, 23);
     this.add(timerTimeLeft);
 
@@ -129,7 +129,7 @@ public class Hud2D extends JPanel implements Observer {
     tMessage.schedule(new TimerTask() {
       @Override
       public void run() {
-        String message = hub.getOlderMessage();
+        String message = hud.getOlderMessage();
         if (message != null) {
           messages.setText(message);
         } else {
