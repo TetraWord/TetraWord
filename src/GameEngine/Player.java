@@ -30,7 +30,7 @@ public class Player implements Observable {
   private final Object monitor = new Object();
   private ArrayList<Observer> listObserver = new ArrayList<>();
   private final Dictionary dico;
-  private Modifier modifier = new Modifier("Shake");
+  private Modifier modifier = null;
   private boolean worddle = false;
   private Timer timerBeforeWorddle = null;
   private long t = 0;
@@ -127,7 +127,7 @@ public class Player implements Observable {
 
   private void tryModifierCollision(CurrentShape s) {
     CurrentModifier cm = getGrid().getCurrentModifier();
-    if (cm != null && s.tryCollision(cm, s.getX(), s.getY())) {
+    if (cm != null && s.tryCollision(cm, s.getX(), s.getY()) && this.modifier != null) {
       this.modifier = new Modifier(cm);
       updateObserver(this.modifier);
       getGrid().setCurrentModifier(null);
