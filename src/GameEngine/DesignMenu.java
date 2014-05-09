@@ -43,7 +43,7 @@ public class DesignMenu {
 
 	/**
    * DesignMenu constructor.
-   * Initialize attribute of the class by reading all design files (.properties)
+   * Initialize attributes of the class by reading all design files (.properties)
    *
    * @see DesignMenu#readFile(String file, int i)
    */
