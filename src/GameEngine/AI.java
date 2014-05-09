@@ -115,7 +115,7 @@ public class AI extends Player implements Runnable {
       }
       clearWord();
       boardGame.getGrid().setAllowDoubleClick(true);
-      updateObservateur(null);
+      updateObserver(null);
     }
     finishWorddle();
   }
@@ -295,10 +295,10 @@ public class AI extends Player implements Runnable {
         doWorddle();
       }
 
-      updateObservateur(null);
+      updateObserver(null);
     }
 
-    updateObservateur("Perdu");
+    updateObserver("Perdu");
 
     ContextManager.getInstance().stop();
   }

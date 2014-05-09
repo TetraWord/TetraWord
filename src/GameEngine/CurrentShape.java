@@ -182,7 +182,7 @@ public class CurrentShape extends Shape {
       representation = prevRepresentation.clone();
     }
 
-    updateObservateur(null);
+    updateObserver(null);
   }
 
   /**

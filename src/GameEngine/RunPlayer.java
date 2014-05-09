@@ -14,7 +14,7 @@ public class RunPlayer implements Runnable {
 
   @Override
   public void run() {
-    player.updateObservateur("Bienvenue "+ player.getName());
+    player.updateObserver("Bienvenue "+ player.getName());
     while (!this.player.isFinish()) {
       if (!ContextManager.getInstance().isPaused && player.isTetris()) {
         player.down(1);
@@ -29,10 +29,10 @@ public class RunPlayer implements Runnable {
         player.doWorddle();
       }
 
-      player.updateObservateur(null);
+      player.updateObserver(null);
     }
    
-    player.updateObservateur("Perdu");
+    player.updateObserver("Perdu");
     
     ContextManager.getInstance().stop();
   }

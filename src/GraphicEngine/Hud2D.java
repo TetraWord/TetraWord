@@ -340,6 +340,7 @@ public class Hud2D extends JPanel implements Observer {
 				modifier = null;
 			}
 			
+			/* Shake modifier*/
 			if (args != null ){
 				if (args instanceof int[]){
 					int offsetX = ((int[])(args))[0];

@@ -241,7 +241,7 @@ public class Modifier {
     
     p.getBoardGame().launchNextShape();
     grid.setTGrid(tGrid);
-    grid.updateObservateur(tGrid);
+    grid.updateObserver(tGrid);
   }
 
   private void timeTravel(Player p) {

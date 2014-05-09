@@ -114,7 +114,7 @@ public class Player implements Observable {
       shapeStocked = new Shape(cs, true);
       switchShape = false;
     }
-    updateObservateur(null);
+    updateObserver(null);
   }
 
   public int getNumber() {
@@ -139,7 +139,7 @@ public class Player implements Observable {
         }
         if(currentModifier!= null && s.tryCollision(currentModifier,  s.getX(), s.getY())){
         	this.modifier = new Modifier(this.currentModifier);
-					updateObservateur(this.modifier);
+					updateObserver(this.modifier);
         	this.currentModifier = null;
         	boardGame.getGrid().setCurrentModifier(currentModifier);
         }
@@ -220,7 +220,7 @@ public class Player implements Observable {
     if ((int) score / 1000 >= level) {
       setLevelUp();
     }
-    updateObservateur(null);
+    updateObserver(null);
   }
 
   public InGameState getState() {
@@ -244,13 +244,13 @@ public class Player implements Observable {
       ++level;
     }
     setNewSpeedFall(speedFallInit - level * 83);
-    updateObservateur(null);
+    updateObserver(null);
   }
 
   public void switchToAnagram(boolean b) {
     wordFinish = b != true;
     state = b ? InGameState.ANAGRAMME : InGameState.TETRIS;
-    updateObservateur(null);
+    updateObserver(null);
   }
 
   public boolean isAnagram() {
@@ -275,7 +275,7 @@ public class Player implements Observable {
 
   public void addNewChar(char c) {
     word.append(c);
-    updateObservateur(null);
+    updateObserver(null);
   }
 
   public String getWord() {
@@ -289,23 +289,23 @@ public class Player implements Observable {
   void clearWord() {
     word.delete(0, word.length());
     wordFinish = false;
-    updateObservateur(null);
+    updateObserver(null);
   }
 
   @Override
-  public void addObservateur(Observer obs) {
+  public void addObserver(Observer obs) {
     listObserver.add(obs);
   }
 
   @Override
-  public void updateObservateur(Object args) {
+  public void updateObserver(Object args) {
     for (Observer obs : listObserver) {
       obs.update(this, args);
     }
   }
 
   @Override
-  public void delObservateur() {
+  public void delAllObserver() {
     listObserver = new ArrayList<>();
   }
 
@@ -313,19 +313,19 @@ public class Player implements Observable {
     
       System.out.println("word : "+getWord());
     if (dico.included(getWord())) {
-      updateObservateur("Mot existant");
+      updateObserver("Mot existant");
       if (getWord().equals(bestWord) || getWord().length() >= bestWord.length()) {
         addToScore(1000);
         //System.out.println("Le meilleur mot a ete trouve");
-        updateObservateur("1000 points !");
+        updateObserver("1000 points !");
       } else {
         addToScore(getWord().length() * 50);
-        updateObservateur("Meilleur mot : " + bestWord);
+        updateObserver("Meilleur mot : " + bestWord);
       }
     } else {
       addToScore(-(getScore() % 1000));
-      updateObservateur("Non Existant");
-      updateObservateur("Meilleur mot : " + bestWord);
+      updateObserver("Non Existant");
+      updateObserver("Meilleur mot : " + bestWord);
     }
   }
 
@@ -356,14 +356,14 @@ public class Player implements Observable {
     }
 
     numLinesTotalRemoved += numLinesRemoved;
-    updateObservateur(null);
+    updateObserver(null);
     boardGame.getGrid().setAllowClick(false);
     boardGame.launchNextShape();
   }
 
   public void setWordFinish() {
     wordFinish = true;
-    updateObservateur(null);
+    updateObserver(null);
   }
 
   public void switchToWorddle(boolean b) {
@@ -375,7 +375,7 @@ public class Player implements Observable {
     boardGame.getGrid().setAllowClick(b);
     boardGame.getGrid().setNoLastBrickClicked();
     state = b ? InGameState.WORDDLE : InGameState.TETRIS;
-    updateObservateur(null);
+    updateObserver(null);
   }
 
   public void stockCurrentShape() {
@@ -387,17 +387,17 @@ public class Player implements Observable {
     if (wordFinish && GameEngine.getInstance().timerWorddleIsAlive()) {
       String s = getWord();
       if (dico.included(s)) {
-        updateObservateur("Mot Existant !");
+        updateObserver("Mot Existant !");
         boardGame.getGrid().setBricksToDestroy();
         addToScore(s.length() * 3);
       } else {
-        updateObservateur("Non Existant");
+        updateObserver("Non Existant");
         boardGame.getGrid().clearTabBrickClicked();
         addToScore(-s.length() * 4);
       }
       clearWord();
       boardGame.getGrid().setAllowDoubleClick(true);
-      updateObservateur(null);
+      updateObserver(null);
     } else if (!GameEngine.getInstance().timerWorddleIsAlive()) {
       finishWorddle();
     }
@@ -406,7 +406,7 @@ public class Player implements Observable {
   public void finishWorddle() {
     getGrid().finishWorddle(currentShapeStocked);
     clearWord();
-    updateObservateur(null);
+    updateObserver(null);
   }
 
   public final void startTimerBeforeWorddle() {
@@ -470,7 +470,7 @@ public class Player implements Observable {
   public void activeModifier() {
     modifier.active(this);
     modifier = null;
-		updateObservateur(modifier);
+		updateObserver(modifier);
   }
   
   /*public void throwModifier() {
@@ -483,6 +483,6 @@ public class Player implements Observable {
 		int[] offset = new int[2];
 		offset[0] = offsetX;
 		offset[1] = offsetY;
-		updateObservateur(offset);
+		updateObserver(offset);
 	}
 }

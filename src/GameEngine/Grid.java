@@ -78,9 +78,9 @@ public class Grid implements Observable, Observer {
   /**
    * The Observer of the Grid.
    *
-   * @see Grid#addObservateur(Pattern.Observer)
-   * @see Grid#updateObservateur(java.lang.Object)
-   * @see Grid#delObservateur()
+   * @see Grid#addObserver(Pattern.Observer)
+   * @see Grid#updateObserver(java.lang.Object)
+   * @see Grid#delAllObserver()
    */
   private ArrayList<Observer> listObserver = new ArrayList<>();
 
@@ -187,7 +187,7 @@ public class Grid implements Observable, Observer {
    */
   public void setCurrentShape(CurrentShape cs) {
     currentShape = cs;
-    updateObservateur(cs);
+    updateObserver(cs);
   }
 
   /**
@@ -208,7 +208,7 @@ public class Grid implements Observable, Observer {
    */
   public void setCurrentModifier(CurrentModifier cm) {
     currentModifier = cm;
-    updateObservateur(cm);
+    updateObserver(cm);
   }
 
   /**
@@ -312,7 +312,7 @@ public class Grid implements Observable, Observer {
         tGrid[i][j] = tGrid[i - 1][j];
       }
     }
-    updateObservateur(tGrid);
+    updateObserver(tGrid);
   }
 
   /**
@@ -374,7 +374,7 @@ public class Grid implements Observable, Observer {
         }
       }
     }
-    updateObservateur(tGrid);
+    updateObserver(tGrid);
   }
 
   /**
@@ -461,7 +461,7 @@ public class Grid implements Observable, Observer {
         }
       }
     }
-    updateObservateur(tGrid);
+    updateObserver(tGrid);
   }
 
   /**
@@ -747,19 +747,19 @@ public class Grid implements Observable, Observer {
   }
 
   @Override
-  public void addObservateur(Observer obs) {
+  public void addObserver(Observer obs) {
     listObserver.add(obs);
   }
 
   @Override
-  public void updateObservateur(Object args) {
+  public void updateObserver(Object args) {
     for (Observer obs : listObserver) {
       obs.update(this, args);
     }
   }
 
   @Override
-  public void delObservateur() {
+  public void delAllObserver() {
     listObserver = new ArrayList<>();
   }
 

@@ -50,15 +50,15 @@ public class Hud implements Observer, Observable {
 
   /**
    * A list of the Observer of the Hud.
-   * @see Hud#addObservateur(Pattern.Observer) 
-   * @see Hud#delObservateur() 
-   * @see Hud#updateObservateur(java.lang.Object) 
+   * @see Hud#addObserver(Pattern.Observer) 
+   * @see Hud#delAllObserver() 
+   * @see Hud#updateObserver(java.lang.Object) 
    */
   private ArrayList<Observer> listObserver = new ArrayList<>();
   
   /**
    * A list of the message to display.
-   * @see Hud#updateObservateur(java.lang.Object) 
+   * @see Hud#updateObserver(java.lang.Object) 
    * @see Hud#getOlderMessage() 
    */
   private final Queue<String> listMessage = new LinkedList<>();
@@ -254,6 +254,11 @@ public class Hud implements Observer, Observable {
     return wordFinish;
   }
 
+	/**
+	 * Update Hud attributes from Player and BoardGame
+	 * @param o Observable whih have notify
+	 * @param args Arguments
+	 */
   @Override
   public void update(Observable o, Object args) {
     if (o instanceof Player) {
@@ -279,7 +284,7 @@ public class Hud implements Observer, Observable {
         listMessage.add(((String) args));
       } else {
 				if (args instanceof int[]){
-					updateObservateur((int[])args);
+					updateObserver((int[])args);
 				}	
 			}
     }
@@ -294,23 +299,34 @@ public class Hud implements Observer, Observable {
     }
     
     timeLeft = GameEngine.getInstance().getTimeLeft();
-    updateObservateur(null);
+    updateObserver(null);
   }
 
+	/**
+	 * Add an Observer
+	 * @param obs Observer to add
+	 */
   @Override
-  public void addObservateur(Observer obs) {
+  public void addObserver(Observer obs) {
     listObserver.add(obs);
   }
 
+	/**
+	 * Update all Observer
+	 * @param args Arguments fot the notifictaion
+	 */
   @Override
-  public void updateObservateur(Object args) {
+  public void updateObserver(Object args) {
     for (Observer obs : listObserver) {
       obs.update(this, args);
     }
   }
 
+	/**
+	 * Delete all Observer
+	 */
   @Override
-  public void delObservateur() {
+  public void delAllObserver() {
     listObserver = new ArrayList<>();
   }
 

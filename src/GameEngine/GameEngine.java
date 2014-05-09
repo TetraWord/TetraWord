@@ -255,10 +255,10 @@ public class GameEngine {
     p1Grid.setTGrid(p2TGrid);
     p2Grid.setTGrid(tmp);
 
-    p1Grid.updateObservateur(p2CS);
-    p2Grid.updateObservateur(p1CS);
-    p1Grid.updateObservateur(p2TGrid);
-    p2Grid.updateObservateur(p1TGrid);
+    p1Grid.updateObserver(p2CS);
+    p2Grid.updateObserver(p1CS);
+    p1Grid.updateObserver(p2TGrid);
+    p2Grid.updateObserver(p1TGrid);
 
   }
 

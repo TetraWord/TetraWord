@@ -113,9 +113,9 @@ public final class BoardGame implements Observable {
     this.hud = new Hud();
     this.listNextShape.add(s2);
 
-    this.myPlayer.addObservateur(hud);
-    addObservateur(hud);
-    updateObservateur(null);
+    this.myPlayer.addObserver(hud);
+    addObserver(hud);
+    updateObserver(null);
   }
 
   /**
@@ -228,13 +228,13 @@ public final class BoardGame implements Observable {
 
     myPlayer.canSwitchShape(true);
 
-    updateObservateur(null);
+    updateObserver(null);
 
     if (!grid.isComplete(cs)) {
       grid.setCurrentShape(cs);
     }
-    grid.updateObservateur(cs);
-    grid.updateObservateur(grid.getTGrid());
+    grid.updateObserver(cs);
+    grid.updateObserver(grid.getTGrid());
 
   }
 
@@ -242,7 +242,7 @@ public final class BoardGame implements Observable {
    * @see Observable
    */
   @Override
-  public void addObservateur(Observer obs) {
+  public void addObserver(Observer obs) {
     listObserver.add(obs);
   }
 
@@ -250,7 +250,7 @@ public final class BoardGame implements Observable {
    * @see Observable
    */
   @Override
-  public void updateObservateur(Object args) {
+  public void updateObserver(Object args) {
     for (Observer obs : listObserver) {
       obs.update(this, args);
     }
@@ -260,7 +260,7 @@ public final class BoardGame implements Observable {
    * @see Observable
    */
   @Override
-  public void delObservateur() {
+  public void delAllObserver() {
     listObserver = new ArrayList<>();
   }
 
