@@ -92,6 +92,10 @@ public class MenuEventListener implements ActionListener {
       case "Précédent":
         c.getBack();
         break;
+        
+      case "Reprendre":
+        c.setPause();
+        break;
 
       default:
         System.out.println("No implemented yet");

@@ -31,9 +31,6 @@ public class RunPlayer implements Runnable {
 
       player.updateObserver(null);
     }
-   
-    player.updateObserver("Perdu");
-    
     ContextManager.getInstance().stop();
   }
 

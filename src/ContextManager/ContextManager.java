@@ -168,6 +168,13 @@ public final class ContextManager {
    */
   public void setPause() {
     isPaused = !isPaused;
+    Window w = graphicEngine.getWindow();
+    if(isPaused){
+      w.definePauseMenu();
+      gameEngine.stopAllTimers();
+    }else{
+      w.stopPauseMenu();
+    }
   }
 
   /**

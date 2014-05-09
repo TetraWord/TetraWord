@@ -65,12 +65,11 @@ public class AI extends Player implements Runnable {
         Logger.getLogger(AI.class.getName()).log(Level.SEVERE, null, ex);
       }
       int r = (int) (Math.random() * 100);
-      System.out.println("r vaut : "+r);
       if (r < 25) {
         //Select the bestWord
         bestWord = bestWords[0];
       } else if (r > 25 && r < 75) {
-        bestWord = bestWords[(int) (Math.random() * bestWords.length - 2)];
+        bestWord = bestWords[(int) (Math.random() * (bestWords.length - 2))];
       } else {
         bestWord = bestWords[bestWords.length - 1];
       }

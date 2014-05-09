@@ -5,7 +5,6 @@ import GameEngine.Brick;
 import GameEngine.CurrentModifier;
 import GameEngine.CurrentShape;
 import GameEngine.Grid;
-import GameEngine.Modifier;
 import GameEngine.Player;
 import Pattern.Observable;
 import Pattern.Observer;

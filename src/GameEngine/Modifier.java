@@ -2,15 +2,18 @@ package GameEngine;
 
 import static GameEngine.Grid.sizeX;
 import static GameEngine.Grid.sizeY;
-import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class Modifier {
 	
-	private enum ModifierEnum {
-    Speed, Shake, Storm, Exchange, Score, Bomb, Worddle
+	private enum ModifierSingleEnum {
+    Speed, Shake, Storm, Score, Bomb, Worddle
   };
+  
+  private enum ModifierMultiEnum {
+    Speed, Shake, Storm, Exchange, Score, Bomb, Worddle
+  }
 	/*Non implémenté
 		Reversal
 		TimeTravel
@@ -20,9 +23,14 @@ public class Modifier {
   private Timer t = null;
  
 	public Modifier() {
-		Random r = new Random();
-		int random = r.nextInt(7);
-		this.name = ModifierEnum.values()[random].toString();
+    int random;
+    if(GameEngine.getInstance().getNbPlayers() == 1){
+      random = (int) (Math.random() * 6);
+      this.name = ModifierSingleEnum.values()[random].toString();
+    }else {
+      random = (int) (Math.random() * 7);
+      this.name = ModifierMultiEnum.values()[random].toString();
+    }
 	}
 
   public Modifier(String name) {
@@ -192,9 +200,9 @@ public class Modifier {
 
   private void exchange() {
     GameEngine g = GameEngine.getInstance();
-    if (g.getNbPlayers() == 2) {
-      g.exchange();
-    }
+    if (!g.isPlayersInWordMode()) {
+      g.exchange(); 
+    } 
   }
 
   private void score(Player p, char sign) {

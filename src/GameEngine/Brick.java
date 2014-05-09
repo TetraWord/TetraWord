@@ -10,17 +10,20 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * <b> Brick is a logical part of the game representing the bricks of a
+ * <b> Brick is a logical part of the game representing the Bricks of a
  * shape.</b>
  * <p>
- * A brick contains:
+ * A Brick contains:
  * <ul>
  * <li> A letter for the worddle/anagram mode </li>
  * <li> A number: 1 for visible, else -1 </li>
  * <li> A Color </li>
- * <li> Boolean to know if the brick is clicked </li>
- * <li> Boolean to know if the brick is double clicked </li>
- * <li> Boolean to know if the brick is selected in a worddle mode </li>
+ * <li> Boolean to know if the Brick is clicked </li>
+ * <li> Boolean to know if the Brick is double clicked </li>
+ * <li> Boolean to know if the Brick is selected and in a right word in a
+ * worddle mode </li>
+ * <li> Boolean to know if the Brick can be selected in a new word in a worddle
+ * mode </li>
  * <li> An array of char to know the letter's appearance frequency </li>
  * </ul>
  * </p>
@@ -29,20 +32,70 @@ import java.util.logging.Logger;
  */
 public class Brick {
 
+  /**
+   * The Brick's letter.
+   *
+   * @see Brick#getLetter()
+   */
   private char letter;
+
+  /**
+   * The Shape's number.
+   *
+   * @see Brick#getNb()
+   */
   private int number;
+
+  /**
+   * The Brick's color.
+   *
+   * @see Brick#getColor()
+   */
   private Color color;
+
+  /**
+   * Allow to know if the Brick is clicked.
+   *
+   * @see Brick#isClicked()
+   * @see Brick#setClicked(boolean)
+   */
   private boolean clicked = false;
+
+  /**
+   * Allow to know if the Brick is double clicked.
+   *
+   * @see Brick#isDoubleClicked()
+   * @see Brick#setClicked(boolean)
+   */
   private boolean doubleClicked = false;
+
+  /**
+   * Allow to know if the Brick is gonna be destroyed.
+   *
+   * @see Brick#gonnaBeDestroyed()
+   * @see Brick#setToDestroy()
+   */
   private boolean gonnaBeDestroyed = false;
+
+  /**
+   * Allow to know if the Brick can be in a new word in Worddle mode.
+   *
+   * @see Brick#setNewClickable()
+   * @see Brick#canBeInANewWord()
+   */
+  private boolean newClickable = false;
+
+  /**
+   * Array of char to know the frequency letter in french language.
+   */
   private static char[] frequencyLetter = initLetters();
 
   /**
-   * It's the main constructor for Brick
+   * It's the main constructor for Brick.
    *
-   * @param letter: char
-   * @param number: int
-   * @param c: Color
+   * @param letter char
+   * @param number int
+   * @param c Color
    */
   private Brick(char letter, int number, Color c) {
     this.letter = letter;
@@ -52,10 +105,10 @@ public class Brick {
 
   /**
    * Call the main constructor with the letter and number get in parameters and
-   * white color
+   * white color.
    *
-   * @param letter: char
-   * @param number: int
+   * @param letter char
+   * @param number int
    */
   public Brick(char letter, int number) {
     this(letter, number, new Color(255));
@@ -63,10 +116,10 @@ public class Brick {
 
   /**
    * Call the main constructor with the color and number get in parameters. Then
-   * it give an aleatory letter
+   * it give an aleatory letter.
    *
-   * @param number: int
-   * @param c: Color
+   * @param number int
+   * @param c Color
    */
   public Brick(int number, Color c) {
     this(' ', number, c);
@@ -75,9 +128,9 @@ public class Brick {
 
   /**
    * The copy constructor call the main constructor with the parameters of the
-   * brick is copied
+   * Brick is copied.
    *
-   * @param b: Brick
+   * @param b Brick
    */
   public Brick(Brick b) {
     this(b.letter, b.number, b.color);
@@ -95,7 +148,7 @@ public class Brick {
   }
 
   /**
-   * Allow to know the letters's appearance frequency
+   * Allow to know the letters's appearance frequency.
    *
    * @return an array of char
    */
@@ -143,41 +196,42 @@ public class Brick {
   }
 
   /**
-   * Get the number contained in the brick
+   * Get the number contained in the Brick.
    *
-   * @return the number contained in the brick
+   * @return the number contained in the Brick
    */
   public int getNb() {
     return number;
   }
 
   /**
-   * Get the color of the brick
+   * Get the color of the Brick.
    *
-   * @return the color of the brick
+   * @return the color of the Brick
    */
   public Color getColor() {
     return color;
   }
 
   /**
-   * Get the letter of the brick
+   * Get the letter of the Brick.
    *
-   * @return the letter of the brick
+   * @return the letter of the Brick
    */
   public char getLetter() {
     return letter;
   }
 
   /**
-   * Select the brick for worddle mode to destroy it
+   * Select the Brick for worddle mode to destroy it.
    */
   public void setToDestroy() {
     gonnaBeDestroyed = true;
   }
 
   /**
-   * Allow to know if the brick is selected
+   * Allow to know if the Brick is selected
+   *
    *
    * @return
    */
@@ -187,7 +241,7 @@ public class Brick {
 
   /**
    * Verify if it's clicked or not. If it's clicked, verify if it's a simple or
-   * a double clicked
+   * a double clicked.
    *
    * @param b: Boolean represents it's clicked
    */
@@ -201,7 +255,7 @@ public class Brick {
   }
 
   /**
-   * Return true if it's clicked, else false
+   * Return true if it's clicked, else false.
    *
    * @return the boolean if it's clicked
    */
@@ -210,12 +264,27 @@ public class Brick {
   }
 
   /**
-   * Return true if it's double clicked, else false
+   * Return true if it's double clicked, else false.
    *
    * @return the boolean if it's double clicked
    */
   public boolean isDoubleClicked() {
     return doubleClicked;
+  }
+
+  /**
+   * Set the Brick clickable for a new word in Worddle mode.
+   * @param b Boolean
+   */
+  void setNewClickable(Boolean b) {
+    this.newClickable = b;
+  }
+  
+  /**
+   * @return True if it can be in a new word in Worddle mode, else false.
+   */
+  public boolean canBeInANewWord() {
+    return this.newClickable;
   }
 
 }

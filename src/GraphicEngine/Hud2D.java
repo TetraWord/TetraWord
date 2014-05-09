@@ -319,7 +319,9 @@ public class Hud2D extends JPanel implements Observer {
       }
 
       if (hub.getTimeBeforeWorddle() > 0) {
-        timerBeforeWorddle.setValue(100 - hub.getTimeBeforeWorddle() * 50 / 15);
+        int value = 100 - hub.getTimeBeforeWorddle() * 50 / 15;
+        timerBeforeWorddle.setValue(value);
+        timerBeforeWorddle.setString(Integer.toString(value) + " %");
       } else if (hub.getState().getStateName().compareTo("Worddle") != 0) {
         timerBeforeWorddle.setValue(100);
         timerBeforeWorddle.setString("Worddle prêt !");

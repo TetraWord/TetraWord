@@ -129,6 +129,15 @@ public class Player implements Observable {
     return dico;
   }
 
+  private void tryModifierCollision(CurrentShape s) {
+    if(currentModifier!= null && s.tryCollision(currentModifier,  s.getX(), s.getY())){
+        	this.modifier = new Modifier(this.currentModifier);
+					updateObserver(this.modifier);
+        	this.currentModifier = null;
+        	boardGame.getGrid().setCurrentModifier(currentModifier);
+        }
+  }
+  
   public void down(int step) {
     synchronized (monitor) {
       CurrentShape s = getCurrentShape();
@@ -137,12 +146,7 @@ public class Player implements Observable {
         if (!s.tryCollision(boardGame.getGrid().getTGrid(), s.getX(), s.getY() + step)) {
           s.move(s.getX(), s.getY() + step);
         }
-        if(currentModifier!= null && s.tryCollision(currentModifier,  s.getX(), s.getY())){
-        	this.modifier = new Modifier(this.currentModifier);
-					updateObserver(this.modifier);
-        	this.currentModifier = null;
-        	boardGame.getGrid().setCurrentModifier(currentModifier);
-        }
+        tryModifierCollision(s);
         //Si on ne peut pas faire descendre la pièce plus bas, on l'inscrit dans la Grid
         if (tmpY == s.getY()) {
           boardGame.finishFall(s);
@@ -157,6 +161,7 @@ public class Player implements Observable {
       if (!s.tryCollision(boardGame.getGrid().getTGrid(), s.getX() - 1, s.getY())) {
         s.move(s.getX() - 1, s.getY());
       }
+      tryModifierCollision(s);
     }
   }
 
@@ -166,6 +171,7 @@ public class Player implements Observable {
       if (!s.tryCollision(boardGame.getGrid().getTGrid(), s.getX() + 1, s.getY())) {
         s.move(s.getX() + 1, s.getY());
       }
+      tryModifierCollision(s);
     }
   }
 
@@ -180,12 +186,7 @@ public class Player implements Observable {
       this.addToScore(interval * 2);
       s.move(s.getX(), finalLine - 1);
       
-      if(currentModifier!= null && s.tryCollision(currentModifier,  s.getX(), s.getY())){
-      	this.modifier = new Modifier(this.currentModifier);
-      	System.out.println("catch modifier");
-      	this.currentModifier = null;
-      	boardGame.getGrid().setCurrentModifier(currentModifier);
-      }
+      tryModifierCollision(s);
 
       boardGame.finishFall(s);
     }
@@ -333,6 +334,7 @@ public class Player implements Observable {
     boardGame.getGrid().setAllowClick(true);
     int numLinesRemoved = 0;
     while (boardGame.getGrid().getFirstFullLine() != -1) {
+      updateObserver(null);
       if (wordFinish) {
         StringBuilder sb = getGrid().getAllLetterFromTheRemovedLine();
         String bestWord = dico.findBestAnagramm(sb);
@@ -389,10 +391,12 @@ public class Player implements Observable {
       if (dico.included(s)) {
         updateObserver("Mot Existant !");
         boardGame.getGrid().setBricksToDestroy();
+        getGrid().setBricksToDestroy();
         addToScore(s.length() * 3);
       } else {
         updateObserver("Non Existant");
         boardGame.getGrid().clearTabBrickClicked();
+        getGrid().clearTabBrickClicked();
         addToScore(-s.length() * 4);
       }
       clearWord();
@@ -407,6 +411,7 @@ public class Player implements Observable {
     getGrid().finishWorddle(currentShapeStocked);
     clearWord();
     updateObserver(null);
+    state = InGameState.TETRIS;
   }
 
   public final void startTimerBeforeWorddle() {
@@ -485,4 +490,7 @@ public class Player implements Observable {
 		offset[1] = offsetY;
 		updateObserver(offset);
 	}
+
+  public void stopAllTimers() throws InterruptedException {
+  }
 }

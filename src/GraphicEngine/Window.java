@@ -98,10 +98,22 @@ public class Window extends JFrame {
   }
   
   public void definePauseMenu() {
+    Container pan = getContentPane();
     menu = new Menu2D();
     menu.definePauseMenu();
+    setContentPane(menu);
+    this.setVisible(true);
   }
 
+  public void stopPauseMenu() {
+    this.clear();
+    Container pan = getContentPane();
+    for(int i = 0; i < boardGames.size(); ++i){
+      pan.add(boardGames.get(i));
+    }
+    this.setVisible(true);
+  }
+  
   public void addWindowListener() {
     this.addKeyListener(ContextManager.getInstance().getPlayerListener(0));
     this.addKeyListener(ContextManager.getInstance().getPlayerListener(1));
@@ -117,6 +129,10 @@ public class Window extends JFrame {
 
   public void clear() {
     getContentPane().removeAll();
+  }
+  
+  public void resize() {
+    this.setSize(size);
   }
 
   public Menu2D getMenu() {
