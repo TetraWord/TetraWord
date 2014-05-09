@@ -270,13 +270,19 @@ public class GameEngine {
     p2Grid.updateObservateur(p1CS);
     p1Grid.updateObservateur(p2TGrid);
     p2Grid.updateObservateur(p1TGrid);
-
   }
 
   /**
    * Stop the game. 
    */
   public void stop() {
+    for(int i = 0; i < nbPlayer; ++i) {
+      players[i].finish();
+      players[i].updateObservateur("Jeux fini");
+      players[i] = null;
+    }
+    
+    nbPlayer = 0;
     //TO DO
   }
 

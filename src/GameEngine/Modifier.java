@@ -200,9 +200,9 @@ public class Modifier {
 
   private void exchange() {
     GameEngine g = GameEngine.getInstance();
-    if (g.getNbPlayers() == 2) {
-      g.exchange();
-    }
+    if (!g.isPlayersInWordMode()) {
+      g.exchange(); 
+    } 
   }
 
   private void score(Player p, char sign) {

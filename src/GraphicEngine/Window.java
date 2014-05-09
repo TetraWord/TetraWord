@@ -130,6 +130,10 @@ public class Window extends JFrame {
   public void clear() {
     getContentPane().removeAll();
   }
+  
+  public void resize() {
+    this.setSize(size);
+  }
 
   public Menu2D getMenu() {
     return menu;

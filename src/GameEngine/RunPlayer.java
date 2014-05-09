@@ -30,10 +30,7 @@ public class RunPlayer implements Runnable {
       }
 
       player.updateObservateur(null);
-    }
-   
-    player.updateObservateur("Perdu");
-    
+    }   
     ContextManager.getInstance().stop();
   }
 
