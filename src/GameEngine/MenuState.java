@@ -1,7 +1,7 @@
 package GameEngine;
 
 /**
- * Enumeration of state for the menu
+ * <b>Enumeration of states for the menu</b>
  * 
  */
 public enum MenuState {
