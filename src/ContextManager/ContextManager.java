@@ -336,7 +336,7 @@ public final class ContextManager {
       w.setLayout(new GridLayout(1, 2));
     }
     Player[] players = gameEngine.getPlayers();
-    for (int i = 0; i < numPlayer; ++i) {
+    for (int i = numPlayer - 1; i >= 0; --i) {
       if (i == 0) {
         player1Listener = new Config1(players[i]);
       }
@@ -414,8 +414,7 @@ public final class ContextManager {
 
     w.setLocationRelativeTo(null);
 
-    Player[] players = gameEngine.getPlayers();
-    for (int i = 0; i < numPlayer; ++i) {
+    for (int i = gameEngine.getNbPlayers() - 1; i >= 0; --i) {
       if (numPlayer != 1.5) {
         w.defineCommande(i);
       } else {
