@@ -420,7 +420,7 @@ public class Grid implements Observable, Observer {
    */
   public void setNoLastBrickClicked() {
     for(int i = 0; i < tabBrickClicked.size(); ++i){
-      tabBrickClicked.get(i).setNewClickable();
+      tabBrickClicked.get(i).setNewClickable(true);
     }
     coordsLastBrickClicked = null;
   }
@@ -449,6 +449,7 @@ public class Grid implements Observable, Observer {
     for (int i = 0; i < sizeY; ++i) {
       for (int j = 0; j < sizeX; ++j) {
         tGrid[i][j].setClicked(false);
+        tGrid[i][j].setNewClickable(false);
       }
     }
   }

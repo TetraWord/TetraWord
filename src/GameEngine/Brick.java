@@ -274,9 +274,10 @@ public class Brick {
 
   /**
    * Set the Brick clickable for a new word in Worddle mode.
+   * @param b Boolean
    */
-  void setNewClickable() {
-    this.newClickable = true;
+  void setNewClickable(Boolean b) {
+    this.newClickable = b;
   }
   
   /**
