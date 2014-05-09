@@ -108,7 +108,7 @@ public class Window extends JFrame {
     this.requestFocusInWindow();
   }
 
-  public void reloadApercuBackground(String item) {
+  public void reloadOverviews(String item) {
     Container pan = getContentPane();
     if (pan instanceof DesignMenu2D) {
       ((DesignMenu2D) pan).loadOverviews(item);
