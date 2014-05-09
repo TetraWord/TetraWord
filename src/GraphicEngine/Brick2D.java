@@ -35,8 +35,10 @@ public class Brick2D {
 		if (model.isClicked()) {
       if(model.isDoubleClicked()){
         c = Color.black;
-      }else{
+      }else if(model.canBeInANewWord()) {
         c = Color.gray;
+      }else{
+        c = Color.lightGray;
       }
 		} else {
 			c = model.getColor();

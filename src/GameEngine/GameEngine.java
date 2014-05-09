@@ -21,7 +21,7 @@ import java.util.TimerTask;
  * <li> The number of player in game. </li>
  * <li> The Dictionary to check the right word. </li>
  * <li> A boolean to know if an AI is in the game. </li>
- * <li> The worddleTimer of the Player. </li>
+ * <li> The time left in Worddle mode for a Player. </li>
  * <li> The game timer </li>
  * <li> The time until the game stop </li>
  * </ul>
@@ -70,7 +70,7 @@ public class GameEngine {
   private boolean ai = false;
 
   /**
-   *
+   * The timer before a end of Player's Worddle mode
    */
   private Timer worddleTimer = null;
 
@@ -175,15 +175,26 @@ public class GameEngine {
     this.ai = ai;
   }
 
+  /**
+   * Start the worddle timer for the Player
+   * @param p The Player in Worddle mode.
+   */
   public void beginWorddleTimer(Player p) {
     worddleTimer = new Timer();
-    worddleTimer.schedule(new WorddleTimerTask((p)), 30000);
+    worddleTimer.schedule(new WorddleTimerTask((p)), 15000);
   }
 
+  /**
+   * Finish the Worddle mode of the Player.
+   */
   public void finishTimerWorddle() {
     worddleTimer = null;
   }
-
+  
+  /**
+   * To know if a Player is already in Worddle mode.
+   * @return true if the Worddle's timer is still alive.
+   */
   public boolean timerWorddleIsAlive() {
     return worddleTimer != null;
   }
@@ -267,5 +278,12 @@ public class GameEngine {
    */
   public void stop() {
     //TO DO
+  }
+
+  /**
+   * Stop all the timers in the game
+   */
+  public void stopAllTimers() {
+        
   }
 }

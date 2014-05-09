@@ -1,7 +1,6 @@
 package GraphicEngine;
 
 import GameEngine.Hud;
-import static GraphicEngine.GraphicEngine.WINDOW_WIDTH;
 import Pattern.Observable;
 import Pattern.Observer;
 import java.awt.Color;
@@ -93,13 +92,6 @@ public class Hud2D extends JPanel implements Observer {
     nbLinesRemoved = new JLabel(Integer.toString(hub.getNbLines()), CENTER);
     setJLabel(nbLinesRemoved, 583, 760, 30, 23);
     this.add(nbLinesRemoved);
-
-    /* UI Word anagramme/wordlle */
-    /*word = new JLabel(hub.getWord(), CENTER);
-     setJLabel(word, 70, 0, 367, 55);
-     word.setVerticalTextPosition(CENTER);
-     word.setHorizontalAlignment(CENTER);
-     this.add(word);*/
 
     /* UI Timer time left */
     timerTimeLeft = new JLabel(Long.toString(hub.getTimeLeft()), CENTER);
@@ -197,7 +189,9 @@ public class Hud2D extends JPanel implements Observer {
       }
 
       if (hub.getTimeBeforeWorddle() > 0) {
-        timerBeforeWorddle.setValue(100 - hub.getTimeBeforeWorddle() * 50 / 15);
+        int value = 100 - hub.getTimeBeforeWorddle() * 50 / 15;
+        timerBeforeWorddle.setValue(value);
+        timerBeforeWorddle.setString(Integer.toString(value) + " %");
       } else if (hub.getState().getStateName().compareTo("Worddle") != 0) {
         timerBeforeWorddle.setValue(100);
         timerBeforeWorddle.setString("Worddle prêt !");

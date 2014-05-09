@@ -100,7 +100,7 @@ public class Config1 extends KeyAdapter {
         break;
 
       case KeyEvent.VK_ENTER:
-        if ((p.isAnagram() || p.isWorddle()) && p.getWord().length() > 0) {
+        if ((p.isAnagram() || p.isWorddle()) && p.getWord().length() > 1) {
           p.setWordFinish();
           p.getGrid().setNoLastBrickClicked();
         } else if (p.hasModifier() && p.isTetris()) {

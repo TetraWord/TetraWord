@@ -419,6 +419,9 @@ public class Grid implements Observable, Observer {
    * @see Grid#coordsLastBrickClicked
    */
   public void setNoLastBrickClicked() {
+    for(int i = 0; i < tabBrickClicked.size(); ++i){
+      tabBrickClicked.get(i).setNewClickable();
+    }
     coordsLastBrickClicked = null;
   }
 
