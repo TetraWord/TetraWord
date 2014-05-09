@@ -22,7 +22,7 @@ import static javax.swing.SwingConstants.CENTER;
 
 public class Hud2D extends JPanel implements Observer {
 
-  private final Hud hub;
+  private final Hud hud;
   private final String font;
   private final Color color;
   private final JLabel playerName;
@@ -53,7 +53,7 @@ public class Hud2D extends JPanel implements Observer {
     this.setOpaque(false);
     this.setVisible(true);
 
-    this.hub = hub;
+    this.hud = hub;
 
 		try {
 			File fis = new File("media/font/" + font);
@@ -162,37 +162,37 @@ public class Hud2D extends JPanel implements Observer {
   @Override
   public void update(Observable o, Object args) {
     if (o instanceof Hud) {
-      playerName.setText(hub.getPlayerName());
-      String modeName = "Mode " + hub.getState().getStateName();
+      playerName.setText(hud.getPlayerName());
+      String modeName = "Mode " + hud.getState().getStateName();
       mode.setText(modeName);
-      level.setText(Integer.toString(hub.getLevel()));
-      score.setText(Integer.toString(hub.getScore()));
-      nbLinesRemoved.setText(Integer.toString(hub.getNbLines()));
+      level.setText(Integer.toString(hud.getLevel()));
+      score.setText(Integer.toString(hud.getScore()));
+      nbLinesRemoved.setText(Integer.toString(hud.getNbLines()));
 
-      wordInProgress = hub.getWord();
+      wordInProgress = hud.getWord();
       if (wordInProgress != null) {
         if (!wordInProgress.isEmpty()) {
           messages.setText("Mot en cours : " + wordInProgress);
         }
       }
 
-      this.nextShape = new Shape2D(hub.getNextShape());
+      this.nextShape = new Shape2D(hud.getNextShape());
 
-      if (hub.getStockShape() != null) {
-        this.stockShape = new Shape2D(hub.getStockShape());
+      if (hud.getStockShape() != null) {
+        this.stockShape = new Shape2D(hud.getStockShape());
       }
 
-      if (hub.getTimeLeft() > 0) {
-        timerTimeLeft.setText(Long.toString(hub.getTimeLeft()));
+      if (hud.getTimeLeft() > 0) {
+        timerTimeLeft.setText(Long.toString(hud.getTimeLeft()));
       } else {
         timerTimeLeft.setText("Fini");
       }
 
-      if (hub.getTimeBeforeWorddle() > 0) {
-        int value = 100 - hub.getTimeBeforeWorddle() * 50 / 15;
+      if (hud.getTimeBeforeWorddle() > 0) {
+        int value = 100 - hud.getTimeBeforeWorddle() * 50 / 15;
         timerBeforeWorddle.setValue(value);
         timerBeforeWorddle.setString(Integer.toString(value) + " %");
-      } else if (hub.getState().getStateName().compareTo("Worddle") != 0) {
+      } else if (hud.getState().getStateName().compareTo("Worddle") != 0) {
         timerBeforeWorddle.setValue(100);
         timerBeforeWorddle.setString("Worddle prêt !");
       } else {
@@ -200,12 +200,13 @@ public class Hud2D extends JPanel implements Observer {
         timerBeforeWorddle.setString("Worddle en cours !");
       }
 			
-			if (hub.getModifier() != null ){
-				String m = hub.getModifier().getName();
+			if (hud.getModifier() != null ){
+				String m = hud.getModifier().getName();
 				String file = "./media/Design/modifieurs/" + m + ".png";
 				try {
 					modifier = ImageIO.read(new File(file));
 				} catch (IOException ex) {
+          System.out.println("Erreur file : "+file);
 					ex.printStackTrace();
 				}
 			}else{

@@ -4,6 +4,8 @@ import Pattern.Observable;
 import Pattern.Observer;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * <b> Grid is a logical part of the game.</b>
@@ -118,6 +120,11 @@ public class Grid implements Observable, Observer {
   private int[] coordsLastBrickClicked = new int[2];
 
   /**
+   * The Timer in charge of the CurrentModifier's Display
+   */
+  private Timer timerBeforeModifier = null;
+
+  /**
    * Grid constructor. Init its BoardGame and its first CurrentShape. Init the
    * composition of Brick to null Brick.
    *
@@ -132,6 +139,8 @@ public class Grid implements Observable, Observer {
         tGrid[i][j] = new Brick(' ', -1);
       }
     }
+    System.out.println("je passe ici");
+    displayModifier();
   }
 
   /**
@@ -419,10 +428,12 @@ public class Grid implements Observable, Observer {
    * @see Grid#coordsLastBrickClicked
    */
   public void setNoLastBrickClicked() {
-    for(int i = 0; i < tabBrickClicked.size(); ++i){
-      tabBrickClicked.get(i).setNewClickable(true);
+    if (coordsLastBrickClicked != null) {
+      for (int i = 0; i < tabBrickClicked.size(); ++i) {
+        tabBrickClicked.get(i).setNewClickable(true);
+      }
+      coordsLastBrickClicked = null;
     }
-    coordsLastBrickClicked = null;
   }
 
   /**
@@ -596,9 +607,9 @@ public class Grid implements Observable, Observer {
     return result;
   }
 
-  
   /**
    * Test if the CurrentShape's position is an acceptable position.
+   *
    * @param shape The CurrentShape to test
    * @return 0 if the position is not acceptable, 1 if it is.
    */
@@ -659,6 +670,7 @@ public class Grid implements Observable, Observer {
 
   /**
    * Drop down the CurrentShape and add this in the Grid.
+   *
    * @param tmpShape The CurrentShape to drop and add.
    */
   public void FullDropAndAddShapeToGrid(CurrentShape tmpShape) {
@@ -673,6 +685,7 @@ public class Grid implements Observable, Observer {
 
   /**
    * Get the column height.
+   *
    * @param x The column
    * @return The height of the column
    */
@@ -688,6 +701,7 @@ public class Grid implements Observable, Observer {
 
   /**
    * Get the heighest column of the Grid.
+   *
    * @return The value of the heighest column of the Grid.
    */
   public int PileHeightWeightedCells() {
@@ -711,6 +725,7 @@ public class Grid implements Observable, Observer {
 
   /**
    * Sum the height of all column of the Grid.
+   *
    * @return The sum of all column of the Grid.
    */
   public int SumOfWellHeights() {
@@ -725,6 +740,7 @@ public class Grid implements Observable, Observer {
 
   /**
    * Get all letter from a removed line.
+   *
    * @return A string of all the letter from the removed line
    */
   public StringBuilder getAllLetterFromTheRemovedLine() {
@@ -738,6 +754,7 @@ public class Grid implements Observable, Observer {
 
   /**
    * Select a Brick at a specific line with a specific char.
+   *
    * @param y The specific line
    * @param charAt The specifid char
    */
@@ -748,6 +765,31 @@ public class Grid implements Observable, Observer {
         return;
       }
     }
+  }
+
+  /**
+   * The timer to display a CurrentModifier
+   */
+  private void displayModifier() {
+    timerBeforeModifier = new Timer();
+
+    timerBeforeModifier.schedule(new TimerTask() {
+      @Override
+      public void run() {
+        System.out.println("New Modifier");
+        currentModifier = new CurrentModifier(tGrid);
+        setCurrentModifier(currentModifier);
+      }
+    }, 10000, 35000);
+
+    timerBeforeModifier.schedule(new TimerTask() {
+      @Override
+      public void run() {
+        System.out.println("Delete modifier");
+        setCurrentModifier(null);
+      }
+    }, 35000);
+
   }
 
   @Override

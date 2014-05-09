@@ -8,7 +8,7 @@ import java.util.TimerTask;
 public class Modifier {
 	
 	private enum ModifierSingleEnum {
-    Speed, Shake, Storm, Score, Bomb, Worddle
+    Speed, Shake, Storm, Score, Bomb
   };
   
   private enum ModifierMultiEnum {
@@ -47,11 +47,23 @@ public class Modifier {
 
   public void active(Player p) {
 		int random;
+    Player pAffect;
+    GameEngine g = GameEngine.getInstance();
+    if(g.getNbPlayers() > 1){
+      Player[] ps = g.getPlayers();
+      if(p.getNumber() == 1){
+        pAffect = ps[2];
+      }else {
+        pAffect = ps[1];
+      }
+    }else{
+      pAffect = p;
+    }
     switch (this.name) {
       case "Speed":
 				random = (int) Math.random();
 				if(random == 0){
-					this.changeSpeed(p, '+');
+					this.changeSpeed(pAffect, '+');
 				} else {
 					this.changeSpeed(p, '-');
 				}
@@ -59,15 +71,15 @@ public class Modifier {
 				
 
       case "Shake":
-        this.shake(p);
+        this.shake(pAffect);
         break;
 
       case "Storm":
-        this.storm(p);
+        this.storm(pAffect);
         break;
 
       case "Reversal":
-        this.reversal(p);
+        this.reversal(pAffect);
         break;
 
       case "Exchange":
@@ -79,7 +91,7 @@ public class Modifier {
 				if(random == 0){
 					this.score(p, '+');
 				} else {
-				 this.score(p, '-');
+				 this.score(pAffect, '-');
 				}
         break;
 
@@ -88,11 +100,11 @@ public class Modifier {
         break;
 
       case "TimeTravel":
-        this.timeTravel(p);
+        this.timeTravel(pAffect);
         break;
 
       case "Worddle":
-        this.worddle(p);
+        this.worddle(pAffect);
         break;
     }
   }

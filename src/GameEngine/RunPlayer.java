@@ -25,7 +25,7 @@ public class RunPlayer implements Runnable {
         }
       } else if (player.isAnagram()) {
         player.doAnagram();
-      } else if (player.isWorddle()) {
+      } else if (player.isWorddle()) {              
         player.doWorddle();
       }
 
