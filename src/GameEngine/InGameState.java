@@ -24,6 +24,7 @@ public enum InGameState {
 
 	/**
 	 * Name of the state
+	 * @see InGameState#getStateName() 
 	 */
   private String name = "";
 
@@ -38,6 +39,8 @@ public enum InGameState {
 	/**
 	 * Get the name of the enum
 	 * @return Name of the enum
+	 * 
+	 * @see InGameState#name
 	 */
   public String getStateName() {
     return name;

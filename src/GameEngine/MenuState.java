@@ -1,5 +1,7 @@
 package GameEngine;
 
+import sun.security.jgss.spi.MechanismFactory;
+
 /**
  * <b>Enumeration of states for the menu</b>
  * 
@@ -37,6 +39,7 @@ public enum MenuState {
 
 	/**
 	 * Name of the enumeration
+	 * @see MenuState#getStateName() 
 	 */
   private String name = "";
 
@@ -51,6 +54,7 @@ public enum MenuState {
 	/**
 	 * Get the name of the MenuState
 	 * @return Name of the MenuState
+	 * @see MenuState#name
 	 */
   public String getStateName() {
     return name;
