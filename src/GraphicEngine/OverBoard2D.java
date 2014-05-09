@@ -11,13 +11,37 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+/**
+ * <b> Screen before the begin of the game</b>
+ * <p>OverBoards2D inherits from JPanel</p>
+ * <p>OverBoards2D contains : 
+ * <ul>
+ * <li>Image of controls</li>
+ * <li>JTextField for the player's name</li>
+ * <li>Play button</li>
+ * </ul>
+ * </p>
+ */
 public class OverBoard2D extends JPanel {
 
+	/**
+	 * Image of controls
+	 */
   private final Image img;
+	/**
+	 * JTextField for the player's name
+	 */
   private final JTextField namePlayer = new JTextField("Pseudo");
+	/**
+	 * Play button
+	 */
 	private static final Button2D play = new Button2D("Jouer", WINDOW_WIDTH / 2 - 150, 780, 300, 50);
-	//private final Menu2D menu;
 
+	/**
+	 * Default OverBoard2D constructor
+	 * @param numPlayer Identifying of the player
+	 * @throws IOException 
+	 */
   public OverBoard2D(int numPlayer) throws IOException {
     /* Settings */
     this.setLayout(null);
@@ -42,10 +66,18 @@ public class OverBoard2D extends JPanel {
 		}
   }
 
+	/**
+	 * Get entered player's name
+	 * @return player's name
+	 */
   public String getPlayerName() {
     return namePlayer.getText();
   }
 
+	/**
+	 * Override of paintComponent function to draw the background image
+	 * @param g Graphics to draw on
+	 */
   @Override
   public void paintComponent(Graphics g) {
 		g.drawImage(img, 0, 0, this);

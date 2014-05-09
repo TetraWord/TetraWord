@@ -40,14 +40,14 @@ public class BoardGame2D extends JPanel implements Observer {
     loadOptions();
 
     hud = new Hud2D(model.getHud(), font, color);
-    model.getHud().addObservateur(hud);
+    model.getHud().addObserver(hud);
     this.add(hud);
 
     event = new GridEventListener(this.model);
     gameGrid = new Grid2D(model.getGrid(), event, shadow);
     gameGrid.setBounds(70, 135, 350, 700);
 
-    model.getGrid().addObservateur(gameGrid);
+    model.getGrid().addObserver(gameGrid);
     this.add(gameGrid);
 
     setShapeToGrid2D();

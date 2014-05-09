@@ -273,15 +273,15 @@ public final class ContextManager {
   }
 
   /**
-   * Reload the background displayed in the design menu of the tetris.
+   * Reload images displayed in the design menu of the tetris.
    *
-   * @param item The name of the background wanted
+   * @param item The name of the chosen theme
    *
-   * @see Window#reloadApercuBackground(java.lang.String)
+   * @see Window#reloadOverviews(java.lang.String)
    */
-  public void reloadApercuBackground(String item) {
+  public void reloadOverviewBackground(String item) {
     Window w = graphicEngine.getWindow();
-    w.reloadApercuBackground(item);
+    w.reloadOverviews(item);
   }
 
   /**

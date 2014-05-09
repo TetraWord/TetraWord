@@ -13,7 +13,7 @@ public final class GridEventListener extends MouseAdapter implements Observable 
   private ArrayList<Observer> listObserver = new ArrayList<>();
 
   public GridEventListener(BoardGame obs) {
-    addObservateur(obs.getGrid());
+    addObserver(obs.getGrid());
   }
 
   @Override
@@ -30,23 +30,23 @@ public final class GridEventListener extends MouseAdapter implements Observable 
     coords[1] = y;
 
     //Tell the boardGame that the brick is clicked
-    updateObservateur(coords);
+    updateObserver(coords);
   }
 
   @Override
-  public void addObservateur(Observer obs) {
+  public void addObserver(Observer obs) {
     listObserver.add(obs);
   }
 
   @Override
-  public void updateObservateur(Object args) {
+  public void updateObserver(Object args) {
     for (Observer obs : listObserver) {
       obs.update(this, args);
     }
   }
 
   @Override
-  public void delObservateur() {
+  public void delAllObserver() {
     listObserver = new ArrayList<>();
   }
 }

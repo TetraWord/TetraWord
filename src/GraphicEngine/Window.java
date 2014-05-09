@@ -78,7 +78,7 @@ public class Window extends JFrame {
   public void defineNewBoardGame(BoardGame model) {
     Container pan = getContentPane();
     BoardGame2D boardGame = new BoardGame2D(model);
-    model.addObservateur(boardGame);
+    model.addObserver(boardGame);
     pan.add(boardGame);
     this.boardGames.add(boardGame);
 
@@ -120,10 +120,10 @@ public class Window extends JFrame {
     this.requestFocusInWindow();
   }
 
-  public void reloadApercuBackground(String item) {
+  public void reloadOverviews(String item) {
     Container pan = getContentPane();
     if (pan instanceof DesignMenu2D) {
-      ((DesignMenu2D) pan).loadApercus(item);
+      ((DesignMenu2D) pan).loadOverviews(item);
     }
   }
 

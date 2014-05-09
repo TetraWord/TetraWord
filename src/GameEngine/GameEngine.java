@@ -266,10 +266,10 @@ public class GameEngine {
     p1Grid.setTGrid(p2TGrid);
     p2Grid.setTGrid(tmp);
 
-    p1Grid.updateObservateur(p2CS);
-    p2Grid.updateObservateur(p1CS);
-    p1Grid.updateObservateur(p2TGrid);
-    p2Grid.updateObservateur(p1TGrid);
+    p1Grid.updateObserver(p2CS);
+    p2Grid.updateObserver(p1CS);
+    p1Grid.updateObserver(p2TGrid);
+    p2Grid.updateObserver(p1TGrid);
   }
 
   /**
@@ -278,7 +278,7 @@ public class GameEngine {
   public void stop() {
     for(int i = 0; i < nbPlayer; ++i) {
       players[i].finish();
-      players[i].updateObservateur("Jeux fini");
+      players[i].updateObserver("Jeu fini");
       players[i] = null;
     }
     
