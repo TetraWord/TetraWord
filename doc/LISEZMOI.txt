@@ -1,0 +1,17 @@
+Après installation du jeu dans Eclipse ou Netbeans, vous pouvez lancer le jeu.
+
+La navigation dans le menu se fait grâce à la souris.
+Une fois une partie démarrée, vous jouez avec les touches du clavier en mode Tetris et avec la souris en mode Worddle et Anagramme.
+
+
+POLITIQUE DE SCORE
+Chaque chute accéléré : +1 points
+Un drop down : nombre de lignes descendus * 2 points
+1 ligne : 
+Plusieurs lignes : 100 points par lignes
+4 lignes : 1000 points
+Faux mot : retour au niveau inférieur (Level up tout les 1000 points)
+Anagramme correct : longueur de mot * 50 points
+Anagramme le plus long : 1000 points
+Mot existant Worddle : longueur du mot * 3 points
+Mot non existant Worddle :  perte de longueur de mot * 4 points
