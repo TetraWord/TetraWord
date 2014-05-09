@@ -8,7 +8,7 @@ import javax.swing.JButton;
 import javax.swing.SwingConstants;
 
 /**
- * <b> Button2D is a JButton wich our design </b>
+ * <b> Button2D is a JButton with our design </b>
  * <p> Button2D inherits from JButton</p>
  * <p>
  * The BrickButton contains :
