@@ -18,19 +18,52 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 
+/**
+ * <b> DifficultyMenu2D is the menu permmiting to choose difficulty preferences. </b>
+ * <p> DifficultyMenu2D inherits from the Menu2D</p>
+ * <p>
+ * The DifficultyMenu2D contains :
+ * <ul>
+ * <li> A check box for the shadow of the shape</li>
+ * <li> A ButtonGroup for radio button to choose fall speed </li>
+ * </ul>
+ * 
+ * </p>
+ *
+ * @see Menu2D
+ */
 class DifficultyMenu2D extends Menu2D {
 
+	/**
+	 * The check box for the shadow of the shape
+	 * @see JCheckBox
+	 */
   private JCheckBox shadow;
+	
+	
+	/**
+	 * The ButtonGroup for radio button to choose fall speed
+	 * @see ButtonGroup
+	 */
 	private ButtonGroup speedFall = new ButtonGroup();
 
+	/**
+	 * DifficultyMenu2D constructor
+	 * Create all Swing elements for the menu
+	 */
   public DifficultyMenu2D() {
     defineMenu();
   }
 
+	/**
+	 * Main function of initialisation of attributes
+	 */
   private void defineMenu() {
+		/* Update MenuState */
     state = MenuState.DIFFICULTY;
     lastState = MenuState.OPTION;
 
+		/* Define unseful variables */
     int sx = 300, sy = 50;
     int x = WINDOW_WIDTH / 2 - sx / 2;
     int y = 50;
@@ -111,11 +144,13 @@ class DifficultyMenu2D extends Menu2D {
     x = WINDOW_WIDTH / 2 - sx / 2;
     y = y + step_y;
 		
+		/* Saving and quit buttons*/
     setButton2D(2);
     Button2D b = new Button2D("Sauvegarder", x, y, sx, sy);
     b.removeListener();
     b.addActionListener(new ActionListener() {
-
+			
+			/* Listener on save button */
       @Override
       public void actionPerformed(ActionEvent e) {
         boolean shadowBool = shadow.isSelected();
@@ -139,14 +174,14 @@ class DifficultyMenu2D extends Menu2D {
         Properties prop = new Properties();
         OutputStream output = null;
         try {
-
+					
           output = new FileOutputStream("conf/options.properties");
 
-          // set the properties value
+          /* set the properties value */
           prop.setProperty("shadow", Boolean.toString(shadowBool));
           prop.setProperty("speed", Integer.toString(speed));
 
-          // save properties to project root folder
+          /* save properties to project root folder */
           prop.store(output, null);
           JOptionPane.showMessageDialog(null, "Options sauvegardées");
 
@@ -163,7 +198,7 @@ class DifficultyMenu2D extends Menu2D {
 
         }
 			}
-			
+			/* Get the button selected in the speed fall group */
 			private JRadioButton getSelectedButtonText(ButtonGroup buttonGroup) {
         for (Enumeration<AbstractButton> buttons = buttonGroup.getElements(); buttons.hasMoreElements();) {
           AbstractButton button = buttons.nextElement();
