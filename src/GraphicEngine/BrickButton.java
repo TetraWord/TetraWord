@@ -5,7 +5,7 @@ import javax.swing.JButton;
 
 /**
  * <b> BrickButton is a JButton that permits to choose a brick in DesignMenu2D </b>
- * <p> BrickButton inheritfs from JButton</p>
+ * <p> BrickButton inherits from JButton</p>
  * <p>
  * The BrickButton contains :
  * <ul>

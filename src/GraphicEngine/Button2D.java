@@ -7,10 +7,33 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 
+/**
+ * <b> Button2D is a JButton wich our design </b>
+ * <p> Button2D inherits from JButton</p>
+ * <p>
+ * The BrickButton contains :
+ * <ul>
+ * <li> A name</li>
+ * </ul>
+ * 
+ * </p>
+ *
+ */
 public class Button2D extends JButton {
 
+	/**
+	 * Button's name
+	 */
   private final String name;
 
+	/**
+	 * Button2D default constructo
+	 * @param name Name of the button
+	 * @param x Horizontal position
+	 * @param y Vertical position
+	 * @param sx Width
+	 * @param sy Heigth
+	 */
   public Button2D(String name, int x, int y, int sx, int sy) {
     super(name);
     this.name = name;
@@ -27,10 +50,17 @@ public class Button2D extends JButton {
     this.setFont(new Font("Champagne & Limousines", 30, 30));
   }
 
+	/**
+	 * Delete the listener of the button
+	 */
   public void removeListener() {
     this.removeActionListener(ContextManager.getMenuListener());
   }
 
+	/**
+	 * Get the button's name 
+	 * @return Name of the button
+	 */
   @Override
   public String getName() {
     return name;
