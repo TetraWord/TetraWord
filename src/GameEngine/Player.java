@@ -49,7 +49,6 @@ import java.util.Timer;
  */
 public class Player implements Observable {
 
-<<<<<<< HEAD
 	protected final BoardGame boardGame;
 	private String name = "player";
 	private int speedFall;
