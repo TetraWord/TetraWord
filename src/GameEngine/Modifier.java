@@ -6,42 +6,74 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * <b> Modifier is a logical part of the game representing the modifier.</b>
+ * <p>
+ * A modifier contains:
+ * <ul>
+ * <li> modifierEnum: An enum of the different modifier existing </li>
+ * <li> name: A string for the name of the modifier </li>
+ * <li> t: A Timer </li>
+ * </ul>
+ * </p>
+ */
 public class Modifier {
 	
-	private enum ModifierEnum {
-    Speed, Slow, Shake, Storm, Reversal, Exchange, ScorePlus, ScoreMoins, Bomb, TimeTravel, Worddle
+	private enum modifierEnum {
+    Speed, Shake, Storm, Exchange, Score, Bomb, Worddle
   };
+	/*Non implémenté
+		Reversal
+		TimeTravel
+	*/
 
   private String name;
   private Timer t = null;
  
+  /**
+   * Modifier constructor
+   * Create a random modifier among modifierEnum
+   */
 	public Modifier() {
 		Random r = new Random();
-		int random = r.nextInt(11);
-		this.name = ModifierEnum.values()[random].toString();
+		int random = r.nextInt(7);
+		this.name = modifierEnum.values()[random].toString();
 	}
 
-  public Modifier(String name) {
-		this.name = name;
-  }
-  
+  /**
+   * Modifier constructor by copy
+   * 
+   * @param m: Modifier to copy
+   */
   public Modifier( Modifier m) {
   	this.name = m.getName();
   }
 
+  /**
+   * Get the name of the modifier
+   * @return the name of the modifier
+   */
   public String getName() {
     return this.name;
   }
 
+  /**
+   * Activate the modifier
+   * Call the function corresponding of the modifier's name
+   * @param p: Player for whom the modifier is activated
+   */
   public void active(Player p) {
+		int random;
     switch (this.name) {
       case "Speed":
-        this.changeSpeed(p, '+');
+				random = (int) Math.random();
+				if(random == 0){
+					this.changeSpeed(p, '+');
+				} else {
+					this.changeSpeed(p, '-');
+				}
         break;
-
-      case "Slow":
-        this.changeSpeed(p, '-');
-        break;
+				
 
       case "Shake":
         this.shake(p);
@@ -59,12 +91,13 @@ public class Modifier {
         this.exchange();
         break;
 
-      case "ScorePlus":
-        this.score(p, '+');
-        break;
-
-      case "ScoreMoins":
-        this.score(p, '-');
+      case "Score":
+				random = (int) Math.random();
+				if(random == 0){
+					this.score(p, '+');
+				} else {
+				 this.score(p, '-');
+				}
         break;
 
       case "Bomb":
@@ -81,6 +114,12 @@ public class Modifier {
     }
   }
 
+  /**
+   * Change the speed of the game
+   * 
+   * @param p: Player for whom the modifier is activated
+   * @param sign: represent if the speed raise or decreases
+   */
   private void changeSpeed(final Player p, char sign) {
     t = new Timer();
 
@@ -103,6 +142,11 @@ public class Modifier {
 
   }
 
+  /**
+   * Shake the grid
+   * 
+   * @param p: Player for whom the modifier is activated
+   */
   private void shake(final Player p) {
 		
     final int lower = -10;
@@ -151,6 +195,11 @@ public class Modifier {
 		
   }
 
+  /**
+   * Move the shape to the left or the right
+   * 
+	 * @param p: Player for whom the modifier is activated
+   */
   private void storm(final Player p) {
     t = new Timer();
 
@@ -178,10 +227,19 @@ public class Modifier {
     }, 10000);
   }
 
+  /**
+   * Reverse the board game:
+   * the current shape come from the down and go up
+   * 
+   * @param p: Player for whom the modifier is activated
+   */
   private void reversal(Player p) {
 
   }
 
+  /**
+   * Exchange the boardGame between the two players
+   */
   private void exchange() {
     GameEngine g = GameEngine.getInstance();
     if (g.getNbPlayers() == 2) {
@@ -189,6 +247,13 @@ public class Modifier {
     }
   }
 
+  /**
+   * Change the score:
+   * Add a bonus or remove a malus
+   * 
+   * @param p: Player for whom the modifier is activated
+   * @param sign: to know if it's a bonus or a malus
+   */
   private void score(Player p, char sign) {
     if (sign == '+') {
       p.addToScore(500);
@@ -197,8 +262,12 @@ public class Modifier {
     }
   }
 
+  /**
+   * Burst the current shape and the shapes around
+   * @param p: Player for whom the modifier is activated
+   */
   private void bomb(Player p) {
-    Grid grid = p.getBoardGame().getGrid();
+    Grid grid = p.getGrid();
     Brick[][] tGrid = grid.getTGrid();
     CurrentShape s = grid.getCurrentShape();
     //Random beetween 1 and 2;
@@ -236,16 +305,26 @@ public class Modifier {
     grid.updateObservateur(tGrid);
   }
 
+  /**
+   * Go 30 seconds back
+   * 
+   * @param p: Player for whom the modifier is activated
+   */
   private void timeTravel(Player p) {
 
   }
 
+  /**
+   * Go to worddle mode
+   * 
+   * @param p: Player for whom the modifier is activated
+   */
   private void worddle(Player p) {
     if (!GameEngine.getInstance().isPlayersInWordMode() && p.canWorddle()) {
       p.switchToWorddle(true);
       GameEngine.getInstance().beginWorddleTimer(p);
       p.stockCurrentShape();
-      p.addNewChar(p.getBoardGame().clickedOneBrick());
+      p.addNewChar(p.getGrid().clickedOneBrick());
     }
   }
 
