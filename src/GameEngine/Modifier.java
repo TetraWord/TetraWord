@@ -5,15 +5,28 @@ import static GameEngine.Grid.sizeY;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * <b> Modifier is a logical part of the game representing the modifier.</b>
+ * <p>
+ * A modifier contains:
+ * <ul>
+ * <li> modifierSingleEnum: An enum of the different modifier existing for single player only</li>
+ * <li> modifierMultiEnum: An enum of the different modifier existing for multiplayer</li>
+ * <li> name: A string for the name of the modifier </li>
+ * <li> t: A Timer </li>
+ * </ul>
+ * </p>
+ */
 public class Modifier {
 	
-	private enum ModifierSingleEnum {
+	private enum modifierSingleEnum {
     Speed, Shake, Storm, Score, Bomb
   };
   
-  private enum ModifierMultiEnum {
+  private enum modifierMultiEnum {
     Speed, Shake, Storm, Exchange, Score, Bomb, Worddle
   }
+
 	/*Non implémenté
 		Reversal
 		TimeTravel
@@ -22,29 +35,43 @@ public class Modifier {
   private final String name;
   private Timer t = null;
  
+  /**
+   * Modifier constructor
+   * Create a random modifier among modifierEnum
+   */
 	public Modifier() {
     int random;
     if(GameEngine.getInstance().getNbPlayers() == 1){
       random = (int) (Math.random() * 6);
-      this.name = ModifierSingleEnum.values()[random].toString();
+      this.name = modifierSingleEnum.values()[random].toString();
     }else {
       random = (int) (Math.random() * 7);
-      this.name = ModifierMultiEnum.values()[random].toString();
+      this.name = modifierMultiEnum.values()[random].toString();
     }
 	}
 
-  public Modifier(String name) {
-		this.name = name;
-  }
-  
+  /**
+   * Modifier constructor by copy
+   * 
+   * @param m: Modifier to copy
+   */
   public Modifier( Modifier m) {
   	this.name = m.getName();
   }
 
+  /**
+   * Get the name of the modifier
+   * @return the name of the modifier
+   */
   public String getName() {
     return this.name;
   }
 
+  /**
+   * Activate the modifier
+   * Call the function corresponding of the modifier's name
+   * @param p: Player for whom the modifier is activated
+   */
   public void active(Player p) {
 		int random;
     Player pAffect;
@@ -59,6 +86,7 @@ public class Modifier {
     }else{
       pAffect = p;
     }
+
     switch (this.name) {
       case "Speed":
 				random = (int) Math.random();
@@ -109,6 +137,12 @@ public class Modifier {
     }
   }
 
+  /**
+   * Change the speed of the game
+   * 
+   * @param p: Player for whom the modifier is activated
+   * @param sign: represent if the speed raise or decreases
+   */
   private void changeSpeed(final Player p, char sign) {
     t = new Timer();
 
@@ -131,6 +165,11 @@ public class Modifier {
 
   }
 
+  /**
+   * Shake the grid
+   * 
+   * @param p: Player for whom the modifier is activated
+   */
   private void shake(final Player p) {
 		
     final int lower = -10;
@@ -179,6 +218,11 @@ public class Modifier {
 		
   }
 
+  /**
+   * Move the shape to the left or the right
+   * 
+	 * @param p: Player for whom the modifier is activated
+   */
   private void storm(final Player p) {
     t = new Timer();
 
@@ -206,10 +250,19 @@ public class Modifier {
     }, 10000);
   }
 
+  /**
+   * Reverse the board game:
+   * the current shape come from the down and go up
+   * 
+   * @param p: Player for whom the modifier is activated
+   */
   private void reversal(Player p) {
 
   }
 
+  /**
+   * Exchange the boardGame between the two players
+   */
   private void exchange() {
     GameEngine g = GameEngine.getInstance();
     if (!g.isPlayersInWordMode()) {
@@ -217,6 +270,13 @@ public class Modifier {
     } 
   }
 
+  /**
+   * Change the score:
+   * Add a bonus or remove a malus
+   * 
+   * @param p: Player for whom the modifier is activated
+   * @param sign: to know if it's a bonus or a malus
+   */
   private void score(Player p, char sign) {
     if (sign == '+') {
       p.addToScore(500);
@@ -225,6 +285,10 @@ public class Modifier {
     }
   }
 
+  /**
+   * Burst the current shape and the shapes around
+   * @param p: Player for whom the modifier is activated
+   */
   private void bomb(Player p) {
     Grid grid = p.getGrid();
     Brick[][] tGrid = grid.getTGrid();
@@ -264,10 +328,20 @@ public class Modifier {
     grid.updateObserver(tGrid);
   }
 
+  /**
+   * Go 30 seconds back
+   * 
+   * @param p: Player for whom the modifier is activated
+   */
   private void timeTravel(Player p) {
 
   }
 
+  /**
+   * Go to worddle mode
+   * 
+   * @param p: Player for whom the modifier is activated
+   */
   private void worddle(Player p) {
     if (!GameEngine.getInstance().isPlayersInWordMode() && p.canWorddle()) {
       p.switchToWorddle(true);
