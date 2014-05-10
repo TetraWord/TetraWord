@@ -42,7 +42,7 @@ public class CurrentShape2D extends Shape2D implements Observer {
     for (int i = 0; i < 4; ++i) {
 			for (int j = 0; j < 4; ++j) {
 				if (compositionBrick2D[i][j] != null) {
-					compositionBrick2D[i][j].draw(g, (j + model.getX()) * sizeBrick + left, (i + model.getMinY(matrix)) * sizeBrick + top, 1, true);
+					compositionBrick2D[i][j].draw(g, (j + model.getX()) * sizeBrick + left, (i + model.getFinalLine(matrix)) * sizeBrick + top, 1, true);
 				}
 			}
 		}

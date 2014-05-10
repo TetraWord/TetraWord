@@ -5,7 +5,6 @@ import GameEngine.Brick;
 import GameEngine.CurrentModifier;
 import GameEngine.CurrentShape;
 import GameEngine.Grid;
-import GameEngine.Modifier;
 import GameEngine.Player;
 import Pattern.Observable;
 import Pattern.Observer;
@@ -39,8 +38,7 @@ public class Grid2D extends JPanel implements Observer {
     this.clickGrid = new BrickButton[20][10];
     for (int i = 0; i < 20; ++i) {
       for (int j = 0; j < 10; ++j) {
-        BrickButton b = new BrickButton(j, i);
-        b.addMouseListener(event);
+        BrickButton b = new BrickButton(j, i, event);
         clickGrid[i][j] = b;
         this.add(clickGrid[i][j]);
       }
@@ -83,7 +81,7 @@ public class Grid2D extends JPanel implements Observer {
 
   public void setShape2D(CurrentShape s) {
     currentShape = new CurrentShape2D(s);
-    s.addObservateur(currentShape);
+    s.addObserver(currentShape);
   }
   
   public void setModifier2D(CurrentModifier m) {

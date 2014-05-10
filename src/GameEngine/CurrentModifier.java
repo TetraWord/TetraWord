@@ -2,6 +2,7 @@ package GameEngine;
 
 import java.util.Random;
 
+
 /**
  * <b> CurrentModidier is a logical part of the game representing the current modifier presents in the grid.</b>
  * <p>
@@ -16,6 +17,7 @@ import java.util.Random;
  * 
  * @see Modifier
  */
+
 public class CurrentModifier extends Modifier {
 	private final int coordX;
 	private final int coordY;
@@ -68,10 +70,7 @@ public class CurrentModifier extends Modifier {
    * @return boolean
    */
   private boolean displayOnABrick(Brick [][] gridRep, int x, int y) {
-  	if(gridRep[y][x].getNb() >= 1) {
-  		return true;
-  	}
-  	return false;
+  	return gridRep[y][x].getNb() >= 1;
   }
 
 }

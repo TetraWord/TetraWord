@@ -2,7 +2,6 @@ package GameEngine;
 
 import static GameEngine.Grid.sizeX;
 import static GameEngine.Grid.sizeY;
-import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -11,7 +10,8 @@ import java.util.TimerTask;
  * <p>
  * A modifier contains:
  * <ul>
- * <li> modifierEnum: An enum of the different modifier existing </li>
+ * <li> modifierSingleEnum: An enum of the different modifier existing for single player only</li>
+ * <li> modifierMultiEnum: An enum of the different modifier existing for multiplayer</li>
  * <li> name: A string for the name of the modifier </li>
  * <li> t: A Timer </li>
  * </ul>
@@ -19,15 +19,20 @@ import java.util.TimerTask;
  */
 public class Modifier {
 	
-	private enum modifierEnum {
-    Speed, Shake, Storm, Exchange, Score, Bomb, Worddle
+	private enum modifierSingleEnum {
+    Speed, Shake, Storm, Score, Bomb
   };
+  
+  private enum modifierMultiEnum {
+    Speed, Shake, Storm, Exchange, Score, Bomb, Worddle
+  }
+
 	/*Non implémenté
 		Reversal
 		TimeTravel
 	*/
 
-  private String name;
+  private final String name;
   private Timer t = null;
  
   /**
@@ -35,9 +40,14 @@ public class Modifier {
    * Create a random modifier among modifierEnum
    */
 	public Modifier() {
-		Random r = new Random();
-		int random = r.nextInt(7);
-		this.name = modifierEnum.values()[random].toString();
+    int random;
+    if(GameEngine.getInstance().getNbPlayers() == 1){
+      random = (int) (Math.random() * 6);
+      this.name = modifierSingleEnum.values()[random].toString();
+    }else {
+      random = (int) (Math.random() * 7);
+      this.name = modifierMultiEnum.values()[random].toString();
+    }
 	}
 
   /**
@@ -64,11 +74,24 @@ public class Modifier {
    */
   public void active(Player p) {
 		int random;
+    Player pAffect;
+    GameEngine g = GameEngine.getInstance();
+    if(g.getNbPlayers() > 1){
+      Player[] ps = g.getPlayers();
+      if(p.getNumber() == 1){
+        pAffect = ps[2];
+      }else {
+        pAffect = ps[1];
+      }
+    }else{
+      pAffect = p;
+    }
+
     switch (this.name) {
       case "Speed":
 				random = (int) Math.random();
 				if(random == 0){
-					this.changeSpeed(p, '+');
+					this.changeSpeed(pAffect, '+');
 				} else {
 					this.changeSpeed(p, '-');
 				}
@@ -76,15 +99,15 @@ public class Modifier {
 				
 
       case "Shake":
-        this.shake(p);
+        this.shake(pAffect);
         break;
 
       case "Storm":
-        this.storm(p);
+        this.storm(pAffect);
         break;
 
       case "Reversal":
-        this.reversal(p);
+        this.reversal(pAffect);
         break;
 
       case "Exchange":
@@ -96,7 +119,7 @@ public class Modifier {
 				if(random == 0){
 					this.score(p, '+');
 				} else {
-				 this.score(p, '-');
+				 this.score(pAffect, '-');
 				}
         break;
 
@@ -105,11 +128,11 @@ public class Modifier {
         break;
 
       case "TimeTravel":
-        this.timeTravel(p);
+        this.timeTravel(pAffect);
         break;
 
       case "Worddle":
-        this.worddle(p);
+        this.worddle(pAffect);
         break;
     }
   }
@@ -242,9 +265,9 @@ public class Modifier {
    */
   private void exchange() {
     GameEngine g = GameEngine.getInstance();
-    if (g.getNbPlayers() == 2) {
-      g.exchange();
-    }
+    if (!g.isPlayersInWordMode()) {
+      g.exchange(); 
+    } 
   }
 
   /**
@@ -276,8 +299,8 @@ public class Modifier {
     int[][] representation = s.getRepresentation();
     int x = s.getX();
     int y = s.getY();
-    int maxX = s.getMaxX(representation);
-    int maxY = s.getMaxY(representation);
+    int maxX = s.getMaxWidth(representation);
+    int maxY = s.getMaxHeight(representation);
 
     for (int i = y; i <= y + maxY; ++i) {
       for (int j = x; j <= x + maxX; ++j) {
@@ -302,7 +325,7 @@ public class Modifier {
     
     p.getBoardGame().launchNextShape();
     grid.setTGrid(tGrid);
-    grid.updateObservateur(tGrid);
+    grid.updateObserver(tGrid);
   }
 
   /**

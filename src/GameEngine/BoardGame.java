@@ -1,71 +1,221 @@
 package GameEngine;
 
+import GraphicEngine.BoardGame2D;
 import Pattern.Observable;
 import Pattern.Observer;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public final class BoardGame implements Observable, Observer {
+/**
+ * <b> BoardGame is a logical part of the game.</b>
+ * <p>
+ * Each <b> Player </b> in the game has a BoardGame </p>.
+ * <p>
+ * The BoardGame is observable by the hud. </p>
+ * <p>
+ * The BoardGame contains :
+ * <ul>
+ * <li> The Player who played on this BoardGame </li>
+ * <li> The logical Grid of the Player </li>
+ * <li> The logical Hud of the Player to display information </li>
+ * <li> The ShapesStock. Singleton. </li>
+ * <li> A Queue with the next Shape of the Player </li>
+ * <li> An ArrayList of his observateur object </li>
+ * <li> The offsetX and the offsetY of the BoardGame for the shake Modifier
+ * </li>
+ * </ul>
+ * </p>
+ *
+ * @see Player
+ * @see Grid
+ * @see Hud
+ * @see BoardGame2D
+ *
+ */
+public final class BoardGame implements Observable {
 
+  /**
+   * The logical Grid. Not modifiable.
+   *
+   * @see Grid
+   * @see BoardGame#getGrid()
+   */
   private final Grid grid;
-  private final Hub hub;
-  private final Player myPlayer;
-  private final static ShapesStock ss = ShapesStock.getInstance();
-  private final Queue<Shape> listNextShape = new LinkedList<>();
-  private ArrayList<Observer> listObserver = new ArrayList<>();
-  private boolean allowClick = false;
-  private boolean allowDoubleClicked = false;
-  private final ArrayList<Brick> tabBrickClicked = new ArrayList<>();
-  private int[] coordsLastBrickClicked = new int[2];
-	private int offsetX = 0;
-	private int offsetY = 0;
 
-  public BoardGame(int nb, Shape s, Shape s2, Player p) {
+  /**
+   * The logical Hud. Not modifiable.
+   *
+   * @see Hud
+   * @see BoardGame#getHud()
+   */
+  private final Hud hud;
+
+  /**
+   * The player of the BoardGame. Not modifiable.
+   *
+   * @see Player
+   * @see BoardGame#getPlayer()
+   */
+  private final Player myPlayer;
+
+  /**
+   * The singleton ShapeStock. Not modifiable. Provide random Shape.
+   *
+   * @see ShapesStock
+   * @see ShapesStock#getInstance()
+   * @see BoardGame#getRandomShape()
+   */
+  private final static ShapesStock ss = ShapesStock.getInstance();
+
+  /**
+   * Queue of next Shape for the Player.
+   *
+   * @see Shape
+   * @see BoardGame#getNextShape()
+   */
+  private final Queue<Shape> listNextShape = new LinkedList<>();
+
+  /**
+   * List of observateur.
+   */
+  private ArrayList<Observer> listObserver = new ArrayList<>();
+
+  /**
+   * offset on axe x for the Modifier "shake"
+   */
+  private int offsetX = 0;
+
+  /**
+   * offset on axe y for the Modifier "shake"
+   */
+  private int offsetY = 0;
+
+  /**
+   * Constructor BoardGame.
+   * <p>
+   * Initialize the Player of the BoardGame, create a Grid and a Hud for the
+   * BoardGame. Add a Shape to the list of the next Shape for the Player. Add
+   * the new Hud as on Overser of Player and BoardGame for the futur message
+   * displayed during the game.
+   * </p>
+   *
+   * @param s The first Shape of the Game
+   * @param s2 The Second Shape of the Game
+   * @param p The Player associate at the BoardGame
+   *
+   * @see Grid#Grid(GameEngine.BoardGame, GameEngine.CurrentShape)
+   */
+  public BoardGame(Shape s, Shape s2, Player p) {
     /* Init attributes */
     this.myPlayer = p;
     this.grid = new Grid(this, new CurrentShape(s));
-    this.hub = new Hub();
+    this.hud = new Hud();
     this.listNextShape.add(s2);
 
-    this.myPlayer.addObservateur(hub);
-		addObservateur(hub);
-    updateObservateur(null);
+    this.myPlayer.addObserver(hud);
+    addObserver(hud);
+    updateObserver(null);
   }
 
-  public void finishGame() {
-    this.myPlayer.finish();
-  }
-
+  /**
+   * Get the BoardGame's Grid
+   *
+   * @return The Grid in the BoardGame
+   *
+   * @see Grid
+   */
   public Grid getGrid() {
     return grid;
   }
-
-  public Hub getHub() {
-    return hub;
+  /**
+   * Get the BoardGame's Hud
+   *
+   * @return The Hud in the BoardGame
+   *
+   * @see Hud
+   */
+  public Hud getHud() {
+    return hud;
   }
 
+  /**
+   * Get the BoardGame's Player
+   *
+   * @return The BoardGame's Player
+   *
+   * @see Player
+   */
   public Player getPlayer() {
     return myPlayer;
   }
 
-	void setOffset(int offsetX, int offsetY) {
-		this.offsetX = offsetX;
-		this.offsetY = offsetY;
-	}
+  /**
+   * Get the offsetX.
+   *
+   * @return The offsetX
+   *
+   * @see BoardGame#offsetX
+   */
+  public int getOffsetX() {
+    return offsetX;
+  }
 
-	public int getOffsetX() {
-		return offsetX;
-	}
+  /**
+   * Get the offsetY.
+   *
+   * @return The offsetY
+   *
+   * @see BoardGame#offsetY
+   */
+  public int getOffsetY() {
+    return offsetY;
+  }
 
-	public int getOffsetY() {
-		return offsetY;
-	}
-	
+  /**
+   * Set new offset x and new offset y.
+   *
+   * @param offsetX
+   * @param offsetY
+   *
+   * @see BoardGame#offsetX
+   * @see BoardGame#offsetY
+   */
+  void setOffset(int offsetX, int offsetY) {
+    this.offsetX = offsetX;
+    this.offsetY = offsetY;
+  }
+
+  /**
+   * Get a random Shape from the ShapeStock.
+   *
+   * @return The random Shape create by the ShapeStock
+   *
+   * @see ShapesStock#getRandomShape()
+   */
   public Shape getRandomShape() {
     return ss.getRandomShape();
   }
 
+  /**
+   * Get the next Shape in the Queue.
+   *
+   * @return The Shape get in the Queue
+   *
+   * @see BoardGame#listNextShape
+   */
+  public Shape getNextShape() {
+    return listNextShape.element();
+  }
+
+  /**
+   * Launch the next Shape. Create a new CurrentShape from the first Shape of
+   * the Queue. Add a new random Shape in the Players's next Shape Queue. Set
+   * the new CurrentShape in the Grid. Update
+   *
+   * @see CurrentShape
+   * @see Grid
+   */
   public void launchNextShape() {
     int size = listNextShape.size();
     CurrentShape cs = new CurrentShape(listNextShape.poll());
@@ -75,85 +225,62 @@ public final class BoardGame implements Observable, Observer {
     for (int i = 0; i < GameEngine.getInstance().getNbPlayers(); ++i) {
       tabP[i].getBoardGame().listNextShape.add(s);
     }
-    
+
     myPlayer.canSwitchShape(true);
 
-    updateObservateur(null);
+    updateObserver(null);
 
     if (!grid.isComplete(cs)) {
       grid.setCurrentShape(cs);
     }
-    grid.updateObservateur(cs);
-    grid.updateObservateur(grid.getTGrid());
+    grid.updateObserver(cs);
+    grid.updateObserver(grid.getTGrid());
 
   }
 
-  public Shape getNextShape() {
-    return listNextShape.element();
-  }
-
+  /**
+   * @see Observable
+   */
   @Override
-  public void addObservateur(Observer obs) {
+  public void addObserver(Observer obs) {
     listObserver.add(obs);
   }
 
+  /**
+   * @see Observable
+   */
   @Override
-  public void updateObservateur(Object args) {
+  public void updateObserver(Object args) {
     for (Observer obs : listObserver) {
       obs.update(this, args);
     }
   }
 
+  /**
+   * @see Observable
+   */
   @Override
-  public void delObservateur() {
+  public void delAllObserver() {
     listObserver = new ArrayList<>();
   }
 
-  public void setAllowClick(boolean b) {
-    allowClick = b;
+  /**
+   * Finish the game if the Player looses
+   *
+   * @see Player#finish()
+   */
+  public void finishGame() {
+    this.myPlayer.finish();
+    this.myPlayer.updateObserver("Perdu ! ");
   }
 
-  void setAllowDoubleClick(boolean b) {
-    allowDoubleClicked = b;
-  }
-
-  @Override
-  public void update(Observable o, Object args) {
-    if (args instanceof int[] && allowClick) {
-      /*We select the clicked Brick */
-      int x = ((int[]) args)[0];
-      int y = ((int[]) args)[1];
-      int lastX = x;
-      int lastY = y;
-
-      if (coordsLastBrickClicked != null) {
-        lastX = coordsLastBrickClicked[0];
-        lastY = coordsLastBrickClicked[1];
-      }
-
-      Brick b = grid.getTGrid()[y][x];
-
-      /*If the brick is on the full line and if it's not clicked yet */
-      if (myPlayer.isAnagram()) {
-        if (y == grid.getFirstFullLine() && !b.isClicked()) {
-          myPlayer.addNewChar(b.getLetter());
-          b.setClicked(true);
-        }
-      } else if (myPlayer.isWorddle()) {
-        if (!b.isClicked() && !allowDoubleClicked && Math.abs(lastX - x) < 2 && Math.abs(lastY - y) < 2) {
-          b.setClicked(true);
-          tabBrickClicked.add(b);
-          myPlayer.addNewChar(b.getLetter());
-          coordsLastBrickClicked = grid.getBrickCoordInGrid(b);
-        } else if (allowDoubleClicked && !b.isDoubleClicked() && b.isClicked() && Math.abs(lastX - x) < 2 && Math.abs(lastY - y) < 2) {
-          doubleClickedAllBrickClicked(b);
-          myPlayer.addNewChar(b.getLetter());
-          coordsLastBrickClicked = grid.getBrickCoordInGrid(b);
-        }
-      }
-    }
-  }
-
+  /**
+   * Method called when the CurrentShape stop his fall. The CurrentShape is set
+   * in the Grid and it verifies if a full line is done. Switch the Player in
+   * Anagram mode if he has to.
+   *
+   * @param s The CurrentShape to set in the Grid.
+   */
   public void finishFall(CurrentShape s) {
     grid.setIn(s);
     if (grid.getFirstFullLine() != -1) {
@@ -163,44 +290,4 @@ public final class BoardGame implements Observable, Observer {
       launchNextShape();
     }
   }
-
-  public char clickedOneBrick() {
-    Brick b = grid.clickedOneBrick();
-    tabBrickClicked.add(b);
-    coordsLastBrickClicked = grid.getBrickCoordInGrid(b);
-    return b.getLetter();
-  }
-
-  public void declickedAllBrick() {
-    grid.declickedAllBrick();
-  }
-
-  private void doubleClickedAllBrickClicked(Brick b) {
-    grid.doubleClickedAllBrickClicked(b);
-    setAllowDoubleClick(false);
-  }
-
-  public void setNoLastBrickClicked() {
-    coordsLastBrickClicked = null;
-  }
-
-  public void setBricksToDestroy() {
-    for (int i = 0; i < tabBrickClicked.size(); ++i) {
-      tabBrickClicked.get(i).setInWord();
-    }
-    clearTabBrickClicked();
-  }
-  
-  public void clearTabBrickClicked() {
-    tabBrickClicked.clear();
-  }
-
-  StringBuilder getAllLetterFromTheRemovedLine() {
-    return grid.getAllLetterFromeTheRemovedLine();
-  }
-
-  void removeLine() {
-    grid.removeLine(grid.getFirstFullLine());
-  }
-
 }

@@ -73,6 +73,10 @@ public class GraphicEngine {
     //remove listener on window
     window.removeKeyListener(ContextManager.getInstance().getPlayerListener(0));
     window.removeKeyListener(ContextManager.getInstance().getPlayerListener(1));
+    window.clear();
+    window.resize();
+    window.setLocationRelativeTo(null);
+    window.defineMainMenu();
   }
 
 }

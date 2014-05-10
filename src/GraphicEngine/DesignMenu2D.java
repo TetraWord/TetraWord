@@ -26,32 +26,91 @@ import javax.swing.ButtonGroup;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
+/**
+ * <b> DesignMenu2D is the menu permmiting to choose theme preferences. </b>
+ * <p> DesignedMenu2D inherits from the Menu2D</p>
+ * <p>
+ * The DesigneMenu2d contains :
+ * <ul>
+ * <li> A DesignMenu instance </li>
+ * <li> The pathname of the background image file of the actual chosen theme</li>
+ * <li> The list of pathnames corresponding to bricks image files of the actual chosen theme</li>
+ * <li> A ButtonGroup permiting to stock radio buttons to choose bricks</li>
+ * <li> A ComboBox permiting to make a drop-down list of theme </li>
+ * </ul>
+ * 
+ * </p>
+ *
+ * @see Menu2D
+ * @see DesignMenu
+ */
 public class DesignMenu2D extends Menu2D {
-
-  DesignMenu dm;
-  String apercuBackground;
-  String[] bricks;
-  ButtonGroup group = new ButtonGroup();
-  ComboBox combo;
-
+	
+	/**
+   * The model of DesignMenu
+   *
+   * @see DesignMenu
+   */
+  private final DesignMenu dm;
+	
+	/**
+   * The pathname of the background image file of the actual chosen theme
+   *
+   */
+  private String apercuBackground;
+	
+	/**
+   * The list of pathnames corresponding to bricks image files of the actual chosen theme
+   *
+   */
+  private String[] bricks;
+	
+	/**
+   * Stock radio buttons to choose bricks
+   *
+   */
+	private final  ButtonGroup group = new ButtonGroup();
+	
+	/**
+   * Drop-down list of theme
+   *
+   */
+	private final  ComboBox combo;
+	
+	/**
+	 * DesignMenu2D constructor
+	 * 
+	 * Initialize attributes of the class by creating Swing elements 
+   *
+   * @see DesignMenu2D#loadOverviews(String)
+   * @see Menu2D#loadBackground()
+	 */
   public DesignMenu2D() {
+		
+		/* Call to the constructor of Menu2D */
     super();
+		
+		/* Update MenuState */
     state = MenuState.DESIGN;
     lastState = MenuState.OPTION;
 
+		/* Useful variable */
     int sx = 150, sy = 50;
     int x = WINDOW_WIDTH / 2 - sx;
     int y = 50;
     int step_x = 200;
 
+		/* Creation of DesignMenu model */
     dm = new DesignMenu();
 
+		/* Label "choose theme" */
     JLabel label = new JLabel("Choisir un thème");
     label.setBounds(x, y, sx, sy);
     label.setFont(new Font("Champagne & Limousines", 20, 20));
     label.setForeground(Color.white);
     this.add(label);
-
+		
+		/* Drop-down list of themes */
     x = x + step_x;
     combo = new ComboBox("Choose theme", dm.getNames(), x, y, sx, sy);
     combo.setFont(new Font("Champagne & Limousines", 20, 20));
@@ -62,10 +121,13 @@ public class DesignMenu2D extends Menu2D {
     y = 600;
     int step_y = 100;
     setButton2D(2);
+		
+		/* Save button */
     Button2D b = new Button2D("Sauvegarder", x, y, sx, sy);
     b.removeListener();
     b.addActionListener(new ActionListener() {
-
+			
+			/* Listener of save button  */
       @Override
       public void actionPerformed(ActionEvent e) {
         RadioButton2D brick = getSelectedButtonText(group);
@@ -75,16 +137,16 @@ public class DesignMenu2D extends Menu2D {
         String[] color;
         String colors;
         String imgModifier;
-        /*Open propertie file of selected design to read it*/
+        /* Open propertie file of selected design to read it */
         String file = "conf/Design/" + combo.getSelectedItem() + ".properties";
         Properties readprop = new Properties();
         InputStream input = null;
-        /*Get infos from file*/
+        /* Get infos from file */
         try {
 
           input = new FileInputStream(file);
 
-          // load a properties file
+          /* Load a properties file */ 
           readprop.load(input);
 
           font = readprop.getProperty("font");
@@ -97,14 +159,14 @@ public class DesignMenu2D extends Menu2D {
 
             output = new FileOutputStream("conf/design.properties");
 
-            // set the properties value
+            /* Set the properties value */ 
             prop.setProperty("background", apercuBackground);
             prop.setProperty("brick", imgBrick);
             prop.setProperty("modifier", imgModifier);
             prop.setProperty("font", font);
             prop.setProperty("color", colors);
 
-            // save properties to project root folder
+            /* Save properties to project root folder*/
             prop.store(output, null);
             JOptionPane.showMessageDialog(null, "Préférences sauvegardées");
 
@@ -133,7 +195,8 @@ public class DesignMenu2D extends Menu2D {
         }
 
       }
-
+			
+			/* Get the selected button in the list of radio button for bricks image file */
       public RadioButton2D getSelectedButtonText(ButtonGroup buttonGroup) {
         for (Enumeration<AbstractButton> buttons = buttonGroup.getElements(); buttons.hasMoreElements();) {
           AbstractButton button = buttons.nextElement();
@@ -151,20 +214,32 @@ public class DesignMenu2D extends Menu2D {
     y = y + step_y;
     this.add(new Button2D("Précédent", x, y, sx, sy));
 
-    loadApercus((String) combo.getSelectedItem());
+    loadOverviews((String) combo.getSelectedItem());
 		
 		loadBackground();
   }
 
+	/**
+	 * Override the function paintComponent of Swing elements
+	 * Draw oversiews of the background and the bricks depending on chosen theme
+	 * 
+	 * @param g Graphics to draw on
+	 */
   @Override
   public void paintComponent(Graphics g) {
     super.paintComponent(g);
-    drawApercuBackground(g, apercuBackground);
-    drawApercuBricks(g, bricks);
+    drawOverviewBackground(g, apercuBackground);
+    drawOverviewsBricks(g, bricks);
     this.validate();
   }
 
-  private void drawApercuBackground(Graphics g, String file) {
+	/**
+	 * Draw oversiew of the background of the chosen theme
+	 * 
+	 * @param g Graphics to draw on
+	 * @param file Background image pathname to draw
+	 */
+  private void drawOverviewBackground(Graphics g, String file) {
     try {
       Image img = ImageIO.read(new File(apercuBackground));
       int width = WINDOW_WIDTH / 3;
@@ -175,7 +250,13 @@ public class DesignMenu2D extends Menu2D {
     }
   }
 
-  private void drawApercuBricks(Graphics g, String[] bricks) {
+	/**
+	 * Draw oversiew of the bricks of the chosen theme
+	 * 
+	 * @param g Graphics to draw on
+	 * @param bricks Pathnames of bricks image files to draw
+	 */
+  private void drawOverviewsBricks(Graphics g, String[] bricks) {
     int x = WINDOW_WIDTH / 4;
     int y = WINDOW_HEIGHT / 2 + 40;
     int step = WINDOW_WIDTH / 7;
@@ -197,7 +278,12 @@ public class DesignMenu2D extends Menu2D {
     }
   }
 
-  public void loadApercus(String item) {
+	/**
+	 * Update background image pathname and bricks image pathname if needed
+	 * 
+	 * @param item Name of the actual chosen theme
+	 */
+  public void loadOverviews(String item) {
 
     int x = WINDOW_WIDTH / 4;
     int y = WINDOW_HEIGHT / 2 + 100;

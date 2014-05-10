@@ -7,6 +7,17 @@ import GameEngine.Player;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+/**
+ * <b> Config2 is an KeyEventListener class for the player 2. </b>
+ * <p>
+ * Config2 contains the player who plays with it. </p>
+ * <p>
+ * It extends from KeyAdapter, and override the keyPressed method </p>
+ * <p>
+ * Same methods as Config1 with other keys listened </p>
+ *
+ * @see Config1
+ */
 public class Config2 extends KeyAdapter {
 
   private final Player p;
@@ -43,7 +54,7 @@ public class Config2 extends KeyAdapter {
       case KeyEvent.VK_2:
         if ((p.isAnagram() || p.isWorddle()) && p.getWord().length() > 0) {
           p.setWordFinish();
-          p.getBoardGame().setNoLastBrickClicked();
+          p.getGrid().setNoLastBrickClicked();
         } else if (p.hasModifier() && p.isTetris()) {
           p.activeModifier();
         }
@@ -54,12 +65,12 @@ public class Config2 extends KeyAdapter {
           p.switchToWorddle(true);
           GameEngine.getInstance().beginWorddleTimer(p);
           p.stockCurrentShape();
-          p.addNewChar(p.getBoardGame().clickedOneBrick());
+          p.addNewChar(p.getGrid().clickedOneBrick());
         }
         break;
 
       case KeyEvent.VK_R:
-        Grid grid = p.getBoardGame().getGrid();
+        Grid grid = p.getGrid();
         CurrentShape cs = grid.getCurrentShape();
         if (!p.hasShapeStocked()) {
           p.stockShape(cs);

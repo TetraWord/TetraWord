@@ -1,10 +1,24 @@
 package Pattern;
 
+/**
+ * <b>Interface for Observable objects</b>
+ */
 public interface Observable {
 
-  public void addObservateur(Observer obs);
+	/**
+	 * Add an observer to the set of observers
+	 * @param obs The new Observer
+	 */
+  public void addObserver(Observer obs);
 
-  public void updateObservateur(Object args);
+	/**
+	 * Update all Observer
+	 * @param args Arguments 
+	 */
+  public void updateObserver(Object args);
 
-  public void delObservateur();
+	/**
+	 * Delete all Observer 
+	 */
+  public void delAllObserver();
 }

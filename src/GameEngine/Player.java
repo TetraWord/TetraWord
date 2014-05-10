@@ -1,6 +1,6 @@
 package GameEngine;
 
-import GameEngine.Dictionnary.Dictionnary;
+import GameEngine.Dictionnary.Dictionary;
 import Pattern.Observable;
 import Pattern.Observer;
 
@@ -10,7 +10,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Properties;
 import java.util.Timer;
-import java.util.TimerTask;
 
 public class Player implements Observable {
 
@@ -30,16 +29,14 @@ public class Player implements Observable {
   private boolean switchShape = false;
   private final Object monitor = new Object();
   private ArrayList<Observer> listObserver = new ArrayList<>();
-  private final Dictionnary dico;
+  private final Dictionary dico;
   private Modifier modifier = null;
-  private CurrentModifier currentModifier = null;
   private boolean worddle = false;
   private Timer timerBeforeWorddle = null;
-  private Timer timerBeforeModifier = null;
   private long t = 0;
 
-  public Player(int nb, Shape s, Shape s2, Dictionnary d) {
-    boardGame = new BoardGame(nb, s, s2, this);
+  public Player(int nb, Shape s, Shape s2, Dictionary d) {
+    boardGame = new BoardGame(s, s2, this);
     score = 0;
     level = 1;
     numLinesTotalRemoved = 0;
@@ -48,7 +45,6 @@ public class Player implements Observable {
     speedFall = 1000;
     speedFallInit = speedFall;
     loadOptions();
-    displayModifier();
   }
 
   private void loadOptions() {
@@ -114,7 +110,7 @@ public class Player implements Observable {
       shapeStocked = new Shape(cs, true);
       switchShape = false;
     }
-    updateObservateur(null);
+    updateObserver(null);
   }
 
   public int getNumber() {
@@ -125,8 +121,17 @@ public class Player implements Observable {
     return numLinesTotalRemoved;
   }
 
-  public Dictionnary getDico() {
+  public Dictionary getDico() {
     return dico;
+  }
+
+  private void tryModifierCollision(CurrentShape s) {
+    CurrentModifier cm = getGrid().getCurrentModifier();
+    if (cm != null && s.tryCollision(cm, s.getX(), s.getY()) && this.modifier != null) {
+      this.modifier = new Modifier(cm);
+      updateObserver(this.modifier);
+      getGrid().setCurrentModifier(null);
+    }
   }
 
   public void down(int step) {
@@ -137,12 +142,7 @@ public class Player implements Observable {
         if (!s.tryCollision(boardGame.getGrid().getTGrid(), s.getX(), s.getY() + step)) {
           s.move(s.getX(), s.getY() + step);
         }
-        if(currentModifier!= null && s.tryCollision(currentModifier,  s.getX(), s.getY())){
-        	this.modifier = new Modifier(this.currentModifier);
-        	System.out.println("catch modifier");
-        	this.currentModifier = null;
-        	boardGame.getGrid().setCurrentModifier(currentModifier);
-        }
+        tryModifierCollision(s);
         //Si on ne peut pas faire descendre la pièce plus bas, on l'inscrit dans la Grid
         if (tmpY == s.getY()) {
           boardGame.finishFall(s);
@@ -157,6 +157,7 @@ public class Player implements Observable {
       if (!s.tryCollision(boardGame.getGrid().getTGrid(), s.getX() - 1, s.getY())) {
         s.move(s.getX() - 1, s.getY());
       }
+      tryModifierCollision(s);
     }
   }
 
@@ -166,6 +167,7 @@ public class Player implements Observable {
       if (!s.tryCollision(boardGame.getGrid().getTGrid(), s.getX() + 1, s.getY())) {
         s.move(s.getX() + 1, s.getY());
       }
+      tryModifierCollision(s);
     }
   }
 
@@ -179,13 +181,8 @@ public class Player implements Observable {
       int interval = finalLine - s.getY();
       this.addToScore(interval * 2);
       s.move(s.getX(), finalLine - 1);
-      
-      if(currentModifier!= null && s.tryCollision(currentModifier,  s.getX(), s.getY())){
-      	this.modifier = new Modifier(this.currentModifier);
-      	System.out.println("catch modifier");
-      	this.currentModifier = null;
-      	boardGame.getGrid().setCurrentModifier(currentModifier);
-      }
+
+      tryModifierCollision(s);
 
       boardGame.finishFall(s);
     }
@@ -202,6 +199,10 @@ public class Player implements Observable {
     return boardGame;
   }
 
+  public Grid getGrid() {
+    return boardGame.getGrid();
+  }
+
   protected CurrentShape getCurrentShape() {
     return boardGame.getGrid().getCurrentShape();
   }
@@ -216,7 +217,7 @@ public class Player implements Observable {
     if ((int) score / 1000 >= level) {
       setLevelUp();
     }
-    updateObservateur(null);
+    updateObserver(null);
   }
 
   public InGameState getState() {
@@ -240,13 +241,13 @@ public class Player implements Observable {
       ++level;
     }
     setNewSpeedFall(speedFallInit - level * 83);
-    updateObservateur(null);
+    updateObserver(null);
   }
 
   public void switchToAnagram(boolean b) {
     wordFinish = b != true;
     state = b ? InGameState.ANAGRAMME : InGameState.TETRIS;
-    updateObservateur(null);
+    updateObserver(null);
   }
 
   public boolean isAnagram() {
@@ -271,7 +272,7 @@ public class Player implements Observable {
 
   public void addNewChar(char c) {
     word.append(c);
-    updateObservateur(null);
+    updateObserver(null);
   }
 
   public String getWord() {
@@ -285,56 +286,55 @@ public class Player implements Observable {
   void clearWord() {
     word.delete(0, word.length());
     wordFinish = false;
-    updateObservateur(null);
+    updateObserver(null);
   }
 
   @Override
-  public void addObservateur(Observer obs) {
+  public void addObserver(Observer obs) {
     listObserver.add(obs);
   }
 
   @Override
-  public void updateObservateur(Object args) {
+  public void updateObserver(Object args) {
     for (Observer obs : listObserver) {
       obs.update(this, args);
     }
   }
 
   @Override
-  public void delObservateur() {
+  public void delAllObserver() {
     listObserver = new ArrayList<>();
   }
 
   public void verifAnagram(String bestWord) {
-    
-      System.out.println("word : "+getWord());
     if (dico.included(getWord())) {
-      updateObservateur("Mot existant");
+      updateObserver("Mot existant");
       if (getWord().equals(bestWord) || getWord().length() >= bestWord.length()) {
         addToScore(1000);
         //System.out.println("Le meilleur mot a ete trouve");
-        updateObservateur("1000 points !");
+        updateObserver("1000 points !");
       } else {
         addToScore(getWord().length() * 50);
-        updateObservateur("Meilleur mot : " + bestWord);
+        updateObserver("Meilleur mot : " + bestWord);
       }
     } else {
       addToScore(-(getScore() % 1000));
-      updateObservateur("Non Existant");
-      updateObservateur("Meilleur mot : " + bestWord);
+      updateObserver("Non Existant");
+      updateObserver("Meilleur mot : " + bestWord);
     }
   }
 
   public void doAnagram() {
-    boardGame.setAllowClick(true);
+    boardGame.getGrid().setAllowClick(true);
     int numLinesRemoved = 0;
     while (boardGame.getGrid().getFirstFullLine() != -1) {
+      updateObserver(null);
       if (wordFinish) {
-        StringBuilder sb = boardGame.getAllLetterFromTheRemovedLine();
+        StringBuilder sb = getGrid().getAllLetterFromTheRemovedLine();
         String bestWord = dico.findBestAnagramm(sb);
         verifAnagram(bestWord);
         clearWord();
-        boardGame.removeLine();
+        getGrid().removeLine(getGrid().getFirstFullLine());
         ++numLinesRemoved;
       }
     }
@@ -345,21 +345,20 @@ public class Player implements Observable {
     switchToAnagram(false);
 
     if (numLinesRemoved == 4) {
-      System.out.println("Tetris ! ");
       addToScore(1000);
     } else {
       addToScore(numLinesRemoved * 100);
     }
 
     numLinesTotalRemoved += numLinesRemoved;
-    updateObservateur(null);
-    boardGame.setAllowClick(false);
+    updateObserver(null);
+    boardGame.getGrid().setAllowClick(false);
     boardGame.launchNextShape();
   }
 
   public void setWordFinish() {
     wordFinish = true;
-    updateObservateur(null);
+    updateObserver(null);
   }
 
   public void switchToWorddle(boolean b) {
@@ -368,10 +367,10 @@ public class Player implements Observable {
       startTimerBeforeWorddle();
     }
     wordFinish = b != true;
-    boardGame.setAllowClick(b);
-    boardGame.setNoLastBrickClicked();
+    boardGame.getGrid().setAllowClick(b);
+    boardGame.getGrid().setNoLastBrickClicked();
     state = b ? InGameState.WORDDLE : InGameState.TETRIS;
-    updateObservateur(null);
+    updateObserver(null);
   }
 
   public void stockCurrentShape() {
@@ -383,29 +382,29 @@ public class Player implements Observable {
     if (wordFinish && GameEngine.getInstance().timerWorddleIsAlive()) {
       String s = getWord();
       if (dico.included(s)) {
-        updateObservateur("Mot Existant !");
-        boardGame.setBricksToDestroy();
-        addToScore(s.length() * 3);
+        updateObserver("Mot Existant !");
+        boardGame.getGrid().setBricksToDestroy();
+        getGrid().setBricksToDestroy();
+        addToScore(s.length() * 10);
       } else {
-        updateObservateur("Non Existant");
-        boardGame.clearTabBrickClicked();
-        addToScore(-s.length() * 4);
+        updateObserver("Non Existant");
+        boardGame.getGrid().clearTabBrickClicked();
+        getGrid().clearTabBrickClicked();
+        addToScore(-s.length() * 5);
       }
       clearWord();
-      boardGame.setAllowDoubleClick(true);
-      updateObservateur(null);
+      boardGame.getGrid().setAllowDoubleClick(true);
+      updateObserver(null);
     } else if (!GameEngine.getInstance().timerWorddleIsAlive()) {
       finishWorddle();
     }
   }
 
   public void finishWorddle() {
-    boardGame.setAllowDoubleClick(false);
-    boardGame.getGrid().setCurrentShape(currentShapeStocked);
-    boardGame.getGrid().destroyAllSelectedBrickInWord();
-    boardGame.getGrid().declickedAllBrick();
+    getGrid().finishWorddle(currentShapeStocked);
     clearWord();
-    updateObservateur(null);
+    updateObserver(null);
+    state = InGameState.TETRIS;
   }
 
   public final void startTimerBeforeWorddle() {
@@ -434,28 +433,9 @@ public class Player implements Observable {
   public int getSpeedFallInit() {
     return speedFallInit;
   }
-  
-  public void displayModifier() {
-  	 timerBeforeModifier = new Timer();
-  	 
-  	 timerBeforeModifier.schedule(new TimerTask() {
-  		 @Override
-  		 public void run() {
-  			 System.out.println("New Modifier");
-  			 currentModifier = new CurrentModifier(boardGame.getGrid().getTGrid());
-  		   boardGame.getGrid().setCurrentModifier(currentModifier);
-  		 }
-  	 }, 30000, 65000);
-  	 
-  	 timerBeforeModifier.schedule(new TimerTask() {
-			@Override
-			public void run() {
-				System.out.println("Delete modifier");
-				currentModifier = null;
-				boardGame.getGrid().setCurrentModifier(currentModifier);
-			}
-  	 }, 35000);
-  	
+
+  public Modifier getModifier() {
+    return modifier;
   }
 
   public boolean hasModifier() {
@@ -465,18 +445,17 @@ public class Player implements Observable {
   public void activeModifier() {
     modifier.active(this);
     modifier = null;
+		updateObserver(modifier);
   }
-  
-  /*public void throwModifier() {
-  	modifier.active(Adversaire);
-    modifier = null;
-  }*/
-  
+
   public void shake(int offsetX, int offsetY) {
 		boardGame.setOffset(offsetX, offsetY);
 		int[] offset = new int[2];
 		offset[0] = offsetX;
 		offset[1] = offsetY;
-		updateObservateur(offset);
+		updateObserver(offset);
 	}
+
+  public void stopAllTimers() throws InterruptedException {
+  }
 }

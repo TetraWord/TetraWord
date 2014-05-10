@@ -20,19 +20,19 @@ public class Shape implements Observable {
   private ArrayList<Observer> listObserver = new ArrayList<>();
 
   @Override
-  public void addObservateur(Observer obs) {
+  public void addObserver(Observer obs) {
     listObserver.add(obs);
   }
 
   @Override
-  public void updateObservateur(Object args) {
+  public void updateObserver(Object args) {
     for (Observer obs : listObserver) {
       obs.update(this, args);
     }
   }
 
   @Override
-  public void delObservateur() {
+  public void delAllObserver() {
     listObserver = new ArrayList<>();
   }
 
@@ -75,7 +75,7 @@ public class Shape implements Observable {
         }
       }
     }
-    updateObservateur(null);
+    updateObserver(null);
   }
 
   public Brick[][] getComposition() {
