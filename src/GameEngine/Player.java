@@ -127,7 +127,7 @@ public class Player implements Observable {
 
   private void tryModifierCollision(CurrentShape s) {
     CurrentModifier cm = getGrid().getCurrentModifier();
-    if (cm != null && s.tryCollision(cm, s.getX(), s.getY()) && this.modifier != null) {
+    if (cm != null && s.tryCollision(cm, s.getX(), s.getY()) && this.modifier == null) {
       this.modifier = new Modifier(cm);
       updateObserver(this.modifier);
       getGrid().setCurrentModifier(null);
