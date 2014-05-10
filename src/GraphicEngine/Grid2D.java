@@ -76,15 +76,17 @@ public class Grid2D extends JPanel implements Observer {
       }
     }
 
+    setShape2D(model.getCurrentShape());
+    setModifier2D(model.getCurrentModifier());
     this.setVisible(true);
   }
-
-  public void setShape2D(CurrentShape s) {
+  
+  private void setShape2D(CurrentShape s) {
     currentShape = new CurrentShape2D(s);
     s.addObserver(currentShape);
   }
   
-  public void setModifier2D(CurrentModifier m) {
+  private void setModifier2D(CurrentModifier m) {
   	if(m != null){
     	currentModifier = new Modifier2D(m);
   	}

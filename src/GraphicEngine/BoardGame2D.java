@@ -49,9 +49,6 @@ public class BoardGame2D extends JPanel implements Observer {
 
     model.getGrid().addObserver(gameGrid);
     this.add(gameGrid);
-
-    setShapeToGrid2D();
-    setModifierToGrid();
   }
 
   private void loadDesign() {
@@ -122,14 +119,6 @@ public class BoardGame2D extends JPanel implements Observer {
         }
       }
     }
-  }
-
-  private void setShapeToGrid2D() {
-    gameGrid.setShape2D(model.getGrid().getCurrentShape());
-  }
-
-  private void setModifierToGrid() {
-    gameGrid.setModifier2D(model.getGrid().getCurrentModifier());
   }
 
   @Override
