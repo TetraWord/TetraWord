@@ -19,17 +19,17 @@ import GameEngine.CurrentModifier;
 public class Modifier2D {
 
 	/**
-	 * The CurrentModifier model
+	 * The CurrentModifier model.
 	 */
 	private final CurrentModifier model;
 
 	/**
-	 * The modifier image
+	 * The modifier image.
 	 */
 	private static BufferedImage modifierImg;
 
 	/**
-	 * Modifier2D constructor
+	 * Modifier2D constructor.
 	 *
 	 * @param model The CurrentModifier model
 	 */
@@ -38,7 +38,7 @@ public class Modifier2D {
 	}
 
 	/**
-	 * Set the image modifier for all modifiers
+	 * Set the image modifier for all modifiers.
 	 *
 	 * @param modifierImg Pathname of the modifier image
 	 */
@@ -70,7 +70,7 @@ public class Modifier2D {
 	}
 
 	/**
-	 * Draw the Modifier2D
+	 * Draw the Modifier2D.
 	 * @param g Graphics to draw on
 	 * @param offsetX Horizontal offset for shake modifier
 	 * @param offsetY Vertical offset for shake modifier
