@@ -18,19 +18,23 @@ import javax.swing.JPanel;
 /**
  * <b> Grid2D represents the graphical tetris grid. </b>
  * <b> It's a JPanel swing component, who is placed in the BoardGame2D. </b>
- * <p> Grid2D in an observer of the Grid, its logical part. </p>
- * <p> Grid2D contains: <p>
+ * <p>
+ * Grid2D in an observer of the Grid, its logical part. </p>
+ * <p>
+ * Grid2D contains:
+ * <p>
  * <ul>
  * <li> Its Grid model. </li>
  * <li> The CurrentShape2D. </li>
  * <li> Its composition of Brick2D. </li>
  * <li> An 10*20 Array of BrickButton. </li>
  * <li> An event listener for all BrickButton. </li>
- * <li> A boolean to know if we have to display the shadow of the CurrentShape2D. </li>
+ * <li> A boolean to know if we have to display the shadow of the
+ * CurrentShape2D. </li>
  * <li> The Modifier2D placed in the Grid2D. </li>
  * </ul>
  * <p>
- * 
+ *
  * @see BrickButton
  * @see Brick2D
  * @see Grid
@@ -47,10 +51,13 @@ public class Grid2D extends JPanel implements Observer {
 
   /**
    * Constructor.
-   * <p> Initialize the JPanel (size, layout, ...). </p>
-   * <p> Create an event listener for the BrickButton Array. </p>
-   * <p> Create the BrickButton Array. </p>
-   * 
+   * <p>
+   * Initialize the JPanel (size, layout, ...). </p>
+   * <p>
+   * Create an event listener for the BrickButton Array. </p>
+   * <p>
+   * Create the BrickButton Array. </p>
+   *
    * @param model The logical model Grid
    * @param shadow Display or not the CurrentShape2D shadow
    */
@@ -112,6 +119,7 @@ public class Grid2D extends JPanel implements Observer {
 
   /**
    * Set a new CurrentShape2D in the Grid2D with a CurrentShape model.
+   *
    * @param s The CurrentShape model
    */
   private void setShape2D(CurrentShape s) {
@@ -121,6 +129,7 @@ public class Grid2D extends JPanel implements Observer {
 
   /**
    * Set a new Modifier2D in the Grid2D with a CurrentModifier model.
+   *
    * @param m The CurrentModifier model
    */
   private void setModifier2D(CurrentModifier m) {
@@ -135,7 +144,7 @@ public class Grid2D extends JPanel implements Observer {
   public void removeModifier2D() {
     currentModifier = null;
   }
-  
+
   /**
    * Save a Brick in the Grid2D.
    */
@@ -160,7 +169,9 @@ public class Grid2D extends JPanel implements Observer {
   }
 
   /**
-   * Update the Brick2D's composition of the Grid2D with a new composition of Bricks.
+   * Update the Brick2D's composition of the Grid2D with a new composition of
+   * Bricks.
+   *
    * @param bricks The new composition of Bricks
    */
   private void updateCompositionBrick2D(Brick[][] bricks) {
@@ -173,10 +184,9 @@ public class Grid2D extends JPanel implements Observer {
     }
   }
 
-
   /**
    * Draw the Grid2D with their composition.
-   * 
+   *
    * @param g Graphics to draw on
    * @param offsetX The offset in x axe
    * @param offsetY The offset in y axe
@@ -214,6 +224,7 @@ public class Grid2D extends JPanel implements Observer {
 
   /**
    * Update the Grid2D parameters according to the arguments
+   *
    * @see Observer
    */
   @Override

@@ -106,9 +106,8 @@ public class GraphicEngine {
   }
 
   /**
-   * Stop the graphical and event part of the game.
-   * Remove all the event listener. 
-   * Reinit the Window.
+   * Stop the graphical and event part of the game. Remove all the event
+   * listener. Reinit the Window.
    */
   public void stop() {
     //remove listener on window
