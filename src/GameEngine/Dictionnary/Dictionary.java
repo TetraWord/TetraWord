@@ -12,10 +12,23 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
 
+/**
+ * <b> Dictionnary contains all the French language word. </b>
+ * <p>
+ * It is used for Anagram research in the Worddle/Anagram mode. </p>
+ * <p>
+ * It contains a HashSet to facility the research of a word. </p>
+ *
+ * @author Lionel
+ */
 public class Dictionary {
 
-  HashSet dico;
+  private HashSet dico;
 
+  /**
+   * Constructor. Initialise the HashSet with all the word contains in
+   * media/dictionnary.txt .
+   */
   public Dictionary() {
     dico = new HashSet();
     String file = "./media/dictionnary.txt";
@@ -41,10 +54,10 @@ public class Dictionary {
   }
 
   /**
-   * Look if the string is a word contains in the dictionary.
-   * 
-   * @param s 
-   * @return true if the String is included in the dictionary
+   * Look if the string is a word included in the dictionary.
+   *
+   * @param s The word to test
+   * @return True if the String is included in the dictionary, false otherwise
    */
   public boolean included(String s) {
     return dico.contains(s);
@@ -52,14 +65,15 @@ public class Dictionary {
 
   /**
    * Search possible anagrams with the chars of String in the dictionary.
-   * 
-   * @param s : String formed by chars selected
-   * @return Array of 10 Strings : the first is the best one, the last isn't an anagram
+   *
+   * @param s String formed by chars selected
+   * @return Array of 10 Strings : the first is the best one, the last isn't an
+   * anagram
    *
    */
   public String[] findAnagramms(String s) {
-		ArrayList<String> list = new ArrayList<String>();
-		String[] res = new String[10];
+    ArrayList<String> list = new ArrayList<String>();
+    String[] res = new String[10];
     boolean anagramme = false;
 
     // --- Verify that the chars of the word entered are contained in a word of the dictionary
@@ -94,30 +108,29 @@ public class Dictionary {
 
       //if the word is an anagram, add in the list of anagram
       if (anagramme == true) {
-      	list.add(str);
+        list.add(str);
       }
     }
 
     //Sort words by length
-    Collections.sort(list, new Comparator<String>(){
-			public int compare(String s1, String s2) {
-				if(s1.length() < s2.length()){
-					return 1;
-				}else if (s1.length() > s2.length()) {
-					return -1;
-				}
-				return 0;
-			}
+    Collections.sort(list, new Comparator<String>() {
+      public int compare(String s1, String s2) {
+        if (s1.length() < s2.length()) {
+          return 1;
+        } else if (s1.length() > s2.length()) {
+          return -1;
+        }
+        return 0;
+      }
     });
-    
 
-    int cpt=1;
-    for(int i=1; i<list.size() ; i=i+10){
-	    if(list.get(i).length() > 2 && cpt < 9){
-	  		res[cpt++] = list.get(i);
-	  	}
+    int cpt = 1;
+    for (int i = 1; i < list.size(); i = i + 10) {
+      if (list.get(i).length() > 2 && cpt < 9) {
+        res[cpt++] = list.get(i);
+      }
     }
-    
+
     //The first word is the best and the last isn't an anagram
     res[0] = list.get(0);
     res[9] = s.toString();
@@ -127,9 +140,9 @@ public class Dictionary {
 
   /**
    * Call findBestAnagramm to getting the best one.
-   * 
-   * @param sb : StringBuilder contains chars selected to form a word
-   * @return the best anagram find in a String
+   *
+   * @param sb StringBuilder contains chars selected to form a word
+   * @return The best anagram find in a String
    */
   public String findBestAnagramm(StringBuilder sb) {
     return findAnagramms(sb.toString())[0];

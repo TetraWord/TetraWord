@@ -16,9 +16,7 @@ import javax.swing.SwingConstants;
  * <ul>
  * <li> A name. </li>
  * </ul>
- *
  * </p>
- *
  */
 public class Button2D extends JButton {
 

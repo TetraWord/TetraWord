@@ -1,6 +1,5 @@
 package GraphicEngine;
 
-import ContextManager.GridEventListener;
 import GameEngine.BoardGame;
 import Pattern.Observable;
 import Pattern.Observer;
@@ -16,20 +15,47 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 /**
- * *
- * Define one board for a player with it's own grid
+ * <b> BoardGame2D represents one graphical board for a logical Player with it's
+ * own graphical Grid2D and Hud2D. </b>
+ * <p>
+ * BoardGame2D is a JPanel swing's component. </p>
+ * <p>
+ * It is an Observer of the BoardGame, it's model and logical part. </p>
+ * <p>
+ * It contains: </p>
+ * <ul>
+ * <li> The Grid2D. </li>
+ * <li> The Hud2D. </li>
+ * <li> Its logical model. </li>
+ * <li> A background image. </li>
+ * <li> A font for text. </li>
+ * <li> A color for text. </li>
+ * <li> A boolean to know if Shape's shadow has to be display. </li>
+ * </ul>
+ *
+ * @see Grid2D
  */
 public class BoardGame2D extends JPanel implements Observer {
 
   private final Grid2D gameGrid;
+  private final Hud2D hud;
   private final BoardGame model;
   private Image img;
   private String font;
   private Color color;
-  private final GridEventListener event;
   private boolean shadow;
-  private final Hud2D hud;
 
+  /**
+   * Constructor.
+   * <p>
+   * Set the size of the BoardGame2D, assign its model, load the different
+   * options and design for the game.</p>
+   * <p>
+   * It also creates the Grid2D and the Hud2D, add and place them into the
+   * BoardGame2D </p>
+   *
+   * @param model The BoardGame model.
+   */
   public BoardGame2D(BoardGame model) {
     /* Settings */
     this.setLayout(null);
@@ -43,14 +69,16 @@ public class BoardGame2D extends JPanel implements Observer {
     model.getHud().addObserver(hud);
     this.add(hud);
 
-    event = new GridEventListener(this.model);
-    gameGrid = new Grid2D(model.getGrid(), event, shadow);
+    gameGrid = new Grid2D(model.getGrid(), shadow);
     gameGrid.setBounds(70, 135, 350, 700);
 
     model.getGrid().addObserver(gameGrid);
     this.add(gameGrid);
   }
 
+  /**
+   * Load the design wanted in the parameter with a .properties file.
+   */
   private void loadDesign() {
     /**
      * Graphics properties *
@@ -93,6 +121,9 @@ public class BoardGame2D extends JPanel implements Observer {
     }
   }
 
+  /**
+   * Load options wanted in parameters with a .properties file.
+   */
   private void loadOptions() {
     Properties prop = new Properties();
     InputStream input = null;
@@ -121,6 +152,9 @@ public class BoardGame2D extends JPanel implements Observer {
     }
   }
 
+  /**
+   * @see Observer
+   */
   @Override
   public void update(Observable o, Object args) {
     if (args == null) {
@@ -129,6 +163,12 @@ public class BoardGame2D extends JPanel implements Observer {
 
   }
 
+  /**
+   * Override of paintComponent function to draw the background image, the Hud2D
+   * and the Grid2D.
+   *
+   * @param g Graphics to draw on
+   */
   @Override
   public void paintComponent(Graphics g) {
 

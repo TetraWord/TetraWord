@@ -141,8 +141,8 @@ public class Shape implements Observable {
 
   /**
    * Get the Shape's representation.
-   * 
-   * @return The Shape's representation 
+   *
+   * @return The Shape's representation
    */
   public int[][] getRepresentation() {
     return representation;
@@ -150,7 +150,7 @@ public class Shape implements Observable {
 
   /**
    * Get the Shape's height on a single column.
-   * 
+   *
    * @param x The column
    * @return The Shape's height
    */
@@ -166,7 +166,7 @@ public class Shape implements Observable {
 
   /**
    * Get the Shape's width.
-   * 
+   *
    * @return The Shape's width
    */
   public int getWidth() {

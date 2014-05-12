@@ -1,6 +1,6 @@
 package ContextManager;
 
-import GameEngine.BoardGame;
+import GameEngine.Grid;
 import GraphicEngine.BrickButton;
 import Pattern.Observable;
 import Pattern.Observer;
@@ -27,10 +27,10 @@ public final class GridEventListener extends MouseAdapter implements Observable 
   /**
    * Constructor.
    *
-   * @param obs The BoardGame where the Grid is.
+   * @param obs The Grid to Observer.
    */
-  public GridEventListener(BoardGame obs) {
-    addObserver(obs.getGrid());
+  public GridEventListener(Grid obs) {
+    addObserver(obs);
   }
 
   /**

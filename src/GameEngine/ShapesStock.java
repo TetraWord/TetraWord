@@ -1,7 +1,5 @@
 package GameEngine;
 
-//Singleton
-//import Tetris;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -9,10 +7,33 @@ import java.io.StringReader;
 import java.util.Random;
 import java.util.Scanner;
 
+/**
+ * <b> The ShapesStock is a container of all the possible Shape that the tetris
+ * game can have. </b>
+ * <p>
+ * It's a logical part of the game. Singleton. </p>
+ * <p>
+ * ShapesStock give to the BoardGame new random Shape from a model of Shape.
+ * </p>
+ * <p>
+ * The ShapesStock contains: </p>
+ * <ul>
+ * <li> An Array with all the Shape model possible for the game. </li>
+ * </ul>
+ *
+ * @see Shape
+ */
 public final class ShapesStock {
 
   private final Shape[] shapeModel;
 
+  /**
+   * Private constructor. Singleton.
+   * <p>
+   * Search all the .shape files in the media/Shapes directory and create Shapes
+   * model with these files.
+   * </p>
+   */
   private ShapesStock() {
     /*Read files .shape*/
     int cpt = 0;
@@ -27,10 +48,21 @@ public final class ShapesStock {
     }
   }
 
+  /**
+   * Gte the instance of ShapesStock. Singleton.
+   *
+   * @return The ShapesStock's instance
+   */
   public static ShapesStock getInstance() {
     return ShapesStockHolder.INSTANCE;
   }
 
+  /**
+   * Read a .shape file and create a Shape.
+   *
+   * @param path The name of the .shape file
+   * @return The Shape create
+   */
   private Shape readFile(String path) {
     Scanner scanner;
     int count = 0;
@@ -138,6 +170,11 @@ public final class ShapesStock {
 
   }
 
+  /**
+   * Give a random new Shape from the Shapes model.
+   *
+   * @return The new Shape
+   */
   public Shape getRandomShape() {
     Random r = new Random();
     int x = Math.abs(r.nextInt()) % shapeModel.length;
@@ -145,6 +182,9 @@ public final class ShapesStock {
     return newShape;
   }
 
+  /**
+   * Singleton.
+   */
   private static class ShapesStockHolder {
 
     private static final ShapesStock INSTANCE = new ShapesStock();
