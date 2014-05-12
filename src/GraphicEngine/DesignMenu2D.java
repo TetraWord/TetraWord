@@ -29,9 +29,9 @@ import javax.swing.JOptionPane;
 /**
  * <b> DesignMenu2D is the menu permmiting to choose theme preferences. </b>
  * <p>
- * DesignedMenu2D inherits from the Menu2D. </p>
+ * DesignMenu2D inherits from Menu2D. </p>
  * <p>
- * The DesigneMenu2d contains:
+ * DesignMenu2d contains:
  * <ul>
  * <li> A DesignMenu instance. </li>
  * <li> The pathname of the background image file of the actual chosen theme.
