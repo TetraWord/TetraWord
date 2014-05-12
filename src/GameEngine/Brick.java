@@ -274,12 +274,13 @@ public class Brick {
 
   /**
    * Set the Brick clickable for a new word in Worddle mode.
+   *
    * @param b Boolean
    */
   void setNewClickable(Boolean b) {
     this.newClickable = b;
   }
-  
+
   /**
    * @return True if it can be in a new word in Worddle mode, else false.
    */

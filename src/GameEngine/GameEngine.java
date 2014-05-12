@@ -292,7 +292,8 @@ public class GameEngine {
 
   /**
    * Stop all the timers in the game.
-   * <P> Use for the game's pause </p>
+   * <P>
+   * Use for the game's pause </p>
    */
   public void stopAllTimers() {
     //TO DO

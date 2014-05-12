@@ -21,43 +21,43 @@ import javax.swing.JRadioButton;
  */
 public class RadioButton2D extends JRadioButton {
 
-	/**
-	 * Name of the button.
-	 */
-	private final String name;
-	/**
-	 * Pathname of the brick image.
-	 */
-	private final String img;
+  /**
+   * Name of the button.
+   */
+  private final String name;
+  /**
+   * Pathname of the brick image.
+   */
+  private final String img;
 
-	/**
-	 * RadioButton2D constructor. Initialize attributes.
-	 *
-	 * @param name Name of the button
-	 * @param img Pathname of the brick image
-	 */
-	public RadioButton2D(String name, String img) {
-		super(name);
-		this.name = name;
-		this.img = img;
-	}
+  /**
+   * RadioButton2D constructor. Initialize attributes.
+   *
+   * @param name Name of the button
+   * @param img Pathname of the brick image
+   */
+  public RadioButton2D(String name, String img) {
+    super(name);
+    this.name = name;
+    this.img = img;
+  }
 
-	/**
-	 * Get the name of the button.
-	 *
-	 * @return Name of the button
-	 */
-	@Override
-	public String getName() {
-		return name;
-	}
+  /**
+   * Get the name of the button.
+   *
+   * @return Name of the button
+   */
+  @Override
+  public String getName() {
+    return name;
+  }
 
-	/**
-	 * Get the pathname of the brick image.
-	 *
-	 * @return Pathname of the brick image
-	 */
-	public String getImage() {
-		return img;
-	}
+  /**
+   * Get the pathname of the brick image.
+   *
+   * @return Pathname of the brick image
+   */
+  public String getImage() {
+    return img;
+  }
 }

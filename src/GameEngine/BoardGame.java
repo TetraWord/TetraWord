@@ -9,7 +9,8 @@ import java.util.Queue;
 
 /**
  * <b> BoardGame is the container of the Grid and the Hud. </b>
- * <p> It's a logicial part of the game </p>
+ * <p>
+ * It's a logicial part of the game </p>
  * <p>
  * Each <b> Player </b> in the game has a BoardGame. </p>.
  * <p>
@@ -222,7 +223,12 @@ public final class BoardGame implements Observable {
    */
   public void launchNextShape() {
     int size = listNextShape.size();
-    CurrentShape cs = new CurrentShape(listNextShape.poll());
+    CurrentShape cs = null;
+    try{
+      cs = new CurrentShape(listNextShape.poll());
+    }catch(NullPointerException e){
+      cs = new CurrentShape(getRandomShape());
+    }
     Shape s = new CurrentShape(getRandomShape());
 
     Player[] tabP = GameEngine.getInstance().getPlayers();

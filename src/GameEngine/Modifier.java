@@ -10,10 +10,10 @@ import java.util.TimerTask;
  * <p>
  * A Modifier contains:
  * <ul>
- * <li> modifierSingleEnum: An enum of the different  existing for
- * single Player only. </li>
- * <li> modifierMultiEnum: An enum of the different  existing for
- * multiplayer. </li>
+ * <li> modifierSingleEnum: An enum of the different existing for single Player
+ * only. </li>
+ * <li> modifierMultiEnum: An enum of the different existing for multiplayer.
+ * </li>
  * <li> name: A string for the name of the Modifier. </li>
  * <li> t: A Timer </li>
  * </ul>
@@ -39,12 +39,12 @@ public class Modifier {
   private Timer t = null;
 
   /**
-   * Modifier constructor. Create a random  among modifierEnum.
+   * Modifier constructor. Create a random among modifierEnum.
    */
   public Modifier() {
     int random;
     if (GameEngine.getInstance().getNbPlayers() == 1) {
-      random = (int) (Math.random() * 6);
+      random = (int) (Math.random() * 5);
       this.name = modifierSingleEnum.values()[random].toString();
     } else {
       random = (int) (Math.random() * 7);
@@ -64,7 +64,7 @@ public class Modifier {
   /**
    * Get the name of the .
    *
-   * @return The name of the 
+   * @return The name of the
    */
   public String getName() {
     return this.name;
@@ -75,7 +75,7 @@ public class Modifier {
    * <p>
    * Call the function corresponding of the 's name. </p>
    *
-   * @param p Player for whom the  is activated
+   * @param p Player for whom the is activated
    */
   public void active(Player p) {
     int random;
@@ -144,7 +144,7 @@ public class Modifier {
   /**
    * Change the speed of the game.
    *
-   * @param p Player for whom the  is activated
+   * @param p Player for whom the is activated
    * @param sign Represent if the speed raise or decreases
    */
   private void changeSpeed(final Player p, char sign) {
@@ -172,7 +172,7 @@ public class Modifier {
   /**
    * Shake the grid.
    *
-   * @param p Player for whom the  is activated
+   * @param p Player for whom the is activated
    */
   private void shake(final Player p) {
 
@@ -224,7 +224,7 @@ public class Modifier {
   /**
    * Move the shape to the left or the right.
    *
-   * @param p Player for whom the  is activated
+   * @param p Player for whom the is activated
    */
   private void storm(final Player p) {
     t = new Timer();
@@ -256,7 +256,7 @@ public class Modifier {
   /**
    * Reverse the board game ; the current shape come from the down and go up.
    *
-   * @param p Player for whom the  is activated
+   * @param p Player for whom the is activated
    */
   private void reversal(Player p) {
 
@@ -275,7 +275,7 @@ public class Modifier {
   /**
    * Change the score ; add a bonus or remove a malus.
    *
-   * @param p Player for whom the  is activated
+   * @param p Player for whom the is activated
    * @param sign To know if it's a bonus or a malus
    */
   private void score(Player p, char sign) {
@@ -289,7 +289,7 @@ public class Modifier {
   /**
    * Burst the current shape and the shapes around.
    *
-   * @param p Player for whom the  is activated
+   * @param p Player for whom the is activated
    */
   private void bomb(Player p) {
     Grid grid = p.getGrid();
@@ -333,7 +333,7 @@ public class Modifier {
   /**
    * Go 30 seconds back.
    *
-   * @param p Player for whom the  is activated
+   * @param p Player for whom the is activated
    */
   private void timeTravel(Player p) {
 
@@ -342,7 +342,7 @@ public class Modifier {
   /**
    * Go to worddle mode.
    *
-   * @param p Player for whom the  is activated
+   * @param p Player for whom the is activated
    */
   private void worddle(Player p) {
     if (!GameEngine.getInstance().isPlayersInWordMode() && p.canWorddle()) {
