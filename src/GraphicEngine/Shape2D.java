@@ -33,7 +33,7 @@ public class Shape2D {
 	protected final Brick2D[][] compositionBrick2D;
 
 	/**
-	 * Shape2D constructor Create a Shape2D from its Shape model
+	 * Shape2D constructor Create a Shape2D from its Shape model.
 	 *
 	 * @param s Shape logical model
 	 */
@@ -57,7 +57,7 @@ public class Shape2D {
 	}
 
 	/**
-	 * Draw a Shape2D
+	 * Draw a Shape2D.
 	 *
 	 * @param g Graphics to draw on
 	 * @param x Horizontal position
