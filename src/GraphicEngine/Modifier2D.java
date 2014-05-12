@@ -1,60 +1,50 @@
 package GraphicEngine;
 
-import java.awt.AlphaComposite;
 import java.awt.Color;
-import java.awt.Composite;
-import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.geom.AffineTransform;
-import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 import java.awt.image.WritableRaster;
 import java.io.File;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
-
 import GameEngine.CurrentModifier;
 
+/**
+ * <b> Modifier2D is the graphic representation of a CurrentModifier. </b>
+ *
+ * @see CurrentModifier
+ * @see Modifier
+ */
 public class Modifier2D {
+
+	/**
+	 * The CurrentModifier model.
+	 */
 	private final CurrentModifier model;
-	private static String modifierImg;
-	
+
+	/**
+	 * The modifier image.
+	 */
+	private static BufferedImage modifierImg;
+
+	/**
+	 * Modifier2D constructor.
+	 *
+	 * @param model The CurrentModifier model
+	 */
 	public Modifier2D(CurrentModifier model) {
 		this.model = model;
 	}
-	
+
+	/**
+	 * Set the image modifier for all modifiers.
+	 *
+	 * @param modifierImg Pathname of the modifier image
+	 */
 	public static void setModifierImage(String modifierImg) {
-		Modifier2D.modifierImg = modifierImg;
-	}
-	
-	public void draw(Graphics g, int offsetX, int offsetY, double ratio) {
-		int top = 135 + offsetY;
-		int left = 70 + offsetX;
-		int sizeBrick = 35;
+
 		Color c = Color.RED;
-		BufferedImage monImage = getModifierImage(c);
-
-		if (ratio != 1) {
-			/*Resize image*/
-			BufferedImage before = monImage;
-			int w = before.getWidth();
-			int h = before.getHeight();
-			BufferedImage after = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
-			AffineTransform at = new AffineTransform();
-			at.scale(ratio, ratio);
-			AffineTransformOp scaleOp = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
-			after = scaleOp.filter(before, after);
-			monImage = after;
-		}
-
-		g.drawImage(monImage, model.getX() * sizeBrick + left, model.getY() * sizeBrick + top, null);
-		g.setColor(Color.black);
-	}
-
-	public BufferedImage getModifierImage(Color myColor) {
 		try {
 			BufferedImage monImage = ImageIO.read(new File(modifierImg));
 			WritableRaster trame = monImage.getRaster();
@@ -66,17 +56,31 @@ public class Modifier2D {
 					Object pixel = trame.getDataElements(i, j, null);
 					int alpha = color.getAlpha(pixel);
 					/*Create new color with alpha of the image*/
-					myColor = new Color(myColor.getRed(), myColor.getGreen(), myColor.getBlue(), alpha);
-					int rgb = myColor.getRGB();
+					c = new Color(c.getRed(), c.getGreen(), c.getBlue(), alpha);
+					int rgb = c.getRGB();
 					Object couleur = color.getDataElements(rgb, null);
 					trame.setDataElements(i, j, couleur);
 				}
 			}
-			return monImage;
+			Modifier2D.modifierImg = monImage;
 		} catch (IOException e) {
 			e.printStackTrace();
-			return null;
+			Modifier2D.modifierImg = null;
 		}
 	}
 
+	/**
+	 * Draw the Modifier2D.
+	 * @param g Graphics to draw on
+	 * @param offsetX Horizontal offset for shake modifier
+	 * @param offsetY Vertical offset for shake modifier
+	 */
+	public void draw(Graphics g, int offsetX, int offsetY) {
+		int top = 135 + offsetY;
+		int left = 70 + offsetX;
+		int sizeBrick = 35;
+
+		g.drawImage(modifierImg, model.getX() * sizeBrick + left, model.getY() * sizeBrick + top, null);
+		g.setColor(Color.black);
+	}
 }
