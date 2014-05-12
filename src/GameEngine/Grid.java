@@ -8,9 +8,11 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- * <b> Grid is a logical part of the game.</b>
+ * <b> Grid reprensents the 10*20 tetris gris.</b>
  * <p>
- * Each <b> BoardGame </b> in the game has a Grid </p>.
+ * It's a logicial part of the game. </p>
+ * <p>
+ * Each <b> BoardGame </b> in the game has a Grid. </p>.
  * <p>
  * The Grid is observable by the Grid2D, its graphical Part. </p>
  * <p>
@@ -19,19 +21,19 @@ import java.util.TimerTask;
  * <p>
  * The Grid contains :
  * <ul>
- * <li> A horizontal size </li>
- * <li> A vertical size </li>
- * <li> A Brick composition </li>
- * <li> A CurrentShape </li>
- * <li> A CurrentModifier </li>
- * <li> An ArrayList of his observateur object </li>
- * <li> The offsetX and the offsetY of the BoardGame for the shake Modifier
+ * <li> A horizontal size. </li>
+ * <li> A vertical size. </li>
+ * <li> A Brick composition. </li>
+ * <li> A CurrentShape. </li>
+ * <li> A CurrentModifier. </li>
+ * <li> An ArrayList of his observateur object. </li>
+ * <li> The offsetX and the offsetY of the BoardGame for the shake Modifier.
  * </li>
- * <li> The BoardGame who contains the Grid </li>
- * <li> A boolean to know if we can click in the Grid </li>
- * <li> A boolean to know if we can double click in the Grid </li>
- * <li> A list of the Brick clicked in the Grid </li>
- * <li> The coordinates of the last Brick clicked </li>
+ * <li> The BoardGame who contains the Grid. </li>
+ * <li> A boolean to know if we can click in the Grid. </li>
+ * <li> A boolean to know if we can double click in the Grid. </li>
+ * <li> A list of the Brick clicked in the Grid. </li>
+ * <li> The coordinates of the last Brick clicked. </li>
  * </ul>
  * </p>
  *
@@ -120,7 +122,7 @@ public class Grid implements Observable, Observer {
   private int[] coordsLastBrickClicked = new int[2];
 
   /**
-   * The Timer in charge of the CurrentModifier's Display
+   * The Timer in charge of the CurrentModifier's Display.
    */
   private Timer timerBeforeModifier = null;
 
@@ -128,8 +130,8 @@ public class Grid implements Observable, Observer {
    * Grid constructor. Init its BoardGame and its first CurrentShape. Init the
    * composition of Brick to null Brick.
    *
-   * @param b The BoardGame who contains the Grid.
-   * @param cS The first CurrentShape of the Grid.
+   * @param b The BoardGame who contains the Grid
+   * @param cS The first CurrentShape of the Grid
    */
   public Grid(BoardGame b, CurrentShape cS) {
     this.myBoardGame = b;
@@ -145,7 +147,7 @@ public class Grid implements Observable, Observer {
   /**
    * Copy constructor.
    *
-   * @param g The Grid to be copy.
+   * @param g The Grid to be copy
    */
   Grid(Grid g) {
     this(g.myBoardGame, g.getCurrentShape());
@@ -160,7 +162,7 @@ public class Grid implements Observable, Observer {
   /**
    * Get the Grid's Brick composition.
    *
-   * @return The Grid's Brick composition.
+   * @return The Grid's Brick composition
    * @see Grid#tGrid
    */
   public Brick[][] getTGrid() {
@@ -170,7 +172,7 @@ public class Grid implements Observable, Observer {
   /**
    * Set a new Brick composition to the Grid.
    *
-   * @param newTGrid The new Brick composition.
+   * @param newTGrid The new Brick composition
    * @see Grid#tGrid
    */
   public void setTGrid(Brick[][] newTGrid) {
@@ -180,7 +182,7 @@ public class Grid implements Observable, Observer {
   /**
    * Get the CurrentShape falling in the Grid.
    *
-   * @return The CurrentShape falling in the Grid.
+   * @return The CurrentShape falling in the Grid
    * @see Grid#currentShape
    */
   public CurrentShape getCurrentShape() {
@@ -211,7 +213,7 @@ public class Grid implements Observable, Observer {
   /**
    * Set a CurrentModifier in the Grid and update the Grid2D.
    *
-   * @param cm The CurrentModifier set in the Grid.
+   * @param cm The CurrentModifier set in the Grid
    * @see Grid#currentModifier
    */
   public void setCurrentModifier(CurrentModifier cm) {
@@ -222,7 +224,7 @@ public class Grid implements Observable, Observer {
   /**
    * Set the Grid clickable or not.
    *
-   * @param b True if Grid is clickable, false otherwise.
+   * @param b True if Grid is clickable, false otherwise
    * @see Grid#allowClick
    */
   public void setAllowClick(boolean b) {
@@ -230,7 +232,9 @@ public class Grid implements Observable, Observer {
   }
 
   /**
-   * @return True if Grid is clickable, false otherwise.
+   * To know if the Player can click a Brick in the Grid.
+   *
+   * @return True if Grid is clickable, false otherwise
    * @see Grid#allowClick
    */
   public boolean isAllowClick() {
@@ -240,7 +244,7 @@ public class Grid implements Observable, Observer {
   /**
    * Set the Grid double clickable or not.
    *
-   * @param b True if Grid is double clickable, false otherwise.
+   * @param b True if Grid is double clickable, false otherwise
    * @see Grid#allowDoubleClicked
    */
   public void setAllowDoubleClick(boolean b) {
@@ -248,7 +252,9 @@ public class Grid implements Observable, Observer {
   }
 
   /**
-   * @return True if Grid is double clickable, false otherwise.
+   * To know if the Player can double click a Brick in the Grid.
+   *
+   * @return True if Grid is double clickable, false otherwise
    * @see Grid#allowDoubleClicked
    */
   public boolean isAllowDoubleClick() {
@@ -258,7 +264,7 @@ public class Grid implements Observable, Observer {
   /**
    * Get the Player who played with the Grid.
    *
-   * @return The Player who played with the Grid.
+   * @return The Player who played with the Grid
    */
   public Player getPlayer() {
     return myBoardGame.getPlayer();
@@ -267,7 +273,7 @@ public class Grid implements Observable, Observer {
   /**
    * Get the first full line of the Grid.
    *
-   * @return The position of the first full line or -1 if no line is full.
+   * @return The position of the first full line or -1 if no line is full
    */
   public int getFirstFullLine() {
     boolean isLineFull = true;
@@ -289,7 +295,7 @@ public class Grid implements Observable, Observer {
   /**
    * Get the number of full line in the Grid.
    *
-   * @return the number of full line.
+   * @return the number of full line
    */
   public int getNbFullLine() {
     boolean isLineFull = true;
@@ -312,7 +318,7 @@ public class Grid implements Observable, Observer {
   /**
    * Remove a line in the Grid and update the Grid2D.
    *
-   * @param lineToRemove The line to remove in the Grid.
+   * @param lineToRemove The line to remove in the Grid
    */
   public void removeLine(int lineToRemove) {
     for (int i = lineToRemove; i > 0; --i) {
@@ -327,7 +333,7 @@ public class Grid implements Observable, Observer {
    * Test if the Grid can contain the CurrentShape without being outside.
    *
    * @param s The CurrentShape tested
-   * @return True if the Grid can't include the CurrentShape, false otherwise.
+   * @return True if the Grid can't include the CurrentShape, false otherwise
    */
   public boolean isComplete(CurrentShape s) {
     for (int i = 0; i < Shape.sizeShape; ++i) {
@@ -352,11 +358,15 @@ public class Grid implements Observable, Observer {
   }
 
   /**
-   * Finish the Worddle mode. Called from the Player. Disable the double click,
-   * reput the previous CurrentShape in the Grid, destroy all brick selected in
-   * a word and declick all other brick clicked.
+   * Finish the Worddle mode.
+   * <p>
+   * Called from the Player. </p>
+   * <p>
+   * Disable the double click, reput the previous CurrentShape in the Grid,
+   * destroy all brick selected in a word and declick all other brick
+   * clicked.</p>
    *
-   * @param cs The CurrentShape to be in the Grid for falling.
+   * @param cs The CurrentShape to be in the Grid for falling
    */
   public void finishWorddle(CurrentShape cs) {
     setAllowDoubleClick(false);
@@ -368,7 +378,7 @@ public class Grid implements Observable, Observer {
   /**
    * Set the CurrentShape in the Grid's Brick composition. Update the Grid2D.
    *
-   * @param s The CurrentShape setted in.
+   * @param s The CurrentShape setted in
    */
   void setIn(CurrentShape s) {
     for (int i = 0; i < Shape.sizeShape; ++i) {
@@ -386,7 +396,7 @@ public class Grid implements Observable, Observer {
   }
 
   /**
-   * Debug method. Print the grid's composition.
+   * Print the grid's composition. Debug method.
    */
   private void printGrid() {
     for (int i = 0; i < sizeY; ++i) {
@@ -403,7 +413,7 @@ public class Grid implements Observable, Observer {
   /**
    * Click a random Brick in the Grid.
    *
-   * @return The char of the clicked Brick.
+   * @return The char of the clicked Brick
    */
   public char clickedOneBrick() {
     Random r = new Random();
@@ -482,7 +492,7 @@ public class Grid implements Observable, Observer {
    * Double click all Brick who are clicked in the Grid expect those passed in
    * param. Use for Worddle mode.
    *
-   * @param b The Brick who isn't double clicked.
+   * @param b The Brick who isn't double clicked
    */
   public void doubleClickedAllBrickClicked(Brick b) {
     for (int i = 0; i < sizeY; ++i) {
@@ -497,8 +507,8 @@ public class Grid implements Observable, Observer {
   /**
    * Get Brick's x and y coordinates in the Grid.
    *
-   * @param b The Brick's coordinates wanted.
-   * @return The coordinates of the Brick in the Grid.
+   * @param b The Brick's coordinates wanted
+   * @return The coordinates of the Brick in the Grid
    */
   public int[] getBrickCoordInGrid(Brick b) {
     int[] coords = new int[2];
@@ -610,7 +620,7 @@ public class Grid implements Observable, Observer {
    * Test if the CurrentShape's position is an acceptable position.
    *
    * @param shape The CurrentShape to test
-   * @return 0 if the position is not acceptable, 1 if it is.
+   * @return 0 if the position is not acceptable, 1 if it is
    */
   public int IsGoalAcceptable(CurrentShape shape) {
     // Fast check: If piece origin lies outside board, goal is not acceptable.
@@ -670,7 +680,7 @@ public class Grid implements Observable, Observer {
   /**
    * Drop down the CurrentShape and add this in the Grid.
    *
-   * @param tmpShape The CurrentShape to drop and add.
+   * @param tmpShape The CurrentShape to drop and add
    */
   public void FullDropAndAddShapeToGrid(CurrentShape tmpShape) {
     int finalLine = tmpShape.getY();
@@ -701,7 +711,7 @@ public class Grid implements Observable, Observer {
   /**
    * Get the heighest column of the Grid.
    *
-   * @return The value of the heighest column of the Grid.
+   * @return The value of the heighest column of the Grid
    */
   public int PileHeightWeightedCells() {
     int maxY = 0;
@@ -725,7 +735,7 @@ public class Grid implements Observable, Observer {
   /**
    * Sum the height of all column of the Grid.
    *
-   * @return The sum of all column of the Grid.
+   * @return The sum of all column of the Grid
    */
   public int SumOfWellHeights() {
     int totalWeightedCells = 0;
@@ -791,11 +801,17 @@ public class Grid implements Observable, Observer {
 
   }
 
+  /**
+   * @see Observable
+   */
   @Override
   public void addObserver(Observer obs) {
     listObserver.add(obs);
   }
 
+  /**
+   * @see Observable
+   */
   @Override
   public void updateObserver(Object args) {
     for (Observer obs : listObserver) {
@@ -803,6 +819,9 @@ public class Grid implements Observable, Observer {
     }
   }
 
+  /**
+   * @see Observable
+   */
   @Override
   public void delAllObserver() {
     listObserver = new ArrayList<>();

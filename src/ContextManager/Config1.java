@@ -8,61 +8,56 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 /**
- * <b> Config1 is an KeyEventListener class for the player 1. </b>
+ * <b> Config1 is an KeyEventListener class for the Player 1. </b>
  * <p>
- * Config1 contains the player who plays with it. </p>
- * <p>
- * It extends from KeyAdapter, and override the keyPressed method </p>
+ * Config1 contains the Player who plays with it. </p>
  *
  * @see Player
  */
 public class Config1 extends KeyAdapter {
 
   /**
-   * The player of the config. Not modifiable.
+   * The Player of the config. Not modifiable.
    */
   private final Player p;
 
   /**
    * Config1 constructor.
    * <p>
-   * At the construct of a Config1's object, we associate the player passed in
-   * param at it.
+   * At the construct of a Config1's object, we associate the Player's param to
+   * the Config.
    * </p>
    *
-   * @param p The player of the config.
+   * @param p The Player of the config.
    */
   public Config1(Player p) {
     this.p = p;
   }
 
   /**
-   * The overriden method keyPressed.
-   * <p>
    * Listen which key is pressed on the keyboard.
-   * </p>
    * <p>
-   * According to the pressed key, some methods are called on the player or the
+   * According to the pressed key, some methods are called on the Player or the
    * manager of the game :
    * <ul>
-   * <li> UP -> rotate the player's current shape </li>
-   * <li> DOWN -> move down the player's current shape and add score to the
-   * player </li>
-   * <li> LEFT -> move left the player's current shape </li>
-   * <li> RIGHT -> move right the player's current shape </li>
-   * <li> NUMPAD0 -> drop down the player's current shape </li>
-   * <li> NUMPAD1 -> launch the worddle mode for the player if he can </li>
-   * <li> NUMPAD2 -> stock the player's current shape if he can </li>
-   * <li> ENTER -> if the player is in Tetris mode launch his modifier </li>
-   * <li> ENTER -> if the player is in Worddle mode or Anagram mode, validate
+   * <li> UP -> rotate the Player's current shape </li>
+   * <li> DOWN -> move down the Player's current shape and add score to the
+   * Player </li>
+   * <li> LEFT -> move left the Player's current shape </li>
+   * <li> RIGHT -> move right the Player's current shape </li>
+   * <li> NUMPAD0 -> drop down the Player's current shape </li>
+   * <li> NUMPAD1 -> launch the Worddle mode for the Player if he can </li>
+   * <li> NUMPAD2 -> stock the Player's current shape if he can </li>
+   * <li> ENTER -> if the Player is in Tetris mode launch his modifier </li>
+   * <li> ENTER -> if the Player is in Worddle mode or Anagram mode, validate
    * the input word </li>
    * <li> P -> set the manager of the game in pause mode </li>
    * </ul>
    * </p>
    *
    * @see Player#rotate()
-   * @see Player#down(int) 
-   * @see Player#addToScore(int) 
+   * @see Player#down(int)
+   * @see Player#addToScore(int)
    * @see Player#left()
    * @see Player#right()
    * @see Player#dropDown()

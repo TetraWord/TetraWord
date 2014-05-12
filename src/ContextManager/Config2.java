@@ -8,11 +8,9 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 /**
- * <b> Config2 is an KeyEventListener class for the player 2. </b>
+ * <b> Config2 is an KeyEventListener class for the Player 2. </b>
  * <p>
- * Config2 contains the player who plays with it. </p>
- * <p>
- * It extends from KeyAdapter, and override the keyPressed method </p>
+ * Config2 contains the Player who plays with it. </p>
  * <p>
  * Same methods as Config1 with other keys listened </p>
  *

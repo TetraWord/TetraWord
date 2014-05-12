@@ -15,7 +15,7 @@ import java.awt.event.KeyAdapter;
  * It's the chocolate spread between the graphical part and the logical part of
  * the game </p>
  * <p>
- * This class contains :
+ * This class contains:
  * <ul>
  * <li> An instance of the singleton ContextManager. </li>
  * <li> The GameEngine which is the logical part of the game. Singleton. </li>
@@ -25,8 +25,8 @@ import java.awt.event.KeyAdapter;
  * modifiable. </li>
  * <li> The ItemActionListener which is the event part of the design menu. Not
  * modifiable. </li>
- * <li> The Config1 of the player 1. Needed. </li>
- * <li> The Config2 of the player 2. If needed in multiplayer game. </li>
+ * <li> The Config1 of the Player 1. Needed. </li>
+ * <li> The Config2 of the Player 2. If needed in multiplayer game. </li>
  * <li> A boolean to set the game in pause. </li>
  * </ul>
  * </p>
@@ -79,7 +79,7 @@ public final class ContextManager {
   private static final ItemActionListener itemListener = new ItemActionListener();
 
   /**
-   * Listener of the player 1's input. Not modifiable.
+   * Listener of the Player 1's input. Not modifiable.
    *
    * @see ContextManager#getPlayerListener(int)
    * @see ContextManager#definePlayersGame(java.lang.String[])
@@ -87,7 +87,7 @@ public final class ContextManager {
   private static Config1 player1Listener = null;
 
   /**
-   * Listener of the player 2's input. Not modifiable.
+   * Listener of the Player 2's input. Not modifiable.
    *
    * @see ContextManager#getPlayerListener(int)
    * @see ContextManager#definePlayersGame(java.lang.String[])
@@ -120,10 +120,10 @@ public final class ContextManager {
   }
 
   /**
-   * Get a player key event listener.
+   * Get a Player key event listener.
    *
-   * @param index The number of the player
-   * @return The KeyEventListener of the player wanted
+   * @param index The number of the Player
+   * @return The KeyEventListener of the Player wanted
    *
    * @see Config1
    * @see ContextManager#player1Listener
@@ -164,15 +164,15 @@ public final class ContextManager {
   }
 
   /**
-   * Switch the Tetris game in pause or in play
+   * Switch the Tetris game in pause or in play.
    */
   public void setPause() {
     isPaused = !isPaused;
     Window w = graphicEngine.getWindow();
-    if(isPaused){
+    if (isPaused) {
       w.definePauseMenu();
       gameEngine.stopAllTimers();
-    }else{
+    } else {
       w.stopPauseMenu();
     }
   }
@@ -187,8 +187,10 @@ public final class ContextManager {
   }
 
   /**
-   * Method call by the game loop. Do nothing if the game is in pause. Demand
-   * the repaint of the window when call.
+   * Method call by the game loop.
+   * <p>
+   * Do nothing if the game is in pause. Demand the repaint of the window when
+   * call. </p>
    *
    * @see Tetris#run
    * @see GraphicEngine#renderFrame()
@@ -308,16 +310,16 @@ public final class ContextManager {
   /**
    * Define the players game.
    * <p>
-   * Create the different <b> BoardGame </b> of the players created in the <b>
+   * Create the different <b> BoardGame </b> of the Players created in the <b>
    * initGame() </b> method</p>.
    * <p>
-   * Create also the needed config of the players </p>
+   * Create also the needed config of the Players </p>
    * <p>
-   * When all player's items are create, the player's thread are startes </p>
+   * When all Player's items are create, the Player's thread are startes </p>
    * <p>
    * Start all the game timers </p>
    *
-   * @param playersName The different players name
+   * @param playersName The different Players name
    *
    * @see ContextManager#initGame(double)
    * @see Window#defineNewBoardGame(GameEngine.BoardGame)
@@ -364,23 +366,23 @@ public final class ContextManager {
   }
 
   /**
-   * Init the game with the number of player wanted
+   * Init the game with the number of Player wanted
    * <p>
-   * Create the number of player wanted </p>
+   * Create the number of Player wanted </p>
    * <p>
    * Create an AI if wanted </p>
    * <p>
-   * Add this players to the GameEngine </p>
+   * Add this Players to the GameEngine </p>
    * <p>
    * Define the new window size if needed </p>
    * <p>
    * Create the first shape for the game </p>
    *
-   * @param numPlayer The number of player wanted :
+   * @param numPlayer The number of Player wanted :
    * <ul>
-   * <li> 1 -> 1 player </li>
-   * <li> 1.5 -> 1 player and 1 AI <AIi>
-   * <li> 2 -> 2 player </li>
+   * <li> 1 -> 1 Player </li>
+   * <li> 1.5 -> 1 Player and 1 AI <AIi>
+   * <li> 2 -> 2 Player </li>
    * </ul>
    *
    * @see ShapesStock
@@ -401,7 +403,7 @@ public final class ContextManager {
       }
     }
 
-    /* Add the players with the same shapes */
+    /* Add the Players with the same shapes */
     Shape s = ShapesStock.getInstance().getRandomShape();
     Shape s2 = ShapesStock.getInstance().getRandomShape();
     for (int i = 0; i < numPlayer; ++i) {

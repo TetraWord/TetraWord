@@ -8,35 +8,39 @@ import java.util.logging.Logger;
 /**
  * <b> AI is the Artificial Intelligence of the game. </b>
  * <p>
- * AI inherits from the Player. It's a Player who can play alone.
- * AI is a Runnable. 
+ * AI inherits from the Player. It's a Player who can play alone. AI is a
+ * Runnable.
  * </p>
  * <p>
- * The AI can do Tetris mode and Anagram mode. 
+ * The AI can do Tetris mode and Anagram mode.
  * </p>
  */
 public class AI extends Player implements Runnable {
 
   /**
-   * The best translation that the CurrentShape in the Grid must do.
-   * @see AI#getBestMoveShape() 
+   * The best translation that the CurrentShape must do in the Grid.
+   *
+   * @see AI#getBestMoveShape()
    */
   private int bestTranslation;
   /**
-   * The best rotation that the CurrentShape in the Grid must do.
-   * @see AI#getBestMoveShape() 
+   * The best rotation that the CurrentShape must do in the Grid .
+   *
+   * @see AI#getBestMoveShape()
    */
   private int bestRotation;
   /**
    * The best score of the CurrentShape's position.
-   * @see AI#getBestMoveShape() 
+   *
+   * @see AI#getBestMoveShape()
    */
   private int bestMerit;
 
   /**
    * AI constructor.
-   * 
-   * @see Player#Player(int, GameEngine.Shape, GameEngine.Shape, GameEngine.Dictionnary.Dictionary) 
+   *
+   * @see Player#Player(int, GameEngine.Shape, GameEngine.Shape,
+   * GameEngine.Dictionnary.Dictionary)
    * @param nb The number of the Player
    * @param s The first Shape of the Player
    * @param s2 The second Shape of the Player
@@ -48,8 +52,10 @@ public class AI extends Player implements Runnable {
 
   /**
    * Override the doAnagram method of the Player.
-   * AI get back all the possible word possible in the Line to remove. 
-   * AI choose one of this word and click all the Brick needed to do this word.
+   * <p>
+   * AI get back all the possible word possible in the Line to remove. AI choose
+   * one of this word and click all the Brick needed to do this word.
+   * </p>
    */
   @Override
   public void doAnagram() {
@@ -97,8 +103,7 @@ public class AI extends Player implements Runnable {
   }
 
   /**
-   * Override the doWorddle method of the Player.
-   * Not implemented.
+   * Override the doWorddle method of the Player. Not implemented.
    */
   @Override
   public void doWorddle() {
@@ -120,8 +125,11 @@ public class AI extends Player implements Runnable {
   }
 
   /**
-   * Get the best number of translation and rotation that the CurrentShape must do to go to the better place of the Grid.
-   * @return The best translation, the best rotation and the coefficient of the best place.
+   * Get the best number of translation and rotation that the CurrentShape must
+   * do to go to the better place of the Grid.
+   *
+   * @return The best translation, the best rotation and the coefficient of the
+   * best place.
    */
   public int[] getBestMoveShape() {
 
@@ -231,8 +239,10 @@ public class AI extends Player implements Runnable {
   }
 
   /**
-   * Move the CurrentShape to the best position determines by the getBestMoveShape method.
-   * @see AI#getBestMoveShape() 
+   * Move the CurrentShape to the best position determines by the
+   * getBestMoveShape method.
+   *
+   * @see AI#getBestMoveShape()
    */
   public void move() {
     CurrentShape s = getCurrentShape();
@@ -253,9 +263,13 @@ public class AI extends Player implements Runnable {
 
   /**
    * To launch an AI.
-   * AI choose the best place to the CurrentShape and try to move it to this place. 
+   * <p>
+   * AI choose the best place to the CurrentShape and try to move it to this
+   * place. </p>
+   * <p>
    * When the Worddle mode is ready, the AI has a chance to go to this mode.
-   * 
+   * </p>
+   *
    */
   @Override
   public void run() {
@@ -282,12 +296,13 @@ public class AI extends Player implements Runnable {
                     .getName()).log(Level.SEVERE, null, ex);
           }
         } /*else if (!GameEngine.getInstance().isPlayersInWordMode() && canWorddle()) {
-          switchToWorddle(true);
-          boardGame.getGrid().setAllowClick(false);
-          GameEngine.getInstance().beginWorddleTimer(this);
-          stockCurrentShape();
-          addNewChar(getGrid().clickedOneBrick());
-        } */
+         switchToWorddle(true);
+         boardGame.getGrid().setAllowClick(false);
+         GameEngine.getInstance().beginWorddleTimer(this);
+         stockCurrentShape();
+         addNewChar(getGrid().clickedOneBrick());
+         } */
+
       } else if (isAnagram()) {
         doAnagram();
       } else if (isWorddle()) {

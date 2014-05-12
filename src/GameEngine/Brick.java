@@ -15,14 +15,14 @@ import java.util.logging.Logger;
  * <p>
  * A Brick contains:
  * <ul>
- * <li> A letter for the worddle/anagram mode </li>
+ * <li> A letter for the Worddle/Anagram mode </li>
  * <li> A number: 1 for visible, else -1 </li>
  * <li> A Color </li>
  * <li> Boolean to know if the Brick is clicked </li>
  * <li> Boolean to know if the Brick is double clicked </li>
  * <li> Boolean to know if the Brick is selected and in a right word in a
- * worddle mode </li>
- * <li> Boolean to know if the Brick can be selected in a new word in a worddle
+ * Worddle mode </li>
+ * <li> Boolean to know if the Brick can be selected in a new word in a Worddle
  * mode </li>
  * <li> An array of char to know the letter's appearance frequency </li>
  * </ul>
@@ -223,7 +223,7 @@ public class Brick {
   }
 
   /**
-   * Select the Brick for worddle mode to destroy it.
+   * Select the Brick for Worddle mode to destroy it.
    */
   public void setToDestroy() {
     gonnaBeDestroyed = true;

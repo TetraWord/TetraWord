@@ -5,9 +5,9 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
 /**
- * <b>ItemActionListener is a listener for drop-down list </b>
+ * <b>ItemActionListener is a listener for drop-down list.</b>
  * <p>
- * Specialized for needs of the drop-down list of the DesignMenu2D
+ * Specialized for needs of the drop-down list of the DesignMenu2D.
  * </p>
  * 
  * @see ItemListener
@@ -15,8 +15,7 @@ import java.awt.event.ItemListener;
 public class ItemActionListener implements ItemListener {
 
 	/**
-	 * Override of itemStateChanged
-	 * Reload overviews if needed
+	 * Reload overviews if needed.
 	 * @param e ItemEvent
 	 */
   @Override

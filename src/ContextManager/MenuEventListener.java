@@ -16,8 +16,9 @@ import java.util.ArrayList;
 public class MenuEventListener implements ActionListener {
 
   /**
-   * Do an action according to the Button2D clicked. These actions are called on
-   * the ContextManager.
+   * Do an action according to the Button2D clicked.
+   * <p>
+   * These actions are called on the ContextManager. </p>
    *
    * @param e The Button2D clicked
    *
@@ -92,7 +93,7 @@ public class MenuEventListener implements ActionListener {
       case "Précédent":
         c.getBack();
         break;
-        
+
       case "Reprendre":
         c.setPause();
         break;

@@ -1,47 +1,50 @@
 package GameEngine;
 
 /**
- * <b>Enumeration of states for the game</b>
+ * <b>Enumeration of states for the game. </b>
  */
 public enum InGameState {
 
-	/**
-	 * Tetris mode
-	 */
+  /**
+   * Tetris mode.
+   */
   TETRIS("Tetris"),
-	/**
-	 * Anagram mode
-	 */
+  /**
+   * Anagram mode.
+   */
   ANAGRAMME("Anagramme"),
-	/**
-	 * Worddle mode
-	 */
+  /**
+   * Worddle mode.
+   */
   WORDDLE("Worddle"),
-	/**
-	 * Game finish
-	 */
+  /**
+   * Game finish.
+   */
   FINISH("Finish");
 
-	/**
-	 * Name of the state
-	 * @see InGameState#getStateName() 
-	 */
+  /**
+   * Name of the state.
+   *
+   * @see InGameState#getStateName()
+   */
   private String name = "";
 
-	/**
-	 * Dafault InGameState constructor
-	 * @param name Name of the state
-	 */
+  /**
+   * Dafault InGameState constructor.
+   *
+   * @param name Name of the state
+   */
   InGameState(String name) {
     this.name = name;
   }
 
-	/**
-	 * Get the name of the enum
-	 * @return Name of the enum
-	 * 
-	 * @see InGameState#name
-	 */
+  /**
+   * Get the name of the enum.
+   *
+   * @return Name of the enum
+   *
+   * @see InGameState#name
+   */
   public String getStateName() {
     return name;
   }

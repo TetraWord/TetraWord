@@ -5,6 +5,25 @@ import Pattern.Observer;
 import java.awt.Color;
 import java.util.ArrayList;
 
+/**
+ * <b> Shape represents a shape/piece in the tetris game. </b>
+ * <p>
+ * It's a logicial part of the game. </p>
+ * <p>
+ * Shape is Observable by the Shape2D. </p>
+ * <p>
+ * Shape contains: </p>
+ * <ul>
+ * <li> ShapeEnum: The different name that a Shape can have. </li>
+ * <li> sizeShape: The size in x and y axes of a Shape. </li>
+ * <li> name: The name of the Shape. </li>
+ * <li> color: The color of the Shape. </li>
+ * <li> reprensentation: An Array to represents with 1 and 0 the shape's form.
+ * </li>
+ * <li> composition: A Brick Array of the Shape's composition. </li>
+ * </ul>
+ *
+ */
 public class Shape implements Observable {
 
   public enum ShapeEnum {
@@ -19,23 +38,14 @@ public class Shape implements Observable {
   protected Brick[][] composition;
   private ArrayList<Observer> listObserver = new ArrayList<>();
 
-  @Override
-  public void addObserver(Observer obs) {
-    listObserver.add(obs);
-  }
-
-  @Override
-  public void updateObserver(Object args) {
-    for (Observer obs : listObserver) {
-      obs.update(this, args);
-    }
-  }
-
-  @Override
-  public void delAllObserver() {
-    listObserver = new ArrayList<>();
-  }
-
+  /**
+   * Complete constructor.
+   *
+   * @param name The name
+   * @param color The color
+   * @param representation The representation
+   * @param composition The composition
+   */
   public Shape(String name, Color color, int[][] representation, Brick[][] composition) {
     this.name = name;
     this.color = color;
@@ -43,6 +53,13 @@ public class Shape implements Observable {
     this.composition = composition;
   }
 
+  /**
+   * Constructor. Create the Color and the Composition.
+   *
+   * @param name The name
+   * @param color The color with an Array of 3 int
+   * @param representation The representation
+   */
   public Shape(String name, int[] color, int[][] representation) {
     this.name = name;
     this.color = new Color(color[0], color[1], color[2]);
@@ -50,6 +67,13 @@ public class Shape implements Observable {
     setComposition(representation);
   }
 
+  /**
+   * Construction. Create the Composition.
+   *
+   * @param name The name
+   * @param color The Color
+   * @param representation The representation
+   */
   public Shape(String name, Color color, int[][] representation) {
     this.name = name;
     this.color = color;
@@ -57,7 +81,12 @@ public class Shape implements Observable {
     setComposition(representation);
   }
 
-  //Copy constructor
+  /**
+   * Copy constructor with or without compsition copy.
+   *
+   * @param shape The Shape to copy
+   * @param copyComposition To copy or not the composition
+   */
   public Shape(Shape shape, boolean copyComposition) {
     this(shape.name, shape.color, shape.representation);
     if (copyComposition) {
@@ -65,6 +94,11 @@ public class Shape implements Observable {
     }
   }
 
+  /**
+   * To create a Shape composition.
+   *
+   * @param representation The Shape's representation
+   */
   private void setComposition(int[][] representation) {
     this.composition = new Brick[representation.length][representation[0].length];
     Color c = this.getColor();
@@ -78,30 +112,48 @@ public class Shape implements Observable {
     updateObserver(null);
   }
 
+  /**
+   * Get the Shape's composition.
+   *
+   * @return The Shape's composition
+   */
   public Brick[][] getComposition() {
     return composition;
   }
 
+  /**
+   * Get the color.
+   *
+   * @return The color
+   */
   public Color getColor() {
     return color;
   }
 
-  public int getRep(int x, int y) {
-    return representation[x][y];
-  }
-
-  public Color getRGB() {
-    return color;
-  }
-
+  /**
+   * Get the name.
+   *
+   * @return The name
+   */
   public String getName() {
     return this.name;
   }
 
+  /**
+   * Get the Shape's representation.
+   * 
+   * @return The Shape's representation 
+   */
   public int[][] getRepresentation() {
     return representation;
   }
 
+  /**
+   * Get the Shape's height on a single column.
+   * 
+   * @param x The column
+   * @return The Shape's height
+   */
   public int getHeight(int x) {
     int height = 0;
     for (int i = 0; i < representation.length; ++i) {
@@ -112,6 +164,11 @@ public class Shape implements Observable {
     return height;
   }
 
+  /**
+   * Get the Shape's width.
+   * 
+   * @return The Shape's width
+   */
   public int getWidth() {
     int maxWidth = 0;
     for (int i = 0; i < representation.length; ++i) {
@@ -122,5 +179,31 @@ public class Shape implements Observable {
       }
     }
     return maxWidth + 1;
+  }
+
+  /**
+   * @see Oberservable
+   */
+  @Override
+  public void addObserver(Observer obs) {
+    listObserver.add(obs);
+  }
+
+  /**
+   * @see Oberservable
+   */
+  @Override
+  public void updateObserver(Object args) {
+    for (Observer obs : listObserver) {
+      obs.update(this, args);
+    }
+  }
+
+  /**
+   * @see Oberservable
+   */
+  @Override
+  public void delAllObserver() {
+    listObserver = new ArrayList<>();
   }
 }

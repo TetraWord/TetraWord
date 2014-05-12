@@ -7,35 +7,38 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 /**
- * <b> Hud is a logical part of the game.</b>
- * <p> 
- *  Hud means Head-up Display
+ * <b> Hud is used to stock infomation to display to the Player. </b>
+ * <p>
+ * It's a logical part of the game. </p>
+ * <p>
+ * Hud means Head-up Display.
  * </p>
  * <p>
- * Each <b> BoardGame </b> in the game has a Hud </p>.
- * <p> The Hud display the game and the player information </p>
+ * Each <b> BoardGame </b> in the game has a Hud. </p>.
+ * <p>
+ * The Hud display the game and the player information. </p>
  * <p>
  * The Hud is observable by the Hud2D, its graphical Part. </p>
  * <p>
  * The Hud is observer of the Player and the BoardGame to display message.
  * </p>
  * <p>
- * The Grid contains :
+ * The Grid contains:
  * <ul>
- * <li> An ArrayList of his observateur object </li>
- * <li> A Queue of the message to show </li>
- * <li> The state of the Game </li>
- * <li> The level of the Player </li>
- * <li> The word in progress </li>
- * <li> The Player's name</li>
- * <li> The next Shape </li>
- * <li> The Shape stocked by the Player </li>
- * <li> The Player's score </li>
+ * <li> An ArrayList of his observateur object. </li>
+ * <li> A Queue of the message to show. </li>
+ * <li> The state of the Game. </li>
+ * <li> The level of the Player. </li>
+ * <li> The word in progress. </li>
+ * <li> The Player's name. </li>
+ * <li> The next Shape. </li>
+ * <li> The Shape stocked by the Player. </li>
+ * <li> The Player's score. </li>
  * <li> The Player's number line removed </li>
- * <li> A boolean to know if the word in progress is finished </li>
- * <li> The time left before the game's end </li>
- * <li> The time before the worddle mode </li>
- * <li> The Modifier stocked by the Player </li>
+ * <li> A boolean to know if the word in progress is finished. </li>
+ * <li> The time left before the game's end. </li>
+ * <li> The time before the worddle mode. </li>
+ * <li> The Modifier stocked by the Player. </li>
  * </ul>
  * </p>
  *
@@ -50,94 +53,107 @@ public class Hud implements Observer, Observable {
 
   /**
    * A list of the Observer of the Hud.
-   * @see Hud#addObserver(Pattern.Observer) 
-   * @see Hud#delAllObserver() 
-   * @see Hud#updateObserver(java.lang.Object) 
+   *
+   * @see Hud#addObserver(Pattern.Observer)
+   * @see Hud#delAllObserver()
+   * @see Hud#updateObserver(java.lang.Object)
    */
   private ArrayList<Observer> listObserver = new ArrayList<>();
-  
+
   /**
    * A list of the message to display.
-   * @see Hud#updateObserver(java.lang.Object) 
-   * @see Hud#getOlderMessage() 
+   *
+   * @see Hud#updateObserver(java.lang.Object)
+   * @see Hud#getOlderMessage()
    */
   private final Queue<String> listMessage = new LinkedList<>();
-  
+
   /**
    * The state of the Game (tetris, worddle, anagram, finish).
-   * @see Hud#getState() 
+   *
+   * @see Hud#getState()
    */
   private InGameState state;
-  
+
   /**
    * The Player's level.
-   * @see Hud#getLevel() 
+   *
+   * @see Hud#getLevel()
    */
   private int level;
-  
+
   /**
    * The Player's name.
-   * @see Hud#getPlayerName() 
+   *
+   * @see Hud#getPlayerName()
    */
   private String playerName;
-  
+
   /**
    * The word in progress.
+   *
    * @see Hud#getWord() t
    */
   private String word;
-  
+
   /**
-   * The next Shape. 
-   * @see Hud#getNextShape() 
+   * The next Shape.
+   *
+   * @see Hud#getNextShape()
    */
   private Shape nextShape;
-  
+
   /**
    * The shape stocked by the Player.
-   * @see Hud#getStockShape() 
+   *
+   * @see Hud#getStockShape()
    */
   private Shape stockShape;
-  
+
   /**
    * The Player's score.
-   * @see Hud#getScore() 
+   *
+   * @see Hud#getScore()
    */
   private int score;
-  
+
   /**
    * The Player's number removed line.
-   * @see Hud#getNbLines() 
+   *
+   * @see Hud#getNbLines()
    */
   private int nbRemovedLine;
-  
+
   /**
    * A boolean to know if the word in progress is finish or not.
-   * @see Hud#isWordFinish() 
+   *
+   * @see Hud#isWordFinish()
    */
   private boolean wordFinish;
-  
+
   /**
    * The time before the game's end.
-   * @see Hud#getTimeLeft() 
+   *
+   * @see Hud#getTimeLeft()
    */
   private long timeLeft;
-  
+
   /**
-   * The time before enable the Worddle mode. 
-   * @see Hud#getTimeBeforeWorddle() 
+   * The time before enable the Worddle mode.
+   *
+   * @see Hud#getTimeBeforeWorddle()
    */
   private int secondBeforeWorddle;
-  
+
   /**
-   * The Modifier stocked by the Player. 
-   * @see Hud#getModifier() 
+   * The Modifier stocked by the Player.
+   *
+   * @see Hud#getModifier()
    */
   private Modifier modifier;
 
   /**
-   * Hud constructor.
-   * Init display's variable.
+   * Hud constructor. Init display's variable.
    */
   public Hud() {
     this.level = 1;
@@ -146,7 +162,7 @@ public class Hud implements Observer, Observable {
     this.state = InGameState.TETRIS;
     this.nbRemovedLine = 0;
     this.wordFinish = true;
-		this.modifier = null;
+    this.modifier = null;
   }
 
   /**
@@ -158,7 +174,7 @@ public class Hud implements Observer, Observable {
   }
 
   /**
-   * @return Get the game state.
+   * @return Get the game state
    * @see Hud#state
    */
   public InGameState getState() {
@@ -166,7 +182,7 @@ public class Hud implements Observer, Observable {
   }
 
   /**
-   * @return Get the score.
+   * @return Get the score
    * @see Hud#score
    */
   public int getScore() {
@@ -174,15 +190,15 @@ public class Hud implements Observer, Observable {
   }
 
   /**
-   * @return Get the word in progress.
+   * @return Get the word in progress
    * @see Hud#word
    */
   public String getWord() {
     return word;
   }
-  
+
   /**
-   * @return Get the Player's name.
+   * @return Get the Player's name
    * @see Hud#playerName
    */
   public String getPlayerName() {
@@ -190,7 +206,7 @@ public class Hud implements Observer, Observable {
   }
 
   /**
-   * @return Get the number of lines remove by the Player.
+   * @return Get the number of lines remove by the Player
    * @see Hud#nbRemovedLine
    */
   public int getNbLines() {
@@ -198,15 +214,15 @@ public class Hud implements Observer, Observable {
   }
 
   /**
-   * @return Get the time before the game's end.
+   * @return Get the time before the game's end
    * @see Hud#timeLeft
    */
   public long getTimeLeft() {
     return timeLeft;
   }
-  
+
   /**
-   * @return Get the time before the Worddle mode for the Player.
+   * @return Get the time before the Worddle mode for the Player
    * @see Hud#secondBeforeWorddle
    */
   public int getTimeBeforeWorddle() {
@@ -214,7 +230,7 @@ public class Hud implements Observer, Observable {
   }
 
   /**
-   * @return Get the next Shape of the Grid.
+   * @return Get the next Shape of the Grid
    * @see Hud#nextShape
    */
   public Shape getNextShape() {
@@ -222,7 +238,7 @@ public class Hud implements Observer, Observable {
   }
 
   /**
-   * @return Get the Shape stocked by the Player.
+   * @return Get the Shape stocked by the Player
    * @see Hud#stockShape
    */
   public Shape getStockShape() {
@@ -230,35 +246,37 @@ public class Hud implements Observer, Observable {
   }
 
   /**
-   * @return Get the next message to display.
+   * @return Get the next message to display
    * @see Hud#listMessage
    */
   public String getOlderMessage() {
     return listMessage.poll();
   }
-  
+
   /**
-   * @return Get the Modifier stocked by the Player.
+   * @return Get the Modifier stocked by the Player
    * @see Hud#modifier
    */
-	public Modifier getModifier() {
-		return modifier;
-	}
+  public Modifier getModifier() {
+    return modifier;
+  }
 
   /**
    * To know if the word in progress is finish or not.
-   * @return True if the word is finish, false otherwise.
+   *
+   * @return True if the word is finish, false otherwise
    * @see Hud#wordFinish
    */
   public boolean isWordFinish() {
     return wordFinish;
   }
 
-	/**
-	 * Update Hud attributes from Player and BoardGame
-	 * @param o Observable whih have notify
-	 * @param args Arguments
-	 */
+  /**
+   * Update Hud attributes from Player and BoardGame.
+   *
+   * @param o Observable whih have notify
+   * @param args Arguments
+   */
   @Override
   public void update(Observable o, Object args) {
     if (o instanceof Player) {
@@ -278,15 +296,15 @@ public class Hud implements Observer, Observable {
         this.word = p.getWord();
       }
       this.wordFinish = p.isWordFinished();
-			this.modifier = p.getModifier();
-              
-      if(args instanceof String) {
+      this.modifier = p.getModifier();
+
+      if (args instanceof String) {
         listMessage.add(((String) args));
       } else {
-				if (args instanceof int[]){
-					updateObserver((int[])args);
-				}	
-			}
+        if (args instanceof int[]) {
+          updateObserver((int[]) args);
+        }
+      }
     }
     if (o instanceof BoardGame) {
       if (args == null) {
@@ -297,24 +315,22 @@ public class Hud implements Observer, Observable {
         }
       }
     }
-    
+
     timeLeft = GameEngine.getInstance().getTimeLeft();
     updateObserver(null);
   }
 
-	/**
-	 * Add an Observer
-	 * @param obs Observer to add
-	 */
+  /**
+   * @see Observable
+   */
   @Override
   public void addObserver(Observer obs) {
     listObserver.add(obs);
   }
 
-	/**
-	 * Update all Observer
-	 * @param args Arguments fot the notifictaion
-	 */
+  /**
+   * @see Observable
+   */
   @Override
   public void updateObserver(Object args) {
     for (Observer obs : listObserver) {
@@ -322,9 +338,9 @@ public class Hud implements Observer, Observable {
     }
   }
 
-	/**
-	 * Delete all Observer
-	 */
+  /**
+   * @see Observable
+   */
   @Override
   public void delAllObserver() {
     listObserver = new ArrayList<>();

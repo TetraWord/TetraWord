@@ -29,7 +29,7 @@ public class Menu2D extends JPanel {
 		loadBackground();
   }
 	
-	protected void loadBackground(){
+	protected final void loadBackground(){
 		
     if (state != MenuState.DESIGN && state != MenuState.DIFFICULTY) {
       try {

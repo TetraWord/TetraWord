@@ -8,21 +8,22 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 /**
- * <b> BoardGame is a logical part of the game.</b>
+ * <b> BoardGame is the container of the Grid and the Hud. </b>
+ * <p> It's a logicial part of the game </p>
  * <p>
- * Each <b> Player </b> in the game has a BoardGame </p>.
+ * Each <b> Player </b> in the game has a BoardGame. </p>.
  * <p>
  * The BoardGame is observable by the hud. </p>
  * <p>
- * The BoardGame contains :
+ * The BoardGame contains:
  * <ul>
- * <li> The Player who played on this BoardGame </li>
- * <li> The logical Grid of the Player </li>
- * <li> The logical Hud of the Player to display information </li>
+ * <li> The Player who played on this BoardGame. </li>
+ * <li> The logical Grid of the Player. </li>
+ * <li> The logical Hud of the Player to display information. </li>
  * <li> The ShapesStock. Singleton. </li>
- * <li> A Queue with the next Shape of the Player </li>
+ * <li> A Queue with the next Shape of the Player. </li>
  * <li> An ArrayList of his observateur object </li>
- * <li> The offsetX and the offsetY of the BoardGame for the shake Modifier
+ * <li> The offsetX and the offsetY of the BoardGame for the shake Modifier.
  * </li>
  * </ul>
  * </p>
@@ -52,7 +53,7 @@ public final class BoardGame implements Observable {
   private final Hud hud;
 
   /**
-   * The player of the BoardGame. Not modifiable.
+   * The Player of the BoardGame. Not modifiable.
    *
    * @see Player
    * @see BoardGame#getPlayer()
@@ -82,12 +83,12 @@ public final class BoardGame implements Observable {
   private ArrayList<Observer> listObserver = new ArrayList<>();
 
   /**
-   * offset on axe x for the Modifier "shake"
+   * Offset on axe x for the Modifier "shake".
    */
   private int offsetX = 0;
 
   /**
-   * offset on axe y for the Modifier "shake"
+   * Offset on axe y for the Modifier "shake".
    */
   private int offsetY = 0;
 
@@ -100,8 +101,8 @@ public final class BoardGame implements Observable {
    * displayed during the game.
    * </p>
    *
-   * @param s The first Shape of the Game
-   * @param s2 The Second Shape of the Game
+   * @param s The first Shape of the game
+   * @param s2 The Second Shape of the game
    * @param p The Player associate at the BoardGame
    *
    * @see Grid#Grid(GameEngine.BoardGame, GameEngine.CurrentShape)
@@ -119,7 +120,7 @@ public final class BoardGame implements Observable {
   }
 
   /**
-   * Get the BoardGame's Grid
+   * Get the BoardGame's Grid.
    *
    * @return The Grid in the BoardGame
    *
@@ -128,8 +129,9 @@ public final class BoardGame implements Observable {
   public Grid getGrid() {
     return grid;
   }
+
   /**
-   * Get the BoardGame's Hud
+   * Get the BoardGame's Hud.
    *
    * @return The Hud in the BoardGame
    *
@@ -140,7 +142,7 @@ public final class BoardGame implements Observable {
   }
 
   /**
-   * Get the BoardGame's Player
+   * Get the BoardGame's Player.
    *
    * @return The BoardGame's Player
    *
@@ -175,8 +177,8 @@ public final class BoardGame implements Observable {
   /**
    * Set new offset x and new offset y.
    *
-   * @param offsetX
-   * @param offsetY
+   * @param offsetX The new offset on x axe
+   * @param offsetY The new offset on y axe
    *
    * @see BoardGame#offsetX
    * @see BoardGame#offsetY
@@ -209,9 +211,11 @@ public final class BoardGame implements Observable {
   }
 
   /**
-   * Launch the next Shape. Create a new CurrentShape from the first Shape of
-   * the Queue. Add a new random Shape in the Players's next Shape Queue. Set
-   * the new CurrentShape in the Grid. Update
+   * Launch the next Shape.
+   * <p>
+   * Create a new CurrentShape from the first Shape of the Queue. Add a new
+   * random Shape in the Players's next Shape Queue. Set the new CurrentShape in
+   * the Grid. Update. </p>
    *
    * @see CurrentShape
    * @see Grid
@@ -265,7 +269,7 @@ public final class BoardGame implements Observable {
   }
 
   /**
-   * Finish the game if the Player looses
+   * Finish the game if the Player looses.
    *
    * @see Player#finish()
    */
@@ -275,11 +279,14 @@ public final class BoardGame implements Observable {
   }
 
   /**
-   * Method called when the CurrentShape stop his fall. The CurrentShape is set
-   * in the Grid and it verifies if a full line is done. Switch the Player in
-   * Anagram mode if he has to.
+   * Method called when the CurrentShape stop his fall.
+   * <p>
+   * The CurrentShape is set in the Grid and it verifies if a full line is done.
+   * </p>
+   * <p>
+   * Switch the Player in Anagram mode if he has to. </p>
    *
-   * @param s The CurrentShape to set in the Grid.
+   * @param s The CurrentShape to set in the Grid
    */
   public void finishFall(CurrentShape s) {
     grid.setIn(s);

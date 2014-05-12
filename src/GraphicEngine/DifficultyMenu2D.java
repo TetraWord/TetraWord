@@ -19,51 +19,53 @@ import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 
 /**
- * <b> DifficultyMenu2D is the menu permmiting to choose difficulty preferences. </b>
- * <p> DifficultyMenu2D inherits from the Menu2D</p>
+ * <b> DifficultyMenu2D is the menu permmiting to choose difficulty preferences.
+ * </b>
  * <p>
- * The DifficultyMenu2D contains :
+ * DifficultyMenu2D inherits from the Menu2D. </p>
+ * <p>
+ * The DifficultyMenu2D contains:
  * <ul>
- * <li> A check box for the shadow of the shape</li>
- * <li> A ButtonGroup for radio button to choose fall speed </li>
+ * <li> A check box for the shadow of the shape. </li>
+ * <li> A ButtonGroup for radio button to choose fall speed. </li>
  * </ul>
- * 
+ *
  * </p>
  *
  * @see Menu2D
  */
 class DifficultyMenu2D extends Menu2D {
 
-	/**
-	 * The check box for the shadow of the shape
-	 * @see JCheckBox
-	 */
+  /**
+   * The check box for the shadow of the shape.
+   *
+   * @see JCheckBox
+   */
   private JCheckBox shadow;
-	
-	
-	/**
-	 * The ButtonGroup for radio button to choose fall speed
-	 * @see ButtonGroup
-	 */
-	private ButtonGroup speedFall = new ButtonGroup();
 
-	/**
-	 * DifficultyMenu2D constructor
-	 * Create all Swing elements for the menu
-	 */
+  /**
+   * The ButtonGroup for radio button to choose fall speed.
+   *
+   * @see ButtonGroup
+   */
+  private ButtonGroup speedFall = new ButtonGroup();
+
+  /**
+   * DifficultyMenu2D constructor. Create all Swing elements for the menu.
+   */
   public DifficultyMenu2D() {
     defineMenu();
   }
 
-	/**
-	 * Main function of initialisation of attributes
-	 */
+  /**
+   * Main function of initialisation of attributes.
+   */
   private void defineMenu() {
-		/* Update MenuState */
+    /* Update MenuState */
     state = MenuState.DIFFICULTY;
     lastState = MenuState.OPTION;
 
-		/* Define unseful variables */
+    /* Define unseful variables */
     int sx = 300, sy = 50;
     int x = WINDOW_WIDTH / 2 - sx / 2;
     int y = 50;
@@ -95,86 +97,85 @@ class DifficultyMenu2D extends Menu2D {
     shadow.putClientProperty("JComponent.sizeVariant", "large");
     this.add(shadow);
 
-    y = y + step_y/2 - 15;
+    y = y + step_y / 2 - 15;
 
     x = x - sx / 2;
-		
-		/* Speed fall */
-		JLabel speed = new JLabel("Vitesse de chute");
+
+    /* Speed fall */
+    JLabel speed = new JLabel("Vitesse de chute");
     speed.setBounds(x, y, sx, sy);
     speed.setFont(new Font("Champagne & Limousines", 20, 20));
     speed.setForeground(Color.white);
     this.add(speed);
-			
+
     x = x + sx / 2;
     y = y + 15;
-			JRadioButton lent = new JRadioButton("Lent");
-      lent.setOpaque(false);
-      lent.setText("Lent");
-      lent.setName("Lent");
-      lent.setBounds(x, y, 80, 20);
-      lent.setSelected(false);
+    JRadioButton lent = new JRadioButton("Lent");
+    lent.setOpaque(false);
+    lent.setText("Lent");
+    lent.setName("Lent");
+    lent.setBounds(x, y, 80, 20);
+    lent.setSelected(false);
 
-      speedFall.add(lent);
-      this.add(lent);
-			
+    speedFall.add(lent);
+    this.add(lent);
+
     x = x + 80;
-			JRadioButton moyen = new JRadioButton("Moyen");
-      moyen.setOpaque(false);
-      moyen.setText("Moyen");
-      lent.setName("Moyen");
-      moyen.setBounds(x, y, 80, 20);
-      moyen.setSelected(true);
+    JRadioButton moyen = new JRadioButton("Moyen");
+    moyen.setOpaque(false);
+    moyen.setText("Moyen");
+    lent.setName("Moyen");
+    moyen.setBounds(x, y, 80, 20);
+    moyen.setSelected(true);
 
-      speedFall.add(moyen);
-      this.add(moyen);
-			
+    speedFall.add(moyen);
+    this.add(moyen);
+
     x = x + 80;
-			JRadioButton rapide = new JRadioButton("Rapide");
-      rapide.setOpaque(false);
-      rapide.setText("Rapide");
-      lent.setName("Rapide");
-      rapide.setBounds(x, y, 80, 20);
-      rapide.setSelected(false);
+    JRadioButton rapide = new JRadioButton("Rapide");
+    rapide.setOpaque(false);
+    rapide.setText("Rapide");
+    lent.setName("Rapide");
+    rapide.setBounds(x, y, 80, 20);
+    rapide.setSelected(false);
 
-      speedFall.add(rapide);
-      this.add(rapide);
-			
-		
+    speedFall.add(rapide);
+    this.add(rapide);
+
     x = WINDOW_WIDTH / 2 - sx / 2;
     y = y + step_y;
-		
-		/* Saving and quit buttons*/
+
+    /* Saving and quit buttons*/
     setButton2D(2);
     Button2D b = new Button2D("Sauvegarder", x, y, sx, sy);
     b.removeListener();
     b.addActionListener(new ActionListener() {
-			
-			/* Listener on save button */
+
+      /* Listener on save button */
       @Override
       public void actionPerformed(ActionEvent e) {
         boolean shadowBool = shadow.isSelected();
-				JRadioButton speedSelected = getSelectedButtonText(speedFall);
-				int speed;
-				switch(speedSelected.getText()){
-					case "Lent":
-						speed = 1250;
-						break;
-					case "Moyen":
-						speed = 1000;
-						break;
-					case "Rapide":
-						speed = 750;
-						break;
-					default: 
-						speed = 1000;
-						break;
-				}
+        JRadioButton speedSelected = getSelectedButtonText(speedFall);
+        int speed;
+        switch (speedSelected.getText()) {
+          case "Lent":
+            speed = 1250;
+            break;
+          case "Moyen":
+            speed = 1000;
+            break;
+          case "Rapide":
+            speed = 750;
+            break;
+          default:
+            speed = 1000;
+            break;
+        }
 
         Properties prop = new Properties();
         OutputStream output = null;
         try {
-					
+
           output = new FileOutputStream("conf/options.properties");
 
           /* set the properties value */
@@ -197,9 +198,10 @@ class DifficultyMenu2D extends Menu2D {
           }
 
         }
-			}
-			/* Get the button selected in the speed fall group */
-			private JRadioButton getSelectedButtonText(ButtonGroup buttonGroup) {
+      }
+      /* Get the button selected in the speed fall group */
+
+      private JRadioButton getSelectedButtonText(ButtonGroup buttonGroup) {
         for (Enumeration<AbstractButton> buttons = buttonGroup.getElements(); buttons.hasMoreElements();) {
           AbstractButton button = buttons.nextElement();
 
@@ -209,14 +211,14 @@ class DifficultyMenu2D extends Menu2D {
         }
 
         return null;
-				}
+      }
     });
 
     this.add(b);
     y = y + step_y;
     this.add(new Button2D("Précédent", x, y, sx, sy));
-		
-		loadBackground();
+
+    loadBackground();
 
   }
 

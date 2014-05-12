@@ -6,7 +6,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- * <b> GameEngine is the logical engine of the game</b>.
+ * <b> GameEngine is the logical engine of the game.</b>.
  * <p>
  * It's a singleton class, so it can be called everywhere with its <b>
  * getInstance() </b> method. </p>
@@ -14,16 +14,16 @@ import java.util.TimerTask;
  * It's the main logical part of the game. It knows all players and contains
  * timer for the game. </p>
  * <p>
- * This class contains :
+ * This class contains:
  * <ul>
  * <li> An instance of the singleton GameEngine. </li>
- * <li> An array of players in game. </li>
- * <li> The number of player in game. </li>
+ * <li> An array of Players in game. </li>
+ * <li> The number of Player in game. </li>
  * <li> The Dictionary to check the right word. </li>
  * <li> A boolean to know if an AI is in the game. </li>
  * <li> The time left in Worddle mode for a Player. </li>
- * <li> The game timer </li>
- * <li> The time until the game stop </li>
+ * <li> The game timer. </li>
+ * <li> The time until the game stop. </li>
  * </ul>
  * </p>
  *
@@ -40,7 +40,7 @@ public class GameEngine {
   private static final GameEngine INSTANCE = new GameEngine();
 
   /**
-   * The array of players in game.
+   * The array of Players in game.
    *
    * @see GameEngine#addNewPlayer(GameEngine.Shape, GameEngine.Shape, boolean)
    * @see GameEngine#getPlayers()
@@ -48,7 +48,7 @@ public class GameEngine {
   private final Player[] players;
 
   /**
-   * The number of player in game. Set to 0.
+   * The number of Player in game. Set to 0.
    *
    * @see GameEngine#getNbPlayers()
    */
@@ -70,12 +70,12 @@ public class GameEngine {
   private boolean ai = false;
 
   /**
-   * The timer before a end of Player's Worddle mode
+   * The timer before a end of Player's Worddle mode.
    */
   private Timer worddleTimer = null;
 
   /**
-   * The timer before the game end
+   * The timer before the game end.
    *
    * @see GameEngine#setGameTimer()
    * @see GameEngine#getTimeLeft()
@@ -95,7 +95,7 @@ public class GameEngine {
   /**
    * GameEngine constructor. Singleton.
    *
-   * Initialize the game for 4 players max.
+   * Initialize the game for 4 Players max.
    */
   private GameEngine() {
     players = new Player[4];
@@ -104,7 +104,7 @@ public class GameEngine {
   /**
    * To get the instance of the singleton GameEngine.
    *
-   * @return The instance of the GameEngine.
+   * @return The instance of the GameEngine
    *
    * @see GameEngine#GameEngine()
    * @see GameEngine#INSTANCE
@@ -115,11 +115,11 @@ public class GameEngine {
 
   /**
    * Add a new Player to the gameEngine. Create the new Player / AI. Increments
- the number of Player.
+   * the number of Player.
    *
    * @param s The first Shape of the Player
-   * @param s2 The second Shape of the Player.
-   * @param isAI To know if the new Player is an AI oAInot.
+   * @param s2 The second Shape of the Player
+   * @param isAI To know if the new Player is an AI oAInot
    * @see Player#Player(int, GameEngine.Shape, GameEngine.Shape,
    * GameEngine.Dictionnary.Dictionary)
    * @see AI#AI(int, GameEngine.Shape, GameEngine.Shape,
@@ -138,7 +138,7 @@ public class GameEngine {
   /**
    * Get the array of the Players in the game.
    *
-   * @return The array of the Players in the game.
+   * @return The array of the Players in the game
    * @see GameEngine#players
    */
   public Player[] getPlayers() {
@@ -146,9 +146,9 @@ public class GameEngine {
   }
 
   /**
-   * Get the number of players in the game.
+   * Get the number of Players in the game.
    *
-   * @return The number of players in the game.
+   * @return The number of Players in the game
    * @see GameEngine#nbPlayer
    */
   public int getNbPlayers() {
@@ -158,7 +158,7 @@ public class GameEngine {
   /**
    * To know if there is an AI in the game.
    *
-   * @return true if there is an AI, AIlse otherwise.
+   * @return true if there is an AI, else otherwise
    * @see GameEngine#ai
    */
   public boolean hasAI() {
@@ -166,7 +166,7 @@ public class GameEngine {
   }
 
   /**
-   * To set the ai variable
+   * To set the ai variable.
    *
    * @param ai the value of the boolean
    * @see GameEngine#ai
@@ -176,8 +176,9 @@ public class GameEngine {
   }
 
   /**
-   * Start the worddle timer for the Player
-   * @param p The Player in Worddle mode.
+   * Start the worddle timer for the Player.
+   *
+   * @param p The Player in Worddle mode
    */
   public void beginWorddleTimer(Player p) {
     worddleTimer = new Timer();
@@ -190,10 +191,11 @@ public class GameEngine {
   public void finishTimerWorddle() {
     worddleTimer = null;
   }
-  
+
   /**
    * To know if a Player is already in Worddle mode.
-   * @return true if the Worddle's timer is still alive.
+   *
+   * @return true if the Worddle's timer is still alive
    */
   public boolean timerWorddleIsAlive() {
     return worddleTimer != null;
@@ -202,7 +204,7 @@ public class GameEngine {
   /**
    * To know if a Player is in a word mode (Worddle / Anagram).
    *
-   * @return true if a Player is in a word mode, false otherwise.
+   * @return true if a Player is in a word mode, false otherwise
    */
   public boolean isPlayersInWordMode() {
     for (int i = 0; i < nbPlayer; ++i) {
@@ -212,10 +214,10 @@ public class GameEngine {
     }
     return false;
   }
-  
+
   /**
-   * Set the game timer to begin
-   * 
+   * Set the game timer to begin.
+   *
    * @see GameEngine#gameTimer
    * @see GameEngine#tBegin
    */
@@ -233,8 +235,8 @@ public class GameEngine {
 
   /**
    * Get the time last before the game ends.
-   * 
-   * @return the time last before the game ends. 
+   *
+   * @return the time last before the game ends
    */
   public long getTimeLeft() {
     return ((timeToEndGame * 1000000 - (System.nanoTime() - tBegin)) / 1000000000);
@@ -242,9 +244,11 @@ public class GameEngine {
 
   /**
    * Exchange two Player's Grid.
+   * <p>
    * Called by a Modifier.
-   * 
-   * @see Modifier#exchange() 
+   * </p>
+   *
+   * @see Modifier#exchange()
    */
   public void exchange() {
     Player p1 = players[0];
@@ -273,23 +277,24 @@ public class GameEngine {
   }
 
   /**
-   * Stop the game. 
+   * Stop the game.
    */
   public void stop() {
-    for(int i = 0; i < nbPlayer; ++i) {
+    for (int i = 0; i < nbPlayer; ++i) {
       players[i].finish();
       players[i].updateObserver("Jeu fini");
       players[i] = null;
     }
-    
+
     nbPlayer = 0;
     //TO DO
   }
 
   /**
-   * Stop all the timers in the game
+   * Stop all the timers in the game.
+   * <P> Use for the game's pause </p>
    */
   public void stopAllTimers() {
-        
+    //TO DO
   }
 }
