@@ -104,7 +104,7 @@ public class Grid2D extends JPanel implements Observer {
     Player myPlayer = model.getPlayer();
     
     if(currentModifier != null && myPlayer.isTetris()) {
-    	currentModifier.draw(g, offsetX , offsetY, 1);
+    	currentModifier.draw(g, offsetX , offsetY);
     }
 
     if (currentShape != null && myPlayer.isTetris()) {
